@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f5f3ef"/>
+  <g fill="none" stroke="#1a1c20" stroke-opacity="0.2">
+    <ellipse cx="400" cy="300" rx="190" ry="190"/>
+    <ellipse cx="400" cy="300" rx="190" ry="130"/>
+    <ellipse cx="400" cy="300" rx="190" ry="60"/>
+    <ellipse cx="400" cy="300" rx="130" ry="190" transform="rotate(90 400 300)"/>
+    <path d="M210 300 h380"/>
+  </g>
+  <path d="M250 210 C330 180, 470 160, 560 230" fill="none" stroke="#d9a441" stroke-width="2" stroke-dasharray="2 7"/>
+  <circle cx="250" cy="210" r="5" fill="#d9a441"/>
+  <circle cx="560" cy="230" r="5" fill="#e8813a"/>
+  <text x="60" y="546" font-family="Arial, sans-serif" font-size="13" letter-spacing="6" fill="#8b9097">TRAVEL STORIES — FIELD NOTES</text>
+</svg>

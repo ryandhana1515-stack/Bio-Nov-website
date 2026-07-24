@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f3f4f2"/>
+  <g fill="#1a1c20" fill-opacity="0.55">
+    <circle cx="292" cy="252" r="2.5"/><circle cx="341" cy="214" r="2"/><circle cx="391" cy="197" r="2.5"/>
+    <circle cx="443" cy="205" r="2"/><circle cx="489" cy="238" r="2.5"/><circle cx="513" cy="287" r="2"/>
+    <circle cx="507" cy="341" r="2.5"/><circle cx="471" cy="386" r="2"/><circle cx="417" cy="406" r="2.5"/>
+    <circle cx="362" cy="398" r="2"/><circle cx="316" cy="365" r="2.5"/><circle cx="294" cy="311" r="2"/>
+    <circle cx="371" cy="280" r="2"/><circle cx="428" cy="265" r="2.5"/><circle cx="447" cy="323" r="2"/>
+    <circle cx="384" cy="343" r="2.5"/>
+  </g>
+  <g stroke="#1a1c20" stroke-opacity="0.14" fill="none">
+    <path d="M292 252 L371 280 L428 265 L489 238 M341 214 L371 280 M447 323 L428 265 M384 343 L371 280 M384 343 L447 323 L507 341 M316 365 L384 343 M417 406 L447 323"/>
+  </g>
+  <circle cx="428" cy="265" r="9" fill="none" stroke="#aac4d4" stroke-width="2"/>
+  <circle cx="371" cy="280" r="9" fill="none" stroke="#e8813a" stroke-width="2"/>
+  <text x="60" y="546" font-family="Arial, sans-serif" font-size="13" letter-spacing="6" fill="#8b9097">CREATIVE AI — LAB SERIES</text>
+</svg>

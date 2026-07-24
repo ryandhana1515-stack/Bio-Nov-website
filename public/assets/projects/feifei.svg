@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#f6f4f1"/>
+  <g fill="none" stroke="#1a1c20" stroke-opacity="0.25" stroke-width="1.5">
+    <circle cx="400" cy="270" r="110"/>
+    <circle cx="330" cy="180" r="34"/>
+    <circle cx="470" cy="180" r="34"/>
+    <path d="M352 420 q48 34 96 0"/>
+  </g>
+  <circle cx="362" cy="258" r="8" fill="#1a1c20" fill-opacity="0.7"/>
+  <circle cx="438" cy="258" r="8" fill="#1a1c20" fill-opacity="0.7"/>
+  <path d="M376 308 q24 20 48 0" fill="none" stroke="#e8813a" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="400" cy="270" r="150" fill="none" stroke="#c98a9a" stroke-opacity="0.4" stroke-dasharray="1 9"/>
+  <text x="60" y="546" font-family="Arial, sans-serif" font-size="13" letter-spacing="6" fill="#8b9097">FEIFEITOY — CHARACTER STUDY</text>
+</svg>

@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "assets": {
+    "curiosity-core": {
+      "id": "curiosity-core",
+      "kind": "reference",
+      "status": "test",
+      "prompt": "Create an original premium abstract 3D organic sphere representing curiosity and creative intelligence. The sphere is formed from hundreds of soft white and silver procedural ridges and flowing filaments, with a subtle warm orange energy source glowing from the centre. Bright warm-white studio background, minimal futuristic gallery aesthetic, soft realistic shadows, elegant technological sculpture, highly detailed, calm and refined, original design, no text, no logo, no people.",
+      "negativePrompt": "logo, watermark, text, copied person, public figure, celebrity, dark cyberpunk background, gaming interface, horror, damaged face, distorted anatomy, extra facial features, violent explosion, smoke, fire, chaotic debris, heavy neon, low-resolution texture, cheap stock-website appearance, cartoon style, generic corporate stock imagery",
+      "model": "fal-ai/flux/schnell",
+      "file": "/assets/references/curiosity-core.png",
+      "width": 1024,
+      "height": 1024,
+      "estimatedCostUsd": 0.0031,
+      "attempts": 3,
+      "generatedAt": "2026-07-24T19:04:21.171Z"
+    },
+    "core-to-strands": {
+      "id": "core-to-strands",
+      "kind": "reference",
+      "status": "test",
+      "prompt": "The original white organic curiosity sphere slowly unfolds into hundreds of long flowing white and silver strands. Soft warm-orange light travels through selected strands. The strands extend elegantly across a bright minimal background. Premium technological motion design, controlled transformation, smooth camera, no explosion, no debris, no text.",
+      "negativePrompt": "logo, watermark, text, copied person, public figure, celebrity, dark cyberpunk background, gaming interface, horror, damaged face, distorted anatomy, extra facial features, violent explosion, smoke, fire, chaotic debris, heavy neon, low-resolution texture, cheap stock-website appearance, cartoon style, generic corporate stock imagery",
+      "model": "fal-ai/flux/schnell",
+      "file": "/assets/references/core-to-strands.png",
+      "width": 1024,
+      "height": 1024,
+      "estimatedCostUsd": 0.0031,
+      "attempts": 1,
+      "generatedAt": "2026-07-24T19:04:22.337Z"
+    },
+    "strands-to-head": {
+      "id": "strands-to-head",
+      "kind": "reference",
+      "status": "test",
+      "prompt": "Hundreds of flowing white procedural strands and particles gradually assemble into an original symbolic human-head silhouette. The head is made from point clouds, fine mesh fragments, transparent scan lines and delicate digital structures. Neutral identity, not based on a recognisable real person, bright soft-grey studio background, subtle warm highlights, premium experimental technology artwork.",
+      "negativePrompt": "logo, watermark, text, copied person, public figure, celebrity, dark cyberpunk background, gaming interface, horror, damaged face, distorted anatomy, extra facial features, violent explosion, smoke, fire, chaotic debris, heavy neon, low-resolution texture, cheap stock-website appearance, cartoon style, generic corporate stock imagery",
+      "model": "fal-ai/flux/schnell",
+      "file": "/assets/references/strands-to-head.png",
+      "width": 1024,
+      "height": 1024,
+      "estimatedCostUsd": 0.0031,
+      "attempts": 1,
+      "generatedAt": "2026-07-24T19:04:23.433Z"
+    },
+    "procedural-face": {
+      "id": "procedural-face",
+      "kind": "reference",
+      "status": "test",
+      "prompt": "An original neutral digital human-head sculpture covered by fine fingerprint-like and topographic contour lines. White and silver surface, partial transparency, subtle particle distortion, soft pale-blue reflections, bright minimal background, elegant procedural 3D art, high-end creative technology portfolio, no text, no recognisable person.",
+      "negativePrompt": "logo, watermark, text, copied person, public figure, celebrity, dark cyberpunk background, gaming interface, horror, damaged face, distorted anatomy, extra facial features, violent explosion, smoke, fire, chaotic debris, heavy neon, low-resolution texture, cheap stock-website appearance, cartoon style, generic corporate stock imagery",
+      "model": "fal-ai/flux/schnell",
+      "file": "/assets/references/procedural-face.png",
+      "width": 1024,
+      "height": 1024,
+      "estimatedCostUsd": 0.0031,
+      "attempts": 1,
+      "generatedAt": "2026-07-24T19:04:24.525Z"
+    },
+    "digital-to-human": {
+      "id": "digital-to-human",
+      "kind": "reference",
+      "status": "test",
+      "prompt": "An original artistic human silhouette transitioning between a realistic soft photographic surface, a fingerprint-like procedural mesh and fine digital particles. Bright neutral background, monochrome white, silver and soft charcoal tones, calm editorial lighting, premium experimental portfolio visual, no recognisable public figure, no text.",
+      "negativePrompt": "logo, watermark, text, copied person, public figure, celebrity, dark cyberpunk background, gaming interface, horror, damaged face, distorted anatomy, extra facial features, violent explosion, smoke, fire, chaotic debris, heavy neon, low-resolution texture, cheap stock-website appearance, cartoon style, generic corporate stock imagery",
+      "model": "fal-ai/flux/schnell",
+      "file": "/assets/references/digital-to-human.png",
+      "width": 1024,
+      "height": 1024,
+      "estimatedCostUsd": 0.0031,
+      "attempts": 1,
+      "generatedAt": "2026-07-24T19:04:25.640Z"
+    },
+    "particle-dissolve": {
+      "id": "particle-dissolve",
+      "kind": "reference",
+      "status": "test",
+      "prompt": "An elegant digital head sculpture dissolving into thousands of fine white and silver particles that travel outward and become a constellation of abstract creative worlds. Bright minimal background, subtle pale-blue and warm-orange accents, smooth controlled motion, premium technological storytelling, no violent explosion, no text.",
+      "negativePrompt": "logo, watermark, text, copied person, public figure, celebrity, dark cyberpunk background, gaming interface, horror, damaged face, distorted anatomy, extra facial features, violent explosion, smoke, fire, chaotic debris, heavy neon, low-resolution texture, cheap stock-website appearance, cartoon style, generic corporate stock imagery",
+      "model": "fal-ai/flux/schnell",
+      "file": "/assets/references/particle-dissolve.png",
+      "width": 1024,
+      "height": 1024,
+      "estimatedCostUsd": 0.0031,
+      "attempts": 1,
+      "generatedAt": "2026-07-24T19:04:26.750Z"
+    },
+    "og-image": {
+      "id": "og-image",
+      "kind": "og",
+      "status": "test",
+      "prompt": "Minimal premium hero image for a personal creative-technology portfolio: an abstract white organic sphere made of soft procedural filaments with a warm orange inner glow, centred on a bright warm-white studio background with generous empty space, editorial museum-gallery lighting, soft realistic shadow beneath, elegant and calm, no text, no logo, no people.",
+      "negativePrompt": "logo, watermark, text, copied person, public figure, celebrity, dark cyberpunk background, gaming interface, horror, damaged face, distorted anatomy, extra facial features, violent explosion, smoke, fire, chaotic debris, heavy neon, low-resolution texture, cheap stock-website appearance, cartoon style, generic corporate stock imagery",
+      "model": "fal-ai/flux/schnell",
+      "file": "/assets/references/og-image.png",
+      "width": 1216,
+      "height": 640,
+      "estimatedCostUsd": 0.0023,
+      "attempts": 2,
+      "generatedAt": "2026-07-24T19:04:51.814Z"
+    }
+  }
+}

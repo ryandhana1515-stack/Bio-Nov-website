@@ -1,0 +1,68 @@
+{
+  "totalEstimatedUsd": 0.0271,
+  "entries": [
+    {
+      "assetId": "curiosity-core",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:13.214Z"
+    },
+    {
+      "assetId": "curiosity-core",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:21.172Z"
+    },
+    {
+      "assetId": "core-to-strands",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:22.337Z"
+    },
+    {
+      "assetId": "strands-to-head",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:23.434Z"
+    },
+    {
+      "assetId": "procedural-face",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:24.525Z"
+    },
+    {
+      "assetId": "digital-to-human",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:25.641Z"
+    },
+    {
+      "assetId": "particle-dissolve",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:26.751Z"
+    },
+    {
+      "assetId": "og-image",
+      "model": "fal-ai/flux/schnell",
+      "kind": "reference",
+      "estimatedCostUsd": 0.0031,
+      "at": "2026-07-24T19:04:27.323Z"
+    },
+    {
+      "assetId": "og-image",
+      "model": "fal-ai/flux/schnell",
+      "kind": "og",
+      "estimatedCostUsd": 0.0023,
+      "at": "2026-07-24T19:04:51.814Z"
+    }
+  ]
+}
