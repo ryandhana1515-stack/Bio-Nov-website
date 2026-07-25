@@ -1,0 +1,39 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-header">
+      <span class="eyebrow">Journal</span>
+      <h1>{{ blog.title }}</h1>
+    </div>
+
+    {%- paginate blog.articles by 9 -%}
+      <div class="grid grid--3">
+        {%- for article in blog.articles -%}
+          <article class="glass-card product-card">
+            {%- if article.image -%}
+              <div class="product-card__media">
+                <a href="{{ article.url }}">{{ article.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 600' }}</a>
+              </div>
+            {%- endif -%}
+            <h3 class="product-card__title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+            <p style="font-size: 1.4rem;">{{ article.excerpt_or_content | strip_html | truncate: 140 }}</p>
+            <a href="{{ article.url }}" style="margin-top: auto; font-size: 1.4rem; font-weight: 600;">{{ 'blog.read_more' | t }} &rarr;</a>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav style="margin-top: 4.8rem; text-align: center;" aria-label="Pagination">
+          {%- if paginate.previous -%}<a class="btn btn--secondary" href="{{ paginate.previous.url }}">&larr; Previous</a>{%- endif -%}
+          {%- if paginate.next -%}<a class="btn btn--secondary" href="{{ paginate.next.url }}">Next &rarr;</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{
+  "current": {
+    "color_background": "#050A18",
+    "color_background_elevated": "#0A1428",
+    "color_text": "#F2F6FF",
+    "color_text_muted": "#9BA9C4",
+    "color_accent": "#00DCFF",
+    "color_accent_secondary": "#7C5CFF",
+    "page_width": 1280,
+    "corner_radius": 12,
+    "social_facebook": "https://facebook.com/biogreenelixirs",
+    "social_instagram": "https://instagram.com/biogreenelixirs",
+    "social_tiktok": "https://tiktok.com/@biogreenelixirs",
+    "footer_disclaimer": "These statements have not been evaluated by any food or drug authority. This product is not intended to diagnose, treat, cure or prevent any disease. Always consult your healthcare professional before starting any supplement, especially if you are pregnant, nursing, taking medication or have a medical condition."
+  }
+}

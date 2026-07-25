@@ -1,36 +1,34 @@
-# BIO N:OV Premium Website
+# BioExcela Global — BIO N:OV E-commerce Ecosystem
 
-A responsive, cinematic Next.js website based on the supplied 30-page BIO N:OV presentation. The implementation preserves its blue-cyan-purple-pink identity while using careful educational wording and explicit verification notes.
+Global Shopify e-commerce build for **BioExcela Global** (Bio Green Elixirs, Singapore), launching **BIO N:OV** — a third-generation nitric oxide support supplement made in Korea with patented microbial fermentation.
 
-## Folder structure
+## Repository map
 
-- `app/` - Next.js App Router pages, metadata and global design system
-- `components/` - interactive page experience and React Three Fiber molecule
-- `public/images/` - product, ingredient, medical and researcher imagery extracted/cropped from the supplied PDF
-- `CONTENT_VERIFICATION.md` - legal, scientific and regulatory review checklist
+| Path | What it is |
+|---|---|
+| `shopify/theme/` | **BioExcela Prestige** — complete custom Shopify OS 2.0 theme (navy/cyan glassmorphism, mobile-first, CRO-optimized PDP with sticky ATC, JSON-LD schema, metafield-driven accordions) |
+| `shopify/data/` | BIO N:OV product import CSV · metafield architecture · navigation/collections plan |
+| `shopify/docs/` | Phase 1-5 implementation playbooks + `MASTER-PLAN.md` (17-phase roadmap) |
+| `app/`, `components/`, `public/` | Original Next.js BIO N:OV landing page (deployable to Vercel as a campaign page) |
+| `CONTENT_VERIFICATION.md` | Legal/scientific claims checklist — review before publishing any copy |
 
-## Local setup
+## Deploy the Shopify theme
+
+```bash
+npm install -g @shopify/cli @shopify/theme
+cd shopify/theme
+shopify theme push --store=YOUR-STORE.myshopify.com --unpublished --theme="BioExcela Prestige"
+```
+
+Then publish from Admin → Online Store → Themes. Start with `shopify/docs/PHASE-01-architecture.md`.
+
+## Run the Next.js landing page
 
 ```bash
 npm install
-npm run dev
+npm run dev   # http://localhost:3000
 ```
 
-Open `http://localhost:3000`.
+## Status
 
-## Production
-
-```bash
-npm run build
-npm start
-```
-
-## Deploy to Vercel
-
-1. Upload this folder to a Git repository.
-2. Import the repository in Vercel.
-3. Keep the detected framework as Next.js.
-4. Build command: `npm run build`.
-5. Deploy and add the final public domain to the site metadata if needed.
-
-No environment variables are required for the current static experience. Connect the contact form to an approved form handler or CRM before launch.
+Phases 1-5 delivered (architecture, design system, catalog/PDP, Markets/payments/shipping, Meta/TikTok commerce). Phases 6-17 pending the next brief batch — see `shopify/docs/MASTER-PLAN.md`.

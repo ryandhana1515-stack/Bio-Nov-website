@@ -1,0 +1,73 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "stat1": { "type": "stat", "settings": { "value": "3rd Gen", "label": "Nitric oxide technology" } },
+        "stat2": { "type": "stat", "settings": { "value": "GMP", "label": "Certified Korean facility" } },
+        "stat3": { "type": "stat", "settings": { "value": "Patented", "label": "Fermentation KACC91554P" } }
+      },
+      "block_order": ["stat1", "stat2", "stat3"],
+      "settings": {
+        "eyebrow": "Third-generation nitric oxide science",
+        "heading": "Feel the difference. <span>Fast.</span>",
+        "subheading": "BIO N:OV — a patented Korean fermentation breakthrough designed to support healthy circulation, energy and vitality. GMP-certified, naturally derived, made for everyone.",
+        "cta_primary_label": "Shop BIO N:OV",
+        "cta_primary_link": "/products/bio-nov",
+        "cta_secondary_label": "Explore the science",
+        "cta_secondary_link": "/pages/science"
+      }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "b1": { "type": "badge", "settings": { "icon": "award", "label": "GMP-Certified Korean Manufacturing" } },
+        "b2": { "type": "badge", "settings": { "icon": "shield", "label": "Patented Fermentation (KACC91554P)" } },
+        "b3": { "type": "badge", "settings": { "icon": "truck", "label": "Worldwide Tracked Shipping" } },
+        "b4": { "type": "badge", "settings": { "icon": "lock", "label": "Secure Encrypted Checkout" } },
+        "b5": { "type": "badge", "settings": { "icon": "refresh", "label": "30-Day Satisfaction Guarantee" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5"]
+    },
+    "featured": {
+      "type": "featured-product",
+      "settings": {
+        "eyebrow": "The flagship",
+        "heading": "BIO N:OV — 500 mg × 60 tablets",
+        "text": "One box. Twenty days of third-generation nitric oxide support, born from patented Korean fermentation science and developed with Korean university researchers.",
+        "cta_label": "Shop BIO N:OV"
+      }
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "ben1": { "type": "benefit", "settings": { "icon": "heart", "title": "Circulation & balance", "text": "Formulated to support healthy circulation and cardiovascular balance as part of a healthy lifestyle." } },
+        "ben2": { "type": "benefit", "settings": { "icon": "zap", "title": "Vigor & energy", "text": "Designed to support natural energy production and daily vitality — so you can keep up with life." } },
+        "ben3": { "type": "benefit", "settings": { "icon": "shield", "title": "Immune support", "text": "Fermented botanical extracts chosen to help maintain the body's natural defenses." } },
+        "ben4": { "type": "benefit", "settings": { "icon": "brain", "title": "Cognition & clarity", "text": "Healthy circulation matters for the mind too. BIO N:OV supports cognitive wellness from within." } },
+        "ben5": { "type": "benefit", "settings": { "icon": "leaf", "title": "Naturally derived", "text": "Fermented garlic, fermented lettuce, soybean and soybean sprout — no harsh synthetics." } },
+        "ben6": { "type": "benefit", "settings": { "icon": "flask", "title": "Patented science", "text": "A patented microbial fermentation process developed with Korean university researchers." } }
+      },
+      "block_order": ["ben1", "ben2", "ben3", "ben4", "ben5", "ben6"],
+      "settings": {
+        "eyebrow": "Why BIO N:OV",
+        "heading": "Designed to support your whole system"
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Fermented actives", "text": "Fermented garlic and lettuce extracts are produced with a patented microbial strain — no enzyme conversion required." } },
+        "s2": { "type": "step", "settings": { "title": "Absorbed by the body", "text": "The fermentation-derived compounds are designed to be gentle and usable by everyone, without the drawbacks of earlier-generation approaches." } },
+        "s3": { "type": "step", "settings": { "title": "Supports circulation", "text": "Nitric oxide plays a key role in vascular tone — supporting healthy blood flow, energy and overall vitality." } }
+      },
+      "block_order": ["s1", "s2", "s3"]
+    },
+    "ingredients": { "type": "ingredients" },
+    "comparison": { "type": "comparison-table" },
+    "testimonials": { "type": "testimonials" },
+    "faq": { "type": "faq" },
+    "newsletter": { "type": "newsletter" }
+  },
+  "order": ["hero", "trust", "featured", "benefits", "how", "ingredients", "comparison", "testimonials", "faq", "newsletter"]
+}

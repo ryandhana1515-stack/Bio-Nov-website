@@ -1,0 +1,9 @@
+{%- comment -%} Usage: {% render 'price', price_product: product %} {%- endcomment -%}
+{%- if price_product.price_varies -%}
+  From {{ price_product.price_min | money }}
+{%- else -%}
+  {{ price_product.price | money }}
+{%- endif -%}
+{%- if price_product.compare_at_price > price_product.price -%}
+  <s style="color: var(--color-text-muted); font-weight: 400; margin-left: 0.8rem;">{{ price_product.compare_at_price | money }}</s>
+{%- endif -%}

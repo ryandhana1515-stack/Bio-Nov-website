@@ -1,0 +1,50 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-header reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+
+    <div class="grid grid--3">
+      {%- for block in section.blocks -%}
+        <div class="glass-card step-card reveal" {{ block.shopify_attributes }}>
+          <div class="step-card__number">{{ forloop.index | prepend: '0' }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How it works",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The science" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How BIO N:OV works" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Nitric oxide is a signaling molecule your body produces naturally — and production declines with age. BIO N:OV uses a patented microbial fermentation process to deliver third-generation nitric oxide support." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Take daily" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "One tablet, three times a day with water." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Fermented actives", "text": "Fermented garlic and lettuce extracts are produced with a patented microbial strain — no enzyme conversion required." } },
+        { "type": "step", "settings": { "title": "Absorbed by the body", "text": "The fermentation-derived compounds are designed to be gentle and usable by everyone, without the drawbacks of earlier-generation approaches." } },
+        { "type": "step", "settings": { "title": "Supports circulation", "text": "Nitric oxide plays a key role in vascular tone — supporting healthy blood flow, energy and overall vitality." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,18 @@
+{%- if request.page_type == 'product' and product -%}
+  <div class="sticky-atc" data-sticky-atc aria-hidden="true">
+    <div class="sticky-atc__inner">
+      <div class="sticky-atc__meta">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="48" height="48" loading="lazy">
+        {%- endif -%}
+        <div style="min-width: 0;">
+          <div class="sticky-atc__title">{{ product.title }}</div>
+          <div class="sticky-atc__price">{{ product.selected_or_first_available_variant.price | money }}</div>
+        </div>
+      </div>
+      <button type="button" class="btn btn--primary" data-sticky-submit>
+        {{ 'products.add_to_cart' | t }}
+      </button>
+    </div>
+  </div>
+{%- endif -%}

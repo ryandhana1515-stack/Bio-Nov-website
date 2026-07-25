@@ -1,0 +1,55 @@
+<section class="section" style="padding-top: 0;">
+  <div class="page-width">
+    <div class="trust-strip reveal">
+      {%- for block in section.blocks -%}
+        <span class="trust-strip__item" {{ block.shopify_attributes }}>
+          {% render 'icon', name: block.settings.icon %}
+          {{ block.settings.label }}
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust badges",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "award", "label": "Award" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "refresh", "label": "Refresh" },
+            { "value": "globe", "label": "Globe" },
+            { "value": "leaf", "label": "Leaf" }
+          ],
+          "default": "shield"
+        },
+        { "type": "text", "id": "label", "label": "Label", "default": "GMP Certified" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust badges",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "award", "label": "GMP-Certified Korean Manufacturing" } },
+        { "type": "badge", "settings": { "icon": "shield", "label": "Patented Fermentation (KACC91554P)" } },
+        { "type": "badge", "settings": { "icon": "truck", "label": "Worldwide Tracked Shipping" } },
+        { "type": "badge", "settings": { "icon": "lock", "label": "Secure Encrypted Checkout" } },
+        { "type": "badge", "settings": { "icon": "refresh", "label": "30-Day Satisfaction Guarantee" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

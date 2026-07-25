@@ -1,0 +1,14 @@
+<section class="section text-center">
+  <div class="page-width">
+    <h1>{{ 'not_found.title' | t }}</h1>
+    <p>{{ 'not_found.subtitle' | t }}</p>
+    <a href="{{ routes.root_url }}" class="btn btn--primary">{{ 'not_found.back_home' | t }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404",
+  "settings": []
+}
+{% endschema %}

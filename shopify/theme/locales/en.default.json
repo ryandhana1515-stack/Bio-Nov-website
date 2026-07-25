@@ -1,0 +1,47 @@
+{
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "cart_count": "items in cart"
+  },
+  "general": {
+    "search": "Search",
+    "cart": "Cart",
+    "account": "Account",
+    "menu": "Menu",
+    "continue_shopping": "Continue shopping"
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "buy_now": "Buy it now",
+    "sold_out": "Sold out",
+    "quantity": "Quantity",
+    "vendor": "Brand",
+    "view_details": "View details"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is currently empty.",
+    "subtotal": "Subtotal",
+    "checkout": "Secure checkout",
+    "remove": "Remove",
+    "note": "Taxes, shipping and discounts are calculated at checkout."
+  },
+  "newsletter": {
+    "email_placeholder": "Enter your email",
+    "submit": "Subscribe",
+    "success": "Thank you for subscribing."
+  },
+  "search": {
+    "title": "Search results",
+    "no_results": "No results found for your search.",
+    "placeholder": "Search products, pages and articles"
+  },
+  "blog": {
+    "read_more": "Read more"
+  },
+  "not_found": {
+    "title": "Page not found",
+    "subtitle": "The page you were looking for does not exist.",
+    "back_home": "Back to home"
+  }
+}
