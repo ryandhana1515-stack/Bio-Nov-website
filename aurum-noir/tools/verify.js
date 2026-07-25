@@ -48,7 +48,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   await page.goto('http://127.0.0.1:8080/');
   // wait for loader to finish (hero frames loaded)
-  await page.waitForSelector('#loader.done', { timeout: 120000 });
+  await page.waitForSelector('#loader.done', { timeout: 120000, state: 'attached' });
   await sleep(2600); // let intro timeline play
   const results = [];
   const canvasHash = (id) => page.evaluate((cid) => {

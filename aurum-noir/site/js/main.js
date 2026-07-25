@@ -104,7 +104,7 @@
     if (reduceMotion) { gsap.set(letters, { opacity: 1 }); return; }
     gsap.timeline()
       .fromTo(letters,
-        { opacity: 0, letterSpacing: '1.2em', x: (i, el, arr) => (i - (arr.length - 1) / 2) * 60, filter: 'blur(14px)' },
+        { opacity: 0, x: (i, el, arr) => (i - (arr.length - 1) / 2) * 130, filter: 'blur(14px)' },
         { opacity: 1, x: 0, filter: 'blur(0px)', duration: 2.2, ease: 'power3.out', stagger: { each: 0.06, from: 'center' } })
       .fromTo('.hero-sub', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' }, '-=1.2');
   }
