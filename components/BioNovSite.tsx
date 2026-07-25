@@ -4,11 +4,12 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, HeartPulse, Leaf, Menu, Microscope, Plus, ShieldPlus, Sparkles, Sun, Wind, X, Zap } from "lucide-react";
+import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Wind, X, Zap } from "lucide-react";
 
 const MoleculeScene = dynamic(() => import("./MoleculeScene"), { ssr: false });
+const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
 
-const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Blood Flow","flow"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["FAQ","faq"],["Contact","contact"]];
+const nav = [["Home","home"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[] };
 
@@ -454,6 +455,31 @@ const ingredients: (Detail & { name: string; short: string; img?: string })[] = 
   }
 ];
 
+const vesselDetail: Detail = {
+  title: "What you just watched",
+  subtitle: "The mechanism behind the model",
+  body: [
+    "Blood vessels are not rigid pipes. They are living tubes wrapped in smooth muscle, and that muscle is constantly being told how much to relax or tighten. The molecule doing most of that telling is nitric oxide, produced by the endothelium — the single-cell lining on the inside of every vessel you own.",
+    "When nitric oxide signalling is working well, the muscle relaxes, the vessel widens, and blood moves with less resistance. That is the 'relaxed' state in the model. When the vessel stays constricted, the same volume of blood has to squeeze through a smaller opening — so it moves more slowly, and everything downstream is served more slowly too.",
+    "Natural nitric oxide production is generally understood to decline with age. That is the gap BIO N:OV is formulated to support — through fermented plant ingredients rather than an enzyme conversion step inside your body."
+  ],
+  points: [
+    "The endothelium produces nitric oxide naturally",
+    "Nitric oxide signals vessel smooth muscle to relax",
+    "Relaxed vessels move blood with less resistance",
+    "Natural production is understood to decline with age",
+    "BIO N:OV supports this pathway with fermented botanicals",
+    "Educational model — not a depiction of product performance"
+  ]
+};
+
+const affiliatePerks = [
+  { Icon: TrendingUp, title: "Earn on every sale", text: "Competitive commission on every order that comes through your unique link — tracked automatically, paid on schedule." },
+  { Icon: Link2, title: "Your own referral link", text: "Get a personal link and coupon code the moment you're approved. Share it anywhere you already talk to people." },
+  { Icon: Megaphone, title: "Content, ready to go", text: "Product photos, videos, approved claims and campaign briefs in a shared media library. No guesswork." },
+  { Icon: Gift, title: "Try it yourself first", text: "Selected creators receive product to try before promoting. We'd rather you speak from experience." }
+];
+
 /* ------------------------------------------------------------------ *
  * UI primitives
  * ------------------------------------------------------------------ */
@@ -477,10 +503,10 @@ function Modal({ detail, onClose }: { detail: Detail | null; onClose: () => void
             role="dialog"
             aria-modal="true"
             aria-label={detail.title}
-            initial={{ opacity: 0, y: 30, scale: .97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: .98 }}
-            transition={{ duration: .28, ease: [.2,.8,.2,1] }}
+            initial={{ opacity: 0, y: 60, scale: .9, rotateX: -14 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+            exit={{ opacity: 0, y: 34, scale: .94, rotateX: 8 }}
+            transition={{ type: "spring", stiffness: 260, damping: 26, mass: .9 }}
             onClick={e => e.stopPropagation()}
           >
             <button className="modal-close" onClick={onClose} aria-label="Close">
@@ -537,6 +563,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
   const [openFaq, setOpenFaq] = useState(0);
   const [modal, setModal] = useState<Detail | null>(null);
   const [activeSystem, setActiveSystem] = useState(0);
+  const [vesselOpen, setVesselOpen] = useState(true);
   const { scrollYProgress } = useScroll();
   const productY = useTransform(scrollYProgress, [0, .35], [0, 80]);
 
@@ -610,6 +637,8 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             title="Everything Your Body Does Depends on Flow"
             copy="Blood carries oxygen and nutrients to every cell you own. When flow is easy, the whole system is served. When flow becomes harder, every destination waits longer. This is why BIO N:OV starts with circulation — not with symptoms."
           />
+
+          <p className="click-prompt light"><MousePointerClick size={17} /> Click any stage below to read the full explanation</p>
 
           <div className="flow-track">
             {flowStages.map((stage, i) => (
@@ -716,6 +745,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           title="Three Generations of Nitric Oxide Science"
           copy="Click any generation to read how the approaches differ. Comparative performance claims are intentionally excluded pending approved evidence."
         />
+        <p className="click-prompt"><MousePointerClick size={17} /> Click any generation to compare them in detail</p>
         <div className="timeline">
           {generations.map((g, i) => (
             <motion.button
@@ -744,6 +774,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           title="Naturally Derived. Thoughtfully Fermented."
           copy="Click any ingredient for the full story. Confirm the complete authorised formula and exact ingredient naming on the market label."
         />
+        <p className="click-prompt"><MousePointerClick size={17} /> Click any ingredient for the full story</p>
         <div className="ingredient-grid">
           {ingredients.map((ing, i) => (
             <motion.button
@@ -770,6 +801,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       {/* ---------------- Pillars (clickable) ---------------- */}
       <Reveal id="benefits" className="section">
         <Heading eyebrow="Five wellness pillars" title="Wellbeing, Viewed as a Whole" copy="Every pillar traces back to the same foundation: healthy flow. Click any pillar to read more." />
+        <p className="click-prompt"><MousePointerClick size={17} /> Click any pillar to read the full explanation</p>
         <div className="pillars">
           {pillars.map(p => (
             <motion.button whileHover={{ y: -8 }} key={p.name} onClick={() => setModal(p)} aria-label={`Read more about ${p.name}`}>
@@ -782,36 +814,77 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         </div>
       </Reveal>
 
-      {/* ---------------- Vessels ---------------- */}
-      <Reveal className="vessel-section">
+      {/* ---------------- Interactive 3D vessel ---------------- */}
+      <Reveal id="vessels" className="vessel-section">
         <Heading
           light
-          eyebrow="An elegant visual model"
+          eyebrow="See it for yourself — in 3D"
           title="Narrow Road. Open Road."
-          copy="Nitric oxide is a signalling molecule involved in normal vasodilation — helping blood vessels relax as part of healthy circulatory function. The difference that makes to flow is easy to picture."
+          copy="This is the difference everyone talks about but almost nobody sees. Press the buttons below and watch what happens to the blood cells when a vessel is constricted versus relaxed."
         />
-        <div className="vessels">
-          <div>
-            <span>Narrower vessel</span>
-            <div className="vessel narrow">{[1, 2, 3, 4].map(n => <i key={n} />)}</div>
-            <small>Illustrative slower particle flow</small>
+
+        <div className="vessel-3d-wrap">
+          <div className="vessel-canvas">
+            <VesselScene open={vesselOpen} />
+            <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
+              <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
+              <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
+            </div>
           </div>
-          <div>
-            <span>Relaxed vessel</span>
-            <div className="vessel relaxed">{[1, 2, 3, 4, 5, 6].map(n => <i key={n} />)}</div>
-            <small>Illustrative smoother particle flow</small>
+
+          <div className="vessel-controls">
+            <p className="vessel-prompt"><MousePointerClick size={17} /> Click a state to switch the 3D model</p>
+            <button className={`vessel-toggle ${!vesselOpen ? "active" : ""}`} onClick={() => setVesselOpen(false)}>
+              <span className="dot narrow" />
+              <div>
+                <b>Constricted</b>
+                <small>Vessel narrowed &mdash; cells crowd together and slow down. Every organ downstream waits longer for oxygen.</small>
+              </div>
+            </button>
+            <button className={`vessel-toggle ${vesselOpen ? "active" : ""}`} onClick={() => setVesselOpen(true)}>
+              <span className="dot open" />
+              <div>
+                <b>Relaxed &mdash; the nitric oxide signal</b>
+                <small>Nitric oxide signals the vessel wall to relax. The road opens, cells spread out and flow freely.</small>
+              </div>
+            </button>
+
+            <button className="button primary vessel-cta" onClick={() => setModal(vesselDetail)}>
+              Read how this works <ArrowRight size={17} />
+            </button>
           </div>
         </div>
-        <p className="vessel-note">Illustration only — an educational visual model, not a depiction of measured product performance.</p>
+
+        <p className="vessel-note">Educational 3D visual model illustrating normal vascular physiology. Not a depiction of measured product performance. Individual results vary.</p>
       </Reveal>
+
+      {/* ---------------- Conversion band ---------------- */}
+      <section className="cta-band">
+        <div className="cta-band__inner">
+          <div>
+            <span className="eyebrow">Ready when you are</span>
+            <h2>Support your circulation, starting today</h2>
+            <p>One box is a 20-day supply. Third-generation Korean fermentation science, GMP-certified, shipped worldwide.</p>
+          </div>
+          <div className="cta-band__actions">
+            <a className="button primary" href="#product">Buy BIO N:OV now <ArrowRight size={18} /></a>
+            <a className="button glass" href="#affiliate">Earn with us &mdash; become an affiliate</a>
+          </div>
+        </div>
+      </section>
 
       {/* ---------------- Research team (brighter + clickable) ---------------- */}
       <Reveal id="team" className="section team">
+        <div className="team-aurora" aria-hidden="true">
+          <span /><span /><span /><span />
+        </div>
+        <div className="team-inner">
         <Heading
           eyebrow="People behind the science"
           title="Science & Research Team"
-          copy="BIO N:OV was developed with researchers from Korean universities and medical schools. Click any profile to read their focus areas."
+          copy="BIO N:OV was developed with researchers from Korean universities and medical schools — eight specialists across nitric oxide biology, cardiovascular research, metabolism and regenerative medicine."
         />
+        <p className="click-prompt"><MousePointerClick size={17} /> Click any researcher to open their full profile</p>
         <div className="research-grid">
           {researchers.map(r => (
             <motion.button
@@ -838,6 +911,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           ))}
         </div>
         <div className="warning">Professional titles, affiliations, portraits and research information must be verified and permission obtained before publication.</div>
+        </div>
       </Reveal>
 
       {/* ---------------- Product ---------------- */}
@@ -876,6 +950,52 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           <div className="quote">&ldquo;</div>
           <p>Sample testimonial layout &mdash; replace with verified, consented customer reviews before publication.</p>
           <div className="dots"><i /><i /><i /></div>
+        </div>
+      </Reveal>
+
+      {/* ---------------- Affiliate & creator program ---------------- */}
+      <Reveal id="affiliate" className="affiliate-section">
+        <div className="affiliate-inner">
+          <Heading
+            light
+            eyebrow="Partner with us"
+            title="Join the BIO N:OV Affiliate & Creator Program"
+            copy="A science revolution spreads because people talk about it. If you have an audience that cares about healthy ageing, energy and circulation — we'd like you to earn from sharing it."
+          />
+
+          <div className="affiliate-grid">
+            {affiliatePerks.map(perk => (
+              <div className="affiliate-card" key={perk.title}>
+                <perk.Icon />
+                <h3>{perk.title}</h3>
+                <p>{perk.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="affiliate-steps">
+            {[
+              ["Apply", "Fill in the short application — it takes two minutes."],
+              ["Get approved", "We review and send your unique link, coupon code and dashboard access."],
+              ["Share & earn", "Post, recommend, refer. Track every click and commission in real time."]
+            ].map(([t, d], i) => (
+              <div key={t}>
+                <span>{String(i + 1).padStart(2, "0")}</span>
+                <b>{t}</b>
+                <small>{d}</small>
+              </div>
+            ))}
+          </div>
+
+          <div className="affiliate-cta">
+            <a className="button primary big" href="#contact">Click here to join as an affiliate <ArrowRight size={19} /></a>
+            <a className="button glass" href="#contact">Apply as a content creator</a>
+          </div>
+          <p className="affiliate-note">
+            Affiliates must follow our marketing guidelines: disclose partnerships (#ad), use only approved product claims,
+            and never make medical or disease-treatment claims. Commission rates, cookie window and payout terms are set out
+            in the program terms you receive on approval.
+          </p>
         </div>
       </Reveal>
 
@@ -934,6 +1054,19 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         </form>
       </Reveal>
 
+      <div className="sticky-cta">
+        <div className="sticky-cta__inner">
+          <div className="sticky-cta__text">
+            <b>BIO N:OV</b>
+            <small>500 mg × 60 tablets · 20-day supply</small>
+          </div>
+          <div className="sticky-cta__actions">
+            <a className="button primary" href="#product">Buy now <ArrowRight size={16} /></a>
+            <a className="button glass" href="#affiliate">Become an affiliate</a>
+          </div>
+        </div>
+      </div>
+
       <footer>
         <div className="footer-top">
           <div>
@@ -941,6 +1074,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             <p>Clearing the Way to Optimum Health</p>
           </div>
           <div><b>Explore</b>{nav.slice(1, 6).map(([a, b]) => <a href={`#${b}`} key={b}>{a}</a>)}</div>
+          <div><b>Earn With Us</b><a href="#affiliate">Affiliate Program</a><a href="#affiliate">Creator Program</a><a href="#contact">Wholesale Enquiry</a><a href="#contact">Contact Us</a></div>
           <div><b>Information</b><a href="#product">Product</a><a href="#faq">FAQ</a><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a><a href="#">Cookie Policy</a></div>
           <div><b>Contact</b><span>Official details to be confirmed</span><span>Social links to be confirmed</span></div>
         </div>

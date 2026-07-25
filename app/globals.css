@@ -54,3 +54,104 @@
 @media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:130px}.hero-product{grid-row:1}.hero-copy{text-align:center}.hero-kicker,.hero-actions{justify-content:center}.hero-copy>p,.hero small{margin-left:auto;margin-right:auto}.molecule-grid,.body-section,.showcase,.contact{grid-template-columns:1fr}.benefit-orbit,.timeline,.ingredient-grid,.vessels{grid-template-columns:1fr}.body-section{padding-top:90px}.body-visual{height:440px;grid-row:1}.lifestyle-path{grid-template-columns:1fr 1fr}.path-line{display:none}.pillars{grid-template-columns:1fr 1fr}.footer-top{grid-template-columns:1fr 1fr}.section{padding:85px 22px}.product-section,.vessel-section,.contact,.body-section{padding-left:22px;padding-right:22px}}
 @media(max-width:520px){.nav-shell{width:calc(100% - 20px);top:8px}.hero{padding:100px 18px 65px}.hero h1{font-size:61px}.hero h2{font-size:30px}.hero-actions{flex-direction:column}.hero-product img{border-radius:19px}.benefit-orbit,.lifestyle-path,.pillars,.research-grid,.form-grid,.footer-top{grid-template-columns:1fr}.chart{padding:10px}.timeline-card{min-height:260px}.ingredient-grid article{min-height:330px}.showcase h2{font-size:62px}.tabs{display:grid;grid-template-columns:1fr 1fr}.testimonial{padding:40px 20px}.testimonial p{font-size:19px}.contact form{padding:20px}.scroll-cue{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* ================= CONVERSION & 3D UPGRADE ================= */
+
+/* ---- Click prompts ---- */
+.click-prompt{display:inline-flex;align-items:center;gap:9px;margin:0 0 26px;padding:10px 18px;border-radius:999px;font-size:13px;font-weight:800;letter-spacing:.02em;color:var(--blue);background:#e9f4ff;border:1px solid #cde5fd}
+.click-prompt svg{animation:tap 2.2s ease-in-out infinite}
+.click-prompt.light{color:#8fe6ff;background:rgba(143,230,255,.12);border-color:rgba(143,230,255,.34)}
+@keyframes tap{0%,100%{transform:translate(0,0)}50%{transform:translate(3px,3px)}}
+
+/* ---- Interactive 3D vessel ---- */
+.vessel-3d-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;margin-top:10px}
+.vessel-canvas{position:relative;height:470px;border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:radial-gradient(circle at 50% 45%,rgba(90,40,110,.55),rgba(4,16,58,.9) 70%);box-shadow:inset 0 0 90px rgba(0,0,0,.45)}
+.vessel-stateplate{position:absolute;left:22px;bottom:22px;padding:14px 20px;border-radius:16px;background:rgba(4,16,50,.72);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.18);transition:border-color .35s}
+.vessel-stateplate span{display:block;font-size:10.5px;font-weight:900;letter-spacing:.18em;margin-bottom:5px}
+.vessel-stateplate b{font-size:15px;color:#fff}
+.vessel-stateplate.is-open{border-color:rgba(90,230,255,.6)}
+.vessel-stateplate.is-open span{color:#6ee7ff}
+.vessel-stateplate.is-narrow{border-color:rgba(255,130,170,.55)}
+.vessel-stateplate.is-narrow span{color:#ff9ab8}
+.vessel-controls{display:flex;flex-direction:column;gap:14px}
+.vessel-prompt{display:inline-flex;align-items:center;gap:9px;margin:0 0 4px;font-size:13px;font-weight:800;color:#8fe6ff}
+.vessel-prompt svg{animation:tap 2.2s ease-in-out infinite}
+.vessel-toggle{display:flex;gap:16px;align-items:flex-start;width:100%;padding:20px;text-align:left;cursor:pointer;border-radius:20px;color:#fff;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);backdrop-filter:blur(12px);transition:border-color .25s,background .25s,transform .25s}
+.vessel-toggle:hover{transform:translateX(4px)}
+.vessel-toggle.active{border-color:#6ee7ff;background:rgba(110,231,255,.14);box-shadow:0 16px 44px rgba(20,120,220,.3)}
+.vessel-toggle b{display:block;font-size:16px;margin-bottom:5px}
+.vessel-toggle small{color:#c3d9ff;font-size:13px;line-height:1.6}
+.vessel-toggle .dot{flex:none;width:16px;height:16px;margin-top:4px;border-radius:50%}
+.vessel-toggle .dot.narrow{background:#ff6f95;box-shadow:0 0 16px #ff6f95}
+.vessel-toggle .dot.open{background:#5ce7ff;box-shadow:0 0 16px #5ce7ff}
+.vessel-cta{margin-top:6px}
+
+/* ---- Conversion band ---- */
+.cta-band{padding:82px max(7vw,32px);background:linear-gradient(115deg,#0a3fa0,#5b46c4 55%,#d24fa5)}
+.cta-band__inner{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;max-width:1240px;margin:auto}
+.cta-band h2{margin:0 0 12px;font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-.04em;color:#fff}
+.cta-band p{margin:0;color:#dfeaff;font-size:16px;line-height:1.7}
+.cta-band .eyebrow{color:#ffd9a8}
+.cta-band__actions{display:flex;flex-direction:column;gap:12px}
+
+/* ---- Affiliate section ---- */
+.affiliate-section{position:relative;padding:120px max(7vw,32px);overflow:hidden;color:#fff;background:radial-gradient(circle at 80% 15%,rgba(32,199,236,.32),transparent 38%),radial-gradient(circle at 12% 82%,rgba(232,76,167,.34),transparent 36%),linear-gradient(150deg,#04123a,#08276f 45%,#3b2f9e 100%)}
+.affiliate-inner{position:relative;z-index:2;max-width:1240px;margin:auto}
+.affiliate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:34px}
+.affiliate-card{padding:28px;border-radius:24px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);backdrop-filter:blur(14px);transition:transform .25s,border-color .25s}
+.affiliate-card:hover{transform:translateY(-6px);border-color:rgba(143,230,255,.6)}
+.affiliate-card svg{width:34px;height:34px;color:#8fe6ff;margin-bottom:16px}
+.affiliate-card h3{margin:0 0 9px;font-size:19px;letter-spacing:-.02em}
+.affiliate-card p{margin:0;color:#c6dcff;font-size:13.5px;line-height:1.62}
+.affiliate-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:36px}
+.affiliate-steps>div{padding:24px;border-radius:20px;border:1px dashed rgba(143,230,255,.4);background:rgba(255,255,255,.04)}
+.affiliate-steps span{display:block;font-size:26px;font-weight:900;color:#8fe6ff;margin-bottom:8px}
+.affiliate-steps b{display:block;font-size:17px;margin-bottom:6px}
+.affiliate-steps small{color:#c6dcff;font-size:13px;line-height:1.6}
+.affiliate-cta{display:flex;flex-wrap:wrap;gap:14px}
+.button.big{padding:20px 34px;font-size:16px}
+.affiliate-note{margin:26px 0 0;max-width:80ch;font-size:12px;line-height:1.7;color:rgba(220,235,255,.6)}
+
+/* ---- Research team aurora ---- */
+.team{position:relative;overflow:hidden}
+.team-inner{position:relative;z-index:2}
+.team-aurora{position:absolute;inset:0;z-index:0;pointer-events:none;filter:blur(64px);opacity:.62}
+.team-aurora span{position:absolute;border-radius:50%;mix-blend-mode:multiply}
+.team-aurora span:nth-child(1){width:46vw;height:46vw;top:-14%;left:-8%;background:radial-gradient(circle,#7fd4ff,transparent 68%);animation:drift1 19s ease-in-out infinite}
+.team-aurora span:nth-child(2){width:38vw;height:38vw;top:8%;right:-6%;background:radial-gradient(circle,#c9b6ff,transparent 68%);animation:drift2 23s ease-in-out infinite}
+.team-aurora span:nth-child(3){width:34vw;height:34vw;bottom:-10%;left:26%;background:radial-gradient(circle,#ffc2e6,transparent 68%);animation:drift3 27s ease-in-out infinite}
+.team-aurora span:nth-child(4){width:28vw;height:28vw;bottom:6%;right:14%;background:radial-gradient(circle,#a9f0e4,transparent 68%);animation:drift1 21s ease-in-out infinite reverse}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6%,8%) scale(1.14)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1.06)}50%{transform:translate(-8%,6%) scale(.94)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(.96)}50%{transform:translate(5%,-7%) scale(1.1)}}
+.research-grid button{transform-style:preserve-3d}
+.research-grid button:hover{transform:translateY(-8px) rotateX(4deg) rotateY(-3deg)}
+
+/* ---- Sticky conversion bar ---- */
+.sticky-cta{position:sticky;bottom:0;z-index:60;padding:12px max(7vw,20px);background:rgba(4,16,50,.92);backdrop-filter:blur(18px);border-top:1px solid rgba(143,230,255,.28)}
+.sticky-cta__inner{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1240px;margin:auto}
+.sticky-cta__text b{display:block;color:#fff;font-size:15px;letter-spacing:.04em}
+.sticky-cta__text small{color:#9fc0ee;font-size:12px}
+.sticky-cta__actions{display:flex;gap:10px}
+.sticky-cta .button{padding:13px 20px;font-size:13.5px}
+
+/* ---- 3D modal entrance ---- */
+.modal-backdrop{perspective:1400px}
+
+@media(max-width:1150px){
+  .vessel-3d-wrap{grid-template-columns:1fr}
+  .vessel-canvas{height:380px}
+  .affiliate-grid{grid-template-columns:repeat(2,1fr)}
+  .cta-band__inner{grid-template-columns:1fr}
+}
+@media(max-width:800px){
+  .affiliate-grid,.affiliate-steps{grid-template-columns:1fr}
+  .affiliate-section,.cta-band{padding-left:22px;padding-right:22px}
+  .sticky-cta__text{display:none}
+  .sticky-cta__actions{width:100%}
+  .sticky-cta .button{flex:1}
+}
+@media(max-width:520px){
+  .vessel-canvas{height:300px}
+  .affiliate-cta .button{width:100%}
+}
