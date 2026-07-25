@@ -8,7 +8,7 @@ Global Shopify e-commerce build for **BioExcela Global** (Bio Green Elixirs, Sin
 |---|---|
 | `shopify/theme/` | **BioExcela Prestige** — complete custom Shopify OS 2.0 theme (navy/cyan glassmorphism, mobile-first, CRO-optimized PDP with sticky ATC, JSON-LD schema, metafield-driven accordions) |
 | `shopify/data/` | BIO N:OV product import CSV · metafield architecture · navigation/collections plan |
-| `shopify/docs/` | Phase 1-5 implementation playbooks + `MASTER-PLAN.md` (17-phase roadmap) |
+| `shopify/docs/` | Phase 1-10 implementation playbooks + `MASTER-PLAN.md` |
 | `app/`, `components/`, `public/` | Original Next.js BIO N:OV landing page (deployable to Vercel as a campaign page) |
 | `CONTENT_VERIFICATION.md` | Legal/scientific claims checklist — review before publishing any copy |
 
@@ -31,4 +31,4 @@ npm run dev   # http://localhost:3000
 
 ## Status
 
-Phases 1-5 delivered (architecture, design system, catalog/PDP, Markets/payments/shipping, Meta/TikTok commerce). Phases 6-17 pending the next brief batch — see `shopify/docs/MASTER-PLAN.md`.
+All 10 briefed phases delivered: architecture, design system, catalog/PDP, Markets/payments/shipping, Meta+TikTok commerce, Google/SEO, CRM+email+SMS+AI agents, affiliate/creator program, analytics/KPI dashboards, and launch checklist + SOPs. See `shopify/docs/MASTER-PLAN.md`.

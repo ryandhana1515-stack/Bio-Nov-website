@@ -23,20 +23,21 @@
 | 3 | Product catalog & BIO N:OV PDP | ✅ CSV + metafields + PDP built |
 | 4 | Global payments, shipping, Markets | ✅ Playbook delivered |
 | 5 | Facebook / Instagram / TikTok commerce | ✅ Playbook delivered |
-| 6 | Google ecosystem (Merchant Center, GA4, GTM, PMax, Search Console) | ⏳ Awaiting your next PDF batch |
-| 7 | Email & SMS automation (Klaviyo flows: welcome, abandoned cart, browse, post-purchase, winback, VIP, birthday) | ⏳ Awaiting PDFs |
-| 8 | Affiliate program (GoAffPro: links, dashboards, commissions, payouts, leaderboard) | ⏳ Awaiting PDFs |
-| 9 | Creator program (application, approval, content library, Spark/Partnership ads) | ⏳ Awaiting PDFs |
-| 10 | SEO (schema done in theme; keyword map, blog engine, internal linking, CWV) | ⏳ Awaiting PDFs |
-| 11 | Analytics & dashboards (GA4 + server-side, ROAS/CAC/LTV/AOV reporting) | ⏳ Awaiting PDFs |
-| 12 | CRO program (A/B tests, exit intent, bundles/upsell apps, one-click upsells) | ⏳ Awaiting PDFs |
-| 13 | Customer support (Tidio AI, WhatsApp, helpdesk, returns portal) | ⏳ Awaiting PDFs |
-| 14 | Automation (Shopify Flow library, segmentation, review requests, payouts) | ⏳ Awaiting PDFs |
-| 15 | Wholesale & corporate | ⏳ Awaiting PDFs |
-| 16 | Testing & QA | ⏳ Awaiting PDFs |
-| 17 | Launch checklist | ⏳ Awaiting PDFs |
+| 6 | Google Merchant Center & SEO infrastructure | ✅ `PHASE-06-google-seo.md` |
+| 7 | Email, SMS, CRM & AI agent automation | ✅ `PHASE-07-crm-email-sms-ai.md` |
+| 8 | Global affiliate & creator program | ✅ `PHASE-08-affiliate-creator.md` |
+| 9 | Analytics & KPI dashboard | ✅ `PHASE-09-analytics-kpi.md` |
+| 10 | Global launch checklist & SOPs | ✅ `PHASE-10-launch-sop.md` |
 
-Upload the next 10 PDFs and each remaining phase gets the same treatment: playbook + any code/data artifacts.
+**All ten briefed phases are delivered.** Phases 6-10 absorbed the work originally sketched as phases 11-17 in the first master brief (SEO, analytics, support, QA and launch all live inside the Phase 6-10 documents).
+
+### Still open (not covered by any brief yet)
+
+| Topic | Where it would go |
+|---|---|
+| CRO testing programme (A/B tests, exit intent, one-click post-purchase upsells) | New phase — worth doing after 30 days of live traffic |
+| Wholesale & corporate B2B channel | New phase — needs pricing tiers and net-terms policy first |
+| Subscription retention deep-dive (churn flows, dunning) | Extension of Phase 7 |
 
 ## Launch-critical decisions for Ryan (owner input needed)
 
