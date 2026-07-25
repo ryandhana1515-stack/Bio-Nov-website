@@ -28,8 +28,12 @@
 | 8 | Global affiliate & creator program | ✅ `PHASE-08-affiliate-creator.md` |
 | 9 | Analytics & KPI dashboard | ✅ `PHASE-09-analytics-kpi.md` |
 | 10 | Global launch checklist & SOPs | ✅ `PHASE-10-launch-sop.md` |
+| 11 | Collections & checkout optimization | ✅ `PHASE-11-collections-checkout.md` |
+| 12 | Brand identity & design system | ✅ `PHASE-12-brand-identity.md` |
+| 13 | Customer ecosystem, operations, support, security | ✅ `PHASE-13-operations-support-security.md` |
+| 14 | Finance, AI operating system & digital asset management | ✅ `PHASE-14-finance-ai-os-dam.md` |
 
-**All ten briefed phases are delivered.** Phases 6-10 absorbed the work originally sketched as phases 11-17 in the first master brief (SEO, analytics, support, QA and launch all live inside the Phase 6-10 documents).
+**All fourteen briefed phases are delivered.** (Fifteen PDFs were supplied; the Phase 10 launch/SOP brief was uploaded twice.)
 
 ### Still open (not covered by any brief yet)
 
