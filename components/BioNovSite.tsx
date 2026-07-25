@@ -600,7 +600,26 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         </div>
         <motion.div className="hero-product" style={{ y: productY }} whileHover={{ rotateY: 5, rotateX: -2 }}>
           <div className="product-halo" />
-          <Image src="/images/bio-nov-hero.jpg" alt="BIO N:OV product box, blister pack and tablets" width={1920} height={1080} priority />
+          <video
+            className="hero-video"
+            poster="/video/bio-nov-hero-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="BIO N:OV product animation showing the box, tablets and a nitric oxide molecular visualisation"
+          >
+            <source src="/video/bio-nov-hero.mp4" type="video/mp4" />
+          </video>
+          {/* Shown instead of the video when the visitor prefers reduced motion */}
+          <img
+            className="hero-poster-fallback"
+            src="/video/bio-nov-hero-poster.jpg"
+            alt="BIO N:OV product box, blister pack and tablets"
+            width={1280}
+            height={720}
+          />
         </motion.div>
         <a href="#why-no" className="scroll-cue">Scroll to discover <ChevronDown /></a>
       </section>
