@@ -79,6 +79,12 @@ export const prompts: GenPrompt[] = [
       "An elegant digital head sculpture dissolving into thousands of fine white and silver particles that travel outward and become a constellation of abstract creative worlds. Bright minimal background, subtle pale-blue and warm-orange accents, smooth controlled motion, premium technological storytelling, no violent explosion, no text.",
   },
   {
+    id: "human-portrait",
+    title: "Asset 7 — Human Portrait (final morph state)",
+    prompt:
+      "Photorealistic studio portrait of an original synthetic young Southeast Asian man in his early twenties, short dark hair, calm confident expression, head and shoulders, three-quarter view turned slightly to the viewer's left, eyes open looking softly past camera, smooth even skin, bright warm-white studio background, soft diffused editorial lighting, premium minimal aesthetic, shallow depth of field, not based on any real person, no text, no logo.",
+  },
+  {
     id: "og-image",
     title: "Open Graph share image",
     prompt:

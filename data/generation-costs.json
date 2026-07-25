@@ -1,5 +1,5 @@
 {
-  "totalEstimatedUsd": 0.0271,
+  "totalEstimatedUsd": 0.0861,
   "entries": [
     {
       "assetId": "curiosity-core",
@@ -63,6 +63,13 @@
       "kind": "og",
       "estimatedCostUsd": 0.0023,
       "at": "2026-07-24T19:04:51.814Z"
+    },
+    {
+      "assetId": "human-portrait",
+      "model": "fal-ai/flux/dev",
+      "kind": "reference",
+      "estimatedCostUsd": 0.059,
+      "at": "2026-07-25T14:08:50.047Z"
     }
   ]
 }

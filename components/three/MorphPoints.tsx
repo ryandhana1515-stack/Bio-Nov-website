@@ -83,6 +83,8 @@ void main() {
 `;
 
 const fragmentShader = /* glsl */ `
+uniform float uGlobalFade;
+
 in float vShade;
 in float vEmber;
 in float vSpark;
@@ -103,7 +105,7 @@ void main() {
   color = mix(color, ember, vEmber * 0.9);
   color = mix(color, gold, vSpark);
 
-  float a = alpha * (0.3 + vShade * 0.2 + vEmber * 0.5 + vSpark * 0.55);
+  float a = alpha * (0.3 + vShade * 0.2 + vEmber * 0.5 + vSpark * 0.55) * uGlobalFade;
   outColor = vec4(color, a);
 }
 `;
@@ -139,6 +141,7 @@ export default function MorphPoints({ count }: Props) {
       uRows: { value: rowsPerTarget },
       uSize: { value: 1.2 },
       uVelocity: { value: 0 },
+      uGlobalFade: { value: 0.2 },
     };
     return { geometry: geo, uniforms: uni };
   }, [count]);
@@ -150,6 +153,10 @@ export default function MorphPoints({ count }: Props) {
     // ease toward the scroll-driven scene value for buttery reversals
     u.uScene.value += (scrollState.scene - u.uScene.value) * 0.09;
     u.uVelocity.value += (scrollState.velocity - u.uVelocity.value) * 0.1;
+    // while the AI imagery owns the stage (scenes 0–4.5) the particles are
+    // quiet ambient dust; once it dissolves they carry the story alone
+    const dustTarget = scrollState.scene < 4.1 ? 0.18 : 1;
+    u.uGlobalFade.value += (dustTarget - u.uGlobalFade.value) * 0.06;
   });
 
   return (

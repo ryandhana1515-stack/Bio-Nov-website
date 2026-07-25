@@ -4,7 +4,7 @@ import { Component, ReactNode, Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { getQualityProfile, supportsWebGL, QualityProfile } from "@/lib/performance/quality";
 import MorphPoints from "./MorphPoints";
-import CuriosityCore from "./CuriosityCore";
+import ImageMorph from "./ImageMorph";
 import CameraRig from "./CameraRig";
 
 /** Static, no-WebGL / reduced-motion stand-in for the core. */
@@ -65,9 +65,9 @@ export default function SceneCanvas() {
         >
           <Suspense fallback={null}>
             <CameraRig parallax={profile.mouseParallax} />
+            <ImageMorph />
             <group scale={0.85}>
               <MorphPoints count={profile.particleCount} />
-              <CuriosityCore detail={profile.coreDetail} />
             </group>
           </Suspense>
         </Canvas>
