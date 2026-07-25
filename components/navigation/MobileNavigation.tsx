@@ -5,11 +5,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/lib/content/chapters";
 import { scrollToId } from "@/lib/scroll/lenis";
+import { subscribeScroll } from "@/lib/scroll/state";
 import Monogram from "@/components/ui/Monogram";
 
-/** Compact pill + full-screen sheet for touch devices. */
-export default function MobileNavigation({ active }: { active: string }) {
+/** Compact lockup + sheet menu for touch devices. */
+export default function MobileNavigation() {
   const [open, setOpen] = useState(false);
+  const [light, setLight] = useState(true);
+
+  useEffect(() => subscribeScroll((s) => setLight(s.chapter <= 4)), []);
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -19,17 +23,26 @@ export default function MobileNavigation({ active }: { active: string }) {
   }, [open]);
 
   return (
-    <div className="flex w-full items-center justify-between px-4 md:hidden">
-      <span className="flex items-center gap-2 text-[var(--ink)]">
-        <Monogram size={26} />
-        <span className="text-[10px] font-medium tracking-[0.26em]">RYAN DHANA</span>
+    <div className="fixed inset-x-0 top-0 z-50 flex w-full items-center justify-between px-4 pt-4 md:hidden">
+      <span
+        className={`flex items-center gap-2 transition-colors duration-500 ${
+          light ? "text-white" : "text-[var(--ink)]"
+        }`}
+      >
+        <Monogram size={24} />
+        <span className="text-left leading-tight">
+          <span className="block text-[12px] font-medium">Ryan Dhana</span>
+          <span className={`block text-[8px] tracking-[0.16em] ${light ? "text-white/55" : "text-[var(--ink-faint)]"}`}>
+            AI EXPLORER · SINGAPORE
+          </span>
+        </span>
       </span>
       <button
         type="button"
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((v) => !v)}
-        className="nav-pill grid h-11 w-11 place-items-center !p-0"
+        className="nav-pill grid h-11 w-11 place-items-center !p-0 text-[var(--ink)]"
       >
         {open ? <X size={16} strokeWidth={1.5} /> : <Menu size={16} strokeWidth={1.5} />}
       </button>
@@ -51,9 +64,7 @@ export default function MobileNavigation({ active }: { active: string }) {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 * i }}
-                className={`block w-full rounded-2xl px-4 py-3.5 text-left text-sm tracking-[0.08em] ${
-                  active === item.target ? "bg-[rgba(20,22,26,0.06)] text-[var(--ink)]" : "text-[var(--ink-soft)]"
-                }`}
+                className="block w-full rounded-2xl px-4 py-3.5 text-left text-sm tracking-[0.08em] text-[var(--ink-soft)]"
                 onClick={() => {
                   setOpen(false);
                   setTimeout(() => scrollToId(item.target), 60);

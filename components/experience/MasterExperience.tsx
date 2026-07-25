@@ -9,8 +9,11 @@ import { notifyScroll, scrollState } from "@/lib/scroll/state";
 import { prefersReducedMotion } from "@/lib/performance/quality";
 import { ExperienceContext } from "./context";
 import FloatingNavigation from "@/components/navigation/FloatingNavigation";
+import MobileNavigation from "@/components/navigation/MobileNavigation";
 import InterfaceLines from "./InterfaceLines";
 import SceneProgress from "./SceneProgress";
+import ChapterRail from "./ChapterRail";
+import CopyScrim from "./CopyScrim";
 import CustomCursor from "./CustomCursor";
 import { StaticCoreFallback } from "@/components/three/SceneCanvas";
 import HeroChapter from "@/components/chapters/HeroChapter";
@@ -103,9 +106,12 @@ export default function MasterExperience() {
   return (
     <ExperienceContext.Provider value={ctx}>
       {motionOk && mounted ? <SceneCanvas /> : <StaticCoreFallback />}
+      {ctx.motionOk && <CopyScrim />}
       <FloatingNavigation />
+      <MobileNavigation />
       {ctx.motionOk && (
         <>
+          <ChapterRail />
           <InterfaceLines />
           <SceneProgress />
           <CustomCursor />

@@ -1,57 +1,65 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { navItems, chapters } from "@/lib/content/chapters";
+import { ArrowRight } from "lucide-react";
+import { navItems } from "@/lib/content/chapters";
 import { subscribeScroll } from "@/lib/scroll/state";
 import { scrollToId } from "@/lib/scroll/lenis";
 import Monogram from "@/components/ui/Monogram";
-import MobileNavigation from "./MobileNavigation";
 
 /**
- * The floating glass pill, top centre. Tracks the active chapter,
- * smooth-scrolls to sections, supports keyboard use, and collapses to
- * a compact menu on mobile.
+ * Header composition matching the reference: name lockup hard left, a small
+ * four-item pill dead centre, and a light action pill with a dark circular
+ * arrow hard right. Sits above the full-bleed visual with no page frame.
  */
 export default function FloatingNavigation() {
-  const [active, setActive] = useState("origin");
+  const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [light, setLight] = useState(true);
 
   useEffect(
     () =>
       subscribeScroll((s) => {
         setScrolled(s.progress > 0.005);
-        const chapter = chapters[s.chapter];
-        // resolve the nav group this chapter belongs to
-        let owner = navItems[0].target;
-        for (const item of navItems) {
-          const ownerIndex = chapters.findIndex((c) => c.id === item.target);
-          if (ownerIndex !== -1 && ownerIndex <= s.chapter) owner = item.target;
-        }
-        setActive(chapter.nav ? chapter.id : owner);
+        // the header inverts once the imagery gives way to paper sections
+        setLight(s.chapter <= 4);
+        const passed = navItems.filter((item) => {
+          const el = document.getElementById(item.target);
+          return el && el.getBoundingClientRect().top <= window.innerHeight * 0.5;
+        });
+        setActive(passed.length ? passed[passed.length - 1].target : "");
       }),
     []
   );
 
   return (
-    <header className="fixed inset-x-0 top-4 z-50 flex items-center justify-center">
-      {/* wordmark, top-left */}
-      <Link
-        href="/"
-        aria-label="Ryan Dhana — home"
-        className="absolute left-5 top-1 hidden items-center gap-2.5 text-[var(--ink)] md:flex"
-        onClick={(e) => {
-          e.preventDefault();
-          scrollToId("origin");
-        }}
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 hidden items-start justify-between px-6 pt-5 md:flex">
+      {/* name lockup */}
+      <button
+        type="button"
+        aria-label="Ryan Dhana — back to top"
+        onClick={() => scrollToId("origin")}
+        className={`pointer-events-auto flex items-center gap-2.5 transition-colors duration-500 ${
+          light ? "text-white" : "text-[var(--ink)]"
+        }`}
       >
-        <Monogram />
-        <span className="text-[11px] font-medium tracking-[0.28em]">RYAN DHANA</span>
-      </Link>
+        <Monogram size={26} />
+        <span className="text-left leading-tight">
+          <span className="block text-[13px] font-medium tracking-[0.02em]">Ryan Dhana</span>
+          <span
+            className={`block text-[8.5px] tracking-[0.18em] transition-colors duration-500 ${
+              light ? "text-white/55" : "text-[var(--ink-faint)]"
+            }`}
+          >
+            AI EXPLORER · SINGAPORE
+          </span>
+        </span>
+      </button>
 
+      {/* centre pill */}
       <nav
-        aria-label="Chapters"
-        className={`nav-pill hidden items-center gap-[2px] md:flex ${scrolled ? "scrolled" : ""}`}
+        aria-label="Sections"
+        className={`nav-pill pointer-events-auto flex items-center gap-[2px] ${scrolled ? "scrolled" : ""}`}
       >
         {navItems.map((item) => (
           <button
@@ -66,7 +74,17 @@ export default function FloatingNavigation() {
         ))}
       </nav>
 
-      <MobileNavigation active={active} />
+      {/* action pill */}
+      <button
+        type="button"
+        onClick={() => scrollToId("contact")}
+        className="nav-pill pointer-events-auto flex items-center gap-2.5 !pl-5 !pr-1.5 text-[11px] font-medium tracking-[0.02em] text-[var(--ink)]"
+      >
+        Let’s talk
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-[var(--ink)] text-[var(--paper)]">
+          <ArrowRight size={14} strokeWidth={1.75} />
+        </span>
+      </button>
     </header>
   );
 }

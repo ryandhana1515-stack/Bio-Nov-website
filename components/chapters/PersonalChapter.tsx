@@ -32,10 +32,10 @@ export default function PersonalChapter() {
       id={chapter.id}
       data-chapter-index={4}
       ref={ref}
-      className="chapter"
+      className="chapter over-image"
       style={{ height: `${chapter.heights}vh` }}
     >
-      <div className="chapter-sticky place-items-center">
+      <div className="chapter-sticky items-center">
         {/* warm wash while the story turns human */}
         <div
           data-warmth
@@ -46,15 +46,18 @@ export default function PersonalChapter() {
               "radial-gradient(60% 55% at 50% 55%, rgba(240,160,90,0.13) 0%, rgba(240,160,90,0.04) 45%, transparent 75%)",
           }}
         />
-        <figure data-quote className="relative max-w-3xl px-6 text-center">
-          <p className="index-label mb-8">
+        <figure
+          data-quote
+          className="relative mx-auto w-full max-w-[1400px] px-6 md:px-14"
+        >
+          <p className="index-label mb-6">
             <span className="tick" />
             {chapter.index}
           </p>
-          <blockquote className="display-md text-[clamp(24px,3.4vw,44px)] text-[var(--ink)]">
+          <blockquote className="display max-w-xl text-[clamp(26px,3.4vw,46px)]">
             “Technology is only meaningful when it helps people create, learn and connect.”
           </blockquote>
-          <figcaption className="micro mt-8">RYAN DHANA — SINGAPORE</figcaption>
+          <figcaption className="micro mt-7">RYAN DHANA — SINGAPORE</figcaption>
         </figure>
       </div>
     </section>

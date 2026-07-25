@@ -17,12 +17,8 @@ export default function HeroChapter() {
   const ref = useChapterTimeline<HTMLElement>(
     useCallback((tl: gsap.core.Timeline, section: HTMLElement) => {
       const copy = section.querySelector("[data-hero-copy]");
-      const aside = section.querySelector("[data-hero-aside]");
       if (copy) {
         tl.to(copy, { y: -110, autoAlpha: 0, duration: 0.45 }, 0.4);
-      }
-      if (aside) {
-        tl.to(aside, { y: -40, autoAlpha: 0, duration: 0.35 }, 0.5);
       }
     }, [])
   );
@@ -32,7 +28,7 @@ export default function HeroChapter() {
       id={chapter.id}
       data-chapter-index={0}
       ref={ref}
-      className="chapter"
+      className="chapter over-image"
       style={{ height: `${chapter.heights}vh` }}
     >
       <div className="chapter-sticky items-center">
@@ -44,16 +40,16 @@ export default function HeroChapter() {
             transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="relative z-10 max-w-xl pt-24 md:pt-0"
           >
-            <p className="index-label mb-7">
-              <span className="tick" />
-              {chapter.index}
-            </p>
-            <h1 className="display text-[clamp(44px,7.2vw,108px)] text-[var(--ink)]">
-              {profile.taglineA}
+            <span className="mb-7 inline-flex items-center gap-2 rounded-full bg-[rgba(20,22,26,0.72)] px-3 py-1.5 text-[9px] font-medium tracking-[0.22em] text-white/85 backdrop-blur-sm">
+              <span className="h-1 w-1 rounded-full bg-[var(--ember)]" />
+              PERSONAL WORLD
+            </span>
+            <h1 className="display text-[clamp(40px,6.4vw,96px)]">
+              <span className="dim">{profile.taglineA}</span>
               <br />
-              <span className="text-[var(--ink-soft)]">{profile.taglineB}</span>
+              {profile.taglineB}
             </h1>
-            <p className="body-editorial mt-8">
+            <p className="body-editorial mt-7 max-w-sm text-[13px] leading-[1.75]">
               I’m Ryan Dhana — exploring artificial intelligence, storytelling, business and the
               future of digital creation.
             </p>
@@ -62,19 +58,6 @@ export default function HeroChapter() {
           {/* the sphere occupies the right column on desktop, centre on mobile */}
           <div aria-hidden="true" className="hidden md:block" />
 
-          <motion.div
-            data-hero-aside
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.9 }}
-            className="micro absolute bottom-24 right-2 hidden max-w-[180px] text-right leading-relaxed md:block"
-          >
-            AN INTERACTIVE PORTRAIT
-            <br />
-            OF A CURIOUS MIND
-            <br />
-            <span className="text-[var(--ember)]">● LIVE OBJECT 001</span>
-          </motion.div>
         </div>
       </div>
     </section>

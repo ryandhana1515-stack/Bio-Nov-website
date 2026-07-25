@@ -41,7 +41,7 @@ export default function DigitalMindChapter() {
       id={chapter.id}
       data-chapter-index={2}
       ref={ref}
-      className="chapter"
+      className="chapter over-image"
       style={{ height: `${chapter.heights}vh` }}
     >
       <div className="chapter-sticky items-center">
@@ -64,7 +64,7 @@ export default function DigitalMindChapter() {
               <span className="tick" />
               {chapter.index}
             </p>
-            <h2 className="display text-[clamp(34px,4.6vw,64px)]">Learning in public.</h2>
+            <h2 className="display text-[clamp(30px,4.2vw,58px)]">Learning in public.</h2>
             <p className="body-editorial mt-6">
               I explore ideas, experiment with new tools and turn what I learn into real projects.
             </p>

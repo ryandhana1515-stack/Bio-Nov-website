@@ -36,7 +36,7 @@ export default function AIChapter() {
       id={chapter.id}
       data-chapter-index={3}
       ref={ref}
-      className="chapter"
+      className="chapter over-image"
       style={{ height: `${chapter.heights}vh` }}
     >
       <div className="chapter-sticky items-center">
@@ -46,10 +46,10 @@ export default function AIChapter() {
               <span className="tick" />
               {chapter.index}
             </p>
-            <h2 className="display text-[clamp(34px,4.8vw,68px)]">
+            <h2 className="display text-[clamp(30px,4.4vw,62px)]">
               Human imagination.
               <br />
-              <span className="text-[var(--ink-soft)]">Amplified by AI.</span>
+              <span className="dim">Amplified by AI.</span>
             </h2>
             <p className="body-editorial mt-6">
               I use artificial intelligence as a creative tool for visual storytelling, websites,

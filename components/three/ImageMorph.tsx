@@ -44,21 +44,23 @@ uniform float uMix;
 uniform float uTime;
 uniform float uOpacity;
 uniform float uAspect;   // viewport width / height
+uniform float uScale;    // >1 pulls the framing back on narrow screens
 uniform vec3 uPaper;
 varying vec2 vUv;
 
-// sample a square texture "contained" by height at the viewport centre
-vec2 containUv(vec2 uv) {
-  return vec2((uv.x - 0.5) * uAspect + 0.5, uv.y);
+// Cover the viewport with the square still so the visual runs edge to edge,
+// exactly like the reference. uScale zooms out on narrow screens to keep the
+// whole subject in frame; anything sampled past the border clamps to the
+// still's own uniform studio backdrop, so the extension is seamless.
+vec2 frameUv(vec2 uv) {
+  vec2 c = uv - 0.5;
+  if (uAspect >= 1.0) c.y /= uAspect;
+  else c.x *= uAspect;
+  return c * uScale + 0.5;
 }
+
 vec4 sampleState(sampler2D tex, vec2 uv, vec2 off) {
-  vec2 fg = containUv(uv) + off;
-  vec2 bgUv = (uv - 0.5) * 0.8 + 0.5 + off * 0.5;
-  vec4 bg = texture2D(tex, bgUv, 5.0);           // heavy mip blur backdrop
-  float inside = step(0.0, fg.x) * step(fg.x, 1.0);
-  vec4 fgc = texture2D(tex, clamp(fg, 0.0, 1.0));
-  float edge = smoothstep(0.0, 0.02, fg.x) * smoothstep(1.0, 0.98, fg.x);
-  return mix(bg, fgc, inside * edge);
+  return texture2D(tex, clamp(frameUv(uv) + off, 0.001, 0.999));
 }
 
 void main() {
@@ -80,11 +82,6 @@ void main() {
 
   float t = clamp(smoothstep(0.12, 0.88, f) + (n - 0.5) * 0.55 * f * (1.0 - f) * 4.0, 0.0, 1.0);
   vec3 color = mix(a.rgb, b.rgb, t);
-
-  // settle the frame into the site's paper tone at the edges
-  float r = length((vUv - 0.5) * vec2(1.0, 1.25)) * 1.55;
-  float vignette = smoothstep(1.25, 0.55, r);
-  color = mix(uPaper, color, clamp(vignette + 0.55, 0.0, 1.0));
 
   gl_FragColor = vec4(color, uOpacity);
 }
@@ -166,6 +163,7 @@ export default function ImageMorph() {
       uTime: { value: 0 },
       uOpacity: { value: 1 },
       uAspect: { value: 1.6 },
+      uScale: { value: 1 },
       uPaper: { value: new THREE.Color("#f5f4f1") },
     }),
     [textures]
@@ -198,6 +196,11 @@ export default function ImageMorph() {
     u.uMix.value = f;
     u.uTime.value = clock.elapsedTime;
     u.uAspect.value = aspect;
+    // Pull back until nearly the whole still is in frame on the narrow axis;
+    // the wide axis then samples past the border and clamps into the still's
+    // own uniform backdrop, so the scene reads edge-to-edge with the subject
+    // fully visible — the reference framing.
+    u.uScale.value = Math.max(aspect, 1 / aspect) * 0.95;
     // hand off to the particle constellation through the worlds chapter
     u.uOpacity.value = 1 - THREE.MathUtils.smoothstep(scene, 4.3, 4.95);
     mesh.current.visible = u.uOpacity.value > 0.002;

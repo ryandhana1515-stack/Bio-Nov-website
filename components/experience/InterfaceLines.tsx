@@ -5,37 +5,36 @@ import { subscribeScroll } from "@/lib/scroll/state";
 import { chapters } from "@/lib/content/chapters";
 
 /**
- * The fine gallery chrome: hairline guides, corner labels, coordinates
- * and the current chapter index. Deliberately quiet.
+ * Minimal corner marks, as in the reference: a tiny index bottom-left and a
+ * scene readout bottom-right. No page frame — the imagery runs edge to edge.
  */
 export default function InterfaceLines() {
   const [chapter, setChapter] = useState(0);
-  const [coord, setCoord] = useState("000.000");
+  const [pct, setPct] = useState("000");
+  const [light, setLight] = useState(true);
 
   useEffect(
     () =>
       subscribeScroll((s) => {
         setChapter(s.chapter);
-        setCoord((s.progress * 100).toFixed(3).padStart(7, "0"));
+        setPct(String(Math.round(s.progress * 100)).padStart(3, "0"));
+        setLight(s.chapter <= 4);
       }),
     []
   );
 
-  const current = chapters[chapter];
+  const tone = light ? "text-white/55" : "text-[var(--ink-faint)]";
 
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-20 hidden md:block">
-      {/* frame guides */}
-      <div className="hairline-h absolute left-6 right-6 top-20" />
-      <div className="hairline-h absolute bottom-14 left-6 right-6" />
-      <div className="hairline-v absolute bottom-14 left-6 top-20" />
-      <div className="hairline-v absolute bottom-14 right-6 top-20" />
-
-      {/* corner labels */}
-      <span className="micro absolute left-8 top-[86px]">RD — PERSONAL WORLD</span>
-      <span className="micro absolute right-8 top-[86px]">SG / {new Date().getFullYear()}</span>
-      <span className="micro absolute bottom-[64px] left-8">{current.index}</span>
-      <span className="micro absolute bottom-[64px] right-8 tabular-nums">LAT {coord}</span>
+      <span className={`absolute bottom-6 left-6 text-[9px] tracking-[0.24em] ${tone}`}>
+        {chapters[chapter].index}
+      </span>
+      <span
+        className={`absolute bottom-6 right-6 text-[9px] tabular-nums tracking-[0.24em] ${tone}`}
+      >
+        SCENE {pct}
+      </span>
     </div>
   );
 }

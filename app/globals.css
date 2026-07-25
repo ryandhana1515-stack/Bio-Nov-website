@@ -224,18 +224,50 @@ button:focus-visible {
 }
 
 /* ---------- copy over imagery ----------
-   Soft paper-toned halos keep the editorial text readable while the
-   full-viewport story imagery plays underneath. */
+   Chapters 1–5 play over the full-bleed visual, so their copy is light and
+   low-contrast — as in the reference, where the headline reads as a soft
+   overlay on the studio backdrop rather than solid ink on paper. */
 
-main[data-motion="full"] .chapter .display,
-main[data-motion="full"] .chapter .display-md {
-  text-shadow: 0 2px 28px rgba(245, 244, 241, 0.9), 0 0 10px rgba(245, 244, 241, 0.65);
+main[data-motion="full"] .over-image .display,
+main[data-motion="full"] .over-image .display-md {
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow: 0 2px 40px rgba(30, 28, 26, 0.4);
 }
 
-main[data-motion="full"] .chapter .body-editorial,
-main[data-motion="full"] .chapter .micro,
-main[data-motion="full"] .chapter .index-label {
-  text-shadow: 0 1px 14px rgba(245, 244, 241, 0.95), 0 0 6px rgba(245, 244, 241, 0.8);
+main[data-motion="full"] .over-image .display .dim,
+main[data-motion="full"] .over-image .dim {
+  color: rgba(255, 255, 255, 0.48);
+}
+
+main[data-motion="full"] .over-image .body-editorial {
+  color: rgba(255, 255, 255, 0.72);
+  text-shadow: 0 1px 22px rgba(30, 28, 26, 0.45);
+}
+
+main[data-motion="full"] .over-image .micro,
+main[data-motion="full"] .over-image .index-label {
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: 0 1px 18px rgba(30, 28, 26, 0.45);
+}
+
+main[data-motion="full"] .over-image .tick::before {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* soft scrim under the left-hand copy column so light type always holds */
+.copy-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(28, 26, 24, 0.42) 0%,
+    rgba(28, 26, 24, 0.24) 26%,
+    rgba(28, 26, 24, 0.06) 48%,
+    rgba(28, 26, 24, 0) 68%
+  );
+  transition: opacity 0.6s ease;
 }
 
 /* ---------- project slides ---------- */

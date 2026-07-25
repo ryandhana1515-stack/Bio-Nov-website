@@ -51,7 +51,7 @@ export default function CuriosityChapter() {
       id={chapter.id}
       data-chapter-index={1}
       ref={ref}
-      className="chapter"
+      className="chapter over-image"
       style={{ height: `${chapter.heights}vh` }}
     >
       <div className="chapter-sticky items-center">
@@ -61,7 +61,7 @@ export default function CuriosityChapter() {
               <span className="tick" />
               {chapter.index}
             </p>
-            <h2 className="display text-[clamp(34px,4.6vw,64px)]">Curiosity connects everything.</h2>
+            <h2 className="display text-[clamp(30px,4.2vw,58px)]">Curiosity connects everything.</h2>
             <p className="body-editorial mt-6">
               Every question becomes a path toward a new skill, idea or possibility.
             </p>
