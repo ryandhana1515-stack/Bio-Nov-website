@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AURUM &amp; NOIR — Eclipse</title>
+<meta name="description" content="The Eclipse tourbillon chronograph. Edition of 88. Crafted in darkness, Genève.">
+<link rel="preload" href="fonts/PlayfairDisplay-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Inter-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="vendor/lenis.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- loader -->
+<div class="loader" id="loader">
+  <div class="loader-mark serif">A&nbsp;&amp;&nbsp;N</div>
+  <div class="loader-bar"><span id="loaderFill"></span></div>
+</div>
+
+<header class="masthead">
+  <div class="masthead-left sans">GENÈVE</div>
+  <div class="masthead-center serif">AURUM &amp; NOIR</div>
+  <div class="masthead-right sans"><a href="#waitlist">PRIVATE&nbsp;WAITLIST</a></div>
+</header>
+
+<main id="main">
+
+  <!-- 1 · HERO — orbit scrub, brand tracks in -->
+  <section class="hero" id="hero">
+    <div class="pin-frame">
+      <canvas id="heroCanvas"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <h1 class="hero-title serif" aria-label="ECLIPSE">
+          <span>E</span><span>C</span><span>L</span><span>I</span><span>P</span><span>S</span><span>E</span>
+        </h1>
+        <p class="hero-sub sans">TOURBILLON&nbsp;CHRONOGRAPH</p>
+        <p class="hero-hint sans">SCROLL</p>
+      </div>
+      <div class="hero-line hero-line-1 sans">Time, kept in shadow.</div>
+      <div class="hero-line hero-line-2 sans">Turned by hand. Seen by few.</div>
+    </div>
+  </section>
+
+  <!-- 2 · STORY -->
+  <section class="story" id="story">
+    <div class="story-inner">
+      <p class="kicker sans reveal">I — PROVENANCE</p>
+      <h2 class="serif story-title reveal">Crafted<br><em>in&nbsp;Darkness</em></h2>
+      <p class="story-text sans reveal">Our atelier keeps no windows. Only lamplight,
+        black titanium, and patience.</p>
+      <p class="story-text sans reveal">Eleven months. One watchmaker. One watch.</p>
+    </div>
+  </section>
+
+  <!-- 3 · MACRO — dial fly-through scrub -->
+  <section class="macro" id="macro">
+    <div class="pin-frame">
+      <canvas id="macroCanvas"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <div class="macro-caption macro-caption-1"><p class="kicker sans">II — THE DIAL</p>
+        <p class="serif caption-line">Indices, cut and laid by hand.</p></div>
+      <div class="macro-caption macro-caption-2"><p class="serif caption-line">Light moves. The metal answers.</p></div>
+      <div class="macro-caption macro-caption-3"><p class="serif caption-line">Sixty seconds,<br>in perpetual rotation.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 · EXPLODED — assembly scrub + specs -->
+  <section class="exploded" id="engineering">
+    <div class="pin-frame">
+      <canvas id="explodedCanvas"></canvas>
+      <div class="vignette" aria-hidden="true"></div>
+      <p class="kicker sans exploded-kicker">III — CONSTRUCTION</p>
+      <div class="spec spec-1"><span class="spec-num serif">42<small>mm</small></span><span class="spec-label sans">GRADE-5 TITANIUM</span></div>
+      <div class="spec spec-2"><span class="spec-num serif">72<small>h</small></span><span class="spec-label sans">POWER RESERVE</span></div>
+      <div class="spec spec-3"><span class="spec-num serif">217</span><span class="spec-label sans">COMPONENTS</span></div>
+    </div>
+  </section>
+
+  <!-- 5 · EDITION -->
+  <section class="edition" id="edition">
+    <div class="edition-inner">
+      <p class="kicker sans reveal">IV — THE EDITION</p>
+      <h2 class="serif edition-title reveal">Edition of <span class="gold">88</span></h2>
+      <p class="edition-price serif reveal">$48,000</p>
+      <p class="edition-note sans reveal">Numbered. Engraved. Never repeated.</p>
+    </div>
+  </section>
+
+  <!-- 6 · WAITLIST -->
+  <section class="waitlist" id="waitlist">
+    <div class="waitlist-inner">
+      <h2 class="serif waitlist-title reveal">The list is<br>quieter than the watch.</h2>
+      <form class="waitlist-form reveal" id="waitlistForm" autocomplete="off">
+        <input class="sans" type="email" required placeholder="EMAIL" aria-label="Email">
+        <button class="sans" type="submit">REQUEST&nbsp;A&nbsp;NUMBER</button>
+      </form>
+      <p class="waitlist-done sans" id="waitlistDone">Noted. We will write to you once.</p>
+      <p class="waitlist-fine sans">Allocation is by correspondence only.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="serif">AURUM &amp; NOIR</div>
+  <div class="sans">GENÈVE · MMXXVI</div>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
