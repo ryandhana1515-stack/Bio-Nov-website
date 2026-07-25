@@ -6,10 +6,12 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Optional CDN/base override for the frame sequences (set before this script loads).
+  const BASE = window.ECLIPSE_ASSET_BASE || '';
   const SEQ = {
-    hero:     { dir: 'frames/hero',     count: 160, canvas: 'heroCanvas' },
-    macro:    { dir: 'frames/macro',    count: 120, canvas: 'macroCanvas' },
-    exploded: { dir: 'frames/exploded', count: 140, canvas: 'explodedCanvas' },
+    hero:     { dir: BASE + 'frames/hero',     count: 160, canvas: 'heroCanvas' },
+    macro:    { dir: BASE + 'frames/macro',    count: 120, canvas: 'macroCanvas' },
+    exploded: { dir: BASE + 'frames/exploded', count: 140, canvas: 'explodedCanvas' },
   };
   const FW = 1600, FH = 900;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -49,6 +51,7 @@
       return new Promise((resolve) => {
         for (let i = 0; i < cfg.count; i++) {
           const img = new Image();
+          if (BASE) img.crossOrigin = 'anonymous';
           img.onload = img.onerror = () => {
             loaded++;
             if (onProgress) onProgress(loaded / cfg.count);
