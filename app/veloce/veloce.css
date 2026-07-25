@@ -1,0 +1,261 @@
+/* VELOCE AUTOMOBILI — Tempesta GT
+   Off-black, gold accent, high-contrast serif display + minimal sans.
+   All rules scoped to .veloce-root / html.veloce-html so the BIO N:OV
+   pages remain untouched. */
+
+html.veloce-html { scroll-behavior: auto; background: #08080a; }
+html.veloce-html body { background: #08080a; color: #e8e4da; }
+
+.veloce-root {
+  --vl-bg: #08080a;
+  --vl-ink: #e8e4da;
+  --vl-dim: #8d887c;
+  --vl-gold: #c9a227;
+  --vl-gold-soft: rgba(201, 162, 39, 0.55);
+  --vl-serif: var(--font-veloce-serif), "Didot", "Bodoni MT", Georgia, serif;
+  --vl-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  position: relative;
+  background: var(--vl-bg);
+  color: var(--vl-ink);
+  font-family: var(--vl-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.vl-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+}
+
+/* ---- chrome ---- */
+.vl-nav {
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px clamp(20px, 4vw, 56px);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+.vl-wordmark {
+  font-family: var(--vl-serif);
+  font-size: 15px;
+  letter-spacing: 0.42em;
+  color: var(--vl-gold);
+}
+.vl-nav-right {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--vl-dim);
+}
+
+/* ---- acts ---- */
+section { position: relative; z-index: 10; pointer-events: none; }
+.vl-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 clamp(20px, 6vw, 90px);
+}
+
+.vl-hero { height: 400vh; }
+.vl-storms { height: 220vh; }
+.vl-macro { height: 360vh; }
+.vl-engineering { height: 300vh; }
+.vl-edition { height: 170vh; }
+.vl-cta { height: 140vh; pointer-events: auto; }
+
+.vl-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--vl-gold);
+  margin: 0 0 22px;
+}
+.vl-serif {
+  font-family: var(--vl-serif);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+/* hero */
+.vl-hero-title {
+  font-family: var(--vl-serif);
+  font-weight: 500;
+  font-size: clamp(40px, 9vw, 142px);
+  line-height: 0.95;
+  margin: 0;
+  letter-spacing: 0.06em;
+  color: var(--vl-ink);
+  text-shadow: 0 0 90px rgba(201, 162, 39, 0.12);
+  white-space: nowrap;
+}
+.vl-hero-sub {
+  margin-top: 26px;
+  font-size: 13px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--vl-dim);
+}
+.vl-scroll-cue {
+  position: absolute;
+  bottom: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.vl-scroll-cue span {
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(var(--vl-gold), transparent);
+  animation: vl-drop 2.2s ease-in-out infinite;
+  transform-origin: top;
+}
+.vl-scroll-cue em {
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--vl-dim);
+}
+@keyframes vl-drop { 0% { transform: scaleY(0); } 45% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+/* storms */
+.vl-storms-stage { align-items: flex-start; text-align: left; max-width: none; }
+.vl-storms-stage h2 { font-size: clamp(38px, 6vw, 92px); }
+.vl-storm-lines { margin-top: 44px; display: grid; gap: 14px; }
+.vl-line-mask { overflow: hidden; }
+.vl-storm-line {
+  margin: 0;
+  font-size: clamp(15px, 1.6vw, 21px);
+  line-height: 1.5;
+  color: var(--vl-dim);
+  max-width: 560px;
+}
+
+/* macro */
+.vl-macro-stage { align-items: flex-end; text-align: right; justify-content: flex-end; padding-bottom: 12vh; }
+.vl-caption h3 { font-size: clamp(30px, 4.4vw, 66px); color: var(--vl-ink); animation: vl-fade 0.7s ease both; }
+.vl-caption p {
+  margin: 16px 0 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--vl-dim);
+  max-width: 400px;
+  margin-left: auto;
+  animation: vl-fade 0.9s ease both;
+}
+@keyframes vl-fade { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.vl-caption-index { display: flex; gap: 8px; margin-top: 34px; }
+.vl-caption-index i {
+  width: 22px; height: 1px; background: rgba(232, 228, 218, 0.18); transition: background 0.4s;
+}
+.vl-caption-index i.on { background: var(--vl-gold); }
+
+/* engineering */
+.vl-eng-stage { justify-content: flex-end; padding-bottom: 9vh; }
+.vl-eng-title { font-size: clamp(30px, 4.6vw, 68px); }
+.vl-specs {
+  margin-top: 52px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: clamp(18px, 4vw, 70px);
+}
+.vl-spec { display: flex; flex-direction: column; gap: 8px; border-top: 1px solid rgba(201, 162, 39, 0.35); padding-top: 16px; text-shadow: 0 2px 26px rgba(0, 0, 0, 0.85); }
+.vl-spec-value { font-family: var(--vl-serif); font-size: clamp(26px, 3.4vw, 52px); line-height: 1; }
+.vl-spec-value em { font-style: normal; font-size: 0.45em; color: var(--vl-gold); letter-spacing: 0.08em; }
+.vl-spec-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--vl-dim); }
+
+/* edition */
+.vl-edition-title { font-size: clamp(52px, 9vw, 150px); line-height: 1; }
+.vl-edition-price {
+  margin: 26px 0 0;
+  font-size: clamp(15px, 1.8vw, 22px);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--vl-gold);
+}
+.vl-edition-note { margin-top: 18px; font-size: 12px; letter-spacing: 0.12em; color: var(--vl-dim); }
+
+/* cta */
+.vl-cta-stage h2 { font-size: clamp(34px, 5.4vw, 80px); }
+.vl-form {
+  margin-top: 46px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(160px, 220px));
+  gap: 14px;
+}
+.vl-form input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(232, 228, 218, 0.25);
+  padding: 12px 4px;
+  color: var(--vl-ink);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.vl-form input:focus { border-color: var(--vl-gold); }
+.vl-form input::placeholder { color: var(--vl-dim); }
+.vl-form button {
+  grid-column: 1 / -1;
+  margin-top: 26px;
+  justify-self: center;
+  background: transparent;
+  color: var(--vl-gold);
+  border: 1px solid var(--vl-gold-soft);
+  padding: 16px 42px;
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.35s, color 0.35s, box-shadow 0.35s;
+}
+.vl-form button:hover {
+  background: var(--vl-gold);
+  color: #0a0905;
+  box-shadow: 0 0 60px rgba(201, 162, 39, 0.35);
+}
+.vl-sent { margin-top: 46px; font-size: 14px; letter-spacing: 0.14em; color: var(--vl-gold); }
+.veloce-root footer.vl-footer { background: transparent; padding: 0; color: var(--vl-dim); }
+.vl-footer {
+  position: absolute;
+  bottom: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--vl-dim);
+}
+.vl-fine { font-size: 8px; letter-spacing: 0.2em; opacity: 0.65; }
+
+@media (max-width: 760px) {
+  .vl-hero-title { white-space: normal; }
+  .vl-specs { grid-template-columns: repeat(2, 1fr); }
+  .vl-form { grid-template-columns: 1fr; width: min(320px, 84vw); }
+  .vl-macro-stage, .vl-storms-stage { align-items: center; text-align: center; }
+  .vl-caption p { margin-right: auto; }
+  .vl-nav-right { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vl-scroll-cue span { animation: none; }
+}
