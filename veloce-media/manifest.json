@@ -24,5 +24,19 @@
     "fps": 12,
     "width": 1280,
     "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/17280b85-9d62-4ec3-8b23-50e36a69d175-kXXGD0LFTQC3Won_K3JGZA-output.mp4?x-kcdn-pid=112372"
+  },
+  {
+    "name": "orbit",
+    "type": "video",
+    "fps": 12,
+    "width": 1280,
+    "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/62e00102-2d01-466f-9896-714eef389dc4-kXXGD0LFTQBAnblNh-H0eQ-output.mp4?x-kcdn-pid=112372"
+  },
+  {
+    "name": "exploded",
+    "type": "video",
+    "fps": 12,
+    "width": 1280,
+    "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/e7e5e232-748b-4f67-a7cc-b9c36b349aca-kXXGD0LFTQAYpLcY1lvdeQ-output.mp4?x-kcdn-pid=112372"
   }
 ]

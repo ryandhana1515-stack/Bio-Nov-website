@@ -9,7 +9,8 @@
  *   1 storms      hero still, slow push-in
  *   2 orbit       360° turntable sequence, scrubbed
  *   3 macro       macro fly-through sequence, scrubbed
- *   4 engineering hero still, drift + darken, spec callouts on top
+ *   4 engineering exploded-assembly sequence, scrubbed — the car comes apart
+ *                 and reassembles under the spec callouts
  *   5 edition     hero still, slow pull-back
  *   6 cta         hero still, deep darken — the car waits
  *
@@ -42,7 +43,7 @@ const VISUALS: Visual[] = [
   { kind: "still", still: "hero", kb: [1.04, 1.14, -0.02, 0.01], darken: 0.35 },
   { kind: "seq", seq: "orbit", darken: 0.1 },
   { kind: "seq", seq: "macro", darken: 0.08 },
-  { kind: "still", still: "hero", kb: [1.18, 1.08, 0.03, -0.01], darken: 0.5 },
+  { kind: "seq", seq: "exploded", darken: 0.28 },
   { kind: "still", still: "hero", kb: [1.12, 1.03, 0, 0.01], darken: 0.3 },
   { kind: "still", still: "hero-wrapped", kb: [1.05, 1.12, 0, 0], darken: 0.45 },
 ];
@@ -97,7 +98,7 @@ export class TempestaFrames {
       this.seqs.set(name, { images: new Array(count), count, loaded: 0 });
     }
     // priority: the act you see first loads first
-    const order = ["wrap", "orbit", "macro"].filter((n) => this.seqs.has(n));
+    const order = ["wrap", "orbit", "macro", "exploded"].filter((n) => this.seqs.has(n));
     for (const name of order) await this.loadSequence(name);
   }
 
