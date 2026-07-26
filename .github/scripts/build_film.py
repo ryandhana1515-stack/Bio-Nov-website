@@ -7,6 +7,7 @@ segment's soundtrack at its position on the timeline, and writes
 public/veloce/film.mp4 (faststart for progressive playback).
 """
 import json
+import os
 import subprocess
 import sys
 
@@ -25,6 +26,21 @@ def duration(path):
 
 
 def main():
+    if not os.path.exists("public/veloce/film.mp4"):
+        build_mp4()
+    if not os.path.exists("public/veloce/film.webm"):
+        # VP9 fallback for browsers without the proprietary H.264 codec
+        sh([
+            "ffmpeg", "-y", "-i", "public/veloce/film.mp4",
+            "-c:v", "libvpx-vp9", "-crf", "34", "-b:v", "0",
+            "-deadline", "good", "-cpu-used", "4", "-row-mt", "1",
+            "-c:a", "libopus", "-b:a", "96k",
+            "public/veloce/film.webm",
+        ])
+    print("film duration:", duration("public/veloce/film.mp4"))
+
+
+def build_mp4():
     cfg = json.load(open("veloce-media/film.json"))
     segs = cfg["segments"]
     fade = float(cfg.get("fade", 0.7))
@@ -92,7 +108,6 @@ def main():
         + ["-c:v", "libx264", "-preset", "medium", "-crf", "23", "-pix_fmt", "yuv420p"]
         + audio_args + ["-movflags", "+faststart", "public/veloce/film.mp4"]
     )
-    print("film duration:", duration("public/veloce/film.mp4"))
 
 
 if __name__ == "__main__":

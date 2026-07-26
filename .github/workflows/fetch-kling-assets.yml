@@ -70,7 +70,7 @@ jobs:
 
       - name: Build hero film
         run: |
-          if [ -f veloce-media/film.json ] && [ ! -f public/veloce/film.mp4 ]; then
+          if [ -f veloce-media/film.json ] && { [ ! -f public/veloce/film.mp4 ] || [ ! -f public/veloce/film.webm ]; }; then
             python3 .github/scripts/build_film.py
           else
             echo "film build skipped"

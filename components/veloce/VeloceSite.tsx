@@ -2,178 +2,140 @@
 
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TempestaFrames } from "./TempestaFrames";
 
-const MACRO_CAPTIONS = [
-  ["Light, cut like stone.", "Crystal elements, no housings. Jewelry that happens to see."],
-  ["A surface like weather.", "Liquid graphite, eleven coats deep."],
-  ["Carbon, laid by hand.", "Forty-two hours of weave beneath the lacquer."],
-  ["Gold, where it counts.", "Monobloc calipers, six pistons, finished by hand in Modena."],
-  ["The last thing most will see.", "A single blade of light, edge to edge."],
-];
+/*
+ * VELOCE — Tempesta GT
+ * Act one: a single 45s film (all six Kling clips joined with crossfades)
+ * plays full-screen on arrival. Scroll stays locked until it ends — no play
+ * button, no controls. Autoplay starts muted (browser rule); the sound
+ * toggle unmutes the film's own soundtrack.
+ * Act two: the marque site — story, engineering, gallery, edition,
+ * allocation.
+ */
 
 const SPECS = [
   { value: "830", unit: "hp", label: "Twin-turbo V8" },
   { value: "2.9", unit: "s", label: "0–100 km/h" },
   { value: "1,380", unit: "kg", label: "Dry weight" },
-  { value: "1", unit: "piece", label: "Carbon monocoque" },
+  { value: "199", unit: "", label: "Pieces, ever" },
+];
+
+const ENGINEERING = [
+  {
+    img: "/veloce/media/rev/frame_100.jpg",
+    kicker: "Il cuore",
+    title: "A V8 with opinions.",
+    body:
+      "Four litres, twin turbochargers, a flat-plane crank that revs to 8,400. " +
+      "830 horsepower arrives through a titanium exhaust that was tuned like an instrument — " +
+      "because it is one. The flames are not a special effect. They are punctuation.",
+  },
+  {
+    img: "/veloce/media/exploded2/frame_060.jpg",
+    kicker: "La struttura",
+    title: "One piece of carbon. No apologies.",
+    body:
+      "The monocoque is laid by hand over forty-two hours and cured as a single piece. " +
+      "Everything bolts to it — engine, suspension, seats — and nothing flexes. " +
+      "1,380 kilograms dry, and every one of them is doing a job.",
+  },
+  {
+    img: "/veloce/media/orbit/frame_045.jpg",
+    kicker: "L'aria",
+    title: "The wind was consulted.",
+    body:
+      "Carbon splitter, flat floor, a diffuser that works from 60 km/h. " +
+      "The Tempesta does not fight the air — it recruits it. " +
+      "Downforce builds quietly until the car feels heavier than physics says it should.",
+  },
+  {
+    img: "/veloce/media/front/frame_050.jpg",
+    kicker: "Lo sguardo",
+    title: "Light, cut like stone.",
+    body:
+      "Crystal LED elements with no housings — jewelry that happens to see. " +
+      "One thin blade of light across the tail. At night, you will know it from a kilometre away, " +
+      "and you will not mistake it for anything else.",
+  },
+];
+
+const GALLERY = [
+  "/veloce/media/hero.jpg",
+  "/veloce/media/macro/frame_030.jpg",
+  "/veloce/media/orbit/frame_015.jpg",
+  "/veloce/media/rev/frame_110.jpg",
+  "/veloce/media/exploded2/frame_090.jpg",
+  "/veloce/media/front/frame_030.jpg",
 ];
 
 export default function VeloceSite() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const [macroIdx, setMacroIdx] = useState(0);
-  const [sent, setSent] = useState(false);
-  const [loadPct, setLoadPct] = useState(0);
-  const [ready, setReady] = useState(false);
+  const [locked, setLocked] = useState(true);
+  const [progress, setProgress] = useState(0);
   const [soundOn, setSoundOn] = useState(false);
-  const sceneRef = useRef<TempestaFrames | null>(null);
+  const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const video = videoRef.current;
     const root = rootRef.current;
-    if (!canvas || !root) return;
+    if (!video || !root) return;
 
     document.documentElement.classList.add("veloce-html");
-    const scene = new TempestaFrames(canvas);
-    sceneRef.current = scene;
-    scene.onProgress = (pct) => {
-      setLoadPct(pct);
-      if (pct >= 40) setReady(true); // enough of the reveal to start
+
+    const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
+    let raf = 0;
+    const tick = (time: number) => {
+      lenis.raf(time);
+      raf = requestAnimationFrame(tick);
     };
-    const readyFallback = window.setTimeout(() => setReady(true), 6000);
+    raf = requestAnimationFrame(tick);
 
-    gsap.registerPlugin(ScrollTrigger);
-    const lenis = new Lenis({ duration: 1.35, smoothWheel: true });
-    lenis.on("scroll", ScrollTrigger.update);
-    const tick = (time: number) => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
+    // ---- the cinema lock: nobody leaves before the credits
+    let unlocked = false;
+    const unlock = () => {
+      if (unlocked) return;
+      unlocked = true;
+      setLocked(false);
+      document.documentElement.classList.remove("vl-locked");
+      lenis.start();
+    };
+    document.documentElement.classList.add("vl-locked");
+    lenis.stop();
 
-    const q = (sel: string) => root.querySelector(sel) as HTMLElement;
-    const triggers: ScrollTrigger[] = [];
-    const tweens: gsap.core.Tween[] = [];
+    video.play().catch(() => unlock()); // autoplay refused → let them in
+    video.addEventListener("ended", unlock);
+    video.addEventListener("error", unlock);
+    const safety = window.setTimeout(unlock, 75_000); // never trap anyone
 
-    // ---- scene phase drivers: one trigger per act
-    const phases = [".vl-hero", ".vl-storms", ".vl-orbit", ".vl-front", ".vl-macro", ".vl-rev", ".vl-engineering", ".vl-edition", ".vl-cta"];
-    phases.forEach((sel, i) => {
-      triggers.push(
-        ScrollTrigger.create({
-          trigger: q(sel),
-          start: i === 0 ? "top top" : "top 60%",
-          end: i === phases.length - 1 ? "bottom bottom" : "bottom 60%",
-          onUpdate: (self) => scene.setPhase(i, self.progress),
-        })
-      );
-    });
+    const onTime = () => {
+      if (video.duration > 0) setProgress(video.currentTime / video.duration);
+    };
+    video.addEventListener("timeupdate", onTime);
 
-    // ---- hero: marque tracks in over the unveiling, then recedes
-    tweens.push(
-      gsap.fromTo(".vl-hero-title",
-        { letterSpacing: "0.3em", opacity: 0.25 },
-        {
-          letterSpacing: "0.06em", opacity: 1, ease: "none",
-          scrollTrigger: { trigger: q(".vl-hero"), start: "top top", end: "30% top", scrub: true },
-        })
+    // ---- reveal-on-scroll for the site below
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
+      { threshold: 0.18 }
     );
-    tweens.push(
-      gsap.to(".vl-hero-stage", {
-        opacity: 0, y: -60, ease: "none",
-        scrollTrigger: { trigger: q(".vl-hero"), start: "55% top", end: "80% top", scrub: true },
-      })
-    );
+    root.querySelectorAll(".rv").forEach((el) => io.observe(el));
 
-    // ---- storms: lines surface one by one
-    gsap.utils.toArray<HTMLElement>(".vl-storm-line").forEach((line, i) => {
-      tweens.push(
-        gsap.fromTo(line, { yPercent: 120, opacity: 0 }, {
-          yPercent: 0, opacity: 1, ease: "none",
-          scrollTrigger: {
-            trigger: q(".vl-storms"),
-            start: `${8 + i * 16}% bottom`, end: `${30 + i * 16}% bottom`, scrub: true,
-          },
-        })
-      );
-    });
-
-    // ---- orbit / front / rev: quiet lines rise while the footage plays
-    for (const [sec, line] of [[".vl-orbit", ".vl-orbit-line"], [".vl-front", ".vl-front-line"], [".vl-rev", ".vl-rev-line"]]) {
-      tweens.push(
-        gsap.fromTo(line, { opacity: 0, y: 30 }, {
-          opacity: 1, y: 0, ease: "none",
-          scrollTrigger: { trigger: q(sec), start: "10% bottom", end: "35% bottom", scrub: true },
-        })
-      );
-    }
-
-    // ---- macro captions follow the fly-through
-    triggers.push(
-      ScrollTrigger.create({
-        trigger: q(".vl-macro"),
-        start: "top 60%", end: "bottom 60%",
-        onUpdate: (self) =>
-          setMacroIdx(Math.min(MACRO_CAPTIONS.length - 1, Math.floor(self.progress * MACRO_CAPTIONS.length))),
-      })
-    );
-
-    // ---- engineering: spec callouts land one by one
-    gsap.utils.toArray<HTMLElement>(".vl-spec").forEach((el, i) => {
-      tweens.push(
-        gsap.fromTo(el, { opacity: 0, y: 40 }, {
-          opacity: 1, y: 0, ease: "none",
-          scrollTrigger: {
-            trigger: q(".vl-engineering"),
-            start: `${12 + i * 15}% bottom`, end: `${26 + i * 15}% bottom`, scrub: true,
-          },
-        })
-      );
-    });
-
-    // ---- edition: price reveal
-    tweens.push(
-      gsap.fromTo(".vl-edition-stage", { opacity: 0, scale: 0.94 }, {
-        opacity: 1, scale: 1, ease: "none",
-        scrollTrigger: { trigger: q(".vl-edition"), start: "top 70%", end: "45% 50%", scrub: true },
-      })
-    );
-
-    // ---- cta reveal
-    tweens.push(
-      gsap.fromTo(".vl-cta-stage", { opacity: 0, y: 60 }, {
-        opacity: 1, y: 0, ease: "none",
-        scrollTrigger: { trigger: q(".vl-cta"), start: "top 75%", end: "40% 55%", scrub: true },
-      })
-    );
-
-    const onResize = () => scene.resize();
-    window.addEventListener("resize", onResize);
-    ScrollTrigger.refresh();
-    (window as unknown as Record<string, unknown>).__vl = { lenis, scene };
+    (window as unknown as Record<string, unknown>).__vl = { lenis, video, isLocked: () => !unlocked };
 
     return () => {
-      window.clearTimeout(readyFallback);
-      window.removeEventListener("resize", onResize);
-      tweens.forEach((t) => t.scrollTrigger?.kill());
-      tweens.forEach((t) => t.kill());
-      triggers.forEach((t) => t.kill());
-      gsap.ticker.remove(tick);
+      window.clearTimeout(safety);
+      cancelAnimationFrame(raf);
+      video.removeEventListener("ended", unlock);
+      video.removeEventListener("error", unlock);
+      video.removeEventListener("timeupdate", onTime);
+      io.disconnect();
       lenis.destroy();
-      scene.dispose();
-      document.documentElement.classList.remove("veloce-html");
+      document.documentElement.classList.remove("veloce-html", "vl-locked");
     };
   }, []);
 
   return (
     <div ref={rootRef} className="veloce-root">
-      <canvas ref={canvasRef} className="vl-canvas" aria-hidden />
-
-      <div className={`vl-veil${ready ? " vl-veil-off" : ""}`} aria-hidden>
-        <span className="vl-veil-mark">VELOCE&nbsp;AUTOMOBILI</span>
-        <span className="vl-veil-bar"><i style={{ width: `${loadPct}%` }} /></span>
-      </div>
-
       <header className="vl-nav">
         <span className="vl-wordmark">VELOCE&nbsp;AUTOMOBILI</span>
         <span className="vl-nav-right">Tempesta&nbsp;GT&nbsp;— MMXXVI</span>
@@ -185,127 +147,126 @@ export default function VeloceSite() {
         onClick={() => {
           const next = !soundOn;
           setSoundOn(next);
-          sceneRef.current?.setSound(next);
+          const v = videoRef.current;
+          if (v) {
+            v.muted = !next;
+            if (next) v.play().catch(() => {});
+          }
         }}
       >
         <i /><i /><i /><i />
         <span>{soundOn ? "Sound on" : "Sound off"}</span>
       </button>
 
-      {/* ACT I — THE UNVEILING (wrap tears away, scrubbed) */}
-      <section className="vl-hero">
-        <div className="vl-sticky vl-hero-stage">
+      {/* THE FILM — plays once, holds the room */}
+      <section className="vl-film">
+        <video
+          ref={videoRef}
+          className="vl-film-video"
+          poster="/veloce/media/hero.jpg"
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+        >
+          <source src="/veloce/film.mp4" type="video/mp4" />
+          <source src="/veloce/film.webm" type="video/webm" />
+        </video>
+        <div className="vl-film-title" aria-hidden>
           <p className="vl-eyebrow">Veloce Automobili presenta</p>
           <h1 className="vl-hero-title">TEMPESTA&nbsp;GT</h1>
           <p className="vl-hero-sub">The storm, held still.</p>
-          <div className="vl-scroll-cue"><span /><em>Scroll to unveil</em></div>
         </div>
+        <div className="vl-film-progress" aria-hidden>
+          <i style={{ transform: `scaleX(${progress})` }} />
+        </div>
+        {!locked && (
+          <div className="vl-scroll-cue vl-cue-ready"><span /><em>Scroll</em></div>
+        )}
       </section>
 
-      {/* ACT II — BORN OF STORMS */}
-      <section className="vl-storms">
-        <div className="vl-sticky vl-storms-stage">
-          <p className="vl-eyebrow">Capitolo I</p>
-          <h2 className="vl-serif">Born of Storms</h2>
-          <div className="vl-storm-lines">
-            {[
-              "On the Adriatic coast, the wind unmakes everything soft.",
-              "What remains is shape without apology.",
-              "We built one machine from what remained.",
-            ].map((l) => (
-              <div className="vl-line-mask" key={l}><p className="vl-storm-line">{l}</p></div>
+      {/* THE MARQUE SITE */}
+      <main className="vl-site">
+        {/* story */}
+        <section className="vl-block vl-story">
+          <div className="rv">
+            <p className="vl-eyebrow">Capitolo I</p>
+            <h2 className="vl-serif">Born of Storms</h2>
+            <p className="vl-lead">
+              On the Adriatic coast, the wind unmakes everything soft. What remains is shape
+              without apology. We built one machine from what remained — a grand tourer that
+              treats distance as an invitation and weather as company.
+            </p>
+          </div>
+        </section>
+
+        {/* numbers */}
+        <section className="vl-block vl-numbers rv">
+          {SPECS.map((s) => (
+            <div className="vl-spec" key={s.label}>
+              <span className="vl-spec-value">{s.value}<em>{s.unit && ` ${s.unit}`}</em></span>
+              <span className="vl-spec-label">{s.label}</span>
+            </div>
+          ))}
+        </section>
+
+        {/* engineering — how it works */}
+        <section className="vl-block vl-engineering-site">
+          <p className="vl-eyebrow rv">Capitolo II — Ingegneria</p>
+          <h2 className="vl-serif rv">Assembled from intent.</h2>
+          <div className="vl-eng-list">
+            {ENGINEERING.map((e, i) => (
+              <article className={`vl-eng-row rv${i % 2 ? " flip" : ""}`} key={e.kicker}>
+                <div className="vl-eng-img"><img src={e.img} alt={e.title} loading="lazy" /></div>
+                <div className="vl-eng-copy">
+                  <p className="vl-eyebrow">{e.kicker}</p>
+                  <h3 className="vl-serif">{e.title}</h3>
+                  <p>{e.body}</p>
+                </div>
+              </article>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ACT III — IL GIRO (360° orbit, scrubbed) */}
-      <section className="vl-orbit">
-        <div className="vl-sticky vl-orbit-stage">
-          <p className="vl-orbit-line"><span className="vl-eyebrow">Il giro</span>Every angle, considered.</p>
-        </div>
-      </section>
-
-      {/* ACT IV — IL FRONTALE (head-on dive into the headlight, scrubbed) */}
-      <section className="vl-front">
-        <div className="vl-sticky vl-orbit-stage">
-          <p className="vl-orbit-line vl-front-line"><span className="vl-eyebrow">Il frontale</span>It looks back.</p>
-        </div>
-      </section>
-
-      {/* ACT V — DETTAGLI (macro fly-through, scrubbed) */}
-      <section className="vl-macro">
-        <div className="vl-sticky vl-macro-stage">
-          <p className="vl-eyebrow">Capitolo II — Dettagli</p>
-          <div className="vl-caption" key={macroIdx}>
-            <h3 className="vl-serif">{MACRO_CAPTIONS[macroIdx][0]}</h3>
-            <p>{MACRO_CAPTIONS[macroIdx][1]}</p>
-          </div>
-          <div className="vl-caption-index">
-            {MACRO_CAPTIONS.map((_, i) => (
-              <i key={i} className={i === macroIdx ? "on" : ""} />
+        {/* gallery */}
+        <section className="vl-block vl-gallery">
+          <p className="vl-eyebrow rv">La galleria</p>
+          <div className="vl-gallery-grid">
+            {GALLERY.map((src) => (
+              <figure className="rv" key={src}><img src={src} alt="Tempesta GT" loading="lazy" /></figure>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ACT VI — LA VOCE (rear, V8 revs, flames) */}
-      <section className="vl-rev">
-        <div className="vl-sticky vl-orbit-stage">
-          <p className="vl-orbit-line vl-rev-line"><span className="vl-eyebrow">La voce</span>It speaks once. You remember it.</p>
-        </div>
-      </section>
-
-      {/* ACT VII — INGEGNERIA */}
-      <section className="vl-engineering">
-        <div className="vl-sticky vl-eng-stage">
-          <p className="vl-eyebrow">Capitolo III — Ingegneria</p>
-          <h2 className="vl-serif vl-eng-title">Assembled from intent.</h2>
-          <div className="vl-specs">
-            {SPECS.map((s) => (
-              <div className="vl-spec" key={s.label}>
-                <span className="vl-spec-value">{s.value}<em>{s.unit === "piece" ? "" : ` ${s.unit}`}</em></span>
-                <span className="vl-spec-label">{s.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ACT VI — EDITION */}
-      <section className="vl-edition">
-        <div className="vl-sticky vl-edition-stage">
+        {/* edition */}
+        <section className="vl-block vl-edition-band rv">
           <p className="vl-eyebrow">L&rsquo;edizione</p>
           <h2 className="vl-serif vl-edition-title">Edition of 199</h2>
           <p className="vl-edition-price">From $420,000</p>
           <p className="vl-edition-note">Each allocation confirmed personally, in Modena.</p>
-        </div>
-      </section>
+        </section>
 
-      {/* ACT VII — CTA */}
-      <section className="vl-cta">
-        <div className="vl-sticky vl-cta-stage">
+        {/* allocation */}
+        <section className="vl-block vl-allocation rv">
           <p className="vl-eyebrow">Configurazione privata</p>
           <h2 className="vl-serif">Request Allocation</h2>
           {sent ? (
             <p className="vl-sent">Received. Our atelier will write to you within 48 hours.</p>
           ) : (
-            <form
-              className="vl-form"
-              onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-            >
+            <form className="vl-form" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
               <input required type="text" placeholder="Full name" aria-label="Full name" />
               <input required type="email" placeholder="Email" aria-label="Email" />
               <input type="text" placeholder="Country" aria-label="Country" />
               <button type="submit">Begin the Conversation</button>
             </form>
           )}
-          <footer className="vl-footer">
-            <span>VELOCE AUTOMOBILI · Modena, Italia</span>
-            <span className="vl-fine">A fictional marque. Imagery AI-generated. All figures illustrative.</span>
-          </footer>
-        </div>
-      </section>
+        </section>
+
+        <footer className="vl-site-footer">
+          <span>VELOCE AUTOMOBILI · Modena, Italia</span>
+          <span className="vl-fine">A fictional marque. Imagery AI-generated. All figures illustrative.</span>
+        </footer>
+      </main>
     </div>
   );
 }
