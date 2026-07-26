@@ -16,7 +16,8 @@ const SOURCE = [
   "app/globals.css",
   "components/BioNovSite.tsx",
   "components/MoleculeScene.tsx",
-  "components/VesselScene.tsx"
+  "components/VesselScene.tsx",
+  "components/BodyScene.tsx"
 ];
 
 const IMAGES = [

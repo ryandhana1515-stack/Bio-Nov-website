@@ -6,8 +6,8 @@ import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import { useEffect, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
 
-const MoleculeScene = dynamic(() => import("./MoleculeScene"), { ssr: false });
 const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
+const BodyScene = dynamic(() => import("./BodyScene"), { ssr: false });
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
@@ -646,6 +646,20 @@ const affiliatePerks = [
   { Icon: Gift, title: "Try it yourself first", text: "Selected creators receive product to try before promoting. We'd rather you speak from experience." }
 ];
 
+
+/* Anatomical label shown over the 3D body when a role is selected. */
+const hotspotLabels: Record<string, string> = {
+  "Circulation": "Heart · the pump",
+  "Cognition & Clarity": "Brain · ~20% of your oxygen",
+  "Immune Function": "Chest · immune transport",
+  "Metabolic Support": "Core · nutrient delivery",
+  "Vitality & Energy": "Muscle · oxygen to work",
+  "Healthy Ageing": "Whole body · every tissue"
+};
+function bodyHotspotLabel(key: string) {
+  return hotspotLabels[key] ?? key;
+}
+
 /* ------------------------------------------------------------------ *
  * UI primitives
  * ------------------------------------------------------------------ */
@@ -731,6 +745,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
   const [activeSystem, setActiveSystem] = useState(0);
   const [vesselOpen, setVesselOpen] = useState(true);
   const [activeDecade, setActiveDecade] = useState(2);
+  const [activeRole, setActiveRole] = useState<string | null>(null);
   const { scrollYProgress } = useScroll();
   const productY = useTransform(scrollYProgress, [0, .35], [0, 80]);
 
@@ -802,16 +817,38 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           />
 
           <div className="molecule-grid">
-            <div className="molecule-canvas"><MoleculeScene /></div>
+            <div className="body-canvas">
+              <BodyScene
+                activeKey={activeRole}
+                boosted={activeRole !== null}
+                onSelect={key => {
+                  setActiveRole(key);
+                  const role = noRoles.find(r => r.name === key);
+                  if (role) setModal(role);
+                }}
+              />
+              <div className="body-legend">
+                <span><i className="dot-blood" /> Blood cells</span>
+                <span><i className="dot-oxygen" /> Oxygen released</span>
+                <span><i className="dot-spot" /> Click a glowing point</span>
+              </div>
+              {activeRole && (
+                <div className="body-active-tag">
+                  {bodyHotspotLabel(activeRole)}
+                </div>
+              )}
+            </div>
 
             <div className="no-roles">
-              <p className="click-prompt light"><MousePointerClick size={17} /> Click any role to read the full science</p>
+              <p className="click-prompt light"><MousePointerClick size={17} /> Hover to light up the body &middot; click for the full science</p>
               {noRoles.map(role => (
                 <motion.button
                   whileHover={{ x: 6 }}
-                  className="no-role-card"
+                  className={`no-role-card ${activeRole === role.name ? "is-active" : ""}`}
                   key={role.name}
-                  onClick={() => setModal(role)}
+                  onMouseEnter={() => setActiveRole(role.name)}
+                  onFocus={() => setActiveRole(role.name)}
+                  onClick={() => { setActiveRole(role.name); setModal(role); }}
                   aria-label={`Read more about ${role.name}`}
                 >
                   <span className="no-role-icon"><role.Icon /></span>
