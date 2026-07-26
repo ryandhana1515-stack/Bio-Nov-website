@@ -19,6 +19,9 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg jq
+
       - name: Download assets and extract frames
         run: |
           set -euo pipefail
