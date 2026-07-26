@@ -38,5 +38,29 @@
     "fps": 12,
     "width": 1280,
     "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/e7e5e232-748b-4f67-a7cc-b9c36b349aca-kXXGD0LFTQAYpLcY1lvdeQ-output.mp4?x-kcdn-pid=112372"
+  },
+  {
+    "name": "front",
+    "type": "video",
+    "fps": 12,
+    "width": 1280,
+    "audio": true,
+    "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/8296ec71-2b78-46c0-b370-408e5e0c501d-GzY6WrXguFjLI1F9G_EBVw-output.mp4?x-kcdn-pid=112372"
+  },
+  {
+    "name": "rev",
+    "type": "video",
+    "fps": 12,
+    "width": 1280,
+    "audio": true,
+    "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/a2da3663-d4ee-4b29-9754-5b80eb4c959c-ebTIKh7l1Y4evEXxp4jRpQ-output.mp4?x-kcdn-pid=112372"
+  },
+  {
+    "name": "exploded2",
+    "type": "video",
+    "fps": 12,
+    "width": 1280,
+    "audio": true,
+    "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/e98c418a-a8b6-45c7-866c-a02a356d0039-2NvSHeCAijrK1o7SrqYbKA-output.mp4?x-kcdn-pid=112372"
   }
 ]

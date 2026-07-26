@@ -45,6 +45,10 @@ jobs:
               mkdir -p "public/veloce/media/$NAME"
               ffmpeg -y -i /tmp/"$NAME".mp4 -vf "fps=${FPS},scale=${WIDTH}:-2" -q:v 3 "public/veloce/media/$NAME/frame_%03d.jpg"
               ls "public/veloce/media/$NAME" | wc -l
+              AUDIO=$(jq -r ".[$i].audio // false" "$MANIFEST")
+              if [ "$AUDIO" = "true" ]; then
+                ffmpeg -y -i /tmp/"$NAME".mp4 -vn -c:a aac -b:a 128k "public/veloce/media/$NAME.m4a" || echo "no audio stream in $NAME"
+              fi
             fi
           done
           # frame-count manifest for the site loader

@@ -8,14 +8,16 @@
  *   0 hero        wrap-tear reveal sequence, scrubbed by scroll
  *   1 storms      hero still, slow push-in
  *   2 orbit       360° turntable sequence, scrubbed
- *   3 macro       macro fly-through sequence, scrubbed
- *   4 engineering exploded-assembly sequence, scrubbed — the car comes apart
- *                 and reassembles under the spec callouts
- *   5 edition     hero still, slow pull-back
- *   6 cta         hero still, deep darken — the car waits
+ *   3 front       head-on approach diving into the headlight, scrubbed + audio
+ *   4 macro       macro fly-through sequence, scrubbed
+ *   5 rev         rear view, V8 revs with exhaust flames + smoke, scrubbed + audio
+ *   6 engineering exploded-assembly (engine glowing, fire) scrubbed + audio,
+ *                 spec callouts on top
+ *   7 edition     hero still, slow pull-back
+ *   8 cta         wrapped still, deep darken — the next one waits
  *
- * Same public surface as the old TempestaScene (setPhase / resize / dispose)
- * so VeloceSite treats them interchangeably.
+ * Acts with an audio name play their Kling-generated soundtrack (looped,
+ * volume-crossfaded per act) once the visitor enables sound.
  */
 
 const MEDIA = "/veloce/media";
@@ -36,14 +38,17 @@ interface Visual {
   // ken burns for stills: [scaleFrom, scaleTo, panX, panY], pan in canvas fractions
   kb?: [number, number, number, number];
   darken: number;
+  audio?: string;
 }
 
 const VISUALS: Visual[] = [
   { kind: "seq", seq: "wrap", darken: 0.12 },
   { kind: "still", still: "hero", kb: [1.04, 1.14, -0.02, 0.01], darken: 0.35 },
   { kind: "seq", seq: "orbit", darken: 0.1 },
+  { kind: "seq", seq: "front", darken: 0.08, audio: "front" },
   { kind: "seq", seq: "macro", darken: 0.08 },
-  { kind: "seq", seq: "exploded", darken: 0.28 },
+  { kind: "seq", seq: "rev", darken: 0.1, audio: "rev" },
+  { kind: "seq", seq: "exploded2", darken: 0.28, audio: "exploded2" },
   { kind: "still", still: "hero", kb: [1.12, 1.03, 0, 0.01], darken: 0.3 },
   { kind: "still", still: "hero-wrapped", kb: [1.05, 1.12, 0, 0], darken: 0.45 },
 ];
@@ -52,6 +57,8 @@ export class TempestaFrames {
   phase = 0;
   phaseT = 0;
   onProgress?: (pct: number) => void;
+  soundEnabled = false;
+  private audios = new Map<string, HTMLAudioElement>();
 
   private ctx: CanvasRenderingContext2D;
   private seqs = new Map<string, Sequence>();
@@ -97,9 +104,29 @@ export class TempestaFrames {
     for (const [name, count] of Object.entries(counts)) {
       this.seqs.set(name, { images: new Array(count), count, loaded: 0 });
     }
+    // per-act Kling soundtracks (only for acts that declare one)
+    for (const v of VISUALS) {
+      if (!v.audio || this.audios.has(v.audio)) continue;
+      const a = new Audio(`${MEDIA}/${v.audio}.m4a`);
+      a.loop = true;
+      a.preload = "auto";
+      a.volume = 0;
+      this.audios.set(v.audio, a);
+    }
+
     // priority: the act you see first loads first
-    const order = ["wrap", "orbit", "macro", "exploded"].filter((n) => this.seqs.has(n));
+    const order = ["wrap", "orbit", "front", "macro", "rev", "exploded2"].filter((n) => this.seqs.has(n));
     for (const name of order) await this.loadSequence(name);
+  }
+
+  setSound(on: boolean) {
+    this.soundEnabled = on;
+    if (!on) {
+      for (const a of this.audios.values()) {
+        a.volume = 0;
+        a.pause();
+      }
+    }
   }
 
   private loadSequence(name: string) {
@@ -198,6 +225,18 @@ export class TempestaFrames {
     this.curT += (this.phaseT - this.curT) * (1 - Math.exp(-dt * 7));
     this.fade = Math.min(1, this.fade + dt * 2.4);
 
+    // act soundtrack crossfade
+    if (this.soundEnabled) {
+      const active = VISUALS[this.curVisual]?.audio;
+      for (const [name, a] of this.audios) {
+        const target = name === active ? 0.85 : 0;
+        const vol = a.volume + (target - a.volume) * Math.min(1, dt * 3);
+        a.volume = Math.max(0, Math.min(1, vol));
+        if (target > 0 && a.paused) a.play().catch(() => {});
+        if (target === 0 && a.volume < 0.02 && !a.paused) a.pause();
+      }
+    }
+
     const { ctx, canvas } = this;
     const cw = canvas.clientWidth || window.innerWidth;
     const ch = canvas.clientHeight || window.innerHeight;
@@ -231,5 +270,9 @@ export class TempestaFrames {
   dispose() {
     this.disposed = true;
     cancelAnimationFrame(this.raf);
+    for (const a of this.audios.values()) {
+      a.pause();
+      a.src = "";
+    }
   }
 }

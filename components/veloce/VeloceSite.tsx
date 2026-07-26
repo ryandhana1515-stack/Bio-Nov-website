@@ -28,6 +28,8 @@ export default function VeloceSite() {
   const [sent, setSent] = useState(false);
   const [loadPct, setLoadPct] = useState(0);
   const [ready, setReady] = useState(false);
+  const [soundOn, setSoundOn] = useState(false);
+  const sceneRef = useRef<TempestaFrames | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,6 +38,7 @@ export default function VeloceSite() {
 
     document.documentElement.classList.add("veloce-html");
     const scene = new TempestaFrames(canvas);
+    sceneRef.current = scene;
     scene.onProgress = (pct) => {
       setLoadPct(pct);
       if (pct >= 40) setReady(true); // enough of the reveal to start
@@ -54,7 +57,7 @@ export default function VeloceSite() {
     const tweens: gsap.core.Tween[] = [];
 
     // ---- scene phase drivers: one trigger per act
-    const phases = [".vl-hero", ".vl-storms", ".vl-orbit", ".vl-macro", ".vl-engineering", ".vl-edition", ".vl-cta"];
+    const phases = [".vl-hero", ".vl-storms", ".vl-orbit", ".vl-front", ".vl-macro", ".vl-rev", ".vl-engineering", ".vl-edition", ".vl-cta"];
     phases.forEach((sel, i) => {
       triggers.push(
         ScrollTrigger.create({
@@ -95,13 +98,15 @@ export default function VeloceSite() {
       );
     });
 
-    // ---- orbit: quiet line rises while the car turns
-    tweens.push(
-      gsap.fromTo(".vl-orbit-line", { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, ease: "none",
-        scrollTrigger: { trigger: q(".vl-orbit"), start: "10% bottom", end: "35% bottom", scrub: true },
-      })
-    );
+    // ---- orbit / front / rev: quiet lines rise while the footage plays
+    for (const [sec, line] of [[".vl-orbit", ".vl-orbit-line"], [".vl-front", ".vl-front-line"], [".vl-rev", ".vl-rev-line"]]) {
+      tweens.push(
+        gsap.fromTo(line, { opacity: 0, y: 30 }, {
+          opacity: 1, y: 0, ease: "none",
+          scrollTrigger: { trigger: q(sec), start: "10% bottom", end: "35% bottom", scrub: true },
+        })
+      );
+    }
 
     // ---- macro captions follow the fly-through
     triggers.push(
@@ -174,6 +179,19 @@ export default function VeloceSite() {
         <span className="vl-nav-right">Tempesta&nbsp;GT&nbsp;— MMXXVI</span>
       </header>
 
+      <button
+        type="button"
+        className={`vl-sound${soundOn ? " on" : ""}`}
+        onClick={() => {
+          const next = !soundOn;
+          setSoundOn(next);
+          sceneRef.current?.setSound(next);
+        }}
+      >
+        <i /><i /><i /><i />
+        <span>{soundOn ? "Sound on" : "Sound off"}</span>
+      </button>
+
       {/* ACT I — THE UNVEILING (wrap tears away, scrubbed) */}
       <section className="vl-hero">
         <div className="vl-sticky vl-hero-stage">
@@ -208,7 +226,14 @@ export default function VeloceSite() {
         </div>
       </section>
 
-      {/* ACT IV — DETTAGLI (macro fly-through, scrubbed) */}
+      {/* ACT IV — IL FRONTALE (head-on dive into the headlight, scrubbed) */}
+      <section className="vl-front">
+        <div className="vl-sticky vl-orbit-stage">
+          <p className="vl-orbit-line vl-front-line"><span className="vl-eyebrow">Il frontale</span>It looks back.</p>
+        </div>
+      </section>
+
+      {/* ACT V — DETTAGLI (macro fly-through, scrubbed) */}
       <section className="vl-macro">
         <div className="vl-sticky vl-macro-stage">
           <p className="vl-eyebrow">Capitolo II — Dettagli</p>
@@ -224,7 +249,14 @@ export default function VeloceSite() {
         </div>
       </section>
 
-      {/* ACT V — INGEGNERIA */}
+      {/* ACT VI — LA VOCE (rear, V8 revs, flames) */}
+      <section className="vl-rev">
+        <div className="vl-sticky vl-orbit-stage">
+          <p className="vl-orbit-line vl-rev-line"><span className="vl-eyebrow">La voce</span>It speaks once. You remember it.</p>
+        </div>
+      </section>
+
+      {/* ACT VII — INGEGNERIA */}
       <section className="vl-engineering">
         <div className="vl-sticky vl-eng-stage">
           <p className="vl-eyebrow">Capitolo III — Ingegneria</p>
