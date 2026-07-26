@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TempestaScene } from "./TempestaScene";
+import { TempestaFrames } from "./TempestaFrames";
 
 const MACRO_CAPTIONS = [
-  ["Light, cut like stone.", "Nine crystal elements. No housings. Jewelry that happens to see."],
-  ["The mark of the storm.", "One badge, milled from a single gram of 18-karat gold."],
+  ["Light, cut like stone.", "Crystal elements, no housings. Jewelry that happens to see."],
+  ["A surface like weather.", "Liquid graphite, eleven coats deep."],
+  ["Carbon, laid by hand.", "Forty-two hours of weave beneath the lacquer."],
   ["Gold, where it counts.", "Monobloc calipers, six pistons, finished by hand in Modena."],
-  ["Carbon, laid by hand.", "Forty-two hours of weave beneath eleven coats of lacquer."],
   ["The last thing most will see.", "A single blade of light, edge to edge."],
 ];
 
@@ -26,6 +26,8 @@ export default function VeloceSite() {
   const rootRef = useRef<HTMLDivElement>(null);
   const [macroIdx, setMacroIdx] = useState(0);
   const [sent, setSent] = useState(false);
+  const [loadPct, setLoadPct] = useState(0);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -33,7 +35,12 @@ export default function VeloceSite() {
     if (!canvas || !root) return;
 
     document.documentElement.classList.add("veloce-html");
-    const scene = new TempestaScene(canvas);
+    const scene = new TempestaFrames(canvas);
+    scene.onProgress = (pct) => {
+      setLoadPct(pct);
+      if (pct >= 40) setReady(true); // enough of the reveal to start
+    };
+    const readyFallback = window.setTimeout(() => setReady(true), 6000);
 
     gsap.registerPlugin(ScrollTrigger);
     const lenis = new Lenis({ duration: 1.35, smoothWheel: true });
@@ -47,7 +54,7 @@ export default function VeloceSite() {
     const tweens: gsap.core.Tween[] = [];
 
     // ---- scene phase drivers: one trigger per act
-    const phases = [".vl-hero", ".vl-storms", ".vl-macro", ".vl-engineering", ".vl-edition", ".vl-cta"];
+    const phases = [".vl-hero", ".vl-storms", ".vl-orbit", ".vl-macro", ".vl-engineering", ".vl-edition", ".vl-cta"];
     phases.forEach((sel, i) => {
       triggers.push(
         ScrollTrigger.create({
@@ -59,19 +66,19 @@ export default function VeloceSite() {
       );
     });
 
-    // ---- hero: marque tracks in, then title recedes as the orbit continues
+    // ---- hero: marque tracks in over the unveiling, then recedes
     tweens.push(
       gsap.fromTo(".vl-hero-title",
         { letterSpacing: "0.3em", opacity: 0.25 },
         {
           letterSpacing: "0.06em", opacity: 1, ease: "none",
-          scrollTrigger: { trigger: q(".vl-hero"), start: "top top", end: "22% top", scrub: true },
+          scrollTrigger: { trigger: q(".vl-hero"), start: "top top", end: "30% top", scrub: true },
         })
     );
     tweens.push(
       gsap.to(".vl-hero-stage", {
         opacity: 0, y: -60, ease: "none",
-        scrollTrigger: { trigger: q(".vl-hero"), start: "38% top", end: "62% top", scrub: true },
+        scrollTrigger: { trigger: q(".vl-hero"), start: "55% top", end: "80% top", scrub: true },
       })
     );
 
@@ -88,7 +95,15 @@ export default function VeloceSite() {
       );
     });
 
-    // ---- macro captions
+    // ---- orbit: quiet line rises while the car turns
+    tweens.push(
+      gsap.fromTo(".vl-orbit-line", { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, ease: "none",
+        scrollTrigger: { trigger: q(".vl-orbit"), start: "10% bottom", end: "35% bottom", scrub: true },
+      })
+    );
+
+    // ---- macro captions follow the fly-through
     triggers.push(
       ScrollTrigger.create({
         trigger: q(".vl-macro"),
@@ -98,7 +113,7 @@ export default function VeloceSite() {
       })
     );
 
-    // ---- engineering: spec callouts land as the car assembles
+    // ---- engineering: spec callouts land one by one
     gsap.utils.toArray<HTMLElement>(".vl-spec").forEach((el, i) => {
       tweens.push(
         gsap.fromTo(el, { opacity: 0, y: 40 }, {
@@ -133,6 +148,7 @@ export default function VeloceSite() {
     (window as unknown as Record<string, unknown>).__vl = { lenis, scene };
 
     return () => {
+      window.clearTimeout(readyFallback);
       window.removeEventListener("resize", onResize);
       tweens.forEach((t) => t.scrollTrigger?.kill());
       tweens.forEach((t) => t.kill());
@@ -148,18 +164,23 @@ export default function VeloceSite() {
     <div ref={rootRef} className="veloce-root">
       <canvas ref={canvasRef} className="vl-canvas" aria-hidden />
 
+      <div className={`vl-veil${ready ? " vl-veil-off" : ""}`} aria-hidden>
+        <span className="vl-veil-mark">VELOCE&nbsp;AUTOMOBILI</span>
+        <span className="vl-veil-bar"><i style={{ width: `${loadPct}%` }} /></span>
+      </div>
+
       <header className="vl-nav">
         <span className="vl-wordmark">VELOCE&nbsp;AUTOMOBILI</span>
         <span className="vl-nav-right">Tempesta&nbsp;GT&nbsp;— MMXXVI</span>
       </header>
 
-      {/* ACT I — HERO ORBIT */}
+      {/* ACT I — THE UNVEILING (wrap tears away, scrubbed) */}
       <section className="vl-hero">
         <div className="vl-sticky vl-hero-stage">
           <p className="vl-eyebrow">Veloce Automobili presenta</p>
           <h1 className="vl-hero-title">TEMPESTA&nbsp;GT</h1>
           <p className="vl-hero-sub">The storm, held still.</p>
-          <div className="vl-scroll-cue"><span /><em>Scroll</em></div>
+          <div className="vl-scroll-cue"><span /><em>Scroll to unveil</em></div>
         </div>
       </section>
 
@@ -180,7 +201,14 @@ export default function VeloceSite() {
         </div>
       </section>
 
-      {/* ACT III — MACRO */}
+      {/* ACT III — IL GIRO (360° orbit, scrubbed) */}
+      <section className="vl-orbit">
+        <div className="vl-sticky vl-orbit-stage">
+          <p className="vl-orbit-line"><span className="vl-eyebrow">Il giro</span>Every angle, considered.</p>
+        </div>
+      </section>
+
+      {/* ACT IV — DETTAGLI (macro fly-through, scrubbed) */}
       <section className="vl-macro">
         <div className="vl-sticky vl-macro-stage">
           <p className="vl-eyebrow">Capitolo II — Dettagli</p>
@@ -196,7 +224,7 @@ export default function VeloceSite() {
         </div>
       </section>
 
-      {/* ACT IV — ENGINEERING / EXPLODED */}
+      {/* ACT V — INGEGNERIA */}
       <section className="vl-engineering">
         <div className="vl-sticky vl-eng-stage">
           <p className="vl-eyebrow">Capitolo III — Ingegneria</p>
@@ -212,7 +240,7 @@ export default function VeloceSite() {
         </div>
       </section>
 
-      {/* ACT V — EDITION */}
+      {/* ACT VI — EDITION */}
       <section className="vl-edition">
         <div className="vl-sticky vl-edition-stage">
           <p className="vl-eyebrow">L&rsquo;edizione</p>
@@ -222,7 +250,7 @@ export default function VeloceSite() {
         </div>
       </section>
 
-      {/* ACT VI — CTA */}
+      {/* ACT VII — CTA */}
       <section className="vl-cta">
         <div className="vl-sticky vl-cta-stage">
           <p className="vl-eyebrow">Configurazione privata</p>
@@ -242,7 +270,7 @@ export default function VeloceSite() {
           )}
           <footer className="vl-footer">
             <span>VELOCE AUTOMOBILI · Modena, Italia</span>
-            <span className="vl-fine">A fictional marque, rendered in real time. All figures illustrative.</span>
+            <span className="vl-fine">A fictional marque. Imagery AI-generated. All figures illustrative.</span>
           </footer>
         </div>
       </section>

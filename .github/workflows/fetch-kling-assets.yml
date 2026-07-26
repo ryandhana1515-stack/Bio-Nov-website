@@ -47,6 +47,21 @@ jobs:
               ls "public/veloce/media/$NAME" | wc -l
             fi
           done
+          # frame-count manifest for the site loader
+          {
+            printf '{'
+            first=1
+            for d in public/veloce/media/*/; do
+              [ -d "$d" ] || continue
+              n=$(ls "$d" | wc -l)
+              name=$(basename "$d")
+              [ $first -eq 1 ] || printf ','
+              printf '"%s":%s' "$name" "$n"
+              first=0
+            done
+            printf '}'
+          } > public/veloce/media/frames.json
+          cat public/veloce/media/frames.json
 
       - name: Commit and push
         run: |

@@ -71,12 +71,54 @@ section { position: relative; z-index: 10; pointer-events: none; }
   padding: 0 clamp(20px, 6vw, 90px);
 }
 
-.vl-hero { height: 400vh; }
-.vl-storms { height: 220vh; }
-.vl-macro { height: 360vh; }
-.vl-engineering { height: 300vh; }
+.vl-hero { height: 320vh; }
+.vl-storms { height: 200vh; }
+.vl-orbit { height: 340vh; }
+.vl-macro { height: 340vh; }
+.vl-engineering { height: 230vh; }
 .vl-edition { height: 170vh; }
 .vl-cta { height: 140vh; pointer-events: auto; }
+
+/* loading veil */
+.vl-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: #050506;
+  transition: opacity 0.9s ease, visibility 0.9s;
+}
+.vl-veil-off { opacity: 0; visibility: hidden; }
+.vl-veil-mark {
+  font-family: var(--vl-serif);
+  font-size: 15px;
+  letter-spacing: 0.42em;
+  color: var(--vl-gold);
+}
+.vl-veil-bar {
+  width: min(240px, 60vw);
+  height: 1px;
+  background: rgba(232, 228, 218, 0.12);
+}
+.vl-veil-bar i { display: block; height: 100%; background: var(--vl-gold); transition: width 0.3s ease; }
+
+/* orbit act */
+.vl-orbit-stage { justify-content: flex-end; padding-bottom: 10vh; }
+.vl-orbit-line {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--vl-serif);
+  font-size: clamp(20px, 2.4vw, 34px);
+  color: var(--vl-ink);
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.8);
+}
+.vl-orbit-line .vl-eyebrow { margin: 0; }
 
 .vl-eyebrow {
   font-size: 10px;
@@ -144,13 +186,14 @@ section { position: relative; z-index: 10; pointer-events: none; }
   margin: 0;
   font-size: clamp(15px, 1.6vw, 21px);
   line-height: 1.5;
-  color: var(--vl-dim);
+  color: #c9c4b8;
   max-width: 560px;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.85);
 }
 
 /* macro */
 .vl-macro-stage { align-items: flex-end; text-align: right; justify-content: flex-end; padding-bottom: 12vh; }
-.vl-caption h3 { font-size: clamp(30px, 4.4vw, 66px); color: var(--vl-ink); animation: vl-fade 0.7s ease both; }
+.vl-caption h3 { font-size: clamp(30px, 4.4vw, 66px); color: var(--vl-ink); animation: vl-fade 0.7s ease both; text-shadow: 0 2px 28px rgba(0, 0, 0, 0.9); }
 .vl-caption p {
   margin: 16px 0 0;
   font-size: 13px;
