@@ -1,0 +1,35 @@
+{
+  "fade": 0.7,
+  "segments": [
+    {
+      "name": "wrap",
+      "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/febae646-08db-465d-ab0e-c4c8ec4b3af7-NCeySGpzZkcjDyE407FIjg-output.mp4?x-kcdn-pid=112372",
+      "audio": false
+    },
+    {
+      "name": "orbit",
+      "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/62e00102-2d01-466f-9896-714eef389dc4-kXXGD0LFTQBAnblNh-H0eQ-output.mp4?x-kcdn-pid=112372",
+      "audio": false
+    },
+    {
+      "name": "front",
+      "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/8296ec71-2b78-46c0-b370-408e5e0c501d-GzY6WrXguFjLI1F9G_EBVw-output.mp4?x-kcdn-pid=112372",
+      "audio": true
+    },
+    {
+      "name": "macro",
+      "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/17280b85-9d62-4ec3-8b23-50e36a69d175-kXXGD0LFTQC3Won_K3JGZA-output.mp4?x-kcdn-pid=112372",
+      "audio": false
+    },
+    {
+      "name": "rev",
+      "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/a2da3663-d4ee-4b29-9754-5b80eb4c959c-ebTIKh7l1Y4evEXxp4jRpQ-output.mp4?x-kcdn-pid=112372",
+      "audio": true
+    },
+    {
+      "name": "exploded2",
+      "url": "https://v15-kling.klingai.com/bs2/upload-ylab-stunt-sgp/e98c418a-a8b6-45c7-866c-a02a356d0039-2NvSHeCAijrK1o7SrqYbKA-output.mp4?x-kcdn-pid=112372",
+      "audio": true
+    }
+  ]
+}
