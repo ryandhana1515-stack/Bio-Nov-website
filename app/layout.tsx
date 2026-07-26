@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bio-nov.example"),
+  metadataBase: new URL("https://bio-nov-website.vercel.app"),
   title: "BIO N:OV | Fermentation-Based Nitric Oxide Wellness Support",
   description: "Discover BIO N:OV, a fermentation-based wellness formula developed to support the body’s natural nitric oxide pathways, circulation and everyday vitality.",
   openGraph: { title: "BIO N:OV", description: "Clearing the Way to Optimum Health", type: "website", images: ["/video/bio-nov-hero-poster.jpg"] },
