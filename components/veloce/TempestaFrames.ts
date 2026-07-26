@@ -39,18 +39,21 @@ interface Visual {
   kb?: [number, number, number, number];
   darken: number;
   audio?: string;
+  reverse?: boolean;
+  range?: [number, number]; // scrub only a slice of the sequence
 }
 
+/* every act is live footage — stills remain only as loading fallbacks */
 const VISUALS: Visual[] = [
   { kind: "seq", seq: "wrap", darken: 0.12 },
-  { kind: "still", still: "hero", kb: [1.04, 1.14, -0.02, 0.01], darken: 0.35 },
+  { kind: "seq", seq: "macro", range: [0, 0.18], darken: 0.45 },        // storms: slow creep in the dark
   { kind: "seq", seq: "orbit", darken: 0.1 },
   { kind: "seq", seq: "front", darken: 0.08, audio: "front" },
-  { kind: "seq", seq: "macro", darken: 0.08 },
+  { kind: "seq", seq: "macro", range: [0.2, 1], darken: 0.08 },
   { kind: "seq", seq: "rev", darken: 0.1, audio: "rev" },
   { kind: "seq", seq: "exploded2", darken: 0.28, audio: "exploded2" },
-  { kind: "still", still: "hero", kb: [1.12, 1.03, 0, 0.01], darken: 0.3 },
-  { kind: "still", still: "hero-wrapped", kb: [1.05, 1.12, 0, 0], darken: 0.45 },
+  { kind: "seq", seq: "orbit", reverse: true, range: [0.3, 0.75], darken: 0.3 }, // edition: slow counter-turn
+  { kind: "seq", seq: "wrap", reverse: true, darken: 0.45 },            // cta: the cover returns
 ];
 
 export class TempestaFrames {
@@ -182,12 +185,14 @@ export class TempestaFrames {
 
   private visualImage(v: Visual, t: number): HTMLImageElement | undefined {
     if (v.kind === "seq") {
-      return this.frameFor(v.seq!, t) ?? this.stills.get("hero");
+      let tt = v.reverse ? 1 - t : t;
+      if (v.range) tt = v.range[0] + tt * (v.range[1] - v.range[0]);
+      return this.frameFor(v.seq!, tt) ?? this.stills.get("hero");
     }
     return this.stills.get(v.still!);
   }
 
-  private drawVisual(vIdx: number, t: number, alpha: number) {
+  private drawVisual(vIdx: number, t: number, alpha: number, zoom = 1) {
     const v = VISUALS[vIdx] ?? VISUALS[0];
     const img = this.visualImage(v, t);
     if (!img) return;
@@ -195,7 +200,7 @@ export class TempestaFrames {
     const cw = canvas.clientWidth || window.innerWidth;
     const ch = canvas.clientHeight || window.innerHeight;
 
-    let scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
+    let scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight) * zoom;
     let dx = 0, dy = 0;
     if (v.kind === "still" && v.kb) {
       const [s0, s1, px, py] = v.kb;
@@ -222,8 +227,8 @@ export class TempestaFrames {
     this.lastTime = now;
 
     // damped scrub — keeps fast scrolling silky
-    this.curT += (this.phaseT - this.curT) * (1 - Math.exp(-dt * 7));
-    this.fade = Math.min(1, this.fade + dt * 2.4);
+    this.curT += (this.phaseT - this.curT) * (1 - Math.exp(-dt * 5.5));
+    this.fade = Math.min(1, this.fade + dt * 1.5);
 
     // act soundtrack crossfade
     if (this.soundEnabled) {
@@ -244,8 +249,11 @@ export class TempestaFrames {
     ctx.fillRect(0, 0, cw, ch);
 
     if (this.fade < 1) {
-      this.drawVisual(this.prevVisual, 1, 1);
-      this.drawVisual(this.curVisual, this.curT, easeInOut(this.fade));
+      // cinematic zoom-through: the old act drifts toward camera while the
+      // new one settles back into place
+      const k = easeInOut(this.fade);
+      this.drawVisual(this.prevVisual, 1, 1, 1 + 0.08 * k);
+      this.drawVisual(this.curVisual, this.curT, k, 1.06 - 0.06 * k);
     } else {
       this.drawVisual(this.curVisual, this.curT, 1);
     }
