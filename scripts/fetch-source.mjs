@@ -17,7 +17,8 @@ const SOURCE = [
   "components/BioNovSite.tsx",
   "components/MoleculeScene.tsx",
   "components/VesselScene.tsx",
-  "components/BodyScene.tsx"
+  "components/BodyScene.tsx",
+  "components/XrayBody.tsx"
 ];
 
 const IMAGES = [

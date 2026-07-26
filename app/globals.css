@@ -266,3 +266,73 @@
 .no-role-card.is-active .no-role-icon{background:linear-gradient(145deg,rgba(79,227,255,.45),rgba(124,92,255,.4))}
 @media(max-width:1150px){.body-canvas{height:460px}}
 @media(max-width:520px){.body-canvas{height:400px}.body-legend{font-size:10px}}
+
+/* ================= X-RAY ANATOMY SCENE ================= */
+.body-canvas{position:relative;height:auto;padding:22px 18px 20px;border-radius:32px;overflow:hidden;
+  border:1px solid rgba(143,230,255,.18);
+  background:radial-gradient(ellipse at 50% 38%,rgba(255,150,70,.14),transparent 55%),
+             radial-gradient(circle at 50% 45%,rgba(40,120,255,.2),rgba(3,10,32,.9) 66%,#02071c 100%);
+  box-shadow:inset 0 0 120px rgba(0,0,0,.6)}
+.xray{position:relative}
+.xray__svg{display:block;width:100%;height:auto;max-height:600px}
+.xray__body{opacity:.9}
+.xray__organ path,.xray__organ ellipse{transition:opacity .5s ease}
+.xray__heart{transform-origin:310px 300px}
+
+/* vessel draw-on pulse */
+.xray__vessel-path{stroke-dasharray:6 14;animation:vesselFlow 2.4s linear infinite}
+@keyframes vesselFlow{to{stroke-dashoffset:-40}}
+.xray__vessels.is-lit .xray__vessel-path{stroke-dasharray:none;animation:vesselPulse 2.6s ease-in-out infinite}
+@keyframes vesselPulse{0%,100%{opacity:.62}50%{opacity:1}}
+
+.xray__cell{animation:cellFade 4s ease-in-out infinite}
+@keyframes cellFade{0%,100%{opacity:.35}50%{opacity:1}}
+.xray__spark{animation:sparkPop 2.6s ease-in-out infinite}
+@keyframes sparkPop{0%,100%{opacity:0;transform:scale(.4)}45%{opacity:.95;transform:scale(1.25)}}
+
+/* stage track */
+.xray__track{margin-top:16px;padding:0 6px}
+.xray__track-line{position:relative;height:3px;border-radius:3px;background:rgba(255,255,255,.14);margin-bottom:14px}
+.xray__track-fill{position:absolute;inset:0 auto 0 0;border-radius:3px;
+  background:linear-gradient(90deg,#4fe3ff,#ffb45e);transition:width .55s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 0 14px rgba(255,180,94,.6)}
+.xray__track-stops{display:grid;grid-template-columns:repeat(4,1fr)}
+.xray__stop{display:flex;flex-direction:column;align-items:center;gap:7px;background:none;border:0;cursor:pointer;
+  font-size:10.5px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#6d87b8;transition:color .3s}
+.xray__stop i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.2);transition:all .3s}
+.xray__stop:hover{color:#bcd4ff}
+.xray__stop.is-done i{background:#4fe3ff}
+.xray__stop.is-active{color:#ffb45e}
+.xray__stop.is-active i{background:#ffb45e;box-shadow:0 0 0 5px rgba(255,180,94,.22),0 0 16px #ffb45e;transform:scale(1.25)}
+
+/* journey narrative */
+.journey-panel{padding:26px 28px;margin-bottom:18px;border-radius:22px;
+  border:1px solid rgba(255,180,94,.32);background:linear-gradient(135deg,rgba(255,180,94,.12),rgba(79,227,255,.08))}
+.journey-stage-no{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#ffb45e;margin-bottom:10px}
+.journey-panel h3{margin:0 0 10px;font-size:clamp(21px,2.5vw,28px);line-height:1.15;letter-spacing:-.03em;color:#fff}
+.journey-panel p{margin:0 0 18px;color:#cfe2ff;font-size:15px;line-height:1.72}
+.journey-nav{display:flex;gap:10px}
+.journey-nav button{padding:11px 18px;border-radius:999px;font-size:13px;font-weight:800;cursor:pointer;
+  color:#cfe2ff;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);transition:.25s}
+.journey-nav button:hover:not(:disabled){border-color:#8fe6ff;color:#fff}
+.journey-nav button:disabled{opacity:.35;cursor:not-allowed}
+.journey-nav .is-next{background:linear-gradient(120deg,#ffb45e,#ff8a3d);color:#2a1400;border-color:transparent}
+
+/* ---- Age chart: dark theme to match ---- */
+.dark-age{position:relative;color:#fff;
+  background:radial-gradient(circle at 20% 10%,rgba(124,92,255,.24),transparent 45%),
+             radial-gradient(circle at 85% 80%,rgba(32,199,236,.2),transparent 42%),
+             linear-gradient(180deg,#0b1d47 0%,#0a1a3e 100%)}
+.dark-age .heading h2{color:#fff}
+.dark-age .heading p{color:#c6dcff}
+.dark-age .eyebrow{color:#ffc08a}
+.dark-age .chart{border-color:rgba(255,255,255,.14);
+  background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  box-shadow:inset 0 0 60px rgba(0,0,0,.3)}
+.dark-age .chart text{fill:#bcd4ff}
+.dark-age .chart circle{stroke:#8fe6ff}
+
+@media(max-width:800px){
+  .journey-panel{padding:20px}
+  .xray__stop span{font-size:9px;letter-spacing:.1em}
+}

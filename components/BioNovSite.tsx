@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
 
 const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
-const BodyScene = dynamic(() => import("./BodyScene"), { ssr: false });
+import XrayBody, { journeyStages } from "./XrayBody";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
@@ -746,6 +746,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
   const [vesselOpen, setVesselOpen] = useState(true);
   const [activeDecade, setActiveDecade] = useState(2);
   const [activeRole, setActiveRole] = useState<string | null>(null);
+  const [stage, setStage] = useState(0);
   const { scrollYProgress } = useScroll();
   const productY = useTransform(scrollYProgress, [0, .35], [0, 80]);
 
@@ -811,35 +812,32 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         <div className="molecule-inner">
           <Heading
             light
-            eyebrow="The molecule within"
-            title="Why Nitric Oxide Matters"
-            copy="It was called the Molecule of the Year in 1992 and won a Nobel Prize in 1998 — yet most people have never heard of it. Nitric oxide is the signal your own blood vessels use to stay open. Here is what it touches, and what happens as your body makes less of it."
+            eyebrow="X-ray vision"
+            title="See It Work Inside Your Body"
+            copy="Follow a single tablet from your mouth to every cell you own. Nitric oxide was named Molecule of the Year in 1992 and won a Nobel Prize in 1998 — yet most people have never heard of the signal keeping their blood vessels open."
           />
 
           <div className="molecule-grid">
             <div className="body-canvas">
-              <BodyScene
-                activeKey={activeRole}
-                boosted={activeRole !== null}
-                onSelect={key => {
-                  setActiveRole(key);
-                  const role = noRoles.find(r => r.name === key);
-                  if (role) setModal(role);
-                }}
-              />
-              <div className="body-legend">
-                <span><i className="dot-blood" /> Blood cells</span>
-                <span><i className="dot-oxygen" /> Oxygen released</span>
-                <span><i className="dot-spot" /> Click a glowing point</span>
-              </div>
-              {activeRole && (
-                <div className="body-active-tag">
-                  {bodyHotspotLabel(activeRole)}
-                </div>
-              )}
+              <XrayBody stage={stage} onStage={setStage} />
             </div>
 
             <div className="no-roles">
+              <div className="journey-panel">
+                <span className="journey-stage-no">Stage {String(stage + 1).padStart(2, "0")} &mdash; {journeyStages[stage].label}</span>
+                <h3>{journeyStages[stage].title}</h3>
+                <p>{journeyStages[stage].text}</p>
+                <div className="journey-nav">
+                  <button onClick={() => setStage(Math.max(0, stage - 1))} disabled={stage === 0}>&larr; Back</button>
+                  <button
+                    className="is-next"
+                    onClick={() => setStage(stage < journeyStages.length - 1 ? stage + 1 : 0)}
+                  >
+                    {stage < journeyStages.length - 1 ? "Follow it further \u2192" : "Watch again \u21ba"}
+                  </button>
+                </div>
+              </div>
+
               <p className="click-prompt light"><MousePointerClick size={17} /> Hover to light up the body &middot; click for the full science</p>
               {noRoles.map(role => (
                 <motion.button
@@ -970,7 +968,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </Reveal>
 
       {/* ---------------- Age chart ---------------- */}
-      <Reveal className="section age" id="science">
+      <Reveal className="section age dark-age" id="science">
         <Heading
           eyebrow="A natural life-course change"
           title="Nitric Oxide Production Changes with Age"
