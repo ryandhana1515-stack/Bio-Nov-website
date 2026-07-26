@@ -1,0 +1,50 @@
+name: Fetch Kling assets
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Download assets and extract frames
+        run: |
+          set -euo pipefail
+          MANIFEST="veloce-media/manifest.json"
+          test -f "$MANIFEST" || { echo "no manifest"; exit 1; }
+          mkdir -p public/veloce/media
+          COUNT=$(jq length "$MANIFEST")
+          for i in $(seq 0 $((COUNT - 1))); do
+            NAME=$(jq -r ".[$i].name" "$MANIFEST")
+            URL=$(jq -r ".[$i].url" "$MANIFEST")
+            TYPE=$(jq -r ".[$i].type" "$MANIFEST")
+            FPS=$(jq -r ".[$i].fps // 12" "$MANIFEST")
+            WIDTH=$(jq -r ".[$i].width // 1280" "$MANIFEST")
+            if [ "$TYPE" = "image" ]; then
+              if [ -f "public/veloce/media/$NAME.jpg" ]; then echo "skip $NAME (exists)"; continue; fi
+              curl -fsSL "$URL" -o /tmp/"$NAME".src
+              ffmpeg -y -i /tmp/"$NAME".src -vf "scale=${WIDTH}:-2" -q:v 2 "public/veloce/media/$NAME.jpg"
+            else
+              if [ -d "public/veloce/media/$NAME" ]; then echo "skip $NAME (exists)"; continue; fi
+              curl -fsSL "$URL" -o /tmp/"$NAME".mp4
+              mkdir -p "public/veloce/media/$NAME"
+              ffmpeg -y -i /tmp/"$NAME".mp4 -vf "fps=${FPS},scale=${WIDTH}:-2" -q:v 3 "public/veloce/media/$NAME/frame_%03d.jpg"
+              ls "public/veloce/media/$NAME" | wc -l
+            fi
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "kling-asset-bot"
+          git config user.email "actions@github.com"
+          git add public/veloce/media
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -m "Add Kling-generated media assets (downloaded via CI)"
+          git push
