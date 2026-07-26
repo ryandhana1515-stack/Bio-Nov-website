@@ -29,6 +29,7 @@ interface Sequence {
   images: (HTMLImageElement | undefined)[];
   count: number;
   loaded: number;
+  requested: Set<number>;
 }
 
 interface Visual {
@@ -74,6 +75,7 @@ export class TempestaFrames {
   private fade = 1;
   private prevVisual = 0;
   private curVisual = 0;
+  private vignette: { w: number; h: number; grad: CanvasGradient } | null = null;
 
   constructor(private canvas: HTMLCanvasElement) {
     this.ctx = canvas.getContext("2d")!;
@@ -105,7 +107,7 @@ export class TempestaFrames {
       counts = {};
     }
     for (const [name, count] of Object.entries(counts)) {
-      this.seqs.set(name, { images: new Array(count), count, loaded: 0 });
+      this.seqs.set(name, { images: new Array(count), count, loaded: 0, requested: new Set() });
     }
     // per-act Kling soundtracks (only for acts that declare one)
     for (const v of VISUALS) {
@@ -117,9 +119,24 @@ export class TempestaFrames {
       this.audios.set(v.audio, a);
     }
 
-    // priority: the act you see first loads first
-    const order = ["wrap", "orbit", "front", "macro", "rev", "exploded2"].filter((n) => this.seqs.has(n));
-    for (const name of order) await this.loadSequence(name);
+    // priority: strictly in the order the visitor meets the footage.
+    // storms (act 1) scrubs the head of the macro sequence, so that slice
+    // loads immediately after the wrap reveal — no still-image fallback.
+    const macroCount = this.seqs.get("macro")?.count ?? 0;
+    const stormsSlice = Math.min(macroCount, Math.ceil(macroCount * 0.18) + 4);
+    const queue: [string, number, number][] = [
+      ["wrap", 0, Infinity],
+      ["macro", 0, stormsSlice],
+      ["orbit", 0, Infinity],
+      ["front", 0, Infinity],
+      ["macro", stormsSlice, Infinity],
+      ["rev", 0, Infinity],
+      ["exploded2", 0, Infinity],
+    ];
+    for (const [name, from, to] of queue) {
+      if (!this.seqs.has(name)) continue;
+      await this.loadRange(name, from, to);
+    }
   }
 
   setSound(on: boolean) {
@@ -132,29 +149,34 @@ export class TempestaFrames {
     }
   }
 
-  private loadSequence(name: string) {
+  private async loadRange(name: string, from: number, to: number) {
     const seq = this.seqs.get(name)!;
-    const batch = 8;
-    let i = 0;
-    return new Promise<void>((resolve) => {
-      const next = () => {
-        if (this.disposed || i >= seq.count) return resolve();
-        const end = Math.min(i + batch, seq.count);
-        let pending = end - i;
-        for (; i < end; i++) {
-          const idx = i;
-          const img = new Image();
-          img.onload = img.onerror = () => {
-            seq.images[idx] = img.complete && img.naturalWidth > 0 ? img : undefined;
+    const end = Math.min(seq.count, to);
+    const batch = 6;
+    for (let i = from; i < end && !this.disposed; i += batch) {
+      const jobs: Promise<void>[] = [];
+      for (let idx = i; idx < Math.min(i + batch, end); idx++) {
+        if (seq.requested.has(idx)) continue;
+        seq.requested.add(idx);
+        jobs.push(
+          (async () => {
+            const img = new Image();
+            img.src = `${MEDIA}/${name}/frame_${String(idx + 1).padStart(3, "0")}.jpg`;
+            try {
+              // decode() finishes the JPEG off the render path, so drawing a
+              // freshly arrived frame never stalls the scroll
+              await img.decode();
+              seq.images[idx] = img;
+            } catch {
+              /* skip broken frame */
+            }
             seq.loaded++;
             this.reportProgress();
-            if (--pending === 0) next();
-          };
-          img.src = `${MEDIA}/${name}/frame_${String(idx + 1).padStart(3, "0")}.jpg`;
-        }
-      };
-      next();
-    });
+          })()
+        );
+      }
+      await Promise.all(jobs);
+    }
   }
 
   private reportProgress() {
@@ -258,16 +280,20 @@ export class TempestaFrames {
       this.drawVisual(this.curVisual, this.curT, 1);
     }
 
-    // soft vignette
-    const g = ctx.createRadialGradient(cw / 2, ch / 2, Math.min(cw, ch) * 0.42, cw / 2, ch / 2, Math.max(cw, ch) * 0.78);
-    g.addColorStop(0, "rgba(0,0,0,0)");
-    g.addColorStop(1, "rgba(3,3,4,0.55)");
-    ctx.fillStyle = g;
+    // soft vignette (gradient cached per canvas size)
+    if (!this.vignette || this.vignette.w !== cw || this.vignette.h !== ch) {
+      const g = ctx.createRadialGradient(cw / 2, ch / 2, Math.min(cw, ch) * 0.42, cw / 2, ch / 2, Math.max(cw, ch) * 0.78);
+      g.addColorStop(0, "rgba(0,0,0,0)");
+      g.addColorStop(1, "rgba(3,3,4,0.55)");
+      this.vignette = { w: cw, h: ch, grad: g };
+    }
+    ctx.fillStyle = this.vignette.grad;
     ctx.fillRect(0, 0, cw, ch);
   };
 
   resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    this.vignette = null;
     const w = this.canvas.clientWidth || window.innerWidth;
     const h = this.canvas.clientHeight || window.innerHeight;
     this.canvas.width = Math.round(w * dpr);
