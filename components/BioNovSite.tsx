@@ -4,12 +4,12 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Wind, X, Zap } from "lucide-react";
+import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
 
 const MoleculeScene = dynamic(() => import("./MoleculeScene"), { ssr: false });
 const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
 
-const nav = [["Home","home"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
+const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[] };
 
@@ -455,6 +455,172 @@ const ingredients: (Detail & { name: string; short: string; img?: string })[] = 
   }
 ];
 
+/* Six biological roles — each opens a full explanation on click. */
+const noRoles: (Detail & { name: string; short: string; Icon: typeof Droplets })[] = [
+  {
+    name: "Circulation",
+    short: "The signal that tells your vessels to open.",
+    Icon: Droplets,
+    title: "Circulation",
+    subtitle: "Nitric oxide is the body's own vasodilation signal",
+    body: [
+      "Your blood vessels are lined with a single layer of cells called the endothelium. This lining continuously produces nitric oxide, which diffuses into the smooth muscle wrapped around the vessel and tells it to relax. A relaxed vessel is a wider vessel, and a wider vessel carries blood with less resistance.",
+      "This is why nitric oxide was such a significant discovery in vascular physiology — it explained how the body regulates its own blood flow from moment to moment, second by second, without conscious effort.",
+      "Every other role on this page ultimately traces back to this one. Circulation is the delivery network; nitric oxide helps keep it open."
+    ],
+    points: [
+      "Produced continuously by the healthy endothelium",
+      "Signals vessel smooth muscle to relax (vasodilation)",
+      "Wider vessels move blood with less resistance",
+      "Regulated moment to moment as your needs change",
+      "The foundation the other five roles depend on"
+    ]
+  },
+  {
+    name: "Vitality & Energy",
+    short: "Oxygen delivered efficiently is what energy feels like.",
+    Icon: Zap,
+    title: "Vitality & Energy",
+    subtitle: "Why circulation and energy are the same conversation",
+    body: [
+      "Energy is not something the body keeps in a tank. It is produced continuously inside your cells, in mitochondria, and that process needs a steady supply of oxygen and nutrients. Both arrive by blood.",
+      "This is why efficient circulation and the feeling of having energy are so tightly linked. When working muscle receives oxygen readily, it can sustain effort and recover afterwards. Nitric oxide's role in vasodilation is part of how the body matches blood supply to demand — including during exercise, when muscle needs far more than at rest.",
+      "BIO N:OV is designed to support the body's normal energy-related processes as part of an active lifestyle. It is not a stimulant and contains no caffeine."
+    ],
+    points: [
+      "Cellular energy production requires continuous oxygen",
+      "Blood flow matches supply to demand during activity",
+      "Supports stamina and recovery as part of an active lifestyle",
+      "Not a stimulant — no caffeine, no jitters",
+      "Works alongside regular movement, not instead of it"
+    ]
+  },
+  {
+    name: "Cognition & Clarity",
+    short: "Your brain is the hungriest organ you own.",
+    Icon: Brain,
+    title: "Cognition & Clarity",
+    subtitle: "The brain takes a disproportionate share of your blood supply",
+    body: [
+      "The brain accounts for roughly 2% of body weight but consumes around 20% of the oxygen you breathe. It has almost no capacity to store fuel, which means it depends on blood arriving continuously — a supply interruption is felt in seconds, not minutes.",
+      "Nitric oxide participates in this in two ways. It helps regulate cerebral blood flow, directing supply to the regions currently working hardest. It also acts as a neurotransmitter in its own right, participating in normal signalling between neurons.",
+      "Supporting healthy circulation is therefore part of a whole-body approach to cognitive wellness — the same reason cardiovascular health and brain health are so often discussed together."
+    ],
+    points: [
+      "~2% of body weight, ~20% of oxygen consumption",
+      "Almost no stored fuel — depends on continuous supply",
+      "Nitric oxide helps regulate cerebral blood flow",
+      "Also acts as a signalling molecule between neurons",
+      "Supports normal focus and mental clarity"
+    ]
+  },
+  {
+    name: "Metabolic Support",
+    short: "Nutrients are useless until they arrive.",
+    Icon: Activity,
+    title: "Metabolic Support",
+    subtitle: "Delivery is the step between eating well and feeling well",
+    body: [
+      "Metabolism is the set of processes that turn what you eat into what your body uses. It is easy to focus entirely on the input — the quality of the diet — and forget the logistics. Nutrients absorbed through the gut still have to reach the tissues that need them, and they travel by blood.",
+      "Nitric oxide participates in how blood is distributed to metabolically active tissue, including skeletal muscle, which is one of the largest sites of glucose uptake in the body.",
+      "BIO N:OV is intended to complement balanced nutrition and healthy daily routines — never to replace them, and never as a substitute for medical care or prescribed medication."
+    ],
+    points: [
+      "Nutrient absorption feeds directly into circulation",
+      "Blood distribution serves metabolically active tissue",
+      "Skeletal muscle is a major site of glucose uptake",
+      "Complements balanced nutrition, does not replace it",
+      "Not a substitute for medical treatment"
+    ]
+  },
+  {
+    name: "Immune Function",
+    short: "Your defences travel by bloodstream.",
+    Icon: ShieldPlus,
+    title: "Immune Function",
+    subtitle: "Circulation is the immune system's transport network",
+    body: [
+      "Immune cells are not stationed permanently where they are needed — they patrol, and they travel through the bloodstream and lymphatic system to reach tissue that requires them. Healthy circulation is part of how that patrol operates efficiently.",
+      "Nitric oxide has a second role here: immune cells themselves produce it as part of normal immune signalling. It is one of the molecules the body uses in its own defensive processes.",
+      "This is educational information about normal immune physiology. BIO N:OV is a wellness product intended to help support the body's natural defences — it does not prevent, treat or cure any illness or infection."
+    ],
+    points: [
+      "Immune cells patrol via the bloodstream and lymphatics",
+      "Healthy circulation supports efficient transport",
+      "Immune cells produce nitric oxide themselves",
+      "Part of normal immune signalling pathways",
+      "Supports natural defences — does not prevent illness"
+    ]
+  },
+  {
+    name: "Healthy Ageing",
+    short: "Production falls with each decade. That is the whole story.",
+    Icon: Dna,
+    title: "Healthy Ageing",
+    subtitle: "Why this becomes a mid-life priority for so many people",
+    body: [
+      "Here is the part that makes everything else on this page personal. Natural nitric oxide production is widely understood to decline as we age. The endothelium becomes less efficient at producing it, and the decline is generally described as beginning surprisingly early — in the twenties and thirties — and becoming more noticeable from the forties onward.",
+      "This is normal ageing, not a disease. But it helps explain something people describe to us constantly: that the recovery, stamina and clarity that once felt automatic start to feel like work. When the signal that keeps your delivery network open becomes weaker, everything downstream is served a little less readily.",
+      "That is the gap BIO N:OV was formulated to support — daily, gently, for the long term, through fermented plant ingredients rather than an enzyme conversion step inside the body."
+    ],
+    points: [
+      "Natural production declines with age — normal, not a diagnosis",
+      "Decline typically described as starting in the 20s-30s",
+      "Becomes more noticeable from the 40s onward",
+      "Explains why stamina and recovery change over time",
+      "BIO N:OV supports this pathway for long-term daily use",
+      "Always consult your healthcare professional about your own health"
+    ]
+  }
+];
+
+/* Decade-by-decade context for the interactive decline strip. */
+const decades = [
+  {
+    label: "20s",
+    headline: "Peak output",
+    text: "Nitric oxide production is typically at its highest. Recovery after exertion feels quick and mostly automatic — most people never think about their circulation at this age."
+  },
+  {
+    label: "30s",
+    headline: "The quiet decline begins",
+    text: "Natural production is generally described as already easing downward. The change is subtle and usually goes unnoticed, which is exactly why it is worth understanding early."
+  },
+  {
+    label: "40s",
+    headline: "You start to notice",
+    text: "This is the decade when most people first describe a difference — recovery takes longer, afternoon energy dips, focus takes more effort. It is also when interest in circulation support typically begins."
+  },
+  {
+    label: "50s",
+    headline: "Support becomes a routine",
+    text: "Healthy circulation habits — movement, balanced nutrition, daylight, and targeted support — become a deliberate daily practice rather than something taken for granted."
+  },
+  {
+    label: "60+",
+    headline: "Consistency matters most",
+    text: "The value is in the routine rather than any single dose. Gentle, long-term daily support is the approach BIO N:OV was formulated for — alongside, never instead of, medical care."
+  }
+];
+
+const researchAreas = [
+  {
+    Icon: Microscope,
+    title: "A Nobel-recognised molecule",
+    text: "Nitric oxide's role as a signalling molecule in the cardiovascular system was recognised with the 1998 Nobel Prize in Physiology or Medicine. It moved from obscurity to one of the most studied molecules in vascular biology."
+  },
+  {
+    Icon: FlaskConical,
+    title: "Patented fermentation process",
+    text: "BIO N:OV uses a microbial fermentation process with strain reference KACC91554P, developed in Korea and manufactured in a GMP-certified facility. Patent and certification documentation should be verified for each market."
+  },
+  {
+    Icon: Users,
+    title: "Developed with university researchers",
+    text: "The formulation was developed with researchers from Korean universities and medical schools across nitric oxide biology, cardiovascular research, metabolism and regenerative medicine."
+  }
+];
+
 const vesselDetail: Detail = {
   title: "What you just watched",
   subtitle: "The mechanism behind the model",
@@ -564,6 +730,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
   const [modal, setModal] = useState<Detail | null>(null);
   const [activeSystem, setActiveSystem] = useState(0);
   const [vesselOpen, setVesselOpen] = useState(true);
+  const [activeDecade, setActiveDecade] = useState(2);
   const { scrollYProgress } = useScroll();
   const productY = useTransform(scrollYProgress, [0, .35], [0, 80]);
 
@@ -625,26 +792,104 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </section>
 
       {/* ---------------- Why nitric oxide ---------------- */}
-      <Reveal id="why-no" className="section molecule-section">
-        <Heading
-          eyebrow="The molecule within"
-          title="Why Nitric Oxide Matters"
-          copy="Nitric oxide is a naturally occurring signalling molecule your own blood vessels produce. It tells them to relax — and relaxed vessels move blood more easily."
-        />
-        <div className="molecule-grid">
-          <div className="molecule-canvas"><MoleculeScene /></div>
-          <div className="benefit-orbit">
-            {[["Circulation", Droplets], ["Vitality", Zap], ["Cognition", Brain], ["Metabolic Support", Activity], ["Immune Function", ShieldPlus], ["Healthy Ageing", Dna]].map(([label, Icon]) => {
-              const I = Icon as typeof Droplets;
-              return (
-                <motion.div whileHover={{ y: -6 }} className="mini-card" key={label as string}>
-                  <I /><span>{label as string}</span>
-                </motion.div>
-              );
-            })}
+      <Reveal id="why-no" className="molecule-section">
+        <div className="molecule-inner">
+          <Heading
+            light
+            eyebrow="The molecule within"
+            title="Why Nitric Oxide Matters"
+            copy="It was called the Molecule of the Year in 1992 and won a Nobel Prize in 1998 — yet most people have never heard of it. Nitric oxide is the signal your own blood vessels use to stay open. Here is what it touches, and what happens as your body makes less of it."
+          />
+
+          <div className="molecule-grid">
+            <div className="molecule-canvas"><MoleculeScene /></div>
+
+            <div className="no-roles">
+              <p className="click-prompt light"><MousePointerClick size={17} /> Click any role to read the full science</p>
+              {noRoles.map(role => (
+                <motion.button
+                  whileHover={{ x: 6 }}
+                  className="no-role-card"
+                  key={role.name}
+                  onClick={() => setModal(role)}
+                  aria-label={`Read more about ${role.name}`}
+                >
+                  <span className="no-role-icon"><role.Icon /></span>
+                  <div>
+                    <b>{role.name}</b>
+                    <small>{role.short}</small>
+                  </div>
+                  <Plus size={18} className="row-plus" />
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          {/* ---- The decline story ---- */}
+          <div className="decline-block">
+            <div className="decline-head">
+              <span className="eyebrow">The part that makes it personal</span>
+              <h3>Your body makes less of it every decade</h3>
+              <p>
+                This is the single most important thing to understand about nitric oxide: your natural production
+                declines as you age. It is normal ageing, not a diagnosis &mdash; but it explains why the energy,
+                recovery and clarity that once felt automatic start to feel like work.
+              </p>
+              <p className="click-prompt light" style={{ marginTop: 6 }}>
+                <MousePointerClick size={17} /> Select your decade
+              </p>
+            </div>
+
+            <div className="decade-strip" role="tablist" aria-label="Nitric oxide production by decade">
+              {decades.map((d, i) => (
+                <button
+                  key={d.label}
+                  role="tab"
+                  aria-selected={activeDecade === i}
+                  className={`decade-pill ${activeDecade === i ? "active" : ""}`}
+                  onClick={() => setActiveDecade(i)}
+                >
+                  <span className="decade-bar" style={{ height: `${100 - i * 17}%` }} />
+                  <b>{d.label}</b>
+                </button>
+              ))}
+            </div>
+
+            <motion.div
+              key={activeDecade}
+              className="decade-panel"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+            >
+              <span>{decades[activeDecade].label}</span>
+              <h4>{decades[activeDecade].headline}</h4>
+              <p>{decades[activeDecade].text}</p>
+            </motion.div>
+          </div>
+
+          {/* ---- Research credibility ---- */}
+          <div className="research-strip">
+            {researchAreas.map(r => (
+              <div className="research-note" key={r.title}>
+                <r.Icon />
+                <h4>{r.title}</h4>
+                <p>{r.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="molecule-cta">
+            <p>Now see what that actually looks like inside a blood vessel &mdash; in 3D.</p>
+            <a className="button primary" href="#vessels">Show me the 3D model <ArrowRight size={18} /></a>
+          </div>
+
+          <div className="source-note dark">
+            Educational information about normal human physiology. Statements describe the role of nitric oxide in the
+            body generally, not measured outcomes of this product. BIO N:OV is not intended to diagnose, treat, cure or
+            prevent any disease. Primary references to be added following regulatory review in each market.
           </div>
         </div>
-        <div className="source-note">Scientific source placeholder: add legally approved primary references for each educational statement before publication.</div>
       </Reveal>
 
       {/* ---------------- Blood flow story (NEW) ---------------- */}
