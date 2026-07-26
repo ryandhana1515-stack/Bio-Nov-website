@@ -30,6 +30,17 @@ interface CamState {
   smoke: number;
   assembly: number; // 0 assembled … 1 exploded
   carSpin: number;
+  wrap: number; // 0 film on … 1 film fully flown off
+}
+
+interface WrapSlice {
+  group: THREE.Group;
+  mat: THREE.MeshPhysicalMaterial;
+  basePlanes: THREE.Plane[];
+  livePlanes: THREE.Plane[];
+  fly: THREE.Vector3;
+  spin: THREE.Vector3;
+  stagger: number;
 }
 
 const easeInOut = (t: number) => t * t * (3 - 2 * t);
@@ -43,6 +54,7 @@ export class TempestaScene {
   private smokeGroup = new THREE.Group();
   private smokeSprites: { s: THREE.Sprite; seed: number; base: THREE.Vector3 }[] = [];
   private parts: ExplodePart[] = [];
+  private wrapSlices: WrapSlice[] = [];
   private raf = 0;
   private clock = new THREE.Clock();
   private phase = 0;
@@ -57,6 +69,7 @@ export class TempestaScene {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.0;
+    this.renderer.localClippingEnabled = true;
 
     this.camera = new THREE.PerspectiveCamera(40, 1, 0.1, 80);
     this.camera.position.set(5.8, 1.35, 0);
@@ -70,6 +83,7 @@ export class TempestaScene {
 
     this.buildLights();
     this.buildCar();
+    this.buildWrap();
     this.buildSmoke();
     this.buildMacroPath();
 
@@ -80,6 +94,7 @@ export class TempestaScene {
       smoke: 1,
       assembly: 0,
       carSpin: 0,
+      wrap: 0,
     };
 
     this.resize();
@@ -162,8 +177,7 @@ export class TempestaScene {
     });
   }
 
-  private bodyShell(): THREE.Group {
-    const shell = new THREE.Group();
+  private makeBodyShape(): THREE.Shape {
     const s = new THREE.Shape();
     // silhouette — long bonnet, low fastback tail (x forward, y up)
     s.moveTo(2.3, 0.17);
@@ -178,8 +192,22 @@ export class TempestaScene {
     s.quadraticCurveTo(1.7, 0.62, 2.16, 0.5); // bonnet fall
     s.quadraticCurveTo(2.44, 0.44, 2.43, 0.3); // nose
     s.lineTo(2.3, 0.17);
+    return s;
+  }
 
-    const geo = new THREE.ExtrudeGeometry(s, {
+  private makeCanopyShape(): THREE.Shape {
+    const gs = new THREE.Shape();
+    gs.moveTo(1.02, 0.76);
+    gs.quadraticCurveTo(0.55, 0.82, 0.22, 1.14); // windshield
+    gs.quadraticCurveTo(-0.1, 1.22, -0.5, 1.16); // roof
+    gs.quadraticCurveTo(-1.2, 1.0, -1.75, 0.8); // fastback
+    gs.lineTo(1.02, 0.76);
+    return gs;
+  }
+
+  private bodyShell(): THREE.Group {
+    const shell = new THREE.Group();
+    const geo = new THREE.ExtrudeGeometry(this.makeBodyShape(), {
       depth: 1.5, bevelEnabled: true, bevelThickness: 0.24, bevelSize: 0.2,
       bevelSegments: 24, curveSegments: 96, steps: 1,
     });
@@ -188,13 +216,7 @@ export class TempestaScene {
     shell.add(body);
 
     // greenhouse — black glass canopy
-    const gs = new THREE.Shape();
-    gs.moveTo(1.02, 0.76);
-    gs.quadraticCurveTo(0.55, 0.82, 0.22, 1.14); // windshield
-    gs.quadraticCurveTo(-0.1, 1.22, -0.5, 1.16); // roof
-    gs.quadraticCurveTo(-1.2, 1.0, -1.75, 0.8); // fastback
-    gs.lineTo(1.02, 0.76);
-    const ggeo = new THREE.ExtrudeGeometry(gs, {
+    const ggeo = new THREE.ExtrudeGeometry(this.makeCanopyShape(), {
       depth: 0.98, bevelEnabled: true, bevelThickness: 0.14, bevelSize: 0.12,
       bevelSegments: 16, curveSegments: 64,
     });
@@ -408,6 +430,75 @@ export class TempestaScene {
     this.scene.add(this.car);
   }
 
+  /* --------------------------------------------------------------- wrap */
+  private buildWrap() {
+    // one shared low-res copy of the body + canopy, worn slightly proud of the paint
+    const bodyGeo = new THREE.ExtrudeGeometry(this.makeBodyShape(), {
+      depth: 1.5, bevelEnabled: true, bevelThickness: 0.26, bevelSize: 0.22,
+      bevelSegments: 8, curveSegments: 40, steps: 1,
+    });
+    bodyGeo.translate(0, 0, -0.75);
+    const canopyGeo = new THREE.ExtrudeGeometry(this.makeCanopyShape(), {
+      depth: 1.0, bevelEnabled: true, bevelThickness: 0.16, bevelSize: 0.13,
+      bevelSegments: 6, curveSegments: 28,
+    });
+    canopyGeo.translate(0, 0, -0.5);
+
+    // seven film strips, nose to tail
+    const cuts = [-2.95, -2.15, -1.32, -0.5, 0.35, 1.2, 2.1, 3.1];
+    for (let i = 0; i < cuts.length - 1; i++) {
+      const basePlanes = [
+        new THREE.Plane(new THREE.Vector3(1, 0, 0), -cuts[i]),      // keep x >= cuts[i]
+        new THREE.Plane(new THREE.Vector3(-1, 0, 0), cuts[i + 1]),  // keep x <= cuts[i+1]
+      ];
+      const livePlanes = basePlanes.map((p) => p.clone());
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: 0x08090a, metalness: 0.05, roughness: 0.72,
+        clearcoat: 0.12, clearcoatRoughness: 0.4, envMapIntensity: 0.15,
+        transparent: true, opacity: 1, clippingPlanes: livePlanes,
+      });
+      const group = new THREE.Group();
+      const b = new THREE.Mesh(bodyGeo, mat);
+      b.scale.set(1.015, 1.03, 1.03);
+      const cpy = new THREE.Mesh(canopyGeo, mat);
+      cpy.scale.set(1.02, 1.04, 1.04);
+      group.add(b, cpy);
+      this.car.add(group);
+
+      const side = i % 2 === 0 ? 1 : -1;
+      this.wrapSlices.push({
+        group, mat, basePlanes, livePlanes,
+        fly: new THREE.Vector3(
+          (i < 3 ? -1 : 1) * (1.2 + (i % 3) * 0.5),
+          2.4 + (i % 3) * 0.7,
+          side * (1.0 + (i % 2) * 0.6)
+        ),
+        spin: new THREE.Vector3(side * 1.3, side * 0.5, (i < 3 ? -1 : 1) * 1.0),
+        stagger: ((cuts.length - 2 - i) / (cuts.length - 1)) * 0.55, // nose peels first
+      });
+    }
+  }
+
+  private updateWrap() {
+    const w = this.cur.wrap;
+    for (const sl of this.wrapSlices) {
+      const local = easeInOut(clamp01((w - sl.stagger) / 0.45));
+      if (local >= 0.999 || w >= 0.999) {
+        sl.group.visible = false;
+        continue;
+      }
+      sl.group.visible = true;
+      sl.group.position.set(sl.fly.x * local, sl.fly.y * local, sl.fly.z * local);
+      sl.group.rotation.set(sl.spin.x * local, sl.spin.y * local, sl.spin.z * local);
+      sl.mat.opacity = 1 - easeInOut(clamp01((local - 0.55) / 0.45));
+      // keep the slab clip glued to the flying strip
+      sl.group.updateMatrixWorld();
+      for (let k = 0; k < 2; k++) {
+        sl.livePlanes[k].copy(sl.basePlanes[k]).applyMatrix4(sl.group.matrixWorld);
+      }
+    }
+  }
+
   /* -------------------------------------------------------------- smoke */
   private buildSmoke() {
     const c = document.createElement("canvas");
@@ -463,18 +554,20 @@ export class TempestaScene {
   private targetState(out: CamState) {
     const t = this.phaseT;
     switch (this.phase) {
-      case 0: { // HERO ORBIT — full 360°
+      case 0: { // HERO ORBIT — full 360°, the film tears off mid-orbit
         const th = Math.PI * 0.72 + t * Math.PI * 2;
         const r = 6.9 - t * 0.5;
         out.pos.set(Math.sin(th) * r, 1.55 - easeInOut(t) * 0.5, Math.cos(th) * r);
         out.target.set(0, 0.5, 0);
         out.fov = 38; out.smoke = 1; out.assembly = 0; out.carSpin = 0;
+        out.wrap = clamp01((t - 0.42) / 0.5); // covered until ~half the orbit, bare by t≈0.92
         break;
       }
       case 1: { // BORN OF STORMS — slow menacing drift, front 3/4 low
         out.pos.set(4.6 - t * 1.1, 0.85 - t * 0.3, 3.9 - t * 0.7);
         out.target.set(0.4, 0.55, 0);
         out.fov = 35; out.smoke = 0.75; out.assembly = 0; out.carSpin = 0;
+        out.wrap = 1;
         break;
       }
       case 2: { // MACRO FLY-THROUGH
@@ -482,6 +575,7 @@ export class TempestaScene {
         this.macroPath.getPoint(k, out.pos);
         this.macroTargets.getPoint(k, out.target);
         out.fov = 30; out.smoke = 0; out.assembly = 0; out.carSpin = 0;
+        out.wrap = 1;
         break;
       }
       case 3: { // EXPLODED ASSEMBLY — converges as you scroll
@@ -492,6 +586,7 @@ export class TempestaScene {
         out.fov = 42; out.smoke = 0.15;
         out.assembly = 1 - easeInOut(clamp01(t * 1.18)); // fully assembled slightly before phase end
         out.carSpin = t * 0.35;
+        out.wrap = 1;
         break;
       }
       case 4: { // EDITION — slow gold-lit turntable beauty shot
@@ -499,6 +594,7 @@ export class TempestaScene {
         out.target.set(0.2, 0.5, 0);
         out.fov = 37; out.smoke = 0.6; out.assembly = 0;
         out.carSpin = 0.35 + t * 0.55;
+        out.wrap = 1;
         break;
       }
       default: { // CTA — receding rear 3/4, the car waits
@@ -506,6 +602,7 @@ export class TempestaScene {
         out.target.set(0, 0.5, 0);
         out.fov = 40; out.smoke = 0.5; out.assembly = 0;
         out.carSpin = 0.9 + t * 0.12;
+        out.wrap = 1;
       }
     }
   }
@@ -513,7 +610,7 @@ export class TempestaScene {
   /* ---------------------------------------------------------------- loop */
   private tmp: CamState = {
     pos: new THREE.Vector3(), target: new THREE.Vector3(),
-    fov: 40, smoke: 1, assembly: 0, carSpin: 0,
+    fov: 40, smoke: 1, assembly: 0, carSpin: 0, wrap: 0,
   };
 
   private loop = () => {
@@ -540,6 +637,8 @@ export class TempestaScene {
     this.cur.smoke += (this.tmp.smoke - this.cur.smoke) * k;
     this.cur.assembly += (this.tmp.assembly - this.cur.assembly) * k;
     this.cur.carSpin += (this.tmp.carSpin - this.cur.carSpin) * k;
+    this.cur.wrap += (this.tmp.wrap - this.cur.wrap) * k;
+    this.updateWrap();
 
     this.camera.position.copy(this.cur.pos);
     this.camera.lookAt(this.cur.target);
