@@ -1,0 +1,86 @@
+name: Fetch Kling assets
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "claude/veloce-tempesta-cinematic-site-fqjehs"
+    paths:
+      - "veloce-media/manifest.json"
+      - "veloce-media/film.json"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg jq
+
+      - name: Download assets and extract frames
+        run: |
+          set -euo pipefail
+          MANIFEST="veloce-media/manifest.json"
+          test -f "$MANIFEST" || { echo "no manifest"; exit 1; }
+          mkdir -p public/veloce/media
+          COUNT=$(jq length "$MANIFEST")
+          for i in $(seq 0 $((COUNT - 1))); do
+            NAME=$(jq -r ".[$i].name" "$MANIFEST")
+            URL=$(jq -r ".[$i].url" "$MANIFEST")
+            TYPE=$(jq -r ".[$i].type" "$MANIFEST")
+            FPS=$(jq -r ".[$i].fps // 12" "$MANIFEST")
+            WIDTH=$(jq -r ".[$i].width // 1280" "$MANIFEST")
+            if [ "$TYPE" = "image" ]; then
+              if [ -f "public/veloce/media/$NAME.jpg" ]; then echo "skip $NAME (exists)"; continue; fi
+              curl -fsSL "$URL" -o /tmp/"$NAME".src
+              ffmpeg -y -i /tmp/"$NAME".src -vf "scale=${WIDTH}:-2" -q:v 2 "public/veloce/media/$NAME.jpg"
+            else
+              if [ -d "public/veloce/media/$NAME" ]; then echo "skip $NAME (exists)"; continue; fi
+              curl -fsSL "$URL" -o /tmp/"$NAME".mp4
+              mkdir -p "public/veloce/media/$NAME"
+              ffmpeg -y -i /tmp/"$NAME".mp4 -vf "fps=${FPS},scale=${WIDTH}:-2" -q:v 3 "public/veloce/media/$NAME/frame_%03d.jpg"
+              ls "public/veloce/media/$NAME" | wc -l
+              AUDIO=$(jq -r ".[$i].audio // false" "$MANIFEST")
+              if [ "$AUDIO" = "true" ]; then
+                ffmpeg -y -i /tmp/"$NAME".mp4 -vn -c:a aac -b:a 128k "public/veloce/media/$NAME.m4a" || echo "no audio stream in $NAME"
+              fi
+            fi
+          done
+          # frame-count manifest for the site loader
+          {
+            printf '{'
+            first=1
+            for d in public/veloce/media/*/; do
+              [ -d "$d" ] || continue
+              n=$(ls "$d" | wc -l)
+              name=$(basename "$d")
+              [ $first -eq 1 ] || printf ','
+              printf '"%s":%s' "$name" "$n"
+              first=0
+            done
+            printf '}'
+          } > public/veloce/media/frames.json
+          cat public/veloce/media/frames.json
+
+      - name: Build hero film
+        run: |
+          if [ -f veloce-media/film.json ] && { [ ! -f public/veloce/film.mp4 ] || [ ! -f public/veloce/film.webm ]; }; then
+            python3 .github/scripts/build_film.py
+          else
+            echo "film build skipped"
+          fi
+
+      - name: Commit and push
+        run: |
+          git config user.name "kling-asset-bot"
+          git config user.email "actions@github.com"
+          git add public/veloce
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -m "Add Kling-generated media assets (downloaded via CI)"
+          git push
