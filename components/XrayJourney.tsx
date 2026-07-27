@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Activity, Brain, Heart, Sparkles } from "lucide-react";
-import XrayBody from "./XrayBody";
 
 /* Scroll-driven stages. Copy per Ryan's direction (Lovable version).
    Figures are manufacturer laboratory data — labelled as such on the page. */
@@ -52,14 +51,11 @@ export default function XrayJourney({ videoSrc }: { videoSrc?: string }) {
     };
   }, []);
 
-  // Map continuous scroll onto the four discrete stages of the SVG fallback
-  const svgStage = progress < 0.3 ? 0 : progress < 0.55 ? 1 : progress < 0.8 ? 2 : 3;
 
   return (
     <section ref={sectionRef} id="journey" className="journey-section">
       <div className="journey-sticky">
-        {videoSrc ? (
-          <video
+        <video
             ref={videoRef}
             src={videoSrc}
             poster="/video/xray-journey-poster.jpg"
@@ -67,13 +63,8 @@ export default function XrayJourney({ videoSrc }: { videoSrc?: string }) {
             playsInline
             preload="auto"
             className="journey-video"
-            onLoadedMetadata={() => setHasVideo(true)}
-          />
-        ) : (
-          <div className="journey-fallback">
-            <XrayBody stage={svgStage} onStage={() => {}} />
-          </div>
-        )}
+          onLoadedMetadata={() => setHasVideo(true)}
+        />
 
         {/* cinematic grade */}
         <div className="journey-vignette" />

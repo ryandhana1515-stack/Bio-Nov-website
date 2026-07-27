@@ -15,10 +15,7 @@ const SOURCE = [
   "app/page.tsx",
   "app/globals.css",
   "components/BioNovSite.tsx",
-  "components/MoleculeScene.tsx",
   "components/VesselScene.tsx",
-  "components/BodyScene.tsx",
-  "components/XrayBody.tsx",
   "components/XrayJourney.tsx"
 ];
 

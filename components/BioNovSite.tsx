@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
 
 const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
-import XrayBody, { journeyStages } from "./XrayBody";
 import XrayJourney from "./XrayJourney";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["X-Ray Vision","journey"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
@@ -622,6 +621,67 @@ const researchAreas = [
   }
 ];
 
+
+/* Headline figures from the manufacturer's laboratory testing. Each opens a
+   full explanation on click. */
+const flowStats: (Detail & { value: string; label: string })[] = [
+  {
+    value: "+18%",
+    label: "Vessel diameter",
+    title: "+18% vessel diameter",
+    subtitle: "Manufacturer laboratory measurement",
+    body: [
+      "Blood vessels are not fixed pipes. They are living tubes wrapped in a layer of smooth muscle, and that muscle is constantly being told how tightly to squeeze. Nitric oxide is the message that tells it to let go.",
+      "An 18% wider vessel is not an 18% improvement in flow — it is far more. Flow through a tube rises steeply with radius, which is why a modest widening produces a large change in how easily blood moves. That relationship is the entire reason nitric oxide matters so much to circulation.",
+      "Figure from the manufacturer's laboratory testing. Individual results vary."
+    ],
+    points: [
+      "Vessels are muscle-wrapped, not rigid pipes",
+      "Nitric oxide signals that muscle to relax",
+      "Flow rises steeply as radius increases",
+      "A small widening produces a large flow change",
+      "Manufacturer laboratory data — results vary"
+    ]
+  },
+  {
+    value: "+42%",
+    label: "Blood flow",
+    title: "+42% blood flow",
+    subtitle: "Manufacturer laboratory measurement",
+    body: [
+      "This is the number that matters most, because blood flow is delivery. Every cell in your body is waiting on a delivery of oxygen and nutrients, and the bloodstream is the only road.",
+      "When flow improves, nothing about your cells changes — they simply receive what they were always waiting for, sooner. Muscle gets oxygen to sustain effort. The brain gets the continuous supply it cannot store. Skin, gut and immune tissue are all served by the same network.",
+      "Figure from the manufacturer's laboratory testing. Individual results vary."
+    ],
+    points: [
+      "Blood flow is the body's delivery system",
+      "Oxygen and nutrients travel only by blood",
+      "Muscle, brain and skin all share one network",
+      "Better flow means faster delivery everywhere",
+      "Manufacturer laboratory data — results vary"
+    ]
+  },
+  {
+    value: "-25%",
+    label: "Blood pressure",
+    title: "-25% blood pressure",
+    subtitle: "Manufacturer laboratory measurement",
+    body: [
+      "Pressure is what the heart has to generate to push blood through the network. When vessels relax and widen, resistance falls — and the heart does not have to work as hard to move the same volume of blood.",
+      "That is the mechanism behind this figure: not force applied to the system, but resistance removed from it.",
+      "Figure from the manufacturer's laboratory testing. Individual results vary. BIO N:OV is a wellness supplement and is not a treatment for high blood pressure. It must never replace prescribed medication — if you are managing blood pressure, speak to your doctor before changing anything."
+    ],
+    points: [
+      "Pressure reflects resistance in the network",
+      "Relaxed vessels lower that resistance",
+      "The heart moves the same blood with less effort",
+      "Manufacturer laboratory data — results vary",
+      "Not a treatment; never replace prescribed medication",
+      "Consult your doctor before any change"
+    ]
+  }
+];
+
 const vesselDetail: Detail = {
   title: "What you just watched",
   subtitle: "The mechanism behind the model",
@@ -818,26 +878,9 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             copy="Follow a single tablet from your mouth to every cell you own. Nitric oxide was named Molecule of the Year in 1992 and won a Nobel Prize in 1998 — yet most people have never heard of the signal keeping their blood vessels open."
           />
 
-          <div className="molecule-grid">
-            <div className="body-canvas">
-              <XrayBody stage={stage} onStage={setStage} />
-            </div>
+          <div className="molecule-grid molecule-grid--solo">
 
             <div className="no-roles">
-              <div className="journey-panel">
-                <span className="journey-stage-no">Stage {String(stage + 1).padStart(2, "0")} &mdash; {journeyStages[stage].label}</span>
-                <h3>{journeyStages[stage].title}</h3>
-                <p>{journeyStages[stage].text}</p>
-                <div className="journey-nav">
-                  <button onClick={() => setStage(Math.max(0, stage - 1))} disabled={stage === 0}>&larr; Back</button>
-                  <button
-                    className="is-next"
-                    onClick={() => setStage(stage < journeyStages.length - 1 ? stage + 1 : 0)}
-                  >
-                    {stage < journeyStages.length - 1 ? "Follow it further \u2192" : "Watch again \u21ba"}
-                  </button>
-                </div>
-              </div>
 
               <p className="click-prompt light"><MousePointerClick size={17} /> Hover to light up the body &middot; click for the full science</p>
               {noRoles.map(role => (
@@ -1117,48 +1160,70 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         </div>
       </Reveal>
 
-      {/* ---------------- Interactive 3D vessel ---------------- */}
-      <Reveal id="vessels" className="vessel-section">
-        <Heading
-          light
-          eyebrow="See it for yourself — in 3D"
-          title="Narrow Road. Open Road."
-          copy="This is the difference everyone talks about but almost nobody sees. Press the buttons below and watch what happens to the blood cells when a vessel is constricted versus relaxed."
-        />
+      {/* ---------------- Inside the body: NO flows ---------------- */}
+      <Reveal id="vessels" className="noflow-section">
+        <video
+          className="noflow-video"
+          poster="/video/blood-flow-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src="/video/blood-flow.mp4" type="video/mp4" />
+        </video>
+        <div className="noflow-scrim" />
 
-        <div className="vessel-3d-wrap">
-          <div className="vessel-canvas">
-            <VesselScene open={vesselOpen} />
-            <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
-              <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
-              <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
+        <div className="noflow-inner">
+          <div className="noflow-copy">
+            <span className="eyebrow">Inside the body</span>
+            <h2>
+              When NO flows,<br />
+              <span>life flows freely.</span>
+            </h2>
+            <p>
+              Nitric oxide signals the smooth muscle inside every blood vessel to relax. Vessels widen.
+              Pressure drops. Oxygen-rich blood reaches every cell &mdash; your brain, your heart, your skin,
+              your stamina.
+            </p>
+
+            <p className="click-prompt light"><MousePointerClick size={17} /> Click any figure to see why it matters</p>
+            <div className="noflow-stats">
+              {flowStats.map(stat => (
+                <button key={stat.label} className="noflow-stat" onClick={() => setModal(stat)}>
+                  <b>{stat.value}</b>
+                  <span>{stat.label}</span>
+                  <i><Plus size={14} /></i>
+                </button>
+              ))}
             </div>
+            <p className="noflow-source">Figures from the manufacturer&rsquo;s laboratory testing. Individual results vary.</p>
           </div>
 
-          <div className="vessel-controls">
-            <p className="vessel-prompt"><MousePointerClick size={17} /> Click a state to switch the 3D model</p>
-            <button className={`vessel-toggle ${!vesselOpen ? "active" : ""}`} onClick={() => setVesselOpen(false)}>
-              <span className="dot narrow" />
-              <div>
-                <b>Constricted</b>
-                <small>Vessel narrowed &mdash; cells crowd together and slow down. Every organ downstream waits longer for oxygen.</small>
+          <div className="noflow-3d">
+            <div className="vessel-canvas">
+              <VesselScene open={vesselOpen} />
+              <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
+                <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
+                <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
               </div>
-            </button>
-            <button className={`vessel-toggle ${vesselOpen ? "active" : ""}`} onClick={() => setVesselOpen(true)}>
-              <span className="dot open" />
-              <div>
-                <b>Relaxed &mdash; the nitric oxide signal</b>
-                <small>Nitric oxide signals the vessel wall to relax. The road opens, cells spread out and flow freely.</small>
-              </div>
-            </button>
+            </div>
 
-            <button className="button primary vessel-cta" onClick={() => setModal(vesselDetail)}>
-              Read how this works <ArrowRight size={17} />
+            <div className="noflow-toggle">
+              <button className={!vesselOpen ? "active" : ""} onClick={() => setVesselOpen(false)}>
+                <span className="dot narrow" /> Constricted
+              </button>
+              <button className={vesselOpen ? "active" : ""} onClick={() => setVesselOpen(true)}>
+                <span className="dot open" /> Relaxed &mdash; NO signal
+              </button>
+            </div>
+            <button className="button glass noflow-explain" onClick={() => setModal(vesselDetail)}>
+              How this works <ArrowRight size={16} />
             </button>
           </div>
         </div>
-
-        <p className="vessel-note">Educational 3D visual model illustrating normal vascular physiology. Not a depiction of measured product performance. Individual results vary.</p>
       </Reveal>
 
       {/* ---------------- Conversion band ---------------- */}
