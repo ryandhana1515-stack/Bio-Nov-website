@@ -66,13 +66,6 @@
 /* ---- Interactive 3D vessel ---- */
 .vessel-3d-wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;margin-top:10px}
 .vessel-canvas{position:relative;height:470px;border-radius:30px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:radial-gradient(circle at 50% 45%,rgba(90,40,110,.55),rgba(4,16,58,.9) 70%);box-shadow:inset 0 0 90px rgba(0,0,0,.45)}
-.vessel-stateplate{position:absolute;left:22px;bottom:22px;padding:14px 20px;border-radius:16px;background:rgba(4,16,50,.72);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.18);transition:border-color .35s}
-.vessel-stateplate span{display:block;font-size:10.5px;font-weight:900;letter-spacing:.18em;margin-bottom:5px}
-.vessel-stateplate b{font-size:15px;color:#fff}
-.vessel-stateplate.is-open{border-color:rgba(90,230,255,.6)}
-.vessel-stateplate.is-open span{color:#6ee7ff}
-.vessel-stateplate.is-narrow{border-color:rgba(255,130,170,.55)}
-.vessel-stateplate.is-narrow span{color:#ff9ab8}
 .vessel-controls{display:flex;flex-direction:column;gap:14px}
 .vessel-prompt{display:inline-flex;align-items:center;gap:9px;margin:0 0 4px;font-size:13px;font-weight:800;color:#8fe6ff}
 .vessel-prompt svg{animation:tap 2.2s ease-in-out infinite}
@@ -464,4 +457,27 @@
   .noflow-stats{grid-template-columns:1fr}
   .vessel-control__buttons{grid-template-columns:1fr}
   .journey-detail{padding:22px}
+}
+
+/* ---- Body atlas: live readout replaces the old static illustration ---- */
+.body-visual{position:relative;display:block;border-radius:26px;overflow:hidden;
+  border:1px solid rgba(143,230,255,.2);background:#01050f;min-height:560px}
+.body-visual__video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;
+  opacity:.5;filter:contrast(1.3) saturate(1.2) brightness(.9)}
+.body-visual::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(4,16,50,.35),rgba(2,8,26,.9))}
+.body-readout{position:absolute;left:24px;right:24px;bottom:24px;z-index:2;padding:26px 28px;border-radius:22px;
+  background:rgba(3,12,36,.86);backdrop-filter:blur(18px);border:1px solid rgba(143,230,255,.4);
+  box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.body-readout__no{display:inline-block;font-size:10px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;
+  color:#8fe6ff;margin-bottom:10px}
+.body-readout h3{margin:0 0 10px;font-size:clamp(21px,2.4vw,27px);line-height:1.15;letter-spacing:-.03em;color:#fff}
+.body-readout p{margin:0 0 16px;font-size:14px;line-height:1.7;color:#cfe2ff}
+.body-readout ul{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:8px}
+.body-readout li{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;line-height:1.5;color:#bcd4ff}
+.body-readout li svg{flex:none;margin-top:2px;color:#8fe6ff}
+.body-readout .button{width:100%;padding:13px 20px;font-size:13.5px}
+@media(max-width:800px){
+  .body-visual{min-height:520px}
+  .body-readout{left:14px;right:14px;bottom:14px;padding:20px}
 }

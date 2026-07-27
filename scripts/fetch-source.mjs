@@ -20,7 +20,6 @@ const SOURCE = [
 
 const IMAGES = [
   "bio-nov-hero.jpg",
-  "body-systems.png",
   "garlic-product.jpg",
   "lettuce-product.jpg",
   "product-showcase.jpg",
