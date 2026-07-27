@@ -976,9 +976,18 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
 
       {/* ---------------- Blood flow story (NEW) ---------------- */}
       <Reveal id="vessels" className="noflow-section">
-        <div className="noflow-bg" aria-hidden="true">
-          <VesselScene open={vesselOpen} />
-        </div>
+        <video
+          className="noflow-bg-video"
+          poster="/video/blood-flow-poster.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src="/video/blood-flow.mp4" type="video/mp4" />
+        </video>
         <div className="noflow-scrim" />
 
         <div className="noflow-inner">

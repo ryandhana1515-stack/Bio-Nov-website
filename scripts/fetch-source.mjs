@@ -39,7 +39,9 @@ const VIDEO = [
   "bio-nov-hero.mp4",
   "bio-nov-hero-poster.jpg",
   "xray-journey.mp4",
-  "xray-journey-poster.jpg"
+  "xray-journey-poster.jpg",
+  "blood-flow.mp4",
+  "blood-flow-poster.jpg"
 ].map(
   (name) => `public/video/${name}`
 );
