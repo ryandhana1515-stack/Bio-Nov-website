@@ -9,7 +9,7 @@ import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Drople
 const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
 import XrayJourney from "./XrayJourney";
 
-const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["X-Ray Vision","journey"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
+const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[] };
 
@@ -975,6 +975,61 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       <XrayJourney videoSrc="/video/xray-journey.mp4" />
 
       {/* ---------------- Blood flow story (NEW) ---------------- */}
+      <Reveal id="vessels" className="noflow-section">
+        <div className="noflow-bg" aria-hidden="true">
+          <VesselScene open={vesselOpen} />
+        </div>
+        <div className="noflow-scrim" />
+
+        <div className="noflow-inner">
+          <div className="noflow-copy">
+            <span className="eyebrow">Inside the body</span>
+            <h2>
+              When NO flows,<br />
+              <span>life flows freely.</span>
+            </h2>
+            <p>
+              Nitric oxide signals the smooth muscle inside every blood vessel to relax. Vessels widen.
+              Pressure drops. Oxygen-rich blood reaches every cell &mdash; your brain, your heart, your skin,
+              your stamina.
+            </p>
+
+            <p className="click-prompt light"><MousePointerClick size={17} /> Click any figure to see why it matters</p>
+            <div className="noflow-stats">
+              {flowStats.map(stat => (
+                <button key={stat.label} className="noflow-stat" onClick={() => setModal(stat)}>
+                  <b>{stat.value}</b>
+                  <span>{stat.label}</span>
+                  <i><Plus size={14} /></i>
+                </button>
+              ))}
+            </div>
+            <p className="noflow-source">Figures from the manufacturer&rsquo;s laboratory testing. Individual results vary.</p>
+          </div>
+
+          <div className="noflow-3d">
+            <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
+              <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
+              <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
+            </div>
+
+            <p className="click-prompt light"><MousePointerClick size={17} /> Switch the vessel and watch the flow change</p>
+            <div className="noflow-toggle">
+              <button className={!vesselOpen ? "active" : ""} onClick={() => setVesselOpen(false)}>
+                <span className="dot narrow" /> Constricted
+              </button>
+              <button className={vesselOpen ? "active" : ""} onClick={() => setVesselOpen(true)}>
+                <span className="dot open" /> Relaxed &mdash; NO signal
+              </button>
+            </div>
+            <button className="button glass noflow-explain" onClick={() => setModal(vesselDetail)}>
+              How this works <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* ---------------- Conversion band ---------------- */}
       <Reveal id="flow" className="flow-section">
         <div className="flow-inner">
           <Heading
@@ -1015,27 +1070,6 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </Reveal>
 
       {/* ---------------- Age chart ---------------- */}
-      <Reveal className="section age dark-age" id="science">
-        <Heading
-          eyebrow="A natural life-course change"
-          title="Nitric Oxide Production Changes with Age"
-          copy="Natural nitric oxide production is generally understood to decline as we age. This illustration is educational and does not predict an individual outcome."
-        />
-        <div className="chart">
-          <svg viewBox="0 0 1000 320" role="img" aria-label="Illustrative declining trend from the twenties to age sixty plus">
-            <defs><linearGradient id="line" x1="0" x2="1"><stop stopColor="#12bdf3" /><stop offset=".55" stopColor="#7367ec" /><stop offset="1" stopColor="#f24ea6" /></linearGradient></defs>
-            <motion.path d="M70 62 C 245 70, 310 98, 410 124 S 620 182, 720 215 S 870 258, 940 266" fill="none" stroke="url(#line)" strokeWidth="10" strokeLinecap="round" initial={{ pathLength: 0 }} whileInView={{ pathLength: 1 }} viewport={{ once: true }} transition={{ duration: 2 }} />
-            {[70, 270, 470, 670, 870].map((x, i) => (
-              <g key={x}>
-                <circle cx={x} cy={[62, 92, 140, 198, 250][i]} r="12" fill="#fff" stroke="#206ddd" strokeWidth="6" />
-                <text x={x} y="305" textAnchor="middle">{["20s", "30s", "40s", "50s", "60+"][i]}</text>
-              </g>
-            ))}
-          </svg>
-        </div>
-      </Reveal>
-
-      {/* ---------------- Body atlas (now clickable with detail) ---------------- */}
       <Reveal className="body-section">
         <div className="body-copy">
           <Heading light eyebrow="Interactive body atlas" title="One Signal. Many Biological Roles." copy="Select any system to read how circulation and nitric oxide participate in its normal function." />
@@ -1161,61 +1195,6 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </Reveal>
 
       {/* ---------------- Inside the body: NO flows ---------------- */}
-      <Reveal id="vessels" className="noflow-section">
-        <div className="noflow-bg" aria-hidden="true">
-          <VesselScene open={vesselOpen} />
-        </div>
-        <div className="noflow-scrim" />
-
-        <div className="noflow-inner">
-          <div className="noflow-copy">
-            <span className="eyebrow">Inside the body</span>
-            <h2>
-              When NO flows,<br />
-              <span>life flows freely.</span>
-            </h2>
-            <p>
-              Nitric oxide signals the smooth muscle inside every blood vessel to relax. Vessels widen.
-              Pressure drops. Oxygen-rich blood reaches every cell &mdash; your brain, your heart, your skin,
-              your stamina.
-            </p>
-
-            <p className="click-prompt light"><MousePointerClick size={17} /> Click any figure to see why it matters</p>
-            <div className="noflow-stats">
-              {flowStats.map(stat => (
-                <button key={stat.label} className="noflow-stat" onClick={() => setModal(stat)}>
-                  <b>{stat.value}</b>
-                  <span>{stat.label}</span>
-                  <i><Plus size={14} /></i>
-                </button>
-              ))}
-            </div>
-            <p className="noflow-source">Figures from the manufacturer&rsquo;s laboratory testing. Individual results vary.</p>
-          </div>
-
-          <div className="noflow-3d">
-            <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
-              <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
-              <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
-            </div>
-
-            <p className="click-prompt light"><MousePointerClick size={17} /> Switch the vessel and watch the flow change</p>
-            <div className="noflow-toggle">
-              <button className={!vesselOpen ? "active" : ""} onClick={() => setVesselOpen(false)}>
-                <span className="dot narrow" /> Constricted
-              </button>
-              <button className={vesselOpen ? "active" : ""} onClick={() => setVesselOpen(true)}>
-                <span className="dot open" /> Relaxed &mdash; NO signal
-              </button>
-            </div>
-            <button className="button glass noflow-explain" onClick={() => setModal(vesselDetail)}>
-              How this works <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* ---------------- Conversion band ---------------- */}
       <section className="cta-band">
         <div className="cta-band__inner">
           <div>
