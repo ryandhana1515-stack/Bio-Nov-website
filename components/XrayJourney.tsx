@@ -1,61 +1,120 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Activity, Brain, Heart, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Activity, ArrowRight, Check, Heart, Pill, Sparkles } from "lucide-react";
 
-/* Scroll-driven stages. Copy per Ryan's direction (Lovable version).
-   Figures are manufacturer laboratory data — labelled as such on the page. */
-const STAGES = [
-  { at: 0.18, Icon: Heart, title: "Blood Pressure Controlled", desc: "Vessels relax — pressure drops within 30 minutes.", side: "left", top: "30%" },
-  { at: 0.42, Icon: Brain, title: "Brain Clarity", desc: "Oxygen-rich blood floods cognitive pathways.", side: "right", top: "12%" },
-  { at: 0.66, Icon: Activity, title: "Muscle Vigor", desc: "More O₂ delivered. Endurance and recovery boosted.", side: "left", top: "56%" },
-  { at: 0.88, Icon: Sparkles, title: "Skin Renewal", desc: "Microcirculation revives glow and elasticity.", side: "right", top: "76%" }
+/* What actually happens after you take BIO N:OV — one stage per click.
+   The body copy explains the mechanism so a first-time reader understands
+   why any of it matters. */
+export const stages = [
+  {
+    key: "mouth",
+    label: "Mouth",
+    at: 0.04,
+    Icon: Pill,
+    kicker: "Stage 01",
+    title: "You take one tablet",
+    lead: "500 mg, three times a day, with water.",
+    body: "Nothing clinical, nothing complicated. The tablet goes down the same way as everything else you swallow and begins its journey through your digestive tract. One box is a 20-day supply at this serving.",
+    points: [
+      "500 mg tablet, taken three times daily",
+      "Swallowed with water — no injections, no clinic",
+      "Travels the oesophagus into the stomach",
+      "One box = 20 days at the standard serving"
+    ]
+  },
+  {
+    key: "stomach",
+    label: "Stomach",
+    at: 0.36,
+    Icon: Sparkles,
+    kicker: "Stage 02",
+    title: "Fermented actives release",
+    lead: "The hard work already happened — before it ever reached you.",
+    body: "This is what makes BIO N:OV third-generation. The fermented garlic and lettuce extracts were transformed by a patented microbial process (KACC91554P) inside a GMP-certified Korean facility. Earlier supplements depend on your body converting a precursor — a step that becomes less efficient with age. Here, that conversion is already done.",
+    points: [
+      "Fermented garlic and fermented lettuce extracts",
+      "Patented microbial fermentation — KACC91554P",
+      "GMP-certified Korean manufacturing",
+      "No enzyme conversion needed inside your body",
+      "Why it works the same way at 60 as at 30"
+    ]
+  },
+  {
+    key: "bloodstream",
+    label: "Bloodstream",
+    at: 0.68,
+    Icon: Heart,
+    kicker: "Stage 03",
+    title: "Into your circulation",
+    lead: "Now it joins the only road that reaches everywhere.",
+    body: "Absorbed compounds enter the bloodstream and support your body's natural nitric oxide pathway. Nitric oxide is the signal that tells the smooth muscle wrapped around every blood vessel to relax. Vessels widen. Resistance falls. The same heartbeat moves blood further, more easily.",
+    points: [
+      "Absorbed compounds enter the bloodstream",
+      "Supports your natural nitric oxide pathway",
+      "Nitric oxide signals vessel muscle to relax",
+      "Wider vessels mean less resistance to flow",
+      "No cell in your body sits far from a vessel"
+    ]
+  },
+  {
+    key: "cells",
+    label: "Every cell",
+    at: 0.97,
+    Icon: Activity,
+    kicker: "Stage 04",
+    title: "Delivered — everywhere",
+    lead: "Brain. Heart. Muscle. Skin. All served by one network.",
+    body: "Oxygen-rich blood arrives where it was always needed. Your brain takes about a fifth of your oxygen and stores almost none of it. Working muscle needs a continuous supply to sustain effort and recover afterwards. Skin is fed by the same network. This is why circulation is a whole-body story rather than a single-target one.",
+    points: [
+      "Brain uses ~20% of your oxygen, stores almost none",
+      "Muscle needs continuous supply for stamina and recovery",
+      "Skin and immune tissue share the same network",
+      "Supports energy, clarity and healthy ageing",
+      "One system serving every organ you own"
+    ]
+  }
 ] as const;
 
-const TRACK = ["Mouth", "Stomach", "Bloodstream", "Cells"];
-
-export default function XrayJourney({ videoSrc }: { videoSrc?: string }) {
-  const sectionRef = useRef<HTMLElement>(null);
+export default function XrayJourney({ videoSrc }: { videoSrc: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [hasVideo, setHasVideo] = useState(false);
+  const [stage, setStage] = useState(0);
+  const [ready, setReady] = useState(false);
 
+  /* Ease the X-ray footage to the frame matching the selected stage. */
   useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
+    const vid = videoRef.current;
+    if (!vid || !ready || !vid.duration) return;
     let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        const total = rect.height - window.innerHeight;
-        const p = total > 0 ? Math.max(0, Math.min(1, -rect.top / total)) : 0;
-        setProgress(p);
-
-        // Scrub the video frame-by-frame with scroll position
-        const vid = videoRef.current;
-        if (vid && vid.duration && !Number.isNaN(vid.duration)) {
-          vid.currentTime = p * vid.duration * 0.999;
-        }
-      });
+    const target = stages[stage].at * vid.duration;
+    const step = () => {
+      const diff = target - vid.currentTime;
+      if (Math.abs(diff) < 0.03) return;
+      vid.currentTime += diff * 0.16;
+      raf = requestAnimationFrame(step);
     };
+    step();
+    return () => cancelAnimationFrame(raf);
+  }, [stage, ready]);
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
+  const current = stages[stage];
+  const Icon = current.Icon;
 
   return (
-    <section ref={sectionRef} id="journey" className="journey-section">
-      <div className="journey-sticky">
-        <video
+    <section id="journey" className="journey-section">
+      <div className="journey-head">
+        <span className="journey-kicker">X-Ray Vision</span>
+        <h2>
+          See It Work <span>Inside Your Body.</span>
+        </h2>
+        <p>Click each stage to follow one BIO N:OV tablet from your mouth to every cell you own.</p>
+      </div>
+
+      <div className="journey-grid">
+        {/* ---------- the body ---------- */}
+        <div className="journey-viz">
+          <video
             ref={videoRef}
             src={videoSrc}
             poster="/video/xray-journey-poster.jpg"
@@ -63,61 +122,65 @@ export default function XrayJourney({ videoSrc }: { videoSrc?: string }) {
             playsInline
             preload="auto"
             className="journey-video"
-          onLoadedMetadata={() => setHasVideo(true)}
-        />
-
-        {/* cinematic grade */}
-        <div className="journey-vignette" />
-        <div className="journey-grid" />
-
-        {/* scanline follows scroll */}
-        <div className="journey-scanline" style={{ top: `${10 + progress * 80}%` }} />
-
-        {/* header */}
-        <div className="journey-head">
-          <span className="journey-kicker">X-Ray Vision</span>
-          <h2>
-            See It Work <span>Inside Your Body.</span>
-          </h2>
-          <p>Scroll to follow a single capsule from your mouth to every cell.</p>
+            onLoadedMetadata={() => setReady(true)}
+          />
+          <div className="journey-stagetag">
+            <Icon size={15} />
+            {current.label}
+          </div>
         </div>
 
-        {/* stage callouts */}
-        {STAGES.map((s, i) => {
-          const active = progress >= s.at;
-          const visible = progress >= s.at - 0.06;
-          return (
-            <div
-              key={s.title}
-              className={`journey-stage journey-stage--${s.side} ${visible ? "is-visible" : ""} ${active ? "is-active" : ""}`}
-              style={{ top: s.top }}
-            >
-              <div className="journey-stage__row">
-                <span className="journey-stage__icon">
-                  <s.Icon size={22} />
-                </span>
-                <i className="journey-stage__rule" />
-              </div>
-              <b>{s.title}</b>
-              <p>{s.desc}</p>
-              <span className="journey-stage__no">STAGE 0{i + 1}</span>
-            </div>
-          );
-        })}
-
-        {/* progress track */}
-        <div className="journey-track">
-          <div className="journey-track__labels">
-            {TRACK.map((t) => (
-              <span key={t}>{t}</span>
+        {/* ---------- the explanation ---------- */}
+        <div className="journey-panel">
+          <div className="journey-steps">
+            {stages.map((s, i) => (
+              <button
+                key={s.key}
+                className={`journey-step ${i === stage ? "is-active" : ""} ${i < stage ? "is-done" : ""}`}
+                onClick={() => setStage(i)}
+              >
+                <span className="journey-step__num">{String(i + 1).padStart(2, "0")}</span>
+                <span className="journey-step__label">{s.label}</span>
+              </button>
             ))}
           </div>
-          <div className="journey-track__line">
-            <span className="journey-track__fill" style={{ width: `${progress * 100}%` }} />
-            <span className="journey-track__dot" style={{ left: `${progress * 100}%` }} />
-          </div>
-          <div className="journey-track__note">
-            {hasVideo ? "Scroll to scrub" : "Scroll to follow the journey"}
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current.key}
+              className="journey-detail"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="journey-detail__kicker">
+                <Icon size={14} /> {current.kicker}
+              </span>
+              <h3>{current.title}</h3>
+              <p className="journey-detail__lead">{current.lead}</p>
+              <p className="journey-detail__body">{current.body}</p>
+              <ul>
+                {current.points.map((pt) => (
+                  <li key={pt}>
+                    <Check size={15} />
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="journey-nav">
+            <button onClick={() => setStage(Math.max(0, stage - 1))} disabled={stage === 0}>
+              &larr; Back
+            </button>
+            <button
+              className="is-next"
+              onClick={() => setStage(stage < stages.length - 1 ? stage + 1 : 0)}
+            >
+              {stage < stages.length - 1 ? "Next stage" : "Start again"} <ArrowRight size={16} />
+            </button>
           </div>
         </div>
       </div>

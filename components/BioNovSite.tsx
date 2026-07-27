@@ -6,7 +6,6 @@ import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion"
 import { useEffect, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
 
-const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
 import XrayJourney from "./XrayJourney";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
@@ -1034,6 +1033,251 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             <button className="button glass noflow-explain" onClick={() => setModal(vesselDetail)}>
               How this works <ArrowRight size={16} />
             </button>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* ---------------- Conversion band ---------------- */}
+      <Reveal id="flow" className="flow-section">
+        <div className="flow-inner">
+          <Heading
+            light
+            eyebrow="The story that matters most"
+            title="Everything Your Body Does Depends on Flow"
+            copy="Blood carries oxygen and nutrients to every cell you own. When flow is easy, the whole system is served. When flow becomes harder, every destination waits longer. This is why BIO N:OV starts with circulation — not with symptoms."
+          />
+
+          <p className="click-prompt light"><MousePointerClick size={17} /> Click any stage below to read the full explanation</p>
+
+          <div className="flow-track">
+            {flowStages.map((stage, i) => (
+              <motion.button
+                key={stage.title}
+                className="flow-card"
+                whileHover={{ y: -8 }}
+                onClick={() => setModal(stage.detail)}
+                aria-label={`Read more about ${stage.title}`}
+              >
+                <span className="flow-step">{String(i + 1).padStart(2, "0")}</span>
+                <stage.icon />
+                <h3>{stage.title}</h3>
+                <p>{stage.short}</p>
+                <span className="learn-more">Read the detail <Plus size={15} /></span>
+              </motion.button>
+            ))}
+          </div>
+
+          <div className="flow-statement">
+            <p>
+              <b>The simple version:</b> blood is the delivery system, nitric oxide is the signal that opens the road,
+              and your natural production of that signal is understood to decline with age. BIO N:OV exists to support
+              that pathway &mdash; every single day, gently, for the long run.
+            </p>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* ---------------- Age chart ---------------- */}
+      <Reveal className="body-section">
+        <div className="body-copy">
+          <Heading light eyebrow="Interactive body atlas" title="One Signal. Many Biological Roles." copy="Select any system to read how circulation and nitric oxide participate in its normal function." />
+          <div className="body-list">
+            {bodySystems.map((sys, i) => (
+              <motion.button
+                whileHover={{ x: 6 }}
+                key={sys.name}
+                className={activeSystem === i ? "is-active" : ""}
+                onClick={() => { setActiveSystem(i); setModal(sys); }}
+              >
+                <span>{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <b>{sys.name}</b>
+                  <small>{sys.short}</small>
+                </div>
+                <Plus size={18} className="row-plus" />
+              </motion.button>
+            ))}
+          </div>
+        </div>
+        <div className="body-visual">
+          <Image src="/images/body-systems.png" alt="Medical illustration of body systems" width={1920} height={1080} />
+          <div className="scanline" />
+        </div>
+      </Reveal>
+
+      {/* ---------------- Lifestyle ---------------- */}
+      <Reveal className="section">
+        <Heading
+          eyebrow="Everyday foundations"
+          title="Supporting Your Body's Natural Nitric Oxide Pathways"
+          copy="BIO N:OV is designed as a convenient wellness product. It does not replace exercise, a balanced diet or medical care."
+        />
+        <div className="lifestyle-path">
+          {[["Regular physical activity", "Movement supports overall cardiovascular wellbeing.", Activity], ["Balanced nutrition", "A varied diet provides nutrients for normal body functions.", Leaf], ["Healthy sunlight exposure", "Appropriate daylight supports normal daily rhythms.", Sun]].map(([a, b, Icon]) => {
+            const I = Icon as typeof Activity;
+            return (
+              <div className="lifestyle" key={a as string}>
+                <I /><h3>{a as string}</h3><p>{b as string}</p>
+              </div>
+            );
+          })}
+          <div className="path-line" />
+          <div className="product-node"><span>V</span><b>BIO N:OV</b><small>Convenient daily support</small></div>
+        </div>
+      </Reveal>
+
+      {/* ---------------- Technology (clickable) ---------------- */}
+      <Reveal id="technology" className="section tech">
+        <Heading
+          eyebrow="Evolution of formulation"
+          title="Three Generations of Nitric Oxide Science"
+          copy="Click any generation to read how the approaches differ. Comparative performance claims are intentionally excluded pending approved evidence."
+        />
+        <p className="click-prompt"><MousePointerClick size={17} /> Click any generation to compare them in detail</p>
+        <div className="timeline">
+          {generations.map((g, i) => (
+            <motion.button
+              whileHover={{ y: -8 }}
+              className={`timeline-card ${i === 2 ? "active" : ""}`}
+              key={g.gen}
+              onClick={() => setModal(g)}
+              aria-label={`Read more about ${g.label}`}
+            >
+              <span>{g.gen}</span>
+              {i === 2 ? <FlaskConical /> : <Microscope />}
+              <h3>{g.label}</h3>
+              <p>{g.headline}</p>
+              <span className="learn-more">Read the detail <Plus size={15} /></span>
+              {i === 2 && <div className="bubbles">{[1, 2, 3, 4, 5].map(n => <i key={n} />)}</div>}
+            </motion.button>
+          ))}
+        </div>
+        <div className="tech-note"><Check /> BIO N:OV uses a patented fermentation-based approach with naturally derived ingredients.</div>
+      </Reveal>
+
+      {/* ---------------- Ingredients (clickable) ---------------- */}
+      <Reveal className="ingredients section">
+        <Heading
+          eyebrow="Premium raw materials"
+          title="Naturally Derived. Thoughtfully Fermented."
+          copy="Click any ingredient for the full story. Confirm the complete authorised formula and exact ingredient naming on the market label."
+        />
+        <p className="click-prompt"><MousePointerClick size={17} /> Click any ingredient for the full story</p>
+        <div className="ingredient-grid">
+          {ingredients.map((ing, i) => (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              key={ing.name}
+              className={ing.img ? "" : "ingredient-brand"}
+              onClick={() => setModal(ing)}
+              aria-label={`Read more about ${ing.name}`}
+            >
+              {ing.img
+                ? <Image src={`/images/${ing.img}`} alt={`${ing.name} and BIO N:OV product imagery`} fill sizes="(max-width: 800px) 100vw, 40vw" />
+                : <FlaskConical />}
+              <div>
+                <span>Fermented ingredient {String(i + 1).padStart(2, "0")}</span>
+                <h3>{ing.name}</h3>
+                <p>{ing.short}</p>
+                <span className="learn-more">Read the detail <Plus size={15} /></span>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* ---------------- Pillars (clickable) ---------------- */}
+      <Reveal id="benefits" className="section">
+        <Heading eyebrow="Five wellness pillars" title="Wellbeing, Viewed as a Whole" copy="Every pillar traces back to the same foundation: healthy flow. Click any pillar to read more." />
+        <p className="click-prompt"><MousePointerClick size={17} /> Click any pillar to read the full explanation</p>
+        <div className="pillars">
+          {pillars.map(p => (
+            <motion.button whileHover={{ y: -8 }} key={p.name} onClick={() => setModal(p)} aria-label={`Read more about ${p.name}`}>
+              <p.Icon />
+              <h3>{p.name}</h3>
+              <p>{p.short}</p>
+              <span className="learn-more">Learn more <ArrowRight size={15} /></span>
+            </motion.button>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* ---------------- Inside the body: NO flows ---------------- */}
+      <Reveal id="vessels" className="noflow-section">
+        <div className="noflow-inner">
+          {/* ---- left: copy, figures, and the vessel control ---- */}
+          <div className="noflow-copy">
+            <span className="eyebrow">Inside the body</span>
+            <h2>
+              When NO flows,<br />
+              <span>life flows freely.</span>
+            </h2>
+            <p>
+              Nitric oxide signals the smooth muscle inside every blood vessel to relax. Vessels widen.
+              Pressure drops. Oxygen-rich blood reaches every cell &mdash; your brain, your heart, your skin,
+              your stamina.
+            </p>
+
+            <p className="click-prompt light"><MousePointerClick size={17} /> Click any figure to see why it matters</p>
+            <div className="noflow-stats">
+              {flowStats.map(stat => (
+                <button key={stat.label} className="noflow-stat" onClick={() => setModal(stat)}>
+                  <b>{stat.value}</b>
+                  <span>{stat.label}</span>
+                  <i><Plus size={14} /></i>
+                </button>
+              ))}
+            </div>
+
+            {/* ---- vessel control, directly under the figures ---- */}
+            <div className="vessel-control">
+              <p className="vessel-control__prompt">
+                <MousePointerClick size={16} /> Switch the vessel &mdash; watch the flow change on the right
+              </p>
+              <div className="vessel-control__buttons">
+                <button className={!vesselOpen ? "active narrow" : "narrow"} onClick={() => setVesselOpen(false)}>
+                  <span className="dot narrow" />
+                  <span>
+                    <b>Constricted</b>
+                    <small>Slow, crowded flow</small>
+                  </span>
+                </button>
+                <button className={vesselOpen ? "active open" : "open"} onClick={() => setVesselOpen(true)}>
+                  <span className="dot open" />
+                  <span>
+                    <b>Relaxed &mdash; NO signal</b>
+                    <small>Fast, unrestricted flow</small>
+                  </span>
+                </button>
+              </div>
+              <button className="button glass vessel-control__explain" onClick={() => setModal(vesselDetail)}>
+                How this works <ArrowRight size={16} />
+              </button>
+            </div>
+
+            <p className="noflow-source">Figures from the manufacturer&rsquo;s laboratory testing. Individual results vary.</p>
+          </div>
+
+          {/* ---- right: the flow itself, nothing on top of it ---- */}
+          <div className="noflow-stage">
+            <video
+              key="bloodflow"
+              className={`noflow-flowvideo ${vesselOpen ? "is-open" : "is-narrow"}`}
+              poster="/video/blood-flow-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              ref={el => { if (el) el.playbackRate = vesselOpen ? 1.35 : 0.32; }}
+              aria-label="Blood cells flowing through a vessel"
+            >
+              <source src="/video/blood-flow.mp4" type="video/mp4" />
+            </video>
+            <div className={`noflow-stage__label ${vesselOpen ? "is-open" : "is-narrow"}`}>
+              <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
+              <b>{vesselOpen ? "Wide open — blood moves freely" : "Narrowed — blood crawls through"}</b>
+            </div>
           </div>
         </div>
       </Reveal>
