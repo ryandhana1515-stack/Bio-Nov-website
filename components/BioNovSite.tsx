@@ -8,7 +8,7 @@ import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Drople
 
 import XrayJourney from "./XrayJourney";
 
-const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
+const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[] };
 
@@ -681,6 +681,264 @@ const flowStats: (Detail & { value: string; label: string })[] = [
   }
 ];
 
+
+/* ---- Systems affected by nitric oxide deficiency (from the BIO N:OV deck,
+   attributed to Dr. Ferid Murad, Nobel Laureate in Physiology or Medicine) ---- */
+const noSystems: (Detail & { name: string; conditions: string; Icon: typeof Brain })[] = [
+  {
+    name: "Brain",
+    conditions: "Stroke · Dementia · Alzheimer's Disease",
+    Icon: Brain,
+    title: "Brain",
+    subtitle: "Stroke · Dementia · Alzheimer's Disease",
+    body: [
+      "The brain is the most blood-hungry organ you own — roughly 2% of body weight consuming around 20% of your oxygen, with almost no capacity to store fuel. It depends on blood arriving continuously.",
+      "This is why cerebrovascular health and cognitive health are so tightly linked in the research literature. 87% of strokes are caused by blocked blood flow to the brain.",
+      "Nitric oxide helps regulate cerebral blood flow and participates in normal neuronal signalling."
+    ],
+    points: [
+      "~20% of your oxygen goes to the brain",
+      "Almost no stored fuel — needs continuous supply",
+      "87% of strokes are caused by blocked blood flow",
+      "Nitric oxide helps regulate cerebral blood flow"
+    ]
+  },
+  {
+    name: "Respiratory System",
+    conditions: "Rhinitis · Pneumonia",
+    Icon: Wind,
+    title: "Respiratory System",
+    subtitle: "Rhinitis · Pneumonia",
+    body: [
+      "Nitric oxide is produced in the airways and paranasal sinuses, where it participates in normal respiratory physiology and airway defence.",
+      "Oxygen enters the body through the lungs — but it only reaches tissue if circulation carries it there. The respiratory and circulatory systems work as one delivery chain."
+    ],
+    points: [
+      "Nitric oxide is produced in the airways and sinuses",
+      "Participates in normal airway defence",
+      "Oxygen intake means nothing without delivery",
+      "Respiratory and circulatory systems work as one"
+    ]
+  },
+  {
+    name: "Blood Circulation",
+    conditions: "Hypertension · Diabetes",
+    Icon: Droplets,
+    title: "Blood Circulation",
+    subtitle: "Hypertension · Diabetes",
+    body: [
+      "This is the system nitric oxide governs most directly. It signals the smooth muscle around every vessel to relax — widening the vessel and lowering the resistance blood must overcome.",
+      "1.28 billion people worldwide live with hypertension, and 80% do not have it under control. 537 million adults live with diabetes, and almost half are undiagnosed.",
+      "These figures describe global disease burden and are not claims about this product."
+    ],
+    points: [
+      "Nitric oxide directly governs vessel relaxation",
+      "1.28 billion people live with hypertension",
+      "80% of them do not have it under control",
+      "537 million adults live with diabetes",
+      "Almost half of diabetes cases are undiagnosed"
+    ]
+  },
+  {
+    name: "Heart",
+    conditions: "Myocardial Infarction · Arrhythmia",
+    Icon: HeartPulse,
+    title: "Heart",
+    subtitle: "Myocardial Infarction · Arrhythmia",
+    body: [
+      "The heart is a pump, but what it pumps against is resistance. When vessels stay constricted, the heart must generate more force to move the same volume of blood.",
+      "The heart also feeds itself through its own coronary vessels — so circulation is not something the heart merely serves, it is something the heart depends on."
+    ],
+    points: [
+      "The heart pumps against vascular resistance",
+      "Relaxed vessels mean less work per beat",
+      "The heart feeds itself via coronary vessels",
+      "Circulation serves the pump as much as the pump serves it"
+    ]
+  },
+  {
+    name: "Immune System",
+    conditions: "Flu · Cold · Fever · Allergy",
+    Icon: ShieldPlus,
+    title: "Immune System",
+    subtitle: "Flu · Cold · Fever · Allergy",
+    body: [
+      "Immune cells patrol the body through the bloodstream and lymphatic system. Healthy circulation is how they reach tissue that needs them.",
+      "Nitric oxide has a second role here — immune cells produce it themselves as part of normal immune signalling and defence."
+    ],
+    points: [
+      "Immune cells travel via the bloodstream",
+      "Circulation is their transport network",
+      "Immune cells produce nitric oxide themselves",
+      "Part of normal immune signalling"
+    ]
+  },
+  {
+    name: "Digestive System",
+    conditions: "Indigestion · Diarrhea · Bloating",
+    Icon: Activity,
+    title: "Digestive System",
+    subtitle: "Indigestion · Diarrhea · Bloating",
+    body: [
+      "Nitric oxide participates in signalling throughout the digestive tract, including the relaxation of smooth muscle that governs normal gut motility.",
+      "Nutrients absorbed through the gut enter the bloodstream — so digestion and circulation are two halves of the same delivery system."
+    ],
+    points: [
+      "Nitric oxide signals within the digestive tract",
+      "Involved in normal gut motility",
+      "Absorbed nutrients enter via the bloodstream",
+      "Digestion and circulation are one delivery chain"
+    ]
+  }
+];
+
+/* ---- Global disease burden. Public-health statistics, sourced. ---- */
+const burden: (Detail & { figure: string; unit: string; name: string; source: string })[] = [
+  {
+    figure: "537",
+    unit: "million",
+    name: "Living with diabetes",
+    source: "International Diabetes Federation",
+    title: "Diabetes — spiralling out of control",
+    subtitle: "International Diabetes Federation",
+    body: [
+      "1 in 10 adults worldwide is living with diabetes, and almost half of them are undiagnosed — they do not yet know.",
+      "Every 5 seconds, one person dies from diabetes. In 2021 alone it was linked to 6.7 million deaths, ranking among the top causes of premature death globally.",
+      "These are public-health statistics describing global disease burden. They are not claims about this product."
+    ],
+    points: [
+      "537 million adults living with diabetes",
+      "1 in 10 adults worldwide",
+      "Almost 1 in 2 are undiagnosed",
+      "One death every 5 seconds",
+      "6.7 million deaths in 2021"
+    ]
+  },
+  {
+    figure: "1.28",
+    unit: "billion",
+    name: "Living with hypertension",
+    source: "World Health Organization",
+    title: "Hypertension — sowing seeds of risk",
+    subtitle: "World Health Organization",
+    body: [
+      "High blood pressure is the leading risk factor for stroke, ischaemic heart disease, other vascular diseases and renal disease.",
+      "1.28 billion people live with it worldwide, and 80% do not have it under control. It is directly linked to 8.5 million deaths.",
+      "These are public-health statistics describing global disease burden. They are not claims about this product. If you are managing blood pressure, follow your doctor's guidance."
+    ],
+    points: [
+      "1.28 billion people worldwide",
+      "80% fail to control their blood pressure",
+      "8.5 million deaths directly linked",
+      "Leading risk factor for stroke and heart disease",
+      "Follow your doctor's guidance — always"
+    ]
+  },
+  {
+    figure: "15",
+    unit: "million",
+    name: "Strokes every year",
+    source: "World Heart Federation · Harvard Health",
+    title: "Stroke — weighing down families",
+    subtitle: "World Heart Federation · Harvard Health Publishing",
+    body: [
+      "15 million people worldwide suffer a stroke every year. 6 million die. 5 million are left permanently disabled — becoming a heavy burden on their family and community.",
+      "87% of strokes are caused by blocked blood flow to the brain. That single figure is why circulation is not an abstract topic.",
+      "These are public-health statistics describing global disease burden. They are not claims about this product."
+    ],
+    points: [
+      "15 million strokes every year worldwide",
+      "6 million deaths",
+      "5 million left permanently disabled",
+      "87% caused by blocked blood flow to the brain",
+      "A burden carried by whole families"
+    ]
+  },
+  {
+    figure: "10",
+    unit: "million",
+    name: "New dementia cases a year",
+    source: "2022 Alzheimer's Association",
+    title: "Dementia — trapping the aged",
+    subtitle: "2022 Alzheimer's Association",
+    body: [
+      "10 million new cases every year — one new case every 3.2 seconds. 1 in 3 seniors dies with Alzheimer's or another dementia.",
+      "The weight falls on families too. Caregivers are twice as likely to be emotionally depressed, physically exhausted and financially hard-pressed, with 70% of the expense borne by families.",
+      "These are public-health statistics describing global disease burden. They are not claims about this product."
+    ],
+    points: [
+      "10 million new cases every year",
+      "One new case every 3.2 seconds",
+      "1 in 3 seniors dies with dementia",
+      "Caregivers 2x more likely to suffer",
+      "70% of the expense borne by families"
+    ]
+  }
+];
+
+
+/* ---- What BIO N:OV does (Bzzworld Smart Lab data, per the product deck) ---- */
+const novActions: (Detail & { name: string; headline: string; Icon: typeof Activity })[] = [
+  {
+    name: "Blood sugar support",
+    headline: "Stabilises blood sugar level",
+    Icon: Activity,
+    title: "BIO N:OV and blood sugar",
+    subtitle: "Bzzworld Smart Lab measurement",
+    body: [
+      "Laboratory testing recorded blood sugar dropping by 8% within 1 hour of taking BIO N:OV.",
+      "Two mechanisms are described: reducing insulin resistance to speed up blood sugar metabolism, and reducing digestive enzyme activity so blood sugar does not spike as fast after a meal.",
+      "Source: Bzzworld Smart Lab. This laboratory data is not intended or implied to be a substitute for professional medical advice, diagnosis or treatment. BIO N:OV is not a treatment for diabetes and must never replace prescribed medication."
+    ],
+    points: [
+      "Blood sugar drops by 8% within 1 hour",
+      "Reduces insulin resistance",
+      "Speeds up blood sugar metabolism",
+      "Reduces digestive enzyme activity after meals",
+      "Laboratory data — not medical advice",
+      "Never replace prescribed medication"
+    ]
+  },
+  {
+    name: "Vigor & performance",
+    headline: "Stay energetic all day long",
+    Icon: Zap,
+    title: "BIO N:OV boosts your vigor",
+    subtitle: "The chain from nitric oxide to performance",
+    body: [
+      "As nitric oxide declines with age, mitochondrial function is affected and blood flow at the skeletal muscle slows. Muscle receives less of what it needs, and performance drops.",
+      "Raising nitric oxide reverses the chain: affected functions restored, blood flow increased, more oxygen supplied to working muscle.",
+      "Source: research on nitric oxide, ageing and aerobic exercise — sedentary individuals to Master's athletes."
+    ],
+    points: [
+      "NO declines with age → performance declines",
+      "Mitochondrial function is affected",
+      "Blood flow at skeletal muscle slows",
+      "Raising NO restores affected functions",
+      "More oxygen supplied to working muscle"
+    ]
+  },
+  {
+    name: "Healthy ageing",
+    headline: "Slows down the ageing process",
+    Icon: Dna,
+    title: "BIO N:OV and telomeres",
+    subtitle: "The length of telomeres determines lifespan",
+    body: [
+      "Telomeres are the protective caps at the ends of your chromosomes. They shorten each time a cell divides, and when they reach a critical length the cell stops dividing altogether.",
+      "The deck describes BIO N:OV activating telomerase through the nitric oxide it generates, slowing the shortening process and making slower ageing possible.",
+      "Source: Circulation. This describes a proposed mechanism from the product documentation, not a measured outcome in individual users."
+    ],
+    points: [
+      "Telomeres cap the ends of your chromosomes",
+      "They shorten every time a cell divides",
+      "Cells stop dividing at a critical length",
+      "Telomerase slows that shortening",
+      "Proposed mechanism — individual results vary"
+    ]
+  }
+];
+
 const vesselDetail: Detail = {
   title: "What you just watched",
   subtitle: "The mechanism behind the model",
@@ -1163,29 +1421,68 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         </div>
       </Reveal>
 
-      {/* ---------------- Lifestyle ---------------- */}
-      <Reveal className="section">
-        <Heading
-          eyebrow="Everyday foundations"
-          title="Supporting Your Body's Natural Nitric Oxide Pathways"
-          copy="BIO N:OV is designed as a convenient wellness product. It does not replace exercise, a balanced diet or medical care."
-        />
-        <div className="lifestyle-path">
-          {[["Regular physical activity", "Movement supports overall cardiovascular wellbeing.", Activity], ["Balanced nutrition", "A varied diet provides nutrients for normal body functions.", Leaf], ["Healthy sunlight exposure", "Appropriate daylight supports normal daily rhythms.", Sun]].map(([a, b, Icon]) => {
-            const I = Icon as typeof Activity;
-            return (
-              <div className="lifestyle" key={a as string}>
-                <I /><h3>{a as string}</h3><p>{b as string}</p>
-              </div>
-            );
-          })}
-          <div className="path-line" />
-          <div className="product-node"><span>V</span><b>BIO N:OV</b><small>Convenient daily support</small></div>
+      {/* ---------------- The NO deficiency crisis ---------------- */}
+      <Reveal id="crisis" className="crisis-section">
+        <div className="crisis-inner">
+          <div className="crisis-head">
+            <span className="eyebrow">The scale of the problem</span>
+            <h2>
+              <b>99.9%</b> of human diseases<br />are <span>NO-related.</span>
+            </h2>
+            <p className="crisis-attrib">
+              &mdash; Dr. Ferid Murad, Nobel Laureate in Physiology or Medicine, <em>Magical Nitric Oxide</em>
+            </p>
+            <p className="crisis-lead">
+              Nitric oxide touches almost every system you own. When the signal weakens, the effects are not felt
+              in one place &mdash; they are felt everywhere at once. Here is where, and here is the scale of it.
+            </p>
+          </div>
+
+          <p className="click-prompt light"><MousePointerClick size={17} /> Click any system to see what it means</p>
+          <div className="crisis-grid">
+            {noSystems.map(sys => (
+              <motion.button
+                whileHover={{ y: -6 }}
+                key={sys.name}
+                className="crisis-card"
+                onClick={() => setModal(sys)}
+              >
+                <span className="crisis-card__icon"><sys.Icon /></span>
+                <b>{sys.name}</b>
+                <small>{sys.conditions}</small>
+                <span className="crisis-card__more">Read <Plus size={13} /></span>
+              </motion.button>
+            ))}
+          </div>
+
+          <div className="burden-band">
+            <h3>What that costs the world</h3>
+            <p className="click-prompt light"><MousePointerClick size={17} /> Click any figure for the full picture</p>
+            <div className="burden-grid">
+              {burden.map(b => (
+                <button key={b.name} className="burden-card" onClick={() => setModal(b)}>
+                  <b>{b.figure}<em>{b.unit}</em></b>
+                  <span>{b.name}</span>
+                  <small>{b.source}</small>
+                </button>
+              ))}
+            </div>
+            <p className="burden-note">
+              Public-health statistics describing global disease burden, shown to explain why circulation matters.
+              They are not claims about BIO N:OV. BIO N:OV is a wellness supplement, not a treatment for any
+              condition, and must never replace prescribed medication.
+            </p>
+          </div>
+
+          <div className="crisis-cta">
+            <p>Your body makes less of this signal every decade. That is the part you can act on.</p>
+            <a className="button primary" href="#product">See what BIO N:OV does <ArrowRight size={18} /></a>
+          </div>
         </div>
       </Reveal>
 
       {/* ---------------- Technology (clickable) ---------------- */}
-      <Reveal id="technology" className="section tech">
+      <Reveal id="technology" className="section tech tech--dark">
         <Heading
           eyebrow="Evolution of formulation"
           title="Three Generations of Nitric Oxide Science"
@@ -1211,6 +1508,26 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           ))}
         </div>
         <div className="tech-note"><Check /> BIO N:OV uses a patented fermentation-based approach with naturally derived ingredients.</div>
+
+        <div className="nov-actions">
+          <h3>What that third generation actually does</h3>
+          <p className="click-prompt light"><MousePointerClick size={17} /> Click any effect for the full detail and its source</p>
+          <div className="nov-actions__grid">
+            {novActions.map(a => (
+              <motion.button whileHover={{ y: -6 }} key={a.name} className="nov-action" onClick={() => setModal(a)}>
+                <span className="nov-action__icon"><a.Icon /></span>
+                <b>{a.name}</b>
+                <strong>{a.headline}</strong>
+                <span className="nov-action__more">Read the detail <Plus size={13} /></span>
+              </motion.button>
+            ))}
+          </div>
+          <p className="nov-actions__note">
+            Figures and mechanisms from the manufacturer&rsquo;s product documentation and Bzzworld Smart Lab testing.
+            This laboratory data is not intended or implied to be a substitute for professional medical advice,
+            diagnosis or treatment. Individual results vary.
+          </p>
+        </div>
       </Reveal>
 
       {/* ---------------- Ingredients (clickable) ---------------- */}

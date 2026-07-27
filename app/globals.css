@@ -511,3 +511,108 @@
 .vessel-pick__btn.is-blue.active .vessel-pick__swatch{transform:scale(1.25)}
 
 @media(max-width:800px){.vessel-pick{grid-template-columns:1fr}}
+
+/* ================= THE NO-DEFICIENCY CRISIS ================= */
+.crisis-section{position:relative;padding:120px max(7vw,32px);overflow:hidden;color:#fff;
+  background:radial-gradient(ellipse at 78% 8%,rgba(255,120,50,.2),transparent 52%),
+             radial-gradient(circle at 10% 85%,rgba(220,40,90,.24),transparent 48%),
+             linear-gradient(165deg,#0a0614 0%,#140a1e 45%,#05070f 100%)}
+.crisis-section:before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:58px 58px;mask-image:radial-gradient(circle at 50% 30%,black,transparent 78%)}
+.crisis-inner{position:relative;z-index:2;max-width:1240px;margin:auto}
+
+.crisis-head{max-width:900px;margin-bottom:46px}
+.crisis-head .eyebrow{color:#ff9b5e}
+.crisis-head h2{margin:14px 0 16px;font-size:clamp(34px,6vw,72px);line-height:1.02;letter-spacing:-.05em;color:#fff}
+.crisis-head h2 b{font-weight:900;color:#ffb45e;text-shadow:0 0 44px rgba(255,180,94,.55)}
+.crisis-head h2 span{background:linear-gradient(110deg,#ff6f95,#ff3d6e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.crisis-attrib{margin:0 0 18px;font-size:13px;font-style:italic;color:#9fb6da}
+.crisis-attrib em{color:#cfe2ff}
+.crisis-lead{margin:0;max-width:70ch;font-size:16.5px;line-height:1.78;color:#cfe2ff}
+
+.crisis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:64px}
+.crisis-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:26px 22px;cursor:pointer;
+  text-align:left;border-radius:22px;border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  backdrop-filter:blur(14px);transition:border-color .25s,background .25s}
+.crisis-card:hover{border-color:rgba(255,155,94,.6);background:rgba(255,155,94,.12)}
+.crisis-card__icon{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;margin-bottom:6px;
+  background:linear-gradient(145deg,rgba(255,180,94,.28),rgba(255,95,126,.22));border:1px solid rgba(255,255,255,.18)}
+.crisis-card__icon svg{width:25px;height:25px;color:#ffb45e}
+.crisis-card b{font-size:19px;letter-spacing:-.02em;color:#fff}
+.crisis-card small{font-size:13px;line-height:1.55;color:#bcd4ff}
+.crisis-card__more{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:12px;
+  font-size:12px;font-weight:800;letter-spacing:.06em;color:#ff9b5e}
+
+/* ---- global burden band ---- */
+.burden-band{padding:44px;border-radius:30px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(4,8,22,.55);backdrop-filter:blur(16px)}
+.burden-band h3{margin:0 0 16px;font-size:clamp(24px,3.2vw,38px);line-height:1.08;letter-spacing:-.04em;color:#fff}
+.burden-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.burden-card{display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:24px 20px;cursor:pointer;
+  text-align:left;border-radius:20px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
+  transition:all .25s}
+.burden-card:hover{transform:translateY(-5px);border-color:rgba(255,111,149,.6);background:rgba(255,111,149,.12)}
+.burden-card b{display:flex;align-items:baseline;gap:6px;font-size:clamp(32px,4.4vw,48px);line-height:1;
+  font-weight:900;letter-spacing:-.045em;color:#ff6f95;text-shadow:0 0 34px rgba(255,111,149,.45)}
+.burden-card b em{font-style:normal;font-size:15px;font-weight:800;letter-spacing:0;color:#ffb45e}
+.burden-card span{font-size:14px;font-weight:700;color:#fff;line-height:1.35}
+.burden-card small{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#8fa6c9}
+.burden-note{margin:0;max-width:92ch;font-size:11.5px;line-height:1.7;color:rgba(200,220,255,.55)}
+
+.crisis-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-top:38px;
+  padding:28px 34px;border-radius:24px;border:1px solid rgba(255,180,94,.4);
+  background:linear-gradient(115deg,rgba(255,180,94,.16),rgba(255,95,126,.14))}
+.crisis-cta p{margin:0;font-size:18px;font-weight:650;line-height:1.5;color:#fff;max-width:60ch}
+
+@media(max-width:1150px){.crisis-grid{grid-template-columns:repeat(2,1fr)}.burden-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){
+  .crisis-section{padding-left:20px;padding-right:20px}
+  .crisis-grid,.burden-grid{grid-template-columns:1fr}
+  .burden-band{padding:26px 20px}
+  .crisis-cta{flex-direction:column;align-items:stretch;text-align:center}
+}
+
+/* ================= TECHNOLOGY — DARK + WHAT IT DOES ================= */
+.tech--dark{position:relative;color:#fff;
+  background:radial-gradient(ellipse at 20% 5%,rgba(79,227,255,.18),transparent 50%),
+             radial-gradient(circle at 88% 75%,rgba(124,92,255,.24),transparent 48%),
+             linear-gradient(170deg,#050b22 0%,#0a1330 55%,#070d24 100%)}
+.tech--dark .heading h2{color:#fff}
+.tech--dark .heading p{color:#c6dcff}
+.tech--dark .eyebrow{color:#8fe6ff}
+.tech--dark .click-prompt{color:#8fe6ff;background:rgba(143,230,255,.12);border-color:rgba(143,230,255,.32)}
+/* generation cards on dark */
+.tech--dark .timeline-card{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  border-color:rgba(255,255,255,.14);color:#fff;backdrop-filter:blur(14px);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.tech--dark .timeline-card h3{color:#fff}
+.tech--dark .timeline-card p{color:#bcd4ff}
+.tech--dark .timeline-card>span{color:#8fa6c9}
+.tech--dark .timeline-card svg{color:#8fe6ff}
+.tech--dark .timeline-card .learn-more{color:#8fe6ff}
+.tech--dark .timeline-card.active{background:linear-gradient(150deg,#0759cf,#645bdc 62%,#d54fa8);
+  border-color:transparent;box-shadow:0 30px 80px rgba(79,72,203,.45)}
+.tech--dark .tech-note{background:rgba(143,230,255,.1);border:1px solid rgba(143,230,255,.28);color:#cfe2ff}
+
+/* ---- what BIO N:OV does ---- */
+.nov-actions{margin-top:64px;padding:44px;border-radius:30px;
+  border:1px solid rgba(255,255,255,.14);background:rgba(4,10,30,.5);backdrop-filter:blur(16px)}
+.nov-actions h3{margin:0 0 16px;font-size:clamp(24px,3.2vw,38px);line-height:1.08;letter-spacing:-.04em;color:#fff}
+.nov-actions__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.nov-action{display:flex;flex-direction:column;align-items:flex-start;gap:9px;padding:28px 24px;cursor:pointer;
+  text-align:left;border-radius:22px;border:1px solid rgba(255,255,255,.15);
+  background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));transition:all .25s}
+.nov-action:hover{border-color:rgba(143,230,255,.6);background:rgba(143,230,255,.12)}
+.nov-action__icon{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;
+  background:linear-gradient(145deg,rgba(79,227,255,.3),rgba(124,92,255,.26));border:1px solid rgba(255,255,255,.18)}
+.nov-action__icon svg{width:25px;height:25px;color:#8fe6ff}
+.nov-action b{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#8fe6ff}
+.nov-action strong{font-size:20px;font-weight:750;line-height:1.22;letter-spacing:-.025em;color:#fff}
+.nov-action__more{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:12px;
+  font-size:12px;font-weight:800;color:#8fe6ff}
+.nov-actions__note{margin:0;max-width:92ch;font-size:11.5px;line-height:1.7;color:rgba(200,220,255,.55)}
+
+@media(max-width:1150px){.nov-actions__grid{grid-template-columns:1fr}}
+@media(max-width:800px){.nov-actions{padding:26px 20px}}
