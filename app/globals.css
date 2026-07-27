@@ -481,3 +481,33 @@
   .body-visual{min-height:520px}
   .body-readout{left:14px;right:14px;bottom:14px;padding:20px}
 }
+
+/* ---- Vessel picker: red = low NO, blue = NO active ---- */
+.noflow-how{width:100%;margin-bottom:18px}
+.vessel-pick__prompt{display:flex;align-items:center;gap:9px;margin:0 0 12px;font-size:12.5px;font-weight:800;color:#8fe6ff}
+.vessel-pick__prompt svg{animation:tap 2.2s ease-in-out infinite}
+.vessel-pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.vessel-pick__btn{display:flex;gap:13px;align-items:flex-start;padding:18px 16px;cursor:pointer;text-align:left;
+  border-radius:18px;border:1.5px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+  backdrop-filter:blur(12px);transition:all .28s cubic-bezier(.22,1,.36,1)}
+.vessel-pick__btn:hover{transform:translateY(-3px)}
+.vessel-pick__swatch{flex:none;width:16px;height:16px;border-radius:50%;margin-top:3px;transition:all .28s}
+.vessel-pick__txt{display:block}
+.vessel-pick__txt b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:3px}
+.vessel-pick__txt em{display:block;font-style:normal;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:8px}
+.vessel-pick__txt small{display:block;font-size:12.5px;line-height:1.55;color:#9fb6da}
+
+.vessel-pick__btn.is-red .vessel-pick__swatch{background:#ff5f7e;box-shadow:0 0 14px rgba(255,95,126,.9)}
+.vessel-pick__btn.is-red .vessel-pick__txt em{color:#ff8fa8}
+.vessel-pick__btn.is-red.active{border-color:#ff5f7e;background:rgba(255,95,126,.16);
+  box-shadow:0 16px 40px rgba(220,40,90,.35)}
+.vessel-pick__btn.is-red.active .vessel-pick__swatch{transform:scale(1.25)}
+
+.vessel-pick__btn.is-blue .vessel-pick__swatch{background:#4fe3ff;box-shadow:0 0 14px rgba(79,227,255,.9)}
+.vessel-pick__btn.is-blue .vessel-pick__txt em{color:#8fe6ff}
+.vessel-pick__btn.is-blue.active{border-color:#4fe3ff;background:rgba(79,227,255,.16);
+  box-shadow:0 16px 40px rgba(20,150,220,.35)}
+.vessel-pick__btn.is-blue.active .vessel-pick__swatch{transform:scale(1.25)}
+
+@media(max-width:800px){.vessel-pick{grid-template-columns:1fr}}

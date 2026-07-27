@@ -1036,24 +1036,25 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             <p className="noflow-source">Figures from the manufacturer&rsquo;s laboratory testing. Individual results vary.</p>
           </div>
 
-          <div className="noflow-3d">
-            <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
+          {/* ---- right: the flow itself, nothing on top of it ---- */}
+          <div className="noflow-stage">
+            <video
+              className={`noflow-flowvideo ${vesselOpen ? "is-open" : "is-narrow"}`}
+              poster="/video/blood-flow-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              ref={el => { if (el) el.playbackRate = vesselOpen ? 1.35 : 0.32; }}
+              aria-label="Blood cells flowing through a vessel"
+            >
+              <source src="/video/blood-flow.mp4" type="video/mp4" />
+            </video>
+            <div className={`noflow-stage__label ${vesselOpen ? "is-open" : "is-narrow"}`}>
               <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
-              <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
+              <b>{vesselOpen ? "Wide open — blood moves freely" : "Narrowed — blood crawls through"}</b>
             </div>
-
-            <p className="click-prompt light"><MousePointerClick size={17} /> Switch the vessel and watch the flow change</p>
-            <div className="noflow-toggle">
-              <button className={!vesselOpen ? "active" : ""} onClick={() => setVesselOpen(false)}>
-                <span className="dot narrow" /> Constricted
-              </button>
-              <button className={vesselOpen ? "active" : ""} onClick={() => setVesselOpen(true)}>
-                <span className="dot open" /> Relaxed &mdash; NO signal
-              </button>
-            </div>
-            <button className="button glass noflow-explain" onClick={() => setModal(vesselDetail)}>
-              How this works <ArrowRight size={16} />
-            </button>
           </div>
         </div>
       </Reveal>
