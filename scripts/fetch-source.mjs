@@ -18,7 +18,8 @@ const SOURCE = [
   "components/MoleculeScene.tsx",
   "components/VesselScene.tsx",
   "components/BodyScene.tsx",
-  "components/XrayBody.tsx"
+  "components/XrayBody.tsx",
+  "components/XrayJourney.tsx"
 ];
 
 const IMAGES = [

@@ -336,3 +336,63 @@
   .journey-panel{padding:20px}
   .xray__stop span{font-size:9px;letter-spacing:.1em}
 }
+
+/* ================= SCROLL-SCRUBBED X-RAY JOURNEY ================= */
+.journey-section{position:relative;height:340vh;background:#02071c}
+.journey-sticky{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#02071c}
+.journey-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+.journey-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:6vh 4vw}
+.journey-fallback .xray{width:min(560px,60vw)}
+.journey-fallback .xray__track{display:none}
+.journey-vignette{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 28%,#02071c 88%),
+             linear-gradient(180deg,rgba(2,7,28,.72),transparent 35%,transparent 62%,rgba(2,7,28,.88))}
+.journey-grid{position:absolute;inset:0;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(rgba(143,230,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(143,230,255,.06) 1px,transparent 1px);
+  background-size:64px 64px}
+.journey-scanline{position:absolute;left:0;right:0;height:1px;pointer-events:none;z-index:3;
+  background:linear-gradient(90deg,transparent,#4fe3ff,transparent);box-shadow:0 0 22px #4fe3ff;opacity:.75;
+  transition:top .12s linear}
+
+.journey-head{position:absolute;top:0;left:0;right:0;z-index:4;padding:11vh 6vw 0;text-align:center;pointer-events:none}
+.journey-kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;color:#4fe3ff}
+.journey-head h2{margin:14px 0 10px;font-size:clamp(30px,5.4vw,64px);line-height:1.04;letter-spacing:-.045em;color:#fff}
+.journey-head h2 span{background:linear-gradient(110deg,#ffb45e,#ff8a3d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.journey-head p{margin:0;font-size:15px;color:#9fb6da;max-width:46ch;margin-inline:auto}
+
+.journey-stage{position:absolute;z-index:4;max-width:280px;opacity:0;transform:translateY(20px);
+  transition:opacity .7s ease,transform .7s ease}
+.journey-stage.is-visible{opacity:1;transform:translateY(0)}
+.journey-stage--left{left:4vw;text-align:left}
+.journey-stage--right{right:4vw;text-align:right}
+.journey-stage__row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.journey-stage--right .journey-stage__row{flex-direction:row-reverse}
+.journey-stage__icon{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;flex:none;
+  border:1px solid rgba(79,227,255,.35);background:rgba(10,30,70,.5);color:#4fe3ff;transition:all .5s}
+.journey-stage.is-active .journey-stage__icon{border-color:#ffb45e;background:rgba(255,180,94,.2);color:#ffd9a8;
+  box-shadow:0 0 30px rgba(255,180,94,.7)}
+.journey-stage__rule{flex:1;max-width:80px;height:1px;background:rgba(79,227,255,.3);transition:background .5s}
+.journey-stage.is-active .journey-stage__rule{background:rgba(255,180,94,.6)}
+.journey-stage b{display:block;font-size:clamp(16px,1.9vw,21px);line-height:1.2;letter-spacing:-.02em;color:#fff;transition:color .5s}
+.journey-stage.is-active b{color:#ffd9a8}
+.journey-stage p{margin:6px 0 0;font-size:13.5px;line-height:1.5;color:#9fb6da}
+.journey-stage__no{display:inline-block;margin-top:9px;font-size:10px;letter-spacing:.22em;color:rgba(79,227,255,.7);font-family:ui-monospace,monospace}
+
+.journey-track{position:absolute;bottom:5vh;left:0;right:0;z-index:4;padding:0 6vw}
+.journey-track__labels{display:flex;justify-content:space-between;max-width:780px;margin:0 auto 9px;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#7d93b8;font-family:ui-monospace,monospace}
+.journey-track__line{position:relative;max-width:780px;margin:0 auto;height:1px;background:rgba(255,255,255,.18)}
+.journey-track__fill{position:absolute;left:0;top:0;height:100%;
+  background:linear-gradient(90deg,#4fe3ff,#ffb45e);box-shadow:0 0 20px rgba(255,180,94,.8)}
+.journey-track__dot{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:#ffb45e;
+  transform:translate(-50%,-50%);box-shadow:0 0 20px #ffb45e}
+.journey-track__note{max-width:780px;margin:10px auto 0;text-align:center;font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:#7d93b8;font-family:ui-monospace,monospace}
+
+@media(max-width:900px){
+  .journey-section{height:300vh}
+  .journey-stage{max-width:190px}
+  .journey-stage p{font-size:11.5px}
+  .journey-stage__icon{width:38px;height:38px}
+  .journey-fallback .xray{width:74vw}
+}

@@ -8,8 +8,9 @@ import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Drople
 
 const VesselScene = dynamic(() => import("./VesselScene"), { ssr: false });
 import XrayBody, { journeyStages } from "./XrayBody";
+import XrayJourney from "./XrayJourney";
 
-const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
+const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["X-Ray Vision","journey"],["Blood Flow","flow"],["See It in 3D","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[] };
 
@@ -926,6 +927,9 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           </div>
         </div>
       </Reveal>
+
+      {/* ---------------- Scroll-scrubbed X-ray journey ---------------- */}
+      <XrayJourney />
 
       {/* ---------------- Blood flow story (NEW) ---------------- */}
       <Reveal id="flow" className="flow-section">
