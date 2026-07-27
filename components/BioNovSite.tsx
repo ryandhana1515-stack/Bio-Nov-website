@@ -1162,18 +1162,9 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
 
       {/* ---------------- Inside the body: NO flows ---------------- */}
       <Reveal id="vessels" className="noflow-section">
-        <video
-          className="noflow-video"
-          poster="/video/blood-flow-poster.jpg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-        >
-          <source src="/video/blood-flow.mp4" type="video/mp4" />
-        </video>
+        <div className="noflow-bg" aria-hidden="true">
+          <VesselScene open={vesselOpen} />
+        </div>
         <div className="noflow-scrim" />
 
         <div className="noflow-inner">
@@ -1203,14 +1194,12 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           </div>
 
           <div className="noflow-3d">
-            <div className="vessel-canvas">
-              <VesselScene open={vesselOpen} />
-              <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
-                <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
-                <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
-              </div>
+            <div className={`vessel-stateplate ${vesselOpen ? "is-open" : "is-narrow"}`}>
+              <span>{vesselOpen ? "RELAXED VESSEL" : "CONSTRICTED VESSEL"}</span>
+              <b>{vesselOpen ? "Smooth, unrestricted flow" : "Slower, crowded flow"}</b>
             </div>
 
+            <p className="click-prompt light"><MousePointerClick size={17} /> Switch the vessel and watch the flow change</p>
             <div className="noflow-toggle">
               <button className={!vesselOpen ? "active" : ""} onClick={() => setVesselOpen(false)}>
                 <span className="dot narrow" /> Constricted
