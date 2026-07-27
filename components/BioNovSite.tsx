@@ -1424,18 +1424,34 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       {/* ---------------- The NO deficiency crisis ---------------- */}
       <Reveal id="crisis" className="crisis-section">
         <div className="crisis-inner">
-          <div className="crisis-head">
-            <span className="eyebrow">The scale of the problem</span>
-            <h2>
-              <b>99.9%</b> of human diseases<br />are <span>NO-related.</span>
-            </h2>
-            <p className="crisis-attrib">
-              &mdash; Dr. Ferid Murad, Nobel Laureate in Physiology or Medicine, <em>Magical Nitric Oxide</em>
-            </p>
-            <p className="crisis-lead">
-              Nitric oxide touches almost every system you own. When the signal weakens, the effects are not felt
-              in one place &mdash; they are felt everywhere at once. Here is where, and here is the scale of it.
-            </p>
+          <div className="crisis-top">
+            <div className="crisis-head">
+              <span className="eyebrow">The scale of the problem</span>
+              <h2>
+                <b>99.9%</b> of human diseases<br />are <span>NO-related.</span>
+              </h2>
+              <p className="crisis-attrib">
+                &mdash; Dr. Ferid Murad, Nobel Laureate in Physiology or Medicine, <em>Magical Nitric Oxide</em>
+              </p>
+              <p className="crisis-lead">
+                Nitric oxide touches almost every system you own. When the signal weakens, the effects are not felt
+                in one place &mdash; they are felt everywhere at once. Here is where, and here is the scale of it.
+              </p>
+            </div>
+
+            <figure className="crisis-figure">
+              <Image
+                src="/images/crisis-body.jpg"
+                alt="Anatomical scan of the human body with the circulatory and nervous networks illuminated"
+                width={760}
+                height={1342}
+                sizes="(max-width: 1000px) 100vw, 42vw"
+              />
+              <figcaption>
+                <b>Every organ sits on the same road.</b>
+                <span>Brain, heart, lungs, gut, muscle, skin &mdash; all of it is fed by the network lit up here.</span>
+              </figcaption>
+            </figure>
           </div>
 
           <p className="click-prompt light"><MousePointerClick size={17} /> Click any system to see what it means</p>
@@ -1508,6 +1524,44 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           ))}
         </div>
         <div className="tech-note"><Check /> BIO N:OV uses a patented fermentation-based approach with naturally derived ingredients.</div>
+
+        <div className="tech-showcase">
+          <figure className="tech-showcase__img">
+            <Image
+              src="/images/tech-product.jpg"
+              alt="BIO N:OV carton and tablets surrounded by nitric oxide molecules and a DNA helix"
+              width={1280}
+              height={720}
+              sizes="(max-width: 1000px) 100vw, 52vw"
+            />
+            <figcaption>500 mg &times; 60 tablets &middot; GMP-certified Korean manufacture</figcaption>
+          </figure>
+
+          <div className="tech-showcase__copy">
+            <span className="eyebrow">What third generation means</span>
+            <h3>Fermented first &mdash; so your body doesn&rsquo;t have to do the work.</h3>
+            <p>
+              First- and second-generation formulas hand your body a raw precursor and rely on it to make the
+              conversion. That conversion depends on enzymes that grow less efficient with every decade &mdash;
+              which is exactly why those formulas tend to disappoint the people who need them most.
+            </p>
+            <p>
+              BIO N:OV moves that step out of your body and into the fermentation tank. Garlic and lettuce are
+              transformed by a patented microbial process (KACC91554P) inside a GMP-certified Korean facility
+              before the tablet is ever pressed.
+            </p>
+            <ul className="tech-showcase__list">
+              <li><Check size={16} /> <span>Patented fermentation strain &mdash; KACC91554P</span></li>
+              <li><Check size={16} /> <span>No enzyme conversion required inside your body</span></li>
+              <li><Check size={16} /> <span>Works the same way at 60 as it does at 30</span></li>
+              <li><Check size={16} /> <span>Naturally derived &mdash; fermented garlic and lettuce</span></li>
+            </ul>
+            <div className="tech-showcase__cta">
+              <a className="button primary" href="#product">See the product <ArrowRight size={17} /></a>
+              <a className="button glass" href="#affiliate">Join us as an affiliate <ArrowRight size={17} /></a>
+            </div>
+          </div>
+        </div>
 
         <div className="nov-actions">
           <h3>What that third generation actually does</h3>

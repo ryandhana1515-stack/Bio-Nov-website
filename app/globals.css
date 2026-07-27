@@ -514,16 +514,34 @@
 
 /* ================= THE NO-DEFICIENCY CRISIS ================= */
 .crisis-section{position:relative;padding:120px max(7vw,32px);overflow:hidden;color:#fff;
-  background:radial-gradient(ellipse at 78% 8%,rgba(255,120,50,.2),transparent 52%),
-             radial-gradient(circle at 10% 85%,rgba(220,40,90,.24),transparent 48%),
-             linear-gradient(165deg,#0a0614 0%,#140a1e 45%,#05070f 100%)}
-.crisis-section:before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 78% 8%,rgba(32,199,236,.2),transparent 52%),
+             radial-gradient(circle at 10% 85%,rgba(102,87,217,.26),transparent 48%),
+             linear-gradient(165deg,#16386f 0%,#102a58 48%,#0c1f43 100%)}
+/* photographic wash so the section reads as imagery, not a flat colour field */
+.crisis-section:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:url("/images/vessel-macro.jpg") center/cover no-repeat;
+  opacity:.2;filter:saturate(.55) hue-rotate(178deg) brightness(.85) contrast(1.1);
+  mask-image:linear-gradient(to bottom,black,rgba(0,0,0,.35) 55%,transparent)}
+.crisis-section:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
                    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
   background-size:58px 58px;mask-image:radial-gradient(circle at 50% 30%,black,transparent 78%)}
 .crisis-inner{position:relative;z-index:2;max-width:1240px;margin:auto}
 
-.crisis-head{max-width:900px;margin-bottom:46px}
+.crisis-top{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:46px;margin-bottom:52px}
+.crisis-head{max-width:900px}
+
+/* body atlas picture panel */
+.crisis-figure{position:relative;margin:0;border-radius:28px;overflow:hidden;
+  border:1px solid rgba(143,230,255,.28);background:linear-gradient(165deg,#0f2a56,#0a1c3e);
+  box-shadow:0 34px 90px rgba(2,14,44,.55)}
+.crisis-figure img{display:block;width:100%;height:auto;
+  filter:brightness(1.06) contrast(1.06) saturate(1.05)}
+.crisis-figure:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(12,31,67,.1) 40%,rgba(9,23,52,.92))}
+.crisis-figure figcaption{position:absolute;z-index:2;left:22px;right:22px;bottom:20px}
+.crisis-figure figcaption b{display:block;font-size:19px;letter-spacing:-.02em;color:#fff}
+.crisis-figure figcaption span{display:block;margin-top:6px;font-size:13px;line-height:1.55;color:#bcd4ff}
 .crisis-head .eyebrow{color:#ff9b5e}
 .crisis-head h2{margin:14px 0 16px;font-size:clamp(34px,6vw,72px);line-height:1.02;letter-spacing:-.05em;color:#fff}
 .crisis-head h2 b{font-weight:900;color:#ffb45e;text-shadow:0 0 44px rgba(255,180,94,.55)}
@@ -537,7 +555,7 @@
   text-align:left;border-radius:22px;border:1px solid rgba(255,255,255,.14);
   background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
   backdrop-filter:blur(14px);transition:border-color .25s,background .25s}
-.crisis-card:hover{border-color:rgba(255,155,94,.6);background:rgba(255,155,94,.12)}
+.crisis-card:hover{border-color:rgba(95,224,255,.65);background:rgba(95,224,255,.12)}
 .crisis-card__icon{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;margin-bottom:6px;
   background:linear-gradient(145deg,rgba(255,180,94,.28),rgba(255,95,126,.22));border:1px solid rgba(255,255,255,.18)}
 .crisis-card__icon svg{width:25px;height:25px;color:#ffb45e}
@@ -548,15 +566,15 @@
 
 /* ---- global burden band ---- */
 .burden-band{padding:44px;border-radius:30px;border:1px solid rgba(255,255,255,.14);
-  background:rgba(4,8,22,.55);backdrop-filter:blur(16px)}
+  background:rgba(10,26,58,.5);backdrop-filter:blur(16px)}
 .burden-band h3{margin:0 0 16px;font-size:clamp(24px,3.2vw,38px);line-height:1.08;letter-spacing:-.04em;color:#fff}
 .burden-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
 .burden-card{display:flex;flex-direction:column;align-items:flex-start;gap:7px;padding:24px 20px;cursor:pointer;
   text-align:left;border-radius:20px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);
   transition:all .25s}
-.burden-card:hover{transform:translateY(-5px);border-color:rgba(255,111,149,.6);background:rgba(255,111,149,.12)}
+.burden-card:hover{transform:translateY(-5px);border-color:rgba(95,224,255,.65);background:rgba(95,224,255,.12)}
 .burden-card b{display:flex;align-items:baseline;gap:6px;font-size:clamp(32px,4.4vw,48px);line-height:1;
-  font-weight:900;letter-spacing:-.045em;color:#ff6f95;text-shadow:0 0 34px rgba(255,111,149,.45)}
+  font-weight:900;letter-spacing:-.045em;color:#5fe0ff;text-shadow:0 0 34px rgba(95,224,255,.5)}
 .burden-card b em{font-style:normal;font-size:15px;font-weight:800;letter-spacing:0;color:#ffb45e}
 .burden-card span{font-size:14px;font-weight:700;color:#fff;line-height:1.35}
 .burden-card small{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#8fa6c9}
@@ -568,6 +586,8 @@
 .crisis-cta p{margin:0;font-size:18px;font-weight:650;line-height:1.5;color:#fff;max-width:60ch}
 
 @media(max-width:1150px){.crisis-grid{grid-template-columns:repeat(2,1fr)}.burden-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1000px){.crisis-top{grid-template-columns:1fr;gap:32px}
+  .crisis-figure{max-width:520px}}
 @media(max-width:800px){
   .crisis-section{padding-left:20px;padding-right:20px}
   .crisis-grid,.burden-grid{grid-template-columns:1fr}
@@ -576,10 +596,16 @@
 }
 
 /* ================= TECHNOLOGY — DARK + WHAT IT DOES ================= */
-.tech--dark{position:relative;color:#fff;
-  background:radial-gradient(ellipse at 20% 5%,rgba(79,227,255,.18),transparent 50%),
-             radial-gradient(circle at 88% 75%,rgba(124,92,255,.24),transparent 48%),
-             linear-gradient(170deg,#050b22 0%,#0a1330 55%,#070d24 100%)}
+.tech--dark{position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(ellipse at 20% 5%,rgba(79,227,255,.2),transparent 50%),
+             radial-gradient(circle at 88% 75%,rgba(124,92,255,.22),transparent 48%),
+             linear-gradient(170deg,#1a3d76 0%,#122e5e 52%,#0d2148 100%)}
+.tech--dark>*{position:relative;z-index:2}
+/* product imagery bled into the background so the band is never a wall of text */
+.tech--dark:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:url("/images/tech-product.jpg") center 30%/cover no-repeat;
+  opacity:.16;filter:saturate(.7) brightness(.9);
+  mask-image:linear-gradient(to bottom,transparent,rgba(0,0,0,.5) 30%,black)}
 .tech--dark .heading h2{color:#fff}
 .tech--dark .heading p{color:#c6dcff}
 .tech--dark .eyebrow{color:#8fe6ff}
@@ -597,6 +623,26 @@
 .tech--dark .tech-note{background:rgba(143,230,255,.1);border:1px solid rgba(143,230,255,.28);color:#cfe2ff}
 
 /* ---- what BIO N:OV does ---- */
+/* ---- picture + explanation band ---- */
+.tech-showcase{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:44px;margin-top:64px;
+  padding:38px;border-radius:32px;border:1px solid rgba(143,230,255,.24);
+  background:linear-gradient(150deg,rgba(255,255,255,.09),rgba(255,255,255,.03));backdrop-filter:blur(16px)}
+.tech-showcase__img{position:relative;margin:0;border-radius:24px;overflow:hidden;
+  border:1px solid rgba(143,230,255,.3);box-shadow:0 30px 80px rgba(2,14,44,.5)}
+.tech-showcase__img img{display:block;width:100%;height:auto}
+.tech-showcase__img figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 20px 16px;
+  font-size:12px;font-weight:700;letter-spacing:.04em;color:#cfe2ff;
+  background:linear-gradient(to top,rgba(7,22,52,.92),transparent)}
+.tech-showcase__copy h3{margin:12px 0 16px;font-size:clamp(25px,3.1vw,40px);line-height:1.06;
+  letter-spacing:-.04em;color:#fff}
+.tech-showcase__copy p{margin:0 0 14px;font-size:15.5px;line-height:1.78;color:#c6dcff}
+.tech-showcase__list{display:grid;gap:9px;margin:22px 0 26px;padding:0;list-style:none}
+.tech-showcase__list li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;line-height:1.5;color:#e4efff}
+.tech-showcase__list svg{flex:none;margin-top:2px;color:#5fe0ff}
+.tech-showcase__cta{display:flex;flex-wrap:wrap;gap:12px}
+
+@media(max-width:1000px){.tech-showcase{grid-template-columns:1fr;gap:28px;padding:24px}}
+
 .nov-actions{margin-top:64px;padding:44px;border-radius:30px;
   border:1px solid rgba(255,255,255,.14);background:rgba(4,10,30,.5);backdrop-filter:blur(16px)}
 .nov-actions h3{margin:0 0 16px;font-size:clamp(24px,3.2vw,38px);line-height:1.08;letter-spacing:-.04em;color:#fff}
