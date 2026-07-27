@@ -333,7 +333,8 @@
 /* ================= X-RAY JOURNEY — CLICK DRIVEN ================= */
 .journey-section{position:relative;padding:110px max(7vw,32px);color:#fff;
   background:radial-gradient(ellipse at 50% 0%,rgba(255,150,70,.12),transparent 55%),
-             linear-gradient(180deg,#04102e 0%,#050b22 60%,#04102e 100%)}
+             radial-gradient(circle at 85% 80%,rgba(32,199,236,.16),transparent 46%),
+             linear-gradient(180deg,#153466 0%,#0e2450 58%,#0b1c3f 100%)}
 .journey-head{max-width:820px;margin:0 auto 46px;text-align:center}
 .journey-kicker{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.3em;text-transform:uppercase;color:#4fe3ff}
 .journey-head h2{margin:14px 0 12px;font-size:clamp(30px,5vw,58px);line-height:1.04;letter-spacing:-.045em;color:#fff}
