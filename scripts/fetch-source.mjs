@@ -38,7 +38,12 @@ const IMAGES = [
   "researcher-sooah.png"
 ].map((name) => `public/images/${name}`);
 
-const VIDEO = ["bio-nov-hero.mp4", "bio-nov-hero-poster.jpg"].map(
+const VIDEO = [
+  "bio-nov-hero.mp4",
+  "bio-nov-hero-poster.jpg",
+  "xray-journey.mp4",
+  "xray-journey-poster.jpg"
+].map(
   (name) => `public/video/${name}`
 );
 

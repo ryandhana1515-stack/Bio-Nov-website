@@ -340,7 +340,8 @@
 /* ================= SCROLL-SCRUBBED X-RAY JOURNEY ================= */
 .journey-section{position:relative;height:340vh;background:#02071c}
 .journey-sticky{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#02071c}
-.journey-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+.journey-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:.95}
+@media(min-width:1500px){.journey-video{object-fit:cover}}
 .journey-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:6vh 4vw}
 .journey-fallback .xray{width:min(560px,60vw)}
 .journey-fallback .xray__track{display:none}

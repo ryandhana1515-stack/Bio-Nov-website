@@ -929,7 +929,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </Reveal>
 
       {/* ---------------- Scroll-scrubbed X-ray journey ---------------- */}
-      <XrayJourney />
+      <XrayJourney videoSrc="/video/xray-journey.mp4" />
 
       {/* ---------------- Blood flow story (NEW) ---------------- */}
       <Reveal id="flow" className="flow-section">

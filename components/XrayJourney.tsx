@@ -62,6 +62,7 @@ export default function XrayJourney({ videoSrc }: { videoSrc?: string }) {
           <video
             ref={videoRef}
             src={videoSrc}
+            poster="/video/xray-journey-poster.jpg"
             muted
             playsInline
             preload="auto"
