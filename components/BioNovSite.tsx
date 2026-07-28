@@ -1783,7 +1783,7 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
                 <span className="crisis-card__icon"><sys.Icon /></span>
                 <b>{sys.name}</b>
                 <small>{sys.conditions}</small>
-                <span className="crisis-card__more">Read <Plus size={13} /></span>
+                <span className="crisis-card__more">Read <Plus size={17} /></span>
               </motion.button>
             ))}
           </div>
