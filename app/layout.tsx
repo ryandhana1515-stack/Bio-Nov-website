@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import VoiceAgent from "../components/VoiceAgent";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -13,5 +14,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className="scroll-smooth"><body className={inter.variable}>{children}</body></html>;
+  return <html lang="en" className="scroll-smooth"><body className={inter.variable}>{children}<VoiceAgent /></body></html>;
 }
