@@ -90,8 +90,18 @@ one table row — no workflow changes.
 | Daily Summary | trijC0dd0NbhXLJg | Daily 18:00 | Manager Reports data table |
 | Weekly Report | cuJ1hUpX24cbau7n | Mondays 07:00 | Manager Reports data table |
 
+| Website Agent | wWtVDcMhL0mXvmjf | Hosted chat | Immersive 3D site design packages (Kling prompts + Lovable brief) for the CTO to build |
+| Omnichannel AI Hub | JVGDhhmPFSATl7B7 | Webhook `/inbound-message` | Answers messages from any channel, logs to Leads CRM, triggers voice calls on request |
+| Voice Call Logger | ObQN64nUN4QgoO3N | Webhook `/voice-call-log` | Logs ElevenLabs voice-agent conversations to Call Log |
+
 Data tables: Business Profile (config), Content Queue, Research Reports,
-Affiliate Outreach, Ad Drafts, Manager Reports.
+Affiliate Outreach, Ad Drafts, Manager Reports, Leads CRM, Call Log.
+
+Voice layer: ElevenLabs agent (created manually in the ElevenLabs dashboard;
+connector OAuth unsupported). Outbound calls to +65 8758 7170 require an
+ElevenLabs phone number + the "ElevenLabs API" credential in n8n plus agent ID
+and phone-number ID placeholders in the Omnichannel Hub's Trigger Voice Call
+node.
 
 ## 6. Installation & Environment Agent (Level 8)
 
