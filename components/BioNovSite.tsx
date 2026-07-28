@@ -653,52 +653,70 @@ const researchers = [
 const ingredients: (Detail & { name: string; short: string; img?: string })[] = [
   {
     name: "Fermented Garlic Extract",
-    short: "A traditional botanical, transformed by patented fermentation.",
-    img: "garlic-product.jpg",
+    short: "A top-10 superfood, transformed by patented fermentation.",
+    img: "ingredient-garlic.jpg",
     title: "Fermented Garlic Extract",
     subtitle: "One of the most studied botanicals in the world, fermented",
     body: [
-      "Garlic has one of the longest histories of any wellness botanical. In BIO N:OV it is not used raw — it is put through a controlled microbial fermentation process before it is formulated.",
-      "Fermentation is a transformation step: microorganisms act on the plant material, changing its composition before it reaches the finished tablet."
+      "Garlic has one of the longest histories of any wellness botanical. In BIO N:OV it is not used raw \u2014 it is put through a controlled microbial fermentation process before it is formulated.",
+      "Fermentation is a transformation step: microorganisms act on the plant material, changing its composition before it reaches the finished tablet. The manufacturer lists garlic as a top 10 superfood and credits allicin with promoting anticancer substances and metabolism."
     ],
     points: [
-      "Naturally derived plant ingredient",
+      "Listed by the manufacturer as a top 10 superfood",
+      "Allicin promotes anticancer substances and metabolism",
       "Processed through controlled microbial fermentation",
-      "A featured ingredient in the BIO N:OV formulation",
       "Confirm the full authorised ingredient list on the market label"
     ]
   },
   {
     name: "Fermented Lettuce Extract",
-    short: "An unexpected hero — leafy green material, fermented.",
-    img: "lettuce-product.jpg",
+    short: "Vitamin A, vitamin B and amino acids \u2014 fermented.",
+    img: "ingredient-lettuce.jpg",
     title: "Fermented Lettuce Extract",
     subtitle: "Leafy greens, reimagined through fermentation",
     body: [
       "Leafy green vegetables are a familiar part of a circulation-friendly diet. BIO N:OV features lettuce extract that has been through the same controlled fermentation process as the garlic component.",
-      "The fermentation concept is central to the product's third-generation positioning."
+      "The manufacturer lists vitamin A, vitamin B and amino acids among its contributions, and credits it with helping prevent skin ageing problems."
     ],
     points: [
-      "Leafy plant material, naturally derived",
+      "Vitamin A, vitamin B and amino acids",
+      "Stated to help prevent skin ageing problems",
       "Processed through controlled microbial fermentation",
-      "Part of the third-generation formulation approach",
       "Confirm the full authorised ingredient list on the market label"
     ]
   },
   {
-    name: "Soybean & Soybean Sprout",
-    short: "Staples of Korean nutrition forming the formulation base.",
-    title: "Soybean & Soybean Sprout",
-    subtitle: "Foundational plant nutrition from the Korean tradition",
+    name: "Soybean Sprouts",
+    short: "\u03b2-carotene and vitamin C, to support immunity.",
+    img: "ingredient-sprouts.jpg",
+    title: "Soybean Sprouts",
+    subtitle: "A staple of Korean nutrition",
     body: [
-      "Soybean and soybean sprout are staples of Korean nutrition and form part of the BIO N:OV formulation base alongside the fermented extracts.",
-      "As with every ingredient, the complete authorised formula and exact ingredient naming should be confirmed against the approved market label."
+      "Soybean sprouts are an everyday staple of Korean cooking and part of the BIO N:OV formulation base alongside the fermented extracts.",
+      "The manufacturer lists \u03b2-carotene and vitamin C among their contributions, and states they remove active acids to improve immunity."
     ],
     points: [
-      "Plant-protein staples of Korean nutrition",
+      "\u03b2-carotene and vitamin C",
+      "Stated to remove active acids to improve immunity",
+      "Naturally derived plant material",
+      "Contains soy \u2014 check the label if you have a soy allergy"
+    ]
+  },
+  {
+    name: "Soybean",
+    short: "Vitamins, minerals and fibres forming the base.",
+    img: "ingredient-soybean.jpg",
+    title: "Soybean",
+    subtitle: "Foundational plant nutrition from the Korean tradition",
+    body: [
+      "Soybean forms part of the BIO N:OV formulation base. It is one of the most established plant proteins in Korean nutrition.",
+      "The manufacturer lists various vitamins, minerals and fibres among its contributions, and states it helps prevent arteriosclerosis and reduce cholesterol. As with every ingredient, confirm the complete authorised formula against the approved market label."
+    ],
+    points: [
+      "Various vitamins, minerals and fibres",
+      "Stated to help prevent arteriosclerosis and reduce cholesterol",
       "Part of the BIO N:OV formulation base",
-      "Naturally derived",
-      "Contains soy — check the label if you have a soy allergy"
+      "Contains soy \u2014 check the label if you have a soy allergy"
     ]
   }
 ];
@@ -1931,48 +1949,57 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </Reveal>
 
       {/* ---------------- Ingredients (clickable) ---------------- */}
-      <Reveal className="ingredients section ingredients--brand">
-        <Heading
-          light
-          eyebrow="Premium raw materials"
-          title="Naturally Derived. Thoughtfully Fermented."
-          copy="Four raw materials, each chosen for what it contributes rather than for the label. Nothing exotic — this is food, fermented. Click any ingredient for the full story."
-        />
-        <p className="click-prompt light"><MousePointerClick size={17} /> Click any ingredient for the full story</p>
-        <div className="ingredient-grid">
-          {ingredients.map((ing, i) => (
-            <motion.button
-              whileHover={{ y: -8 }}
-              key={ing.name}
-              className={`ingredient-card ${ing.img ? "" : "ingredient-brand"}`}
-              onClick={() => setModal(ing)}
-              aria-label={`Read more about ${ing.name}`}
-            >
-              {ing.img
-                ? <Image src={`/images/${ing.img}`} alt={`${ing.name} and BIO N:OV product imagery`} fill sizes="(max-width: 800px) 100vw, 40vw" />
-                : <FlaskConical />}
-              <div>
-                <span>Fermented ingredient {String(i + 1).padStart(2, "0")}</span>
-                <h3>{ing.name}</h3>
-                <p>{ing.short}</p>
-                <span className="learn-more">Read the detail <Plus size={15} /></span>
-              </div>
-            </motion.button>
-          ))}
-        </div>
+      <Reveal className="ingredients-section">
+        <div className="ing-inner">
+          {/* left: one row per raw material, each carrying its own photograph */}
+          <div className="ing-copy">
+            <Heading
+              light
+              eyebrow="Premium raw materials"
+              title="Naturally Derived. Thoughtfully Fermented."
+              copy="Four raw materials, each chosen for what it contributes rather than for the label. Nothing exotic — this is food, fermented."
+            />
+            <p className="click-prompt light"><MousePointerClick size={17} /> Click any ingredient for the full story</p>
 
-        <div className="slide-solo">
-          <SlideFigure
-            tone="dark"
-            slide={slides.rawMaterials}
-            caption="What each raw material contributes — lettuce, garlic, soybean sprouts and soybean."
-            onOpen={setModal}
-          />
+            <div className="ing-list">
+              {ingredients.map((ing, i) => (
+                <motion.button
+                  whileHover={{ x: 6 }}
+                  key={ing.name}
+                  className="ing-row"
+                  onClick={() => setModal(ing)}
+                  aria-label={`Read more about ${ing.name}`}
+                >
+                  <span className="ing-row__photo">
+                    {ing.img
+                      ? <Image src={`/images/${ing.img}`} alt={ing.name} fill sizes="150px" />
+                      : <FlaskConical />}
+                  </span>
+                  <span className="ing-row__txt">
+                    <span className="ing-row__no">Raw material {String(i + 1).padStart(2, "0")}</span>
+                    <b>{ing.name}</b>
+                    <small>{ing.short}</small>
+                  </span>
+                  <Plus size={18} className="row-plus" />
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          {/* right: the manufacturer's own panel, showing all four together */}
+          <div className="ing-stage">
+            <SlideFigure
+              tone="dark"
+              slide={slides.rawMaterials}
+              caption="All four together, and what each one contributes."
+              onOpen={setModal}
+            />
+            <p className="slide-note">
+              Confirm the complete authorised formula and exact ingredient naming on the market label for your
+              country. Ingredient descriptions are reproduced from the manufacturer&rsquo;s product documentation.
+            </p>
+          </div>
         </div>
-        <p className="slide-note">
-          Confirm the complete authorised formula and exact ingredient naming on the market label for your country.
-          Ingredient descriptions are reproduced from the manufacturer&rsquo;s product documentation.
-        </p>
       </Reveal>
 
       {/* ---------------- Pillars (clickable) ---------------- */}
