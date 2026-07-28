@@ -74,19 +74,24 @@ workflows once the n8n connector is enabled in the session.
 
 ## 5. Currently deployed agents (live in n8n)
 
-Built 2026-07-28 in project `uFcEmgtYEFyGauyy` (ryan1515.app.n8n.cloud):
+Built 2026-07-28 in project `uFcEmgtYEFyGauyy` (ryan1515.app.n8n.cloud). All
+agents are **general-purpose**: they read the `Business Profile` data table at
+runtime, so pointing the whole company at a different business means editing
+one table row — no workflow changes.
 
 | Agent | Workflow ID | Trigger | Output |
 |---|---|---|---|
+| AI Manager (orchestrator) | cVOaVg8smx6412Kq | Hosted chat | Delegates to Content / Copy+Ads / Research specialist sub-agents, compiles results |
 | Content Agent | 25JpHXIZXIyAvwLG | Daily 09:00 | Content Queue data table |
-| Customer Service Agent | 0er3heB5espW8eEK | Hosted chat, 24/7 | Live chat replies |
-| Research Agent | E3EeEIq9274TzbE4 | Mondays 08:00 | Research Reports data table |
+| Customer Service Agent | 0er3heB5espW8eEK | Hosted chat, 24/7 | Live chat replies (profile-driven facts) |
+| Research Agent | E3EeEIq9274TzbE4 | Mondays 08:00 | Research Reports data table (live web search) |
 | Affiliate Agent | 2UEt08SHOgBw8Kp3 | Webhook `/affiliate-signup` | Affiliate Outreach table + response |
 | Ads Agent | mVa6ZEvC5w0xxef0 | Mondays 10:00 | Ad Drafts data table |
+| Daily Summary | trijC0dd0NbhXLJg | Daily 18:00 | Manager Reports data table |
+| Weekly Report | cuJ1hUpX24cbau7n | Mondays 07:00 | Manager Reports data table |
 
-Pending change (queued): generalise all five so they accept any product/topic
-as input instead of being hard-wired to one brand. Blocked on the n8n
-connector being re-enabled.
+Data tables: Business Profile (config), Content Queue, Research Reports,
+Affiliate Outreach, Ad Drafts, Manager Reports.
 
 ## 6. Installation & Environment Agent (Level 8)
 
@@ -110,11 +115,12 @@ each project and record deltas here.
 
 ## 7. Gap Register (be honest about what's missing)
 
-1. **n8n connector off in the active chat** — blocks Manager workflow, daily/
-   weekly reports, and the generic-agent rebuild. Fix: toggle it on in chat
-   connector settings.
-2. **Gmail not authorized** — blocks Email Marketing Agent and agents emailing
-   their output. Fix: authorize Gmail in claude.ai connector settings.
+1. ~~n8n connector off~~ — resolved 2026-07-28; Manager, reports, and generic
+   agents shipped.
+2. **Gmail credential inside n8n** — claude.ai Gmail is authorized, but n8n
+   workflows need their own Gmail credential to email reports. Fix: in n8n go
+   to Credentials → Add credential → Gmail → Sign in with Google. Then the
+   report workflows can gain a "send email" step.
 3. **Ad platform publishing** (Meta/TikTok/Google Ads APIs) — agents draft
    ads; publishing is manual until ad accounts + APIs are connected.
 4. **SMS marketing** — no provider connected (Twilio or similar needed).
