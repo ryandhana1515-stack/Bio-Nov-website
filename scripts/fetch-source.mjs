@@ -27,7 +27,6 @@ const IMAGES = [
   "ingredient-lettuce.jpg",
   "ingredient-sprouts.jpg",
   "ingredient-soybean.jpg",
-  "crisis-body.jpg",
   "vessel-macro.jpg",
   "tech-product.jpg",
   "slide-blood-pressure.jpg",

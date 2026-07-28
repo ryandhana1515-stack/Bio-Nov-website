@@ -1516,17 +1516,11 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
               <p>{decades[activeDecade].text}</p>
             </motion.div>
 
-            <div className="slide-pair">
+            <div className="slide-solo">
               <SlideFigure
                 tone="dark"
                 slide={slides.bloodPressure}
                 caption="100% at 20. Around 15% past 60. Here is what that does to an artery."
-                onOpen={setModal}
-              />
-              <SlideFigure
-                tone="dark"
-                slide={slides.vesselRepair}
-                caption="Blocked versus open — the same vessel, two different lives."
                 onOpen={setModal}
               />
             </div>
@@ -1767,19 +1761,14 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
               </p>
             </div>
 
-            <figure className="crisis-figure">
-              <Image
-                src="/images/crisis-body.jpg"
-                alt="Anatomical scan of the human body with the circulatory and nervous networks illuminated"
-                width={760}
-                height={1342}
-                sizes="(max-width: 1000px) 100vw, 42vw"
+            <div className="crisis-figure">
+              <SlideFigure
+                tone="dark"
+                slide={slides.vesselRepair}
+                caption="Blocked versus open — stroke and heart disease both start here."
+                onOpen={setModal}
               />
-              <figcaption>
-                <b>Every organ sits on the same road.</b>
-                <span>Brain, heart, lungs, gut, muscle, skin &mdash; all of it is fed by the network lit up here.</span>
-              </figcaption>
-            </figure>
+            </div>
           </div>
 
           <p className="click-prompt light"><MousePointerClick size={17} /> Click any system to see what it means</p>
