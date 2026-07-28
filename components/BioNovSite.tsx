@@ -10,11 +10,162 @@ import XrayJourney from "./XrayJourney";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
-type Detail = { title: string; subtitle?: string; body: string[]; points?: string[] };
+type Detail = { title: string; subtitle?: string; body: string[]; points?: string[]; img?: string; imgAlt?: string };
 
 /* ------------------------------------------------------------------ *
  * Content
  * ------------------------------------------------------------------ */
+
+/* Manufacturer brochure panels (Bzzworld Korea BIO N:OV product deck). Each one
+   is shown inline as a picture and opens full size with its own explanation.
+   Figures and sources are reproduced as published in that deck. */
+const slides: Record<string, Detail & { img: string }> = {
+  bloodPressure: {
+    img: "slide-blood-pressure.jpg",
+    imgAlt: "Cross-section of an artery narrowing across the decades from 100% to 15% nitric oxide",
+    subtitle: "Manufacturer product documentation",
+    title: "Balancing blood pressure, cleansing blood",
+    body: [
+      "This is the decline, drawn as a single artery. At 20 your nitric oxide production sits at 100%. By your 30s it is around 80% and the arterial wall begins to thicken. By your 40s, roughly half — inflammation starts to clump. By your 50s, about 35%, with atherosclerosis. Past 60, around 15%.",
+      "The deck puts the whole arc at 85% of nitric oxide production capability lost as we age. That is the number worth sitting with, because nothing else on this page matters if the road itself is closing."
+    ],
+    points: [
+      "Vessel with sufficient NO — relaxed, broad, smooth",
+      "Vessel with less NO — stiff, stuck, slow running",
+      "85% of NO production capability is lost as we age",
+      "Source: Dr. Nathan Bryan, Functional Nitric Oxide Nutrition"
+    ]
+  },
+  vesselRepair: {
+    img: "slide-vessel-repair.jpg",
+    imgAlt: "Two blood vessels compared — one blocked with plaque, one open and carrying nitric oxide",
+    subtitle: "Manufacturer product documentation",
+    title: "Repairing blood vessels, preventing cardiovascular disease",
+    body: [
+      "Two vessels, side by side. The left one is narrowed by plaque and the blood is crawling past it. The right one is open, and the NO molecules are visible in the flow.",
+      "Stroke is caused by poor elasticity of blood vessels or blocked blood flow. Heart disease follows the same road. The manufacturer's position is that supporting nitric oxide generation supports the elasticity of the vessel itself."
+    ],
+    points: [
+      "Recover elasticity of blood vessel",
+      "Prevent cardiovascular disease caused by blocked blood flow",
+      "Stroke and heart disease share one underlying cause — flow"
+    ]
+  },
+  hypertension: {
+    img: "slide-hypertension.jpg",
+    imgAlt: "Aorta and heart illustration with global hypertension statistics",
+    subtitle: "World Health Organization / UNSW",
+    title: "Hypertension: sowing seeds of risks",
+    body: [
+      "High blood pressure is the leading risk factor for stroke, ischaemic heart disease, other vascular diseases and renal disease.",
+      "It is also the quietest. Most people carrying it feel completely normal, which is exactly why 80% of patients never get it under control."
+    ],
+    points: [
+      "1.28 billion hypertension patients worldwide",
+      "8.5 million deaths directly linked to hypertension",
+      "80% of patients fail to control blood pressure",
+      "Source: World Health Organization, UNSW"
+    ]
+  },
+  stroke: {
+    img: "slide-stroke.jpg",
+    imgAlt: "Stroke statistics with an illustration of blocked blood flow to the brain",
+    subtitle: "World Heart Federation / Harvard Health Publishing",
+    title: "Stroke: weighing down families",
+    body: [
+      "15 million people worldwide suffer a stroke every year. Six million die. Five million are left permanently disabled — which makes this a burden carried by the whole family and community, not just the patient.",
+      "And the mechanism is the one this entire page has been about: 87% of strokes are caused by blocked blood flow to the brain."
+    ],
+    points: [
+      "15 million strokes worldwide every year",
+      "6 million deaths, 5 million permanently disabled",
+      "87% caused by blocked blood flow to the brain",
+      "Source: World Heart Federation, Harvard Health Publishing"
+    ]
+  },
+  dementia: {
+    img: "slide-dementia.jpg",
+    imgAlt: "Dementia statistics showing impact on patients and on their caregivers",
+    subtitle: "2022 Alzheimer's Association",
+    title: "Dementia: trapping the aged",
+    body: [
+      "Ten million new cases a year — one new case every 3.2 seconds. One in three seniors dies with Alzheimer's or another dementia.",
+      "The half of this that rarely gets counted is the caregiver. They are twice as likely to be emotionally depressed and physically exhausted, and families bear 70% of the expense."
+    ],
+    points: [
+      "10 million new cases per year — one every 3.2 seconds",
+      "1 in 3 seniors dies with Alzheimer's or another dementia",
+      "Caregivers are 2× more likely to be depressed and exhausted",
+      "70% of the expense is borne by families",
+      "Source: 2022 Alzheimer's Association"
+    ]
+  },
+  telomeres: {
+    img: "slide-telomeres.jpg",
+    imgAlt: "Chromosome diagram showing telomerase and telomere shortening with and without BIO N:OV",
+    subtitle: "Manufacturer product documentation",
+    title: "Slowing down the ageing process",
+    body: [
+      "Telomeres are the caps on the ends of your chromosomes. Every time a cell divides they get a little shorter, and when they reach a critical length the cell stops dividing altogether. The deck states it plainly: the length of telomeres determines the lifespan of a person.",
+      "The manufacturer's claim is that BIO N:OV activates telomerase through the nitric oxide it generates, slowing the shortening process."
+    ],
+    points: [
+      "Telomeres shorten every time a cell divides",
+      "Telomerase is the enzyme that protects that length",
+      "BIO N:OV is stated to activate telomerase through NO generated",
+      "Source: Circulation"
+    ]
+  },
+  skin: {
+    img: "slide-skin.jpg",
+    imgAlt: "Split-face comparison showing tester-reported skin results",
+    subtitle: "100 testers, aged 15 to 76",
+    title: "What testers reported about their skin",
+    body: [
+      "Skin is fed by the smallest vessels you own, so it tends to show a circulation change earlier and more visibly than anything else. These are self-reported results from a panel of 100 testers ranging from 15 to 76 years old.",
+      "Tester-reported outcomes are not a clinical trial. Individual results vary."
+    ],
+    points: [
+      "78% of testers feel brighter",
+      "84% of testers report wrinkles reduce",
+      "68% of testers report pores shrink",
+      "68% of testers report less inflammation",
+      "Source: Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine"
+    ]
+  },
+  rawMaterials: {
+    img: "slide-raw-materials.jpg",
+    imgAlt: "The four raw materials in BIO N:OV — lettuce, garlic, soybean sprouts and soybean",
+    subtitle: "Premium raw materials",
+    title: "What is actually in the tablet",
+    body: [
+      "Four raw materials, each chosen for what it contributes rather than for the label. Nothing exotic — this is food, fermented.",
+      "Confirm the complete authorised formula and exact ingredient naming on the market label for your country."
+    ],
+    points: [
+      "Lettuce — vitamin A, vitamin B, amino acids; prevents skin ageing problems",
+      "Garlic — a top 10 superfood; allicin promotes anticancer substances and metabolism",
+      "Soybean sprouts — β-carotene and vitamin C; remove active acids to improve immunity",
+      "Soybean — various vitamins, minerals and fibres; prevent arteriosclerosis and reduce cholesterol"
+    ]
+  },
+  patents: {
+    img: "slide-fermentation-patents.jpg",
+    imgAlt: "BIO N:OV patent certificates and GMP certificate",
+    subtitle: "Exclusive proprietary microbial strains",
+    title: "The patents and the GMP certificate",
+    body: [
+      "BIO N:OV is developed from a proprietary microbial strain (KACC91554P) owned by the Korea Research Institute of Bioscience and Biotechnology. It is a fermented composition of natural vegetables and herbs.",
+      "The documents shown are the patent certificates and the GMP certificate for the manufacturing establishment. This is the part of the story you can verify on paper rather than take on trust."
+    ],
+    points: [
+      "Proprietary microbial strain KACC91554P",
+      "Owned by the Korea Research Institute of Bioscience and Biotechnology",
+      "Patent certificates issued in multiple jurisdictions",
+      "GMP certificate — Ministry of Food and Drug Safety"
+    ]
+  }
+};
 
 const flowStages = [
   {
@@ -1012,6 +1163,16 @@ function Modal({ detail, onClose }: { detail: Detail | null; onClose: () => void
             </button>
             {detail.subtitle && <span className="eyebrow">{detail.subtitle}</span>}
             <h3>{detail.title}</h3>
+            {detail.img && (
+              <Image
+                className="modal-figure"
+                src={`/images/${detail.img}`}
+                alt={detail.imgAlt ?? detail.title}
+                width={1308}
+                height={724}
+                sizes="(max-width: 900px) 100vw, 760px"
+              />
+            )}
             {detail.body.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
             {detail.points && (
               <ul className="modal-points">
@@ -1023,6 +1184,42 @@ function Modal({ detail, onClose }: { detail: Detail | null; onClose: () => void
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+/* A manufacturer brochure panel shown inline. The picture carries the argument
+   before anyone clicks; clicking opens the same panel full size with the
+   written explanation beside it. */
+function SlideFigure({
+  slide,
+  caption,
+  onOpen,
+  tone = "light"
+}: {
+  slide: Detail & { img: string };
+  caption: string;
+  onOpen: (d: Detail) => void;
+  tone?: "light" | "dark";
+}) {
+  return (
+    <motion.button
+      whileHover={{ y: -6 }}
+      className={`slide-figure slide-figure--${tone}`}
+      onClick={() => onOpen(slide)}
+      aria-label={`Enlarge and read: ${slide.title}`}
+    >
+      <Image
+        src={`/images/${slide.img}`}
+        alt={slide.imgAlt ?? slide.title}
+        width={1308}
+        height={724}
+        sizes="(max-width: 900px) 100vw, 620px"
+      />
+      <span className="slide-figure__bar">
+        <span className="slide-figure__cap">{caption}</span>
+        <span className="slide-figure__more">Enlarge &amp; read <Plus size={14} /></span>
+      </span>
+    </motion.button>
   );
 }
 
@@ -1202,6 +1399,21 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
               <h4>{decades[activeDecade].headline}</h4>
               <p>{decades[activeDecade].text}</p>
             </motion.div>
+
+            <div className="slide-pair">
+              <SlideFigure
+                tone="dark"
+                slide={slides.bloodPressure}
+                caption="100% at 20. Around 15% past 60. Here is what that does to an artery."
+                onOpen={setModal}
+              />
+              <SlideFigure
+                tone="dark"
+                slide={slides.vesselRepair}
+                caption="Blocked versus open — the same vessel, two different lives."
+                onOpen={setModal}
+              />
+            </div>
           </div>
 
           {/* ---- Research credibility ---- */}
@@ -1483,6 +1695,27 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
                 </button>
               ))}
             </div>
+            <div className="slide-trio">
+              <SlideFigure
+                tone="dark"
+                slide={slides.hypertension}
+                caption="1.28 billion patients. 80% never get it under control."
+                onOpen={setModal}
+              />
+              <SlideFigure
+                tone="dark"
+                slide={slides.stroke}
+                caption="15 million a year. 87% from blocked flow to the brain."
+                onOpen={setModal}
+              />
+              <SlideFigure
+                tone="dark"
+                slide={slides.dementia}
+                caption="One new case every 3.2 seconds — and the carers pay too."
+                onOpen={setModal}
+              />
+            </div>
+
             <p className="burden-note">
               Public-health statistics describing global disease burden, shown to explain why circulation matters.
               They are not claims about BIO N:OV. BIO N:OV is a wellness supplement, not a treatment for any
@@ -1524,6 +1757,21 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           ))}
         </div>
         <div className="tech-note"><Check /> BIO N:OV uses a patented fermentation-based approach with naturally derived ingredients.</div>
+
+        <div className="slide-pair">
+          <SlideFigure
+            tone="dark"
+            slide={slides.rawMaterials}
+            caption="Four raw materials. Nothing exotic — this is food, fermented."
+            onOpen={setModal}
+          />
+          <SlideFigure
+            tone="dark"
+            slide={slides.patents}
+            caption="The part you can verify on paper: patents and the GMP certificate."
+            onOpen={setModal}
+          />
+        </div>
 
         <div className="tech-showcase">
           <figure className="tech-showcase__img">
@@ -1629,6 +1877,24 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             </motion.button>
           ))}
         </div>
+
+        <div className="slide-pair slide-pair--spaced">
+          <SlideFigure
+            slide={slides.telomeres}
+            caption="Ageing, at the level of the chromosome."
+            onOpen={setModal}
+          />
+          <SlideFigure
+            slide={slides.skin}
+            caption="What 100 testers reported about their skin."
+            onOpen={setModal}
+          />
+        </div>
+        <p className="slide-note">
+          Panels reproduced from the manufacturer&rsquo;s product documentation with their stated sources. Tester-reported
+          outcomes are not a clinical trial and individual results vary. BIO N:OV is a wellness supplement, not a
+          treatment for any condition, and must never replace prescribed medication.
+        </p>
       </Reveal>
 
       {/* ---------------- Conversion band ---------------- */}

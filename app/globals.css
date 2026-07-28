@@ -24,6 +24,7 @@
 .modal p{color:#57718f;font-size:15.5px;line-height:1.78;margin:0 0 16px}
 .modal-close{position:absolute;top:16px;right:16px;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid #e0e9f7;background:#fff;color:#5f7591;cursor:pointer;transition:.2s}
 .modal-close:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.modal-figure{display:block;width:100%;height:auto;margin:18px 0 22px;border-radius:16px;border:1px solid #dcebfd;background:#fff;box-shadow:0 16px 44px rgba(12,40,96,.14)}
 .modal-points{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:11px}
 .modal-points li{display:flex;align-items:flex-start;gap:11px;padding:13px 15px;border-radius:13px;background:#eef6ff;border:1px solid #dcebfd;font-size:14px;line-height:1.5;color:#28456f}
 .modal-points svg{flex:none;margin-top:2px;color:var(--blue)}
@@ -663,3 +664,40 @@
 
 @media(max-width:1150px){.nov-actions__grid{grid-template-columns:1fr}}
 @media(max-width:800px){.nov-actions{padding:26px 20px}}
+
+/* ================= MANUFACTURER BROCHURE PANELS ================= */
+/* The picture makes the argument before anyone clicks; the click opens the
+   same panel full size with the written explanation. */
+.slide-pair{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+.slide-pair--spaced{margin-top:44px}
+.slide-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0 22px}
+
+.slide-figure{display:flex;flex-direction:column;padding:0;overflow:hidden;cursor:pointer;
+  border-radius:22px;background:#fff;transition:border-color .25s,box-shadow .25s}
+.slide-figure img{display:block;width:100%;height:auto}
+.slide-figure__bar{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:15px 18px;margin-top:auto}
+.slide-figure__cap{font-size:13.5px;font-weight:650;line-height:1.45;letter-spacing:-.01em}
+.slide-figure__more{display:inline-flex;align-items:center;gap:6px;flex:none;
+  font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.slide-figure:hover .slide-figure__more{gap:10px}
+
+/* on white sections */
+.slide-figure--light{border:1px solid #dfe9f9;box-shadow:0 18px 50px rgba(22,58,122,.1)}
+.slide-figure--light:hover{border-color:#7fc9ff;box-shadow:0 28px 72px rgba(20,90,200,.2)}
+.slide-figure--light .slide-figure__cap{color:#28456f}
+.slide-figure--light .slide-figure__more{color:var(--blue)}
+
+/* on navy sections — the panels are white artwork, so they sit on a light plate */
+.slide-figure--dark{border:1px solid rgba(143,230,255,.28);background:rgba(255,255,255,.94);
+  box-shadow:0 26px 70px rgba(2,14,44,.45)}
+.slide-figure--dark:hover{border-color:rgba(95,224,255,.75);box-shadow:0 34px 90px rgba(2,14,44,.6)}
+.slide-figure--dark .slide-figure__cap{color:#1c355e}
+.slide-figure--dark .slide-figure__more{color:#0a63c8}
+
+.slide-note{max-width:92ch;margin:22px 0 0;font-size:11.5px;line-height:1.7;color:#8195b3}
+.tech--dark .slide-note,.crisis-section .slide-note{color:rgba(200,220,255,.55)}
+
+@media(max-width:1000px){.slide-trio{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.slide-pair,.slide-trio{grid-template-columns:1fr}
+  .slide-figure__bar{flex-direction:column;align-items:flex-start;gap:8px}}
