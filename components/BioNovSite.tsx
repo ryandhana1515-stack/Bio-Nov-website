@@ -1951,8 +1951,9 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       {/* ---------------- Ingredients (clickable) ---------------- */}
       <Reveal className="ingredients-section">
         <div className="ing-inner">
-          {/* left: one row per raw material, each carrying its own photograph */}
-          <div className="ing-copy">
+          {/* heading spans the full width so the panel below can centre against
+              the list itself rather than against heading-plus-list */}
+          <div className="ing-head">
             <Heading
               light
               eyebrow="Premium raw materials"
@@ -1960,7 +1961,10 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
               copy="Four raw materials, each chosen for what it contributes rather than for the label. Nothing exotic — this is food, fermented."
             />
             <p className="click-prompt light"><MousePointerClick size={17} /> Click any ingredient for the full story</p>
+          </div>
 
+          <div className="ing-body">
+            {/* left: one row per raw material, each carrying its own photograph */}
             <div className="ing-list">
               {ingredients.map((ing, i) => (
                 <motion.button
@@ -1984,20 +1988,20 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
                 </motion.button>
               ))}
             </div>
-          </div>
 
-          {/* right: the manufacturer's own panel, showing all four together */}
-          <div className="ing-stage">
-            <SlideFigure
-              tone="dark"
-              slide={slides.rawMaterials}
-              caption="All four together, and what each one contributes."
-              onOpen={setModal}
-            />
-            <p className="slide-note">
-              Confirm the complete authorised formula and exact ingredient naming on the market label for your
-              country. Ingredient descriptions are reproduced from the manufacturer&rsquo;s product documentation.
-            </p>
+            {/* right: the manufacturer's own panel, showing all four together */}
+            <div className="ing-stage">
+              <SlideFigure
+                tone="dark"
+                slide={slides.rawMaterials}
+                caption="All four together, and what each one contributes."
+                onOpen={setModal}
+              />
+              <p className="slide-note">
+                Confirm the complete authorised formula and exact ingredient naming on the market label for your
+                country. Ingredient descriptions are reproduced from the manufacturer&rsquo;s product documentation.
+              </p>
+            </div>
           </div>
         </div>
       </Reveal>
@@ -2024,6 +2028,8 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
 
         {/* ---- Why the manufacturer calls it the better choice ---- */}
         <div className="better-block">
+          {/* copy spans the full width so the panel centres against the five
+              reasons rather than against copy-plus-reasons */}
           <div className="better-copy">
             <span className="eyebrow">The five objections, answered</span>
             <h3>Why they call it the better choice</h3>
@@ -2035,6 +2041,9 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             <p className="click-prompt light" style={{ marginTop: 4 }}>
               <MousePointerClick size={17} /> Click any reason for the full answer
             </p>
+          </div>
+
+          <div className="better-body">
             <div className="better-grid">
               {betterReasons.map(r => (
                 <motion.button
@@ -2053,14 +2062,14 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
                 </motion.button>
               ))}
             </div>
-          </div>
 
-          <SlideFigure
-            tone="dark"
-            slide={slides.betterChoice}
-            caption="The five claims, as published by the manufacturer."
-            onOpen={setModal}
-          />
+            <SlideFigure
+              tone="dark"
+              slide={slides.betterChoice}
+              caption="The five claims, as published by the manufacturer."
+              onOpen={setModal}
+            />
+          </div>
         </div>
 
         <div className="slide-pair slide-pair--spaced">
