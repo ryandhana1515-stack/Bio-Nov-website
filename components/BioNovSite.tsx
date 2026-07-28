@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldPlus, Sparkles, Sun, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
+import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
 
 import XrayJourney from "./XrayJourney";
 
@@ -164,8 +164,106 @@ const slides: Record<string, Detail & { img: string }> = {
       "Patent certificates issued in multiple jurisdictions",
       "GMP certificate — Ministry of Food and Drug Safety"
     ]
+  },
+  techRoadmap: {
+    img: "slide-tech-roadmap.jpg",
+    imgAlt: "Three generations of nitric oxide supplements compared side by side",
+    subtitle: "Manufacturer product documentation",
+    title: "Three generations, and what was wrong with the first two",
+    body: [
+      "First generation was arginine. It needs an enzyme to work and it is unstable — and the deck states it is prohibited for heart disease patients, which rules out a large part of the people who came looking for it.",
+      "Second generation moved to vegetable and fruit extracts. Gentler, but the listed side effects are nausea, diarrhoea and headache, and it is marked not suitable for the over-40s. Again: the wrong group excluded.",
+      "Third generation is microbial fermentation. The manufacturer states it is 40–400% more effective than other competition."
+    ],
+    points: [
+      "1st gen — arginine: enzyme needed, unstable, prohibited for heart disease patients",
+      "2nd gen — veg & fruit extracts: nausea, diarrhoea, headache; not suitable for 40+",
+      "3rd gen — BIO N:OV: microbial fermentation, stated 40–400% more effective",
+      "Comparative figure as published by the manufacturer"
+    ]
+  },
+  betterChoice: {
+    img: "slide-better-choice.jpg",
+    imgAlt: "Five stated advantages of BIO N:OV shown around the product carton",
+    subtitle: "Manufacturer product documentation",
+    title: "Why the manufacturer calls it the better choice",
+    body: [
+      "Five claims, and they answer the five objections people actually raise about nitric oxide supplements: is it natural, will it work for me, how long until anything happens, does my body have to do the work, and will I become dependent on it.",
+      "These are the manufacturer's stated positions. Read them alongside the disclaimer at the foot of this section."
+    ],
+    points: [
+      "Pure herbal formula — ingredients stated 100% natural and safe",
+      "Works on everyone",
+      "Superfast response — blood pressure controlled within 30 minutes",
+      "No enzyme needed — instantly releases NO on contact with stomach acid",
+      "Zero dependence"
+    ]
   }
 };
+
+/* The five claims from the Better Choice panel, each one clickable. */
+const betterReasons = [
+  {
+    Icon: Leaf,
+    name: "Pure herbal formula",
+    title: "Pure herbal formula",
+    subtitle: "Manufacturer product documentation",
+    headline: "Ingredients stated 100% natural and safe",
+    body: [
+      "Fermented garlic, fermented lettuce, soybean and soybean sprouts. That is the whole list — food, transformed by a microbial process, rather than a synthesised compound.",
+      "Confirm the complete authorised formula and exact ingredient naming on the market label for your country."
+    ],
+    points: ["Fermented garlic and lettuce extracts", "Soybean and soybean sprouts", "No synthesised nitric oxide donor"]
+  },
+  {
+    Icon: Users,
+    name: "Works on everyone",
+    title: "Works on everyone — no age ceiling",
+    subtitle: "Manufacturer product documentation",
+    headline: "Not limited to one age group",
+    body: [
+      "This is the direct answer to the second-generation problem. Vegetable and fruit extract formulas are marked not suitable for the over-40s — precisely the people whose nitric oxide production has already dropped by half.",
+      "Because BIO N:OV does not depend on your body making the conversion, the manufacturer's position is that it works the same way regardless of age."
+    ],
+    points: ["No age ceiling stated", "Does not depend on declining enzyme efficiency", "The group earlier formulas excluded"]
+  },
+  {
+    Icon: Timer,
+    name: "Superfast response",
+    title: "Superfast response",
+    subtitle: "Manufacturer product documentation",
+    headline: "Blood pressure controlled within 30 minutes",
+    body: [
+      "The manufacturer states blood pressure is controlled within 30 minutes of taking it.",
+      "This is a manufacturer claim about their product documentation, not a clinical endpoint from a published trial. BIO N:OV is a wellness supplement and must never replace prescribed blood pressure medication. Speak to your doctor before changing anything you are already taking."
+    ],
+    points: ["Stated 30-minute response window", "Manufacturer product documentation", "Not a substitute for prescribed medication"]
+  },
+  {
+    Icon: FlaskConical,
+    name: "No enzyme needed",
+    title: "No enzyme needed",
+    subtitle: "Manufacturer product documentation",
+    headline: "Instantly releases NO in contact with stomach acid",
+    body: [
+      "First-generation arginine needs an enzyme to convert it, and that enzyme becomes less efficient with age. It is the single reason those formulas disappoint the people who need them most.",
+      "The fermentation already did that work. The deck states NO is released instantly on contact with stomach acid — no conversion step required from you."
+    ],
+    points: ["No enzyme conversion required", "Released on contact with stomach acid", "The step that fails with age is removed"]
+  },
+  {
+    Icon: ShieldCheck,
+    name: "Zero dependence",
+    title: "Zero dependence",
+    subtitle: "Manufacturer product documentation",
+    headline: "Nothing to taper off",
+    body: [
+      "The manufacturer states zero dependence — you are supporting a pathway your body already runs, not substituting for it.",
+      "As with everything on this page, this is the manufacturer's stated position rather than a regulatory determination."
+    ],
+    points: ["Stated zero dependence", "Supports a pathway the body already has", "Manufacturer product documentation"]
+  }
+];
 
 const flowStages = [
   {
@@ -1761,8 +1859,8 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         <div className="slide-pair">
           <SlideFigure
             tone="dark"
-            slide={slides.rawMaterials}
-            caption="Four raw materials. Nothing exotic — this is food, fermented."
+            slide={slides.techRoadmap}
+            caption="What was actually wrong with the first two generations."
             onOpen={setModal}
           />
           <SlideFigure
@@ -1833,19 +1931,20 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </Reveal>
 
       {/* ---------------- Ingredients (clickable) ---------------- */}
-      <Reveal className="ingredients section">
+      <Reveal className="ingredients section ingredients--brand">
         <Heading
+          light
           eyebrow="Premium raw materials"
           title="Naturally Derived. Thoughtfully Fermented."
-          copy="Click any ingredient for the full story. Confirm the complete authorised formula and exact ingredient naming on the market label."
+          copy="Four raw materials, each chosen for what it contributes rather than for the label. Nothing exotic — this is food, fermented. Click any ingredient for the full story."
         />
-        <p className="click-prompt"><MousePointerClick size={17} /> Click any ingredient for the full story</p>
+        <p className="click-prompt light"><MousePointerClick size={17} /> Click any ingredient for the full story</p>
         <div className="ingredient-grid">
           {ingredients.map((ing, i) => (
             <motion.button
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ y: -8 }}
               key={ing.name}
-              className={ing.img ? "" : "ingredient-brand"}
+              className={`ingredient-card ${ing.img ? "" : "ingredient-brand"}`}
               onClick={() => setModal(ing)}
               aria-label={`Read more about ${ing.name}`}
             >
@@ -1861,13 +1960,31 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             </motion.button>
           ))}
         </div>
+
+        <div className="slide-solo">
+          <SlideFigure
+            tone="dark"
+            slide={slides.rawMaterials}
+            caption="What each raw material contributes — lettuce, garlic, soybean sprouts and soybean."
+            onOpen={setModal}
+          />
+        </div>
+        <p className="slide-note">
+          Confirm the complete authorised formula and exact ingredient naming on the market label for your country.
+          Ingredient descriptions are reproduced from the manufacturer&rsquo;s product documentation.
+        </p>
       </Reveal>
 
       {/* ---------------- Pillars (clickable) ---------------- */}
-      <Reveal id="benefits" className="section">
-        <Heading eyebrow="Five wellness pillars" title="Wellbeing, Viewed as a Whole" copy="Every pillar traces back to the same foundation: healthy flow. Click any pillar to read more." />
-        <p className="click-prompt"><MousePointerClick size={17} /> Click any pillar to read the full explanation</p>
-        <div className="pillars">
+      <Reveal id="benefits" className="section benefits-section">
+        <Heading
+          light
+          eyebrow="Five wellness pillars"
+          title="Wellbeing, Viewed as a Whole"
+          copy="Every pillar traces back to the same foundation: healthy flow. Click any pillar to read more."
+        />
+        <p className="click-prompt light"><MousePointerClick size={17} /> Click any pillar to read the full explanation</p>
+        <div className="pillars pillars--dark">
           {pillars.map(p => (
             <motion.button whileHover={{ y: -8 }} key={p.name} onClick={() => setModal(p)} aria-label={`Read more about ${p.name}`}>
               <p.Icon />
@@ -1878,22 +1995,73 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           ))}
         </div>
 
+        {/* ---- Why the manufacturer calls it the better choice ---- */}
+        <div className="better-block">
+          <div className="better-copy">
+            <span className="eyebrow">The five objections, answered</span>
+            <h3>Why they call it the better choice</h3>
+            <p>
+              Every one of these answers a question people actually ask before they buy: is it natural, will it work
+              for someone my age, how long before anything happens, does my body have to do the work, and will I end
+              up dependent on it.
+            </p>
+            <p className="click-prompt light" style={{ marginTop: 4 }}>
+              <MousePointerClick size={17} /> Click any reason for the full answer
+            </p>
+            <div className="better-grid">
+              {betterReasons.map(r => (
+                <motion.button
+                  whileHover={{ x: 5 }}
+                  key={r.name}
+                  className="better-card"
+                  onClick={() => setModal(r)}
+                  aria-label={`Read more about ${r.name}`}
+                >
+                  <span className="better-card__icon"><r.Icon /></span>
+                  <span className="better-card__txt">
+                    <b>{r.name}</b>
+                    <small>{r.headline}</small>
+                  </span>
+                  <Plus size={17} className="row-plus" />
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          <SlideFigure
+            tone="dark"
+            slide={slides.betterChoice}
+            caption="The five claims, as published by the manufacturer."
+            onOpen={setModal}
+          />
+        </div>
+
         <div className="slide-pair slide-pair--spaced">
           <SlideFigure
+            tone="dark"
             slide={slides.telomeres}
             caption="Ageing, at the level of the chromosome."
             onOpen={setModal}
           />
           <SlideFigure
+            tone="dark"
             slide={slides.skin}
             caption="What 100 testers reported about their skin."
             onOpen={setModal}
           />
         </div>
+
+        <div className="benefits-cta">
+          <p>Every claim on this page points at the same thing: keep the road open, and the whole system is served.</p>
+          <a className="button primary" href="#product">See the product <ArrowRight size={18} /></a>
+          <a className="button glass" href="#affiliate">Join us as an affiliate <ArrowRight size={18} /></a>
+        </div>
+
         <p className="slide-note">
           Panels reproduced from the manufacturer&rsquo;s product documentation with their stated sources. Tester-reported
           outcomes are not a clinical trial and individual results vary. BIO N:OV is a wellness supplement, not a
-          treatment for any condition, and must never replace prescribed medication.
+          treatment for any condition, and must never replace prescribed medication. Speak to your doctor before
+          changing anything you are already taking.
         </p>
       </Reveal>
 

@@ -35,6 +35,8 @@ const IMAGES = [
   "slide-skin.jpg",
   "slide-raw-materials.jpg",
   "slide-fermentation-patents.jpg",
+  "slide-tech-roadmap.jpg",
+  "slide-better-choice.jpg",
   "researcher-cheon.png",
   "researcher-han.png",
   "researcher-ju.png",
