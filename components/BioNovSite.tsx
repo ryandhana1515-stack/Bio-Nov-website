@@ -182,6 +182,75 @@ const slides: Record<string, Detail & { img: string }> = {
       "Comparative figure as published by the manufacturer"
     ]
   },
+  sixSystems: {
+    img: "slide-six-systems.jpg",
+    imgAlt: "Translucent human figure with six body systems labelled and their associated conditions",
+    subtitle: "Dr. Ferid Murad, Magical Nitric Oxide",
+    title: "One signal, six systems",
+    body: [
+      "This is the claim drawn out in full. Six systems, and the conditions the deck associates with each when the nitric oxide signal weakens.",
+      "It is worth noticing what these have in common. They are not six unrelated illnesses in six unrelated places — they are six destinations on one delivery network, and the deck's argument is that they suffer together when that network narrows."
+    ],
+    points: [
+      "Brain — stroke, dementia, Alzheimer's disease",
+      "Respiratory system — rhinitis, pneumonia",
+      "Blood circulation — hypertension, diabetes",
+      "Heart — myocardial infarction, arrhythmia",
+      "Immune system — flu, cold, fever, allergy",
+      "Digestive system — indigestion, diarrhoea, bloating"
+    ]
+  },
+  diabetes: {
+    img: "slide-diabetes.jpg",
+    imgAlt: "Global diabetes statistics with a glucose meter and insulin syringe",
+    subtitle: "International Diabetes Federation",
+    title: "Diabetes spiralling out of control",
+    body: [
+      "One in ten adults is living with diabetes, and almost half of them do not know it. That is the part that makes it dangerous — undiagnosed means untreated.",
+      "The deck ranks it among the top causes of premature death worldwide."
+    ],
+    points: [
+      "537 million adults living with diabetes",
+      "Every 5 seconds, one person dies from diabetes",
+      "6.7 million deaths in 2021",
+      "Almost half of all cases are undiagnosed",
+      "Source: International Diabetes Federation"
+    ]
+  },
+  diabetesEase: {
+    img: "slide-diabetes-ease.jpg",
+    imgAlt: "Blood sugar results showing an 8% drop within one hour",
+    subtitle: "Bzzworld Smart Lab",
+    title: "What the lab measured on blood sugar",
+    body: [
+      "The manufacturer's laboratory reports blood sugar dropping by 8% within one hour, by two routes: reducing insulin resistance to speed up blood sugar metabolism, and reducing digestive enzyme activity so blood sugar does not spike as fast after a meal.",
+      "This laboratory data is not intended or implied to be a substitute for professional medical advice, diagnosis or treatment. BIO N:OV is not a diabetes treatment and must never replace prescribed medication."
+    ],
+    points: [
+      "Blood sugar stated to drop by 8%",
+      "Within 1 hour",
+      "Reduces insulin resistance, speeding blood sugar metabolism",
+      "Reduces digestive enzyme activity after meals",
+      "Source: Bzzworld Smart Lab"
+    ]
+  },
+  vigor: {
+    img: "slide-vigor.jpg",
+    imgAlt: "Diagram showing nitric oxide decline, its effect on muscle, and restored performance",
+    subtitle: "Manufacturer product documentation",
+    title: "Why energy fades, and what changes it",
+    body: [
+      "The chain runs in one direction. Nitric oxide declines with age. Mitochondrial function is affected and blood flow to skeletal muscle slows, so the muscle itself is damaged. Performance drops — and it feels like simply getting older.",
+      "The deck's argument is that raising the nitric oxide level reverses the same chain: affected functions restored, blood flow increased, more oxygen supplied."
+    ],
+    points: [
+      "NO declines with age — lesser performance follows",
+      "Mitochondrial function affected, blood flow to muscle slows",
+      "Raising NO is stated to restore affected functions",
+      "More oxygen supplied to working muscle",
+      "Source: Nitric oxide, aging and aerobic exercise — sedentary individuals to Master's athletes"
+    ]
+  },
   betterChoice: {
     img: "slide-better-choice.jpg",
     imgAlt: "Five stated advantages of BIO N:OV shown around the product carton",
@@ -1368,7 +1437,9 @@ function Heading({ eyebrow, title, copy, light = false }: { eyebrow: string; tit
  * Page
  * ------------------------------------------------------------------ */
 
-export default function BioNovSite({ faq }: { faq: { question: string; answer: string }[] }) {
+export default function BioNovSite({ faq }: { faq: { group: string; question: string; answer: string }[] }) {
+  /* preserve author order rather than sorting alphabetically */
+  const faqGroups = faq.reduce<string[]>((acc, x) => acc.includes(x.group) ? acc : [...acc, x.group], []);
   const [menu, setMenu] = useState(false);
   const [tab, setTab] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
@@ -1516,11 +1587,17 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
               <p>{decades[activeDecade].text}</p>
             </motion.div>
 
-            <div className="slide-solo">
+            <div className="slide-pair">
               <SlideFigure
                 tone="dark"
                 slide={slides.bloodPressure}
                 caption="100% at 20. Around 15% past 60. Here is what that does to an artery."
+                onOpen={setModal}
+              />
+              <SlideFigure
+                tone="dark"
+                slide={slides.vesselRepair}
+                caption="Blocked versus open — the same vessel, two different lives."
                 onOpen={setModal}
               />
             </div>
@@ -1764,8 +1841,8 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
             <div className="crisis-figure">
               <SlideFigure
                 tone="dark"
-                slide={slides.vesselRepair}
-                caption="Blocked versus open — stroke and heart disease both start here."
+                slide={slides.sixSystems}
+                caption="Six systems, one signal — and the conditions tied to each."
                 onOpen={setModal}
               />
             </div>
@@ -1800,11 +1877,17 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
                 </button>
               ))}
             </div>
-            <div className="slide-trio">
+            <div className="slide-quad">
               <SlideFigure
                 tone="dark"
                 slide={slides.hypertension}
                 caption="1.28 billion patients. 80% never get it under control."
+                onOpen={setModal}
+              />
+              <SlideFigure
+                tone="dark"
+                slide={slides.diabetes}
+                caption="537 million adults — and almost half do not know."
                 onOpen={setModal}
               />
               <SlideFigure
@@ -1863,17 +1946,11 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         </div>
         <div className="tech-note"><Check /> BIO N:OV uses a patented fermentation-based approach with naturally derived ingredients.</div>
 
-        <div className="slide-pair">
+        <div className="slide-solo">
           <SlideFigure
             tone="dark"
             slide={slides.techRoadmap}
             caption="What was actually wrong with the first two generations."
-            onOpen={setModal}
-          />
-          <SlideFigure
-            tone="dark"
-            slide={slides.patents}
-            caption="The part you can verify on paper: patents and the GMP certificate."
             onOpen={setModal}
           />
         </div>
@@ -1881,13 +1958,13 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
         <div className="tech-showcase">
           <figure className="tech-showcase__img">
             <Image
-              src="/images/tech-product.jpg"
-              alt="BIO N:OV carton and tablets surrounded by nitric oxide molecules and a DNA helix"
-              width={1280}
-              height={720}
+              src="/images/slide-fermentation-patents.jpg"
+              alt="BIO N:OV patent certificates and GMP certificate"
+              width={1308}
+              height={724}
               sizes="(max-width: 1000px) 100vw, 52vw"
             />
-            <figcaption>500 mg &times; 60 tablets &middot; GMP-certified Korean manufacture</figcaption>
+            <figcaption>Patent certificates &middot; GMP certificate &middot; strain KACC91554P</figcaption>
           </figure>
 
           <div className="tech-showcase__copy">
@@ -2061,7 +2138,19 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
           </div>
         </div>
 
-        <div className="slide-pair slide-pair--spaced">
+        <div className="slide-quad slide-pair--spaced">
+          <SlideFigure
+            tone="dark"
+            slide={slides.vigor}
+            caption="Why energy fades with age — and what reverses the chain."
+            onOpen={setModal}
+          />
+          <SlideFigure
+            tone="dark"
+            slide={slides.diabetesEase}
+            caption="What the lab measured on blood sugar."
+            onOpen={setModal}
+          />
           <SlideFigure
             tone="dark"
             slide={slides.telomeres}
@@ -2266,24 +2355,54 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </Reveal>
 
       {/* ---------------- FAQ ---------------- */}
-      <Reveal id="faq" className="section faq">
-        <Heading eyebrow="Clear answers" title="Frequently Asked Questions" />
-        <div className="faq-list">
-          {faq.map((x, i) => (
-            <article key={x.question}>
-              <button onClick={() => setOpenFaq(openFaq === i ? -1 : i)} aria-expanded={openFaq === i}>
-                <span>{x.question}</span>
-                <ChevronDown className={openFaq === i ? "rotate" : ""} />
-              </button>
-              <AnimatePresence initial={false}>
-                {openFaq === i && (
-                  <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}>
-                    {x.answer}
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </article>
+      <Reveal id="faq" className="faq-section">
+        <div className="faq-inner">
+          <div className="faq-head">
+            <Heading
+              light
+              eyebrow="Clear answers"
+              title="Frequently Asked Questions"
+              copy="The science, the product, the safety rules and how to buy — answered straight, with the sources named."
+            />
+          </div>
+
+          {faqGroups.map(group => (
+            <div className="faq-group" key={group}>
+              <h3 className="faq-group__title">{group}</h3>
+              <div className="faq-list">
+                {faq.map((x, i) => x.group === group && (
+                  <article key={x.question} className={openFaq === i ? "is-open" : ""}>
+                    <button onClick={() => setOpenFaq(openFaq === i ? -1 : i)} aria-expanded={openFaq === i}>
+                      <span>{x.question}</span>
+                      <ChevronDown className={openFaq === i ? "rotate" : ""} />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {openFaq === i && (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                        >
+                          {x.answer}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </article>
+                ))}
+              </div>
+            </div>
           ))}
+
+          <div className="faq-cta">
+            <div>
+              <b>Still have a question?</b>
+              <span>Ask us directly — we answer every enquiry personally before the store opens.</span>
+            </div>
+            <div className="faq-cta__buttons">
+              <a className="button primary" href="#contact">Ask us a question <ArrowRight size={18} /></a>
+              <a className="button glass" href="#affiliate">Join us as an affiliate <ArrowRight size={18} /></a>
+            </div>
+          </div>
         </div>
       </Reveal>
 
