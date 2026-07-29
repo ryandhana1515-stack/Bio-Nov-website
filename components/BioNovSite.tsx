@@ -1779,20 +1779,12 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
           </div>
         </div>
         <div className="body-visual">
-          <video
-            className="body-visual__video"
-            poster="/video/xray-journey-poster.jpg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-          >
-            <source src="/video/xray-journey.mp4" type="video/mp4" />
-          </video>
+          {/* a calm vessel wash rather than the anatomy footage, which read as
+              clinical and already drives the section above this one */}
+          <span className="body-visual__wash" aria-hidden="true" />
+          <span className="body-visual__pulse" aria-hidden="true" />
 
-          {/* the selected system, explained over the body */}
+          {/* the selected system, explained */}
           <AnimatePresence mode="wait">
             <motion.div
               key={bodySystems[activeSystem].name}
