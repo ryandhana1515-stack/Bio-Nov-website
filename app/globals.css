@@ -808,3 +808,77 @@
 @media(max-width:520px){.ing-row{gap:13px;padding:11px}
   .ing-row__photo{width:78px;height:70px}
   .ing-row__txt b{font-size:16.5px}}
+
+/* ================= RESEARCH TEAM — INSTITUTIONAL ================= */
+/* Was a pale white grid where the portraits' baked-in black backgrounds read
+   as black squares. Portraits are now alpha-keyed and sit on the brand navy,
+   which is what the black was fighting with in the first place. */
+.team-section{position:relative;overflow:hidden;padding:120px max(7vw,32px);color:#fff;
+  background:radial-gradient(ellipse at 84% 6%,rgba(32,199,236,.2),transparent 52%),
+             radial-gradient(circle at 10% 84%,rgba(102,87,217,.24),transparent 50%),
+             linear-gradient(170deg,#1a3d76 0%,#12305f 52%,#0d2148 100%)}
+.team-section:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:58px 58px;mask-image:radial-gradient(circle at 50% 22%,black,transparent 74%)}
+.team-inner{position:relative;z-index:2;max-width:1280px;margin:auto}
+.team-head{margin-bottom:40px}
+.team-head .heading{margin-bottom:22px}
+
+/* credibility strip — reads as an organisation, not a photo gallery */
+.team-creds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 20px}
+.team-creds div{padding:20px 22px;border-radius:20px;border:1px solid rgba(143,230,255,.26);
+  background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03));backdrop-filter:blur(14px)}
+.team-creds b{display:block;font-size:clamp(22px,2.6vw,34px);font-weight:900;letter-spacing:-.04em;color:#5fe0ff;
+  text-shadow:0 0 32px rgba(95,224,255,.45)}
+.team-creds span{display:block;margin-top:5px;font-size:12.5px;line-height:1.45;color:#bcd4ff}
+
+.research-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+/* scoped under .research-grid to outrank the legacy white-card rules */
+.research-grid .research-card{display:flex;flex-direction:column;padding:0;cursor:pointer;overflow:hidden;
+  text-align:left;border-radius:24px;border:1.5px solid rgba(143,230,255,.26);
+  background:linear-gradient(170deg,rgba(9,26,60,.86),rgba(6,18,44,.92));
+  box-shadow:0 20px 54px rgba(2,12,38,.44);transform:none;transform-style:flat;
+  transition:border-color .25s,box-shadow .25s,background .25s}
+.research-grid .research-card:hover{border-color:rgba(95,224,255,.85);box-shadow:0 30px 76px rgba(2,12,38,.6);
+  background:linear-gradient(170deg,rgba(14,36,78,.92),rgba(9,24,56,.95));transform:none}
+
+/* portrait sits on a lit plinth rather than a flat pale panel */
+.research-grid .research-photo{position:relative;display:grid;place-items:end center;height:236px;overflow:hidden;border-bottom:0;
+  background:radial-gradient(ellipse at 50% 92%,rgba(95,224,255,.32),transparent 62%),
+             linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.01))}
+.research-grid .research-photo:after{content:"";position:absolute;left:14%;right:14%;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(95,224,255,.7),transparent)}
+.research-grid .research-photo img{position:relative;z-index:1;width:auto;height:100%;max-width:100%;object-fit:contain;
+  filter:drop-shadow(0 14px 26px rgba(0,0,0,.45)) contrast(1.06) saturate(1.08) brightness(1.04)}
+
+.research-grid .research-body{display:flex;flex-direction:column;flex:1;padding:20px 20px 18px}
+.research-body b{font-size:17px;letter-spacing:-.02em;color:#fff;line-height:1.25}
+.research-body em{margin-top:6px;font-style:normal;font-size:11.5px;font-weight:800;letter-spacing:.04em;color:#5fe0ff}
+.research-body small{margin-top:8px;font-size:12.5px;line-height:1.55;color:#bcd4ff}
+.research-more{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding:9px 15px;
+  align-self:flex-start;border-radius:999px;border:1px solid rgba(143,230,255,.5);
+  background:rgba(95,224,255,.14);font-size:13px;font-weight:800;letter-spacing:.03em;color:#8fe6ff;
+  transition:background .25s,border-color .25s}
+.research-card:hover .research-more{background:rgba(95,224,255,.3);border-color:rgba(143,230,255,.95)}
+.team-section .slide-note{margin-top:26px;color:rgba(200,220,255,.55)}
+
+@media(max-width:1150px){.research-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.team-creds{grid-template-columns:1fr}
+  .research-grid{grid-template-columns:1fr}
+  .research-photo{height:280px}}
+
+/* ================= PRODUCT SHOWCASE — CONVERSION BLOCK ================= */
+.showcase-trust{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 0}
+.showcase-trust span{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);backdrop-filter:blur(10px);
+  font-size:12px;font-weight:700}
+.showcase-trust svg{color:#9aeaff}
+.showcase-box{margin-top:20px;padding:20px 22px;border-radius:20px;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.09);backdrop-filter:blur(12px)}
+.showcase-box b{display:block;margin-bottom:11px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#9aeaff}
+.showcase-box ul{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.showcase-box li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;line-height:1.5;color:#e4efff}
+.showcase-box svg{flex:none;margin-top:3px;color:#9aeaff}
+.showcase-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.showcase-note{margin:14px 0 0;font-size:12.5px;line-height:1.6;color:rgba(226,240,255,.72)}

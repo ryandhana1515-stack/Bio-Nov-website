@@ -2106,43 +2106,55 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
       </section>
 
       {/* ---------------- Research team (brighter + clickable) ---------------- */}
-      <Reveal id="team" className="section team">
-        <div className="team-aurora" aria-hidden="true">
-          <span /><span /><span /><span />
-        </div>
+      <Reveal id="team" className="team-section">
         <div className="team-inner">
-        <Heading
-          eyebrow="People behind the science"
-          title="Science & Research Team"
-          copy="BIO N:OV was developed with researchers from Korean universities and medical schools — eight specialists across nitric oxide biology, cardiovascular research, metabolism and regenerative medicine."
-        />
-        <p className="click-prompt"><MousePointerClick size={17} /> Click any researcher to open their full profile</p>
-        <div className="research-grid">
-          {researchers.map(r => (
-            <motion.button
-              whileHover={{ y: -8 }}
-              key={r.name}
-              onClick={() => setModal({
-                title: r.name,
-                subtitle: r.org,
-                body: [r.role, "Professional titles, affiliations and research information are transcribed from the supplied product presentation and require verification and written permission before public use."],
-                points: r.focus
-              })}
-              aria-label={`Read more about ${r.name}`}
-            >
-              <div className="research-photo">
-                <Image src={`/images/${r.img}`} alt={`Portrait of ${r.name}`} width={320} height={320} />
-              </div>
-              <div className="research-body">
-                <h3>{r.name}</h3>
-                <span>{r.org}</span>
-                <p>{r.role}</p>
-                <span className="learn-more">View profile <Plus size={15} /></span>
-              </div>
-            </motion.button>
-          ))}
-        </div>
-        <div className="warning">Professional titles, affiliations, portraits and research information must be verified and permission obtained before publication.</div>
+          <div className="team-head">
+            <Heading
+              light
+              eyebrow="People behind the science"
+              title="Science & Research Team"
+              copy="BIO N:OV was developed with researchers from Korean universities and medical schools — eight specialists across nitric oxide biology, cardiovascular research, metabolism and regenerative medicine."
+            />
+            <div className="team-creds">
+              <div><b>8</b><span>Specialists</span></div>
+              <div><b>5</b><span>Universities &amp; medical schools</span></div>
+              <div><b>KACC91554P</b><span>Patented fermentation strain</span></div>
+            </div>
+            <p className="click-prompt light"><MousePointerClick size={17} /> Click any researcher to open their full profile</p>
+          </div>
+
+          <div className="research-grid">
+            {researchers.map(r => (
+              <motion.button
+                whileHover={{ y: -8 }}
+                key={r.name}
+                className="research-card"
+                onClick={() => setModal({
+                  title: r.name,
+                  subtitle: r.org,
+                  body: [r.role, "Professional titles, affiliations and research information are transcribed from the supplied product presentation and require verification and written permission before public use."],
+                  points: r.focus
+                })}
+                aria-label={`Read more about ${r.name}`}
+              >
+                <span className="research-photo">
+                  <Image src={`/images/${r.img}`} alt={`Portrait of ${r.name}`} width={320} height={320} />
+                </span>
+                <span className="research-body">
+                  <b>{r.name}</b>
+                  <em>{r.org}</em>
+                  <small>{r.role}</small>
+                  <span className="research-more">View profile <Plus size={16} /></span>
+                </span>
+              </motion.button>
+            ))}
+          </div>
+
+          <p className="slide-note">
+            Professional titles, affiliations, portraits and research information are transcribed from the supplied
+            product presentation. All of it must be verified and written permission obtained from each named
+            individual and institution before this page is published or used in advertising.
+          </p>
         </div>
       </Reveal>
 
@@ -2170,7 +2182,29 @@ export default function BioNovSite({ faq }: { faq: { question: string; answer: s
                 "Consult a qualified healthcare professional if you are pregnant, nursing, taking medication or managing a medical condition. Do not use this product as a substitute for medical treatment."
               ][tab]}
             </div>
-            <a className="button primary" href="#contact">Request product information <ArrowRight /></a>
+            <div className="showcase-trust">
+              <span><ShieldCheck size={16} /> GMP-certified manufacture</span>
+              <span><FlaskConical size={16} /> Patented strain KACC91554P</span>
+              <span><Leaf size={16} /> Naturally derived, fermented</span>
+            </div>
+
+            <div className="showcase-box">
+              <b>Every box contains</b>
+              <ul>
+                <li><Check size={15} /><span>60 tablets &times; 500 mg (30 g net)</span></li>
+                <li><Check size={15} /><span>A 20-day supply at three tablets daily</span></li>
+                <li><Check size={15} /><span>Sealed blister packs, manufactured in Korea</span></li>
+              </ul>
+            </div>
+
+            <div className="showcase-cta">
+              <a className="button primary" href="#contact">Request product information <ArrowRight size={18} /></a>
+              <a className="button glass" href="#affiliate">Join us as an affiliate <ArrowRight size={18} /></a>
+            </div>
+            <p className="showcase-note">
+              Pricing and ordering open when the store goes live. Register your interest now and we will contact you
+              first.
+            </p>
           </div>
         </div>
       </Reveal>
