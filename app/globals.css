@@ -938,3 +938,71 @@
 .crisis-video__label b{display:block;font-size:19px;letter-spacing:-.02em;color:#fff}
 .crisis-video__label span{display:block;margin-top:6px;font-size:13.5px;line-height:1.55;color:#bcd4ff}
 @media(max-width:1000px){.crisis-video{min-height:420px}}
+
+/* ================= SIX-SYSTEM MAP (replaces the artwork panel) ================= */
+/* Same six systems and conditions as the manufacturer slide, but built in
+   markup so the background is genuinely the brand navy and the centre is a
+   nitric oxide core rather than an anatomical figure. */
+.nomap{position:relative;overflow:hidden;padding:30px 26px 22px;border-radius:28px;
+  border:1px solid rgba(143,230,255,.26);
+  background:radial-gradient(ellipse at 50% 42%,rgba(32,199,236,.2),transparent 62%),
+             linear-gradient(165deg,#1a3d76 0%,#12305f 54%,#0b1e3e 100%);
+  box-shadow:0 30px 80px rgba(2,12,38,.5)}
+.nomap:before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:radial-gradient(circle at 50% 45%,black,transparent 76%)}
+.nomap>*{position:relative;z-index:2}
+.nomap__eyebrow{display:block;margin-bottom:18px;font-size:11px;font-weight:800;
+  letter-spacing:.16em;text-transform:uppercase;color:#8fe6ff}
+
+.nomap__grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px}
+.nomap__col{display:grid;gap:12px}
+.nomap__col--left .nomap__node{justify-content:flex-end;text-align:right}
+
+.nomap__node{display:flex;align-items:center;gap:12px;padding:11px 13px;cursor:pointer;
+  border-radius:16px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);
+  transition:border-color .25s,background .25s}
+.nomap__node:hover{background:rgba(255,255,255,.12)}
+.nomap__txt{display:block;min-width:0}
+.nomap__txt b{display:block;font-size:15.5px;letter-spacing:-.02em;line-height:1.25;color:#fff}
+.nomap__txt small{display:block;margin-top:3px;font-size:11.5px;line-height:1.45;color:#bcd4ff}
+.nomap__icon{display:grid;place-items:center;flex:none;width:46px;height:46px;border-radius:50%}
+.nomap__icon svg{width:23px;height:23px;color:#0c1f43}
+
+/* the wayfinding colours carried over from the manufacturer slide */
+.nomap__node.accent-0 .nomap__icon{background:linear-gradient(145deg,#e8c34a,#cfa32c)}
+.nomap__node.accent-1 .nomap__icon{background:linear-gradient(145deg,#a6d95f,#87c33c)}
+.nomap__node.accent-2 .nomap__icon{background:linear-gradient(145deg,#5fe0e8,#33c3cf)}
+.nomap__node.accent-3 .nomap__icon{background:linear-gradient(145deg,#f0925c,#e2703a)}
+.nomap__node.accent-4 .nomap__icon{background:linear-gradient(145deg,#e8c34a,#cfa32c)}
+.nomap__node.accent-5 .nomap__icon{background:linear-gradient(145deg,#74c8ec,#4aabd8)}
+.nomap__node.accent-0:hover{border-color:#e8c34a}
+.nomap__node.accent-1:hover{border-color:#a6d95f}
+.nomap__node.accent-2:hover{border-color:#5fe0e8}
+.nomap__node.accent-3:hover{border-color:#f0925c}
+.nomap__node.accent-4:hover{border-color:#e8c34a}
+.nomap__node.accent-5:hover{border-color:#74c8ec}
+
+/* the signal itself, at the centre */
+.nomap__core{position:relative;display:grid;place-items:center;width:150px;height:150px}
+.nomap__orb{position:relative;z-index:2;display:grid;place-items:center;width:96px;height:96px;
+  border-radius:50%;border:1px solid rgba(160,240,255,.6);
+  background:radial-gradient(circle at 42% 34%,#9df0ff,#28b6e8 46%,#1160c4 100%);
+  box-shadow:0 0 44px rgba(72,208,255,.6),inset 0 0 26px rgba(255,255,255,.4)}
+.nomap__orb b{font-size:27px;font-weight:900;letter-spacing:-.03em;color:#04264f;line-height:1}
+.nomap__orb small{margin-top:2px;font-size:8.5px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(4,38,79,.75)}
+.nomap__ring{position:absolute;border-radius:50%;border:1px solid rgba(120,225,255,.42)}
+.nomap__ring--a{width:124px;height:124px;animation:nopulse 4.6s ease-in-out infinite}
+.nomap__ring--b{width:150px;height:150px;animation:nopulse 4.6s ease-in-out .9s infinite}
+@keyframes nopulse{0%,100%{opacity:.35;transform:scale(.94)}50%{opacity:.9;transform:scale(1.05)}}
+
+.nomap__source{margin:18px 0 0;font-size:10.5px;letter-spacing:.02em;color:rgba(200,220,255,.55)}
+.nomap__source em{font-style:italic}
+
+@media(max-width:1000px){
+  .nomap__grid{grid-template-columns:1fr;gap:12px}
+  .nomap__core{order:-1;margin:0 auto 6px}
+  .nomap__col--left .nomap__node{flex-direction:row-reverse;justify-content:flex-end;text-align:left}
+}

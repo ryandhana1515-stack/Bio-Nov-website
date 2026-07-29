@@ -1838,26 +1838,61 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
               </p>
             </div>
 
-            {/* same footage as the body atlas below — the systems it lights up
-                are the six the cards under this headline describe */}
+            {/* the six-systems map, built rather than dropped in as artwork, so
+                the background is the brand navy and the centre is a nitric
+                oxide core instead of an anatomical figure */}
             <div className="crisis-figure">
-              <div className="crisis-video">
-                <video
-                  className="crisis-video__video"
-                  poster="/video/xray-journey-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-hidden="true"
-                >
-                  <source src="/video/xray-journey.mp4" type="video/mp4" />
-                </video>
-                <div className="crisis-video__label">
-                  <b>Every organ sits on the same road.</b>
-                  <span>Brain, heart, lungs, gut, immune tissue and skin &mdash; all served by one network.</span>
+              <div className="nomap">
+                <span className="nomap__eyebrow">One signal &middot; six systems</span>
+
+                <div className="nomap__grid">
+                  <div className="nomap__col nomap__col--left">
+                    {noSystems.slice(0, 3).map((sys, i) => (
+                      <motion.button
+                        whileHover={{ x: -5 }}
+                        key={sys.name}
+                        className={`nomap__node accent-${i}`}
+                        onClick={() => setModal(sys)}
+                        aria-label={`Read more about ${sys.name}`}
+                      >
+                        <span className="nomap__txt">
+                          <b>{sys.name}</b>
+                          <small>{sys.conditions}</small>
+                        </span>
+                        <span className="nomap__icon"><sys.Icon /></span>
+                      </motion.button>
+                    ))}
+                  </div>
+
+                  <div className="nomap__core" aria-hidden="true">
+                    <span className="nomap__ring nomap__ring--a" />
+                    <span className="nomap__ring nomap__ring--b" />
+                    <span className="nomap__orb">
+                      <b>NO</b>
+                      <small>Nitric oxide</small>
+                    </span>
+                  </div>
+
+                  <div className="nomap__col nomap__col--right">
+                    {noSystems.slice(3).map((sys, i) => (
+                      <motion.button
+                        whileHover={{ x: 5 }}
+                        key={sys.name}
+                        className={`nomap__node accent-${i + 3}`}
+                        onClick={() => setModal(sys)}
+                        aria-label={`Read more about ${sys.name}`}
+                      >
+                        <span className="nomap__icon"><sys.Icon /></span>
+                        <span className="nomap__txt">
+                          <b>{sys.name}</b>
+                          <small>{sys.conditions}</small>
+                        </span>
+                      </motion.button>
+                    ))}
+                  </div>
                 </div>
+
+                <p className="nomap__source">Source: Dr. Ferid Murad, <em>Magical Nitric Oxide</em></p>
               </div>
             </div>
           </div>
