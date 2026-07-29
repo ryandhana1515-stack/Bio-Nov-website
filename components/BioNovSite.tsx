@@ -3,12 +3,13 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
-import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Wind, X, Zap } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Globe, Volume2, VolumeX, Wind, X, Zap } from "lucide-react";
 
 import XrayJourney from "./XrayJourney";
+import { locales, strings, type LocaleCode } from "./i18n";
 
-const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
+const nav: [keyof typeof strings.en, string][] = [["navHome","home"],["navWhy","why-no"],["navCrisis","crisis"],["navInside","journey"],["navFlow","vessels"],["navTech","technology"],["navBenefits","benefits"],["navTeam","team"],["navProduct","product"],["navAffiliate","affiliate"],["navFaq","faq"]];
 
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[]; img?: string; imgAlt?: string };
 
@@ -1440,6 +1441,30 @@ function Heading({ eyebrow, title, copy, light = false }: { eyebrow: string; tit
 export default function BioNovSite({ faq }: { faq: { group: string; question: string; answer: string }[] }) {
   /* preserve author order rather than sorting alphabetically */
   const faqGroups = faq.reduce<string[]>((acc, x) => acc.includes(x.group) ? acc : [...acc, x.group], []);
+
+  /* Hero audio is opt-in: autoplay with sound is blocked by every browser, so
+     the clip starts muted and the visitor turns it on. */
+  /* Locale drives the interface strings and the document direction. Arabic
+     flips the whole page to RTL. */
+  const [locale, setLocale] = useState<LocaleCode>("en");
+  const [langOpen, setLangOpen] = useState(false);
+  const t = strings[locale];
+  const active = locales.find(l => l.code === locale)!;
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.dir = active.dir;
+  }, [locale, active.dir]);
+
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const [heroMuted, setHeroMuted] = useState(true);
+  const toggleHeroSound = () => {
+    const vid = heroVideoRef.current;
+    if (!vid) return;
+    const next = !heroMuted;
+    vid.muted = next;
+    setHeroMuted(next);
+    if (!next) vid.play().catch(() => {});
+  };
   const [menu, setMenu] = useState(false);
   const [tab, setTab] = useState(0);
   const [openFaq, setOpenFaq] = useState(0);
@@ -1458,34 +1483,67 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
 
       <header className="nav-shell">
         <a href="#home" className="brand" aria-label="BIO N:OV home"><span className="brand-mark">V</span><span>BIO N:OV</span></a>
-        <nav className="desktop-nav">{nav.map(([label, id]) => <a key={id} href={`#${id}`}>{label}</a>)}</nav>
-        <a className="nav-cta" href="#contact">Contact us <ArrowRight size={15} /></a>
+        <nav className="desktop-nav">{nav.map(([key, id]) => <a key={id} href={`#${id}`}>{t[key]}</a>)}</nav>
+
+        <div className="langpick">
+          <button
+            className="langpick__btn"
+            onClick={() => setLangOpen(!langOpen)}
+            aria-expanded={langOpen}
+            aria-label={t.langLabel}
+          >
+            <Globe size={15} />
+            <span className="langpick__flag">{active.flag}</span>
+            <span className="langpick__code">{active.code.toUpperCase()}</span>
+            <ChevronDown size={14} className={langOpen ? "rotate" : ""} />
+          </button>
+          {langOpen && (
+            <div className="langpick__menu" role="menu">
+              {locales.map(l => (
+                <button
+                  key={l.code}
+                  role="menuitem"
+                  className={l.code === locale ? "is-active" : ""}
+                  onClick={() => { setLocale(l.code); setLangOpen(false); }}
+                >
+                  <span className="langpick__flag">{l.flag}</span>
+                  <b>{l.label}</b>
+                  <small>{l.english}</small>
+                </button>
+              ))}
+              <p className="langpick__note">{t.langNote}</p>
+            </div>
+          )}
+        </div>
+
+        <a className="nav-cta" href="#contact">{t.navContact} <ArrowRight size={15} /></a>
         <button className="menu-button" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Open navigation">{menu ? <X /> : <Menu />}</button>
-        {menu && <div className="mobile-nav">{nav.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>{label}</a>)}</div>}
+        {menu && <div className="mobile-nav">{nav.map(([key, id]) => <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>{t[key]}</a>)}</div>}
       </header>
 
       {/* ---------------- Hero ---------------- */}
       <section id="home" className="hero">
         <div className="orb orb-a" /><div className="orb orb-b" />
         <div className="hero-copy">
-          <span className="hero-kicker"><CircleDot size={14} /> Third-generation fermentation science</span>
+          <span className="hero-kicker"><CircleDot size={14} /> {t.heroKicker}</span>
           <h1>BIO N:OV</h1>
-          <h2>Clearing the Way<br />to <span>Optimum Health</span></h2>
-          <p>When blood flows freely, everything downstream works better. BIO N:OV is a next-generation wellness formula built on patented microbial fermentation, designed to support your body&rsquo;s natural nitric oxide pathways &mdash; the signal that helps blood vessels relax.</p>
+          <h2>{t.heroTitle2a}<br /><span>{t.heroTitle2b}</span></h2>
+          <p>{t.heroCopy}</p>
           <div className="hero-actions">
-            <a className="button primary" href="#product">Discover BIO N:OV <ArrowRight size={18} /></a>
-            <a className="button glass" href="#flow">Why blood flow matters</a>
+            <a className="button primary" href="#product">{t.heroCta1} <ArrowRight size={18} /></a>
+            <a className="button glass" href="#flow">{t.heroCta2}</a>
           </div>
           <div className="hero-badges">
-            <span><ShieldPlus size={15} /> GMP-Certified Korea</span>
-            <span><FlaskConical size={15} /> Patented Fermentation</span>
-            <span><Leaf size={15} /> Naturally Derived</span>
+            <span><ShieldPlus size={15} /> {t.badgeGmp}</span>
+            <span><FlaskConical size={15} /> {t.badgePatent}</span>
+            <span><Leaf size={15} /> {t.badgeNatural}</span>
           </div>
-          <small>Information on this website is for educational purposes only and is not intended to diagnose, treat, cure or prevent any disease.</small>
+          <small>{t.heroDisclaimer}</small>
         </div>
         <motion.div className="hero-product" style={{ y: productY }} whileHover={{ rotateY: 5, rotateX: -2 }}>
           <div className="product-halo" />
           <video
+            ref={heroVideoRef}
             className="hero-video"
             poster="/video/bio-nov-hero-poster.jpg"
             autoPlay
@@ -1497,6 +1555,16 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
           >
             <source src="/video/bio-nov-hero.mp4" type="video/mp4" />
           </video>
+          {/* browsers refuse autoplay with audio, so sound is opt-in */}
+          <button
+            className={`hero-sound ${heroMuted ? "" : "is-on"}`}
+            onClick={toggleHeroSound}
+            aria-pressed={!heroMuted}
+            aria-label={heroMuted ? "Turn sound on" : "Turn sound off"}
+          >
+            {heroMuted ? <VolumeX size={17} /> : <Volume2 size={17} />}
+            <span>{heroMuted ? t.soundOff : t.soundOn}</span>
+          </button>
           {/* Shown instead of the video when the visitor prefers reduced motion */}
           <img
             className="hero-poster-fallback"
@@ -1506,7 +1574,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             height={720}
           />
         </motion.div>
-        <a href="#why-no" className="scroll-cue">Scroll to discover <ChevronDown /></a>
+        <a href="#why-no" className="scroll-cue">{t.scrollCue} <ChevronDown /></a>
       </section>
 
       {/* ---------------- Why nitric oxide ---------------- */}
@@ -1519,7 +1587,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             copy="Follow a single tablet from your mouth to every cell you own. Nitric oxide was named Molecule of the Year in 1992 and won a Nobel Prize in 1998 — yet most people have never heard of the signal keeping their blood vessels open."
           />
 
-          <div className="molecule-grid molecule-grid--solo">
+          <div className="molecule-grid">
 
             <div className="no-roles">
 
@@ -1542,6 +1610,34 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
                   <Plus size={18} className="row-plus" />
                 </motion.button>
               ))}
+            </div>
+
+            {/* what the signal physically does, drawn rather than described */}
+            <div className="vesselviz">
+              <span className="vesselviz__eyebrow">Cross-section &middot; artery wall</span>
+
+              <div className="vesselviz__tube">
+                <span className="vesselviz__muscle" />
+                <span className="vesselviz__endo" />
+                <span className="vesselviz__lumen">
+                  {[0, 1, 2, 3, 4, 5, 6].map(n => <i className="vesselviz__rbc" key={n} style={{ animationDelay: `${n * -0.9}s` }} />)}
+                  {[0, 1, 2, 3].map(n => <b className="vesselviz__no" key={n} style={{ animationDelay: `${n * -1.6}s` }} />)}
+                </span>
+                <span className="vesselviz__endo vesselviz__endo--b" />
+                <span className="vesselviz__muscle vesselviz__muscle--b" />
+              </div>
+
+              <ul className="vesselviz__key">
+                <li><span className="k k--muscle" /> Smooth muscle &mdash; relaxes when NO arrives</li>
+                <li><span className="k k--endo" /> Endothelium &mdash; where NO is released</li>
+                <li><span className="k k--rbc" /> Red blood cells carrying oxygen</li>
+                <li><span className="k k--no" /> Nitric oxide, the signal itself</li>
+              </ul>
+
+              <div className="vesselviz__creds">
+                <span><Sparkles size={14} /> Molecule of the Year, 1992</span>
+                <span><Microscope size={14} /> Nobel Prize in Medicine, 1998</span>
+              </div>
             </div>
           </div>
 

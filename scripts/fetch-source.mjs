@@ -15,7 +15,8 @@ const SOURCE = [
   "app/page.tsx",
   "app/globals.css",
   "components/BioNovSite.tsx",
-  "components/XrayJourney.tsx"
+  "components/XrayJourney.tsx",
+  "components/i18n.ts"
 ];
 
 const IMAGES = [

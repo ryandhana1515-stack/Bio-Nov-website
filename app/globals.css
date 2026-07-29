@@ -1006,3 +1006,98 @@
   .nomap__core{order:-1;margin:0 auto 6px}
   .nomap__col--left .nomap__node{flex-direction:row-reverse;justify-content:flex-end;text-align:left}
 }
+
+/* ================= VESSEL CROSS-SECTION ================= */
+/* The right column of "See It Work Inside Your Body" was empty. This draws
+   what the copy describes: NO released at the endothelium, muscle relaxing,
+   oxygen moving through. */
+.vesselviz{align-self:center;padding:26px;border-radius:26px;
+  border:1px solid rgba(143,230,255,.26);
+  background:radial-gradient(ellipse at 50% 30%,rgba(32,199,236,.16),transparent 62%),
+             linear-gradient(165deg,rgba(255,255,255,.09),rgba(255,255,255,.03));
+  backdrop-filter:blur(14px);box-shadow:0 26px 70px rgba(2,12,38,.4)}
+.vesselviz__eyebrow{display:block;margin-bottom:16px;font-size:10.5px;font-weight:800;
+  letter-spacing:.16em;text-transform:uppercase;color:#8fe6ff}
+
+.vesselviz__tube{position:relative;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;
+  box-shadow:inset 0 0 40px rgba(0,10,34,.6)}
+.vesselviz__muscle{height:26px;background:linear-gradient(180deg,#c85b7d,#8e2f56);
+  animation:vmuscle 7s ease-in-out infinite}
+.vesselviz__muscle--b{background:linear-gradient(0deg,#c85b7d,#8e2f56)}
+.vesselviz__endo{height:7px;background:linear-gradient(180deg,#ffd9e4,#f39ab5)}
+.vesselviz__endo--b{background:linear-gradient(0deg,#ffd9e4,#f39ab5)}
+.vesselviz__lumen{position:relative;display:block;height:120px;overflow:hidden;
+  background:linear-gradient(180deg,#3d0f2c,#25081c);animation:vlumen 7s ease-in-out infinite}
+
+.vesselviz__rbc{position:absolute;top:50%;width:26px;height:17px;margin-top:-8px;border-radius:50%;
+  background:radial-gradient(circle at 38% 34%,#ff9db4,#d1436f 62%);
+  box-shadow:inset 0 0 0 3px rgba(160,32,74,.75);animation:vflow 6.2s linear infinite}
+.vesselviz__rbc:nth-child(2){top:32%}.vesselviz__rbc:nth-child(3){top:68%}
+.vesselviz__rbc:nth-child(5){top:38%}.vesselviz__rbc:nth-child(6){top:62%}
+.vesselviz__no{position:absolute;top:16%;width:13px;height:13px;border-radius:50%;
+  background:radial-gradient(circle,#c9f6ff,#3fd0ff 60%,transparent);
+  box-shadow:0 0 16px rgba(95,224,255,.95);animation:vno 6.4s linear infinite}
+.vesselviz__no:nth-child(9){top:78%}.vesselviz__no:nth-child(10){top:24%}
+@keyframes vflow{from{left:-40px}to{left:104%}}
+@keyframes vno{0%{left:-20px;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:104%;opacity:0}}
+@keyframes vmuscle{0%,100%{height:26px}50%{height:15px}}
+@keyframes vlumen{0%,100%{height:120px}50%{height:142px}}
+
+.vesselviz__key{display:grid;gap:8px;margin:18px 0 0;padding:0;list-style:none}
+.vesselviz__key li{display:flex;align-items:center;gap:10px;font-size:12.5px;line-height:1.45;color:#c6dcff}
+.vesselviz__key .k{flex:none;width:13px;height:13px;border-radius:4px}
+.k--muscle{background:linear-gradient(145deg,#c85b7d,#8e2f56)}
+.k--endo{background:linear-gradient(145deg,#ffd9e4,#f39ab5)}
+.k--rbc{border-radius:50%;background:radial-gradient(circle at 38% 34%,#ff9db4,#d1436f)}
+.k--no{border-radius:50%;background:radial-gradient(circle,#c9f6ff,#3fd0ff);box-shadow:0 0 10px rgba(95,224,255,.8)}
+
+.vesselviz__creds{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.vesselviz__creds span{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;
+  border:1px solid rgba(143,230,255,.34);background:rgba(95,224,255,.1);
+  font-size:11.5px;font-weight:700;color:#cfe8ff}
+.vesselviz__creds svg{color:#5fe0ff}
+
+@media(max-width:900px){.vesselviz{margin-top:22px}}
+
+/* ---- Hero video: taller frame + opt-in sound ---- */
+/* The clip is 16:9 but the frame reads better with more height beside the
+   headline, so it is cropped at the sides rather than letterboxed. */
+.hero-video{aspect-ratio:4/3;object-fit:cover;height:auto}
+.hero-sound{position:absolute;z-index:3;right:16px;bottom:16px;display:inline-flex;align-items:center;gap:8px;
+  padding:10px 15px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.4);background:rgba(6,24,66,.6);backdrop-filter:blur(12px);
+  color:#fff;font-size:12.5px;font-weight:750;transition:background .25s,border-color .25s}
+.hero-sound:hover{background:rgba(6,24,66,.85);border-color:rgba(154,234,255,.85)}
+.hero-sound.is-on{border-color:rgba(154,234,255,.9);background:rgba(22,140,242,.55)}
+.hero-sound svg{flex:none}
+@media(max-width:520px){.hero-sound span{display:none}.hero-sound{padding:10px}}
+
+/* ================= LANGUAGE SWITCHER ================= */
+.langpick{position:relative;flex:none}
+.langpick__btn{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:12px;cursor:pointer;
+  border:1px solid #dbe8fb;background:#fff;color:#2b4770;font-size:12px;font-weight:700;transition:.2s}
+.langpick__btn:hover{border-color:#7fc9ff;color:var(--blue)}
+.langpick__flag{font-size:15px;line-height:1}
+.langpick__code{letter-spacing:.06em}
+.langpick__menu{position:absolute;z-index:60;top:calc(100% + 10px);right:0;width:270px;padding:8px;
+  border-radius:18px;border:1px solid #dbe8fb;background:#fff;
+  box-shadow:0 26px 70px rgba(8,45,119,.22);max-height:min(70vh,440px);overflow-y:auto}
+.langpick__menu button{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;width:100%;
+  padding:10px 12px;border:0;border-radius:12px;background:none;cursor:pointer;text-align:left;transition:.18s}
+.langpick__menu button:hover{background:#eef6ff}
+.langpick__menu button.is-active{background:#e4f2ff;box-shadow:inset 0 0 0 1px #7fc9ff}
+.langpick__menu b{font-size:14px;font-weight:750;color:var(--ink)}
+.langpick__menu small{font-size:11px;color:#7d93b4}
+.langpick__note{margin:8px 6px 4px;font-size:10.5px;line-height:1.5;color:#8095b5}
+
+/* Arabic flips the document; keep the nav and hero readable in RTL */
+html[dir="rtl"] .desktop-nav{margin-left:0;margin-right:auto}
+html[dir="rtl"] .langpick__menu{right:auto;left:0}
+html[dir="rtl"] .langpick__menu button{text-align:right}
+html[dir="rtl"] .hero-copy,html[dir="rtl"] .heading{text-align:right}
+html[dir="rtl"] .hero-actions,html[dir="rtl"] .hero-badges,html[dir="rtl"] .hero-kicker{justify-content:flex-end}
+html[dir="rtl"] .hero small{margin-left:auto}
+
+@media(max-width:1180px){.langpick__code{display:none}}
+@media(max-width:800px){.langpick{order:2;margin-left:auto}
+  .langpick__menu{width:250px}}
