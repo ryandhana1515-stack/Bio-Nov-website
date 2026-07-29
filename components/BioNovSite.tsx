@@ -7,9 +7,9 @@ import { useEffect, useRef, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Globe, Volume2, VolumeX, Wind, X, Zap } from "lucide-react";
 
 import XrayJourney from "./XrayJourney";
-import { locales, strings, type LocaleCode } from "./i18n";
+import { allLocales, englishLocale, localeGroups, includedLanguages, type Locale } from "./i18n";
 
-const nav: [keyof typeof strings.en, string][] = [["navHome","home"],["navWhy","why-no"],["navCrisis","crisis"],["navInside","journey"],["navFlow","vessels"],["navTech","technology"],["navBenefits","benefits"],["navTeam","team"],["navProduct","product"],["navAffiliate","affiliate"],["navFaq","faq"]];
+const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[]; img?: string; imgAlt?: string };
 
@@ -1444,16 +1444,61 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
 
   /* Hero audio is opt-in: autoplay with sound is blocked by every browser, so
      the clip starts muted and the visitor turns it on. */
-  /* Locale drives the interface strings and the document direction. Arabic
-     flips the whole page to RTL. */
-  const [locale, setLocale] = useState<LocaleCode>("en");
+  /* Whole-page translation. Hand-authored strings could only ever cover the
+     copy we remembered to wrap; the translate element reaches every node on
+     the page, including modal bodies and FAQ answers. */
   const [langOpen, setLangOpen] = useState(false);
-  const t = strings[locale];
-  const active = locales.find(l => l.code === locale)!;
+  const [langQuery, setLangQuery] = useState("");
+  const [locale, setLocale] = useState<Locale>(englishLocale);
+
   useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = active.dir;
-  }, [locale, active.dir]);
+    const saved = window.localStorage.getItem("bionov-locale");
+    if (saved) {
+      const found = allLocales.find(l => l.code === saved);
+      if (found) setLocale(found);
+    }
+    if (document.getElementById("gt-script")) return;
+    (window as unknown as Record<string, unknown>).googleTranslateElementInit = () => {
+      const g = (window as unknown as { google?: { translate?: { TranslateElement: new (o: unknown, el: string) => void } } }).google;
+      if (!g?.translate) return;
+      new g.translate.TranslateElement(
+        { pageLanguage: "en", includedLanguages, autoDisplay: false },
+        "gt-element"
+      );
+    };
+    const script = document.createElement("script");
+    script.id = "gt-script";
+    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.head.appendChild(script);
+  }, []);
+
+  const applyLocale = (l: Locale) => {
+    setLocale(l);
+    setLangOpen(false);
+    setLangQuery("");
+    window.localStorage.setItem("bionov-locale", l.code);
+    document.documentElement.dir = l.rtl ? "rtl" : "ltr";
+
+    /* The cookie is what survives a reload; the select gives an instant swap
+       when the widget has already booted. */
+    const value = l.code === "en" ? "/en/en" : `/en/${l.code}`;
+    const host = window.location.hostname;
+    document.cookie = `googtrans=${value};path=/`;
+    document.cookie = `googtrans=${value};path=/;domain=.${host}`;
+
+    const select = document.querySelector<HTMLSelectElement>("select.goog-te-combo");
+    if (select) {
+      select.value = l.code;
+      select.dispatchEvent(new Event("change"));
+    } else {
+      window.location.reload();
+    }
+  };
+
+  const langMatches = (l: Locale) =>
+    !langQuery ||
+    l.label.toLowerCase().includes(langQuery.toLowerCase()) ||
+    l.english.toLowerCase().includes(langQuery.toLowerCase());
 
   const heroVideoRef = useRef<HTMLVideoElement>(null);
   const [heroMuted, setHeroMuted] = useState(true);
@@ -1483,62 +1528,98 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
 
       <header className="nav-shell">
         <a href="#home" className="brand" aria-label="BIO N:OV home"><span className="brand-mark">V</span><span>BIO N:OV</span></a>
-        <nav className="desktop-nav">{nav.map(([key, id]) => <a key={id} href={`#${id}`}>{t[key]}</a>)}</nav>
+        <nav className="desktop-nav">{nav.map(([label, id]) => <a key={id} href={`#${id}`}>{label}</a>)}</nav>
 
-        <div className="langpick">
+        <div className="langpick notranslate" translate="no">
           <button
             className="langpick__btn"
             onClick={() => setLangOpen(!langOpen)}
             aria-expanded={langOpen}
-            aria-label={t.langLabel}
+            aria-label="Choose language"
           >
             <Globe size={15} />
-            <span className="langpick__flag">{active.flag}</span>
-            <span className="langpick__code">{active.code.toUpperCase()}</span>
+            <span className="langpick__flag">{locale.flag}</span>
+            <span className="langpick__code">{locale.code.toUpperCase()}</span>
             <ChevronDown size={14} className={langOpen ? "rotate" : ""} />
           </button>
+
           {langOpen && (
             <div className="langpick__menu" role="menu">
-              {locales.map(l => (
+              <input
+                className="langpick__search"
+                value={langQuery}
+                onChange={e => setLangQuery(e.target.value)}
+                placeholder="Search language…"
+                aria-label="Search language"
+                autoFocus
+              />
+
+              {langMatches(englishLocale) && (
                 <button
-                  key={l.code}
                   role="menuitem"
-                  className={l.code === locale ? "is-active" : ""}
-                  onClick={() => { setLocale(l.code); setLangOpen(false); }}
+                  className={locale.code === "en" ? "is-active" : ""}
+                  onClick={() => applyLocale(englishLocale)}
                 >
-                  <span className="langpick__flag">{l.flag}</span>
-                  <b>{l.label}</b>
-                  <small>{l.english}</small>
+                  <span className="langpick__flag">{englishLocale.flag}</span>
+                  <b>{englishLocale.label}</b>
+                  <small>Original</small>
                 </button>
-              ))}
-              <p className="langpick__note">{t.langNote}</p>
+              )}
+
+              {localeGroups.map(group => {
+                const shown = group.locales.filter(langMatches);
+                if (!shown.length) return null;
+                return (
+                  <div className="langpick__group" key={group.region}>
+                    <span className="langpick__region">{group.region}</span>
+                    {shown.map(l => (
+                      <button
+                        key={l.code}
+                        role="menuitem"
+                        className={l.code === locale.code ? "is-active" : ""}
+                        onClick={() => applyLocale(l)}
+                      >
+                        <span className="langpick__flag">{l.flag}</span>
+                        <b>{l.label}</b>
+                        <small>{l.english}</small>
+                      </button>
+                    ))}
+                  </div>
+                );
+              })}
+
+              <p className="langpick__note">
+                Machine translation. Product and compliance wording is reviewed per market before
+                it is used in advertising.
+              </p>
             </div>
           )}
         </div>
+        <div id="gt-element" aria-hidden="true" />
 
-        <a className="nav-cta" href="#contact">{t.navContact} <ArrowRight size={15} /></a>
+        <a className="nav-cta" href="#contact">Contact us <ArrowRight size={15} /></a>
         <button className="menu-button" onClick={() => setMenu(!menu)} aria-expanded={menu} aria-label="Open navigation">{menu ? <X /> : <Menu />}</button>
-        {menu && <div className="mobile-nav">{nav.map(([key, id]) => <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>{t[key]}</a>)}</div>}
+        {menu && <div className="mobile-nav">{nav.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>{label}</a>)}</div>}
       </header>
 
       {/* ---------------- Hero ---------------- */}
       <section id="home" className="hero">
         <div className="orb orb-a" /><div className="orb orb-b" />
         <div className="hero-copy">
-          <span className="hero-kicker"><CircleDot size={14} /> {t.heroKicker}</span>
+          <span className="hero-kicker"><CircleDot size={14} /> Third-generation fermentation science</span>
           <h1>BIO N:OV</h1>
-          <h2>{t.heroTitle2a}<br /><span>{t.heroTitle2b}</span></h2>
-          <p>{t.heroCopy}</p>
+          <h2>Clearing the Way<br />to <span>Optimum Health</span></h2>
+          <p>When blood flows freely, everything downstream works better. BIO N:OV is a next-generation wellness formula built on patented microbial fermentation, designed to support your body&rsquo;s natural nitric oxide pathways &mdash; the signal that helps blood vessels relax.</p>
           <div className="hero-actions">
-            <a className="button primary" href="#product">{t.heroCta1} <ArrowRight size={18} /></a>
-            <a className="button glass" href="#flow">{t.heroCta2}</a>
+            <a className="button primary" href="#product">Discover BIO N:OV <ArrowRight size={18} /></a>
+            <a className="button glass" href="#flow">Why blood flow matters</a>
           </div>
           <div className="hero-badges">
-            <span><ShieldPlus size={15} /> {t.badgeGmp}</span>
-            <span><FlaskConical size={15} /> {t.badgePatent}</span>
-            <span><Leaf size={15} /> {t.badgeNatural}</span>
+            <span><ShieldPlus size={15} /> GMP-Certified Korea</span>
+            <span><FlaskConical size={15} /> Patented Fermentation</span>
+            <span><Leaf size={15} /> Naturally Derived</span>
           </div>
-          <small>{t.heroDisclaimer}</small>
+          <small>Information on this website is for educational purposes only and is not intended to diagnose, treat, cure or prevent any disease.</small>
         </div>
         <motion.div className="hero-product" style={{ y: productY }} whileHover={{ rotateY: 5, rotateX: -2 }}>
           <div className="product-halo" />
@@ -1563,7 +1644,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             aria-label={heroMuted ? "Turn sound on" : "Turn sound off"}
           >
             {heroMuted ? <VolumeX size={17} /> : <Volume2 size={17} />}
-            <span>{heroMuted ? t.soundOff : t.soundOn}</span>
+            <span>{heroMuted ? "Sound off" : "Sound on"}</span>
           </button>
           {/* Shown instead of the video when the visitor prefers reduced motion */}
           <img
@@ -1574,7 +1655,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             height={720}
           />
         </motion.div>
-        <a href="#why-no" className="scroll-cue">{t.scrollCue} <ChevronDown /></a>
+        <a href="#why-no" className="scroll-cue">Scroll to discover <ChevronDown /></a>
       </section>
 
       {/* ---------------- Why nitric oxide ---------------- */}

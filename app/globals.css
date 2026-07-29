@@ -1079,25 +1079,37 @@
 .langpick__btn:hover{border-color:#7fc9ff;color:var(--blue)}
 .langpick__flag{font-size:15px;line-height:1}
 .langpick__code{letter-spacing:.06em}
-.langpick__menu{position:absolute;z-index:60;top:calc(100% + 10px);right:0;width:270px;padding:8px;
+.langpick__menu{position:absolute;z-index:60;top:calc(100% + 10px);right:0;width:300px;padding:8px;
   border-radius:18px;border:1px solid #dbe8fb;background:#fff;
-  box-shadow:0 26px 70px rgba(8,45,119,.22);max-height:min(70vh,440px);overflow-y:auto}
+  box-shadow:0 26px 70px rgba(8,45,119,.22);max-height:min(72vh,520px);overflow-y:auto}
+.langpick__search{width:100%;margin-bottom:6px;padding:10px 12px;border-radius:11px;
+  border:1px solid #dbe8fb;background:#f7fbff;color:var(--ink);font-size:13px;outline:none}
+.langpick__search:focus{border-color:#7fc9ff;background:#fff}
+.langpick__region{display:block;padding:10px 12px 6px;font-size:10.5px;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;color:#8fa8c9}
 .langpick__menu button{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;width:100%;
-  padding:10px 12px;border:0;border-radius:12px;background:none;cursor:pointer;text-align:left;transition:.18s}
+  padding:9px 12px;border:0;border-radius:12px;background:none;cursor:pointer;text-align:left;transition:.18s}
 .langpick__menu button:hover{background:#eef6ff}
 .langpick__menu button.is-active{background:#e4f2ff;box-shadow:inset 0 0 0 1px #7fc9ff}
-.langpick__menu b{font-size:14px;font-weight:750;color:var(--ink)}
-.langpick__menu small{font-size:11px;color:#7d93b4}
-.langpick__note{margin:8px 6px 4px;font-size:10.5px;line-height:1.5;color:#8095b5}
+.langpick__menu b{font-size:13.5px;font-weight:750;color:var(--ink)}
+.langpick__menu small{font-size:10.5px;color:#7d93b4}
+.langpick__note{margin:10px 8px 4px;font-size:10.5px;line-height:1.55;color:#8095b5}
 
-/* Arabic flips the document; keep the nav and hero readable in RTL */
+/* Google's own chrome is hidden; the branded picker drives it. */
+#gt-element{display:none}
+.skiptranslate iframe{display:none!important}
+.goog-te-banner-frame,.goog-te-gadget,.goog-logo-link{display:none!important}
+body{top:0!important}
+font[style]{background:none!important;box-shadow:none!important}
+
+/* RTL languages flip the document */
 html[dir="rtl"] .desktop-nav{margin-left:0;margin-right:auto}
 html[dir="rtl"] .langpick__menu{right:auto;left:0}
-html[dir="rtl"] .langpick__menu button{text-align:right}
+html[dir="rtl"] .langpick__menu button,html[dir="rtl"] .langpick__region{text-align:right}
 html[dir="rtl"] .hero-copy,html[dir="rtl"] .heading{text-align:right}
 html[dir="rtl"] .hero-actions,html[dir="rtl"] .hero-badges,html[dir="rtl"] .hero-kicker{justify-content:flex-end}
 html[dir="rtl"] .hero small{margin-left:auto}
 
 @media(max-width:1180px){.langpick__code{display:none}}
 @media(max-width:800px){.langpick{order:2;margin-left:auto}
-  .langpick__menu{width:250px}}
+  .langpick__menu{width:270px}}
