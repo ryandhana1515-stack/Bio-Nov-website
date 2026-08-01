@@ -1113,3 +1113,20 @@ html[dir="rtl"] .hero small{margin-left:auto}
 @media(max-width:1180px){.langpick__code{display:none}}
 @media(max-width:800px){.langpick{order:2;margin-left:auto}
   .langpick__menu{width:270px}}
+
+/* ---- Translated navigation must not overflow the bar ---- */
+/* Chinese, Thai and German items are wider or narrower than the English
+   originals, which pushed items out of the shell. The row now shrinks and
+   scrolls instead of clipping, and hands over to the mobile menu earlier. */
+.desktop-nav{min-width:0;flex:1 1 auto;justify-content:flex-end;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none}
+.desktop-nav::-webkit-scrollbar{display:none}
+.desktop-nav a{white-space:nowrap;flex:none}
+@media(max-width:1400px){.desktop-nav{gap:14px}.desktop-nav a{font-size:11.5px}}
+@media(max-width:1150px){
+  .desktop-nav{display:none}
+  .menu-button{display:inline-flex;align-items:center;color:var(--ink)}
+  .nav-shell{gap:12px}
+}
+/* the brand lockup never wraps or shrinks, in any language */
+.brand{flex:none;white-space:nowrap}

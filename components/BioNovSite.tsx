@@ -11,6 +11,19 @@ import { allLocales, englishLocale, localeGroups, includedLanguages, type Locale
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
 
+/* "BIO N:OV" is a product name, not a phrase. Left alone, the translator turns
+   it into things like 生物学编号：OV — "biology number: OV". Every render path
+   that can contain it runs through this so the token is marked notranslate. */
+const BRAND = "BIO N:OV";
+function brandSafe(text: string) {
+  if (!text.includes(BRAND)) return text;
+  return text.split(BRAND).flatMap((part, i) =>
+    i === 0
+      ? [part]
+      : [<span className="notranslate" translate="no" key={i}>{BRAND}</span>, part]
+  );
+}
+
 type Detail = { title: string; subtitle?: string; body: string[]; points?: string[]; img?: string; imgAlt?: string };
 
 /* ------------------------------------------------------------------ *
@@ -1348,7 +1361,7 @@ function Modal({ detail, onClose }: { detail: Detail | null; onClose: () => void
               <X size={20} />
             </button>
             {detail.subtitle && <span className="eyebrow">{detail.subtitle}</span>}
-            <h3>{detail.title}</h3>
+            <h3>{brandSafe(detail.title)}</h3>
             {detail.img && (
               <Image
                 className="modal-figure"
@@ -1359,10 +1372,10 @@ function Modal({ detail, onClose }: { detail: Detail | null; onClose: () => void
                 sizes="(max-width: 900px) 100vw, 760px"
               />
             )}
-            {detail.body.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
+            {detail.body.map(p => <p key={p.slice(0, 24)}>{brandSafe(p)}</p>)}
             {detail.points && (
               <ul className="modal-points">
-                {detail.points.map(pt => <li key={pt}><Check size={16} /><span>{pt}</span></li>)}
+                {detail.points.map(pt => <li key={pt}><Check size={16} /><span>{brandSafe(pt)}</span></li>)}
               </ul>
             )}
             <button className="button primary modal-cta" onClick={onClose}>Got it</button>
@@ -1402,7 +1415,7 @@ function SlideFigure({
         sizes="(max-width: 900px) 100vw, 620px"
       />
       <span className="slide-figure__bar">
-        <span className="slide-figure__cap">{caption}</span>
+        <span className="slide-figure__cap">{brandSafe(caption)}</span>
         <span className="slide-figure__more">Enlarge &amp; read <Plus size={14} /></span>
       </span>
     </motion.button>
@@ -1527,7 +1540,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
       <Modal detail={modal} onClose={() => setModal(null)} />
 
       <header className="nav-shell">
-        <a href="#home" className="brand" aria-label="BIO N:OV home"><span className="brand-mark">V</span><span>BIO N:OV</span></a>
+        <a href="#home" className="brand notranslate" translate="no" aria-label="BIO N:OV home"><span className="brand-mark">V</span><span>BIO N:OV</span></a>
         <nav className="desktop-nav">{nav.map(([label, id]) => <a key={id} href={`#${id}`}>{label}</a>)}</nav>
 
         <div className="langpick notranslate" translate="no">
@@ -1607,11 +1620,11 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
         <div className="orb orb-a" /><div className="orb orb-b" />
         <div className="hero-copy">
           <span className="hero-kicker"><CircleDot size={14} /> Third-generation fermentation science</span>
-          <h1>BIO N:OV</h1>
+          <h1 className="notranslate" translate="no">BIO N:OV</h1>
           <h2>Clearing the Way<br />to <span>Optimum Health</span></h2>
           <p>When blood flows freely, everything downstream works better. BIO N:OV is a next-generation wellness formula built on patented microbial fermentation, designed to support your body&rsquo;s natural nitric oxide pathways &mdash; the signal that helps blood vessels relax.</p>
           <div className="hero-actions">
-            <a className="button primary" href="#product">Discover BIO N:OV <ArrowRight size={18} /></a>
+            <a className="button primary" href="#product">Discover <span className="notranslate" translate="no">BIO N:OV</span> <ArrowRight size={18} /></a>
             <a className="button glass" href="#flow">Why blood flow matters</a>
           </div>
           <div className="hero-badges">
@@ -2481,7 +2494,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
           </motion.div>
           <div className="showcase-copy">
             <span className="eyebrow">Product showcase</span>
-            <h2>BIO N:OV</h2>
+            <h2 className="notranslate" translate="no">BIO N:OV</h2>
             <div className="specs"><span>500 mg × 60 tablets</span><span>30 g</span><span>20-day supply</span></div>
             <div className="tabs">
               {["Product Overview", "Ingredients", "Technology", "How to Use", "Safety Information"].map((x, i) => (
@@ -2599,7 +2612,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
                 {faq.map((x, i) => x.group === group && (
                   <article key={x.question} className={openFaq === i ? "is-open" : ""}>
                     <button onClick={() => setOpenFaq(openFaq === i ? -1 : i)} aria-expanded={openFaq === i}>
-                      <span>{x.question}</span>
+                      <span>{brandSafe(x.question)}</span>
                       <ChevronDown className={openFaq === i ? "rotate" : ""} />
                     </button>
                     <AnimatePresence initial={false}>
@@ -2609,7 +2622,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                         >
-                          {x.answer}
+                          {brandSafe(x.answer)}
                         </motion.p>
                       )}
                     </AnimatePresence>
@@ -2668,7 +2681,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
       <div className="sticky-cta">
         <div className="sticky-cta__inner">
           <div className="sticky-cta__text">
-            <b>BIO N:OV</b>
+            <b className="notranslate" translate="no">BIO N:OV</b>
             <small>500 mg × 60 tablets · 20-day supply</small>
           </div>
           <div className="sticky-cta__actions">
@@ -2681,7 +2694,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
       <footer>
         <div className="footer-top">
           <div>
-            <a href="#home" className="brand"><span className="brand-mark">V</span><span>BIO N:OV</span></a>
+            <a href="#home" className="brand notranslate" translate="no"><span className="brand-mark">V</span><span>BIO N:OV</span></a>
             <p>Clearing the Way to Optimum Health</p>
           </div>
           <div><b>Explore</b>{nav.slice(1, 6).map(([a, b]) => <a href={`#${b}`} key={b}>{a}</a>)}</div>
