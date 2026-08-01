@@ -20,31 +20,15 @@ const SOURCE = [
 ];
 
 const IMAGES = [
-  "bio-nov-hero.jpg",
-  "garlic-product.jpg",
-  "lettuce-product.jpg",
-  "product-showcase.jpg",
+  "cert-cn-patent.jpg",
+  "cert-gmp.jpg",
+  "cert-kr-patent.jpg",
+  "cert-us-patent.jpg",
   "ingredient-garlic.jpg",
   "ingredient-lettuce.jpg",
-  "ingredient-sprouts.jpg",
   "ingredient-soybean.jpg",
-  "vessel-macro.jpg",
-  "tech-product.jpg",
-  "slide-blood-pressure.jpg",
-  "slide-vessel-repair.jpg",
-  "slide-hypertension.jpg",
-  "slide-stroke.jpg",
-  "slide-dementia.jpg",
-  "slide-telomeres.jpg",
-  "slide-skin.jpg",
-  "slide-raw-materials.jpg",
-  "slide-fermentation-patents.jpg",
-  "slide-tech-roadmap.jpg",
-  "slide-better-choice.jpg",
-  "slide-six-systems.jpg",
-  "slide-diabetes.jpg",
-  "slide-diabetes-ease.jpg",
-  "slide-vigor.jpg",
+  "ingredient-sprouts.jpg",
+  "product-showcase.jpg",
   "researcher-cheon.png",
   "researcher-han.png",
   "researcher-ju.png",
@@ -52,7 +36,9 @@ const IMAGES = [
   "researcher-min.png",
   "researcher-pae.png",
   "researcher-shin.png",
-  "researcher-sooah.png"
+  "researcher-sooah.png",
+  "tech-product.jpg",
+  "vessel-macro.jpg"
 ].map((name) => `public/images/${name}`);
 
 const VIDEO = [

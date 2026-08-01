@@ -45,6 +45,103 @@ type StatPanelData = {
   tone?: "alert" | "brand";
 };
 
+type ItemPanelData = {
+  eyebrow: string;
+  title: string;
+  accent: string;
+  lead?: string;
+  bars?: { label: string; value: string; caption: string }[];
+  items: { img?: string; label: string; heading?: string; points: string[]; bad?: boolean }[];
+  columns?: 2 | 3 | 4;
+  notes?: string[];
+  source: string;
+};
+
+const itemPanels: Record<string, ItemPanelData> = {
+  rawMaterials: {
+    eyebrow: "Premium raw materials",
+    title: "Four materials, and what each one",
+    accent: "contributes",
+    lead: "Nothing exotic. This is food, fermented. Confirm the complete authorised formula against the market label for your country.",
+    columns: 4,
+    items: [
+      { img: "ingredient-lettuce.jpg", label: "Lettuce",
+        points: ["Vitamin A, vitamin B, amino acids", "Stated to help prevent skin ageing problems"] },
+      { img: "ingredient-garlic.jpg", label: "Garlic",
+        points: ["Listed as a top 10 superfood", "Allicin promotes anticancer substances and metabolism"] },
+      { img: "ingredient-sprouts.jpg", label: "Soybean sprouts",
+        points: ["β-carotene and vitamin C", "Stated to remove active acids to improve immunity"] },
+      { img: "ingredient-soybean.jpg", label: "Soybean",
+        points: ["Various vitamins, minerals and fibres", "Stated to help prevent arteriosclerosis and reduce cholesterol"] }
+    ],
+    source: "Manufacturer product documentation"
+  },
+  patents: {
+    eyebrow: "Exclusive proprietary microbial strain",
+    title: "The part you can verify on",
+    accent: "paper",
+    lead: "BIO N:OV is developed from a proprietary microbial strain, KACC91554P, owned by the Korea Research Institute of Bioscience and Biotechnology. It is a fermented composition of natural vegetables and herbs.",
+    columns: 4,
+    items: [
+      { img: "cert-cn-patent.jpg", label: "Patent certificate", points: ["China"] },
+      { img: "cert-kr-patent.jpg", label: "Patent certificate", points: ["Korea"] },
+      { img: "cert-us-patent.jpg", label: "Patent certificate", points: ["United States"] },
+      { img: "cert-gmp.jpg", label: "GMP certificate", points: ["Ministry of Food and Drug Safety"] }
+    ],
+    source: "Manufacturer product documentation"
+  },
+  techRoadmap: {
+    eyebrow: "Nitric oxide supplements",
+    title: "Three generations, and what was wrong with the first",
+    accent: "two",
+    columns: 3,
+    items: [
+      { label: "1st generation", heading: "Arginine", bad: true,
+        points: ["Enzyme needed, and unstable", "Prohibited for heart disease patients"] },
+      { label: "2nd generation", heading: "Vegetable & fruit extracts", bad: true,
+        points: ["Side effects: nausea, diarrhoea, headache", "Not suitable for the over-40s"] },
+      { label: "3rd generation", heading: "BIO N:OV — microbial fermentation",
+        points: ["Stated 40–400% more effective than other competition", "No enzyme conversion needed inside your body"] }
+    ],
+    notes: ["Comparative figure as published by the manufacturer."],
+    source: "Manufacturer product documentation"
+  },
+  bloodPressure: {
+    eyebrow: "Balancing blood pressure",
+    title: "What the decades do to an",
+    accent: "artery",
+    lead: "Nitric oxide production falls with age, and the artery changes with it. The manufacturer puts the whole arc at 85% of production capability lost across a lifetime.",
+    bars: [
+      { label: "20s", value: "100%", caption: "Healthy, open vessel" },
+      { label: "30s", value: "80%",  caption: "Arterial thickening begins" },
+      { label: "40s", value: "50%",  caption: "Inflammation clumped" },
+      { label: "50s", value: "35%",  caption: "Atherosclerosis" },
+      { label: "60+", value: "15%",  caption: "Vessel ruptured" }
+    ],
+    columns: 2,
+    items: [
+      { label: "Vessel with sufficient NO", points: ["Relaxed", "Broad", "Smooth"] },
+      { label: "Vessel with less NO", bad: true, points: ["Stiff", "Stuck", "Slow running"] }
+    ],
+    source: "Dr. Nathan Bryan, Functional Nitric Oxide Nutrition"
+  },
+  vesselRepair: {
+    eyebrow: "Repairing blood vessels",
+    title: "Stroke and heart disease both start",
+    accent: "here",
+    lead: "Stroke is caused by poor elasticity of blood vessels, or by blocked blood flow. Heart disease follows the same road.",
+    columns: 2,
+    items: [
+      { label: "Blocked vessel", bad: true,
+        points: ["Plaque narrows the channel", "Blood crawls past the blockage", "Stroke and heart disease risk"] },
+      { label: "Open vessel",
+        points: ["Elasticity recovered", "Nitric oxide present in the flow", "Oxygen reaches every cell"] }
+    ],
+    notes: ["BIO N:OV is stated to help generate NO, supporting the elasticity of the vessel itself."],
+    source: "Manufacturer product documentation"
+  }
+};
+
 const statPanels: Record<string, StatPanelData> = {
   hypertension: {
     eyebrow: "Hypertension",
@@ -156,10 +253,8 @@ const statPanels: Record<string, StatPanelData> = {
 /* Manufacturer brochure panels (Bzzworld Korea BIO N:OV product deck). Each one
    is shown inline as a picture and opens full size with its own explanation.
    Figures and sources are reproduced as published in that deck. */
-const slides: Record<string, Detail & { img: string }> = {
+const slides: Record<string, Detail> = {
   bloodPressure: {
-    img: "slide-blood-pressure.jpg",
-    imgAlt: "Cross-section of an artery narrowing across the decades from 100% to 15% nitric oxide",
     subtitle: "Manufacturer product documentation",
     title: "Balancing blood pressure, cleansing blood",
     body: [
@@ -174,8 +269,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   vesselRepair: {
-    img: "slide-vessel-repair.jpg",
-    imgAlt: "Two blood vessels compared — one blocked with plaque, one open and carrying nitric oxide",
     subtitle: "Manufacturer product documentation",
     title: "Repairing blood vessels, preventing cardiovascular disease",
     body: [
@@ -189,8 +282,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   hypertension: {
-    img: "slide-hypertension.jpg",
-    imgAlt: "Aorta and heart illustration with global hypertension statistics",
     subtitle: "World Health Organization / UNSW",
     title: "Hypertension: sowing seeds of risks",
     body: [
@@ -205,8 +296,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   stroke: {
-    img: "slide-stroke.jpg",
-    imgAlt: "Stroke statistics with an illustration of blocked blood flow to the brain",
     subtitle: "World Heart Federation / Harvard Health Publishing",
     title: "Stroke: weighing down families",
     body: [
@@ -221,8 +310,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   dementia: {
-    img: "slide-dementia.jpg",
-    imgAlt: "Dementia statistics showing impact on patients and on their caregivers",
     subtitle: "2022 Alzheimer's Association",
     title: "Dementia: trapping the aged",
     body: [
@@ -238,8 +325,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   telomeres: {
-    img: "slide-telomeres.jpg",
-    imgAlt: "Chromosome diagram showing telomerase and telomere shortening with and without BIO N:OV",
     subtitle: "Manufacturer product documentation",
     title: "Slowing down the ageing process",
     body: [
@@ -254,8 +339,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   skin: {
-    img: "slide-skin.jpg",
-    imgAlt: "Split-face comparison showing tester-reported skin results",
     subtitle: "100 testers, aged 15 to 76",
     title: "What testers reported about their skin",
     body: [
@@ -271,8 +354,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   rawMaterials: {
-    img: "slide-raw-materials.jpg",
-    imgAlt: "The four raw materials in BIO N:OV — lettuce, garlic, soybean sprouts and soybean",
     subtitle: "Premium raw materials",
     title: "What is actually in the tablet",
     body: [
@@ -287,8 +368,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   patents: {
-    img: "slide-fermentation-patents.jpg",
-    imgAlt: "BIO N:OV patent certificates and GMP certificate",
     subtitle: "Exclusive proprietary microbial strains",
     title: "The patents and the GMP certificate",
     body: [
@@ -303,8 +382,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   techRoadmap: {
-    img: "slide-tech-roadmap.jpg",
-    imgAlt: "Three generations of nitric oxide supplements compared side by side",
     subtitle: "Manufacturer product documentation",
     title: "Three generations, and what was wrong with the first two",
     body: [
@@ -320,8 +397,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   sixSystems: {
-    img: "slide-six-systems.jpg",
-    imgAlt: "Translucent human figure with six body systems labelled and their associated conditions",
     subtitle: "Dr. Ferid Murad, Magical Nitric Oxide",
     title: "One signal, six systems",
     body: [
@@ -338,8 +413,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   diabetes: {
-    img: "slide-diabetes.jpg",
-    imgAlt: "Global diabetes statistics with a glucose meter and insulin syringe",
     subtitle: "International Diabetes Federation",
     title: "Diabetes spiralling out of control",
     body: [
@@ -355,8 +428,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   diabetesEase: {
-    img: "slide-diabetes-ease.jpg",
-    imgAlt: "Blood sugar results showing an 8% drop within one hour",
     subtitle: "Bzzworld Smart Lab",
     title: "What the lab measured on blood sugar",
     body: [
@@ -372,8 +443,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   vigor: {
-    img: "slide-vigor.jpg",
-    imgAlt: "Diagram showing nitric oxide decline, its effect on muscle, and restored performance",
     subtitle: "Manufacturer product documentation",
     title: "Why energy fades, and what changes it",
     body: [
@@ -389,8 +458,6 @@ const slides: Record<string, Detail & { img: string }> = {
     ]
   },
   betterChoice: {
-    img: "slide-better-choice.jpg",
-    imgAlt: "Five stated advantages of BIO N:OV shown around the product carton",
     subtitle: "Manufacturer product documentation",
     title: "Why the manufacturer calls it the better choice",
     body: [
@@ -1594,6 +1661,78 @@ function StatPanel({
   );
 }
 
+/* The remaining brochure panels, rebuilt the same way: illustrations kept as
+   images where the picture is the point (food, certificates), but every word
+   is markup so it reaches the translator. */
+function ItemPanel({
+  panel,
+  detail,
+  onOpen
+}: {
+  panel: ItemPanelData;
+  detail: Detail;
+  onOpen: (d: Detail) => void;
+}) {
+  return (
+    <motion.button
+      whileHover={{ y: -6 }}
+      className="statpanel itempanel"
+      onClick={() => onOpen(detail)}
+      aria-label={`Read more: ${panel.eyebrow}`}
+    >
+      <span className="statpanel__eyebrow">{panel.eyebrow}</span>
+      <h4 className="statpanel__title">
+        {panel.title} <span>{panel.accent}</span>
+      </h4>
+      {panel.lead && <p className="statpanel__lead">{brandSafe(panel.lead)}</p>}
+
+      {panel.bars && (
+        <span className="itempanel__bars">
+          {panel.bars.map((b, i) => (
+            <span className="itempanel__bar" key={b.label}>
+              <span className="itempanel__barfill" style={{ height: `${100 - i * 18}%` }} />
+              <b>{b.value}</b>
+              <em>{b.label}</em>
+              <small>{b.caption}</small>
+            </span>
+          ))}
+        </span>
+      )}
+
+      <span className={`itempanel__items cols-${panel.columns ?? 3}`}>
+        {panel.items.map(item => (
+          <span className={`itempanel__item ${item.bad ? "is-bad" : ""}`} key={item.label + item.points[0]}>
+            {item.img && (
+              <span className="itempanel__thumb">
+                <Image src={`/images/${item.img}`} alt="" width={420} height={300} />
+              </span>
+            )}
+            <b>{item.label}</b>
+            {item.heading && <strong>{brandSafe(item.heading)}</strong>}
+            <span className="itempanel__points">
+              {item.points.map(pt => (
+                <span key={pt}>
+                  {item.bad ? <X size={13} /> : <Check size={13} />}
+                  <em>{brandSafe(pt)}</em>
+                </span>
+              ))}
+            </span>
+          </span>
+        ))}
+      </span>
+
+      {panel.notes?.map(n => (
+        <span className="statpanel__note" key={n.slice(0, 24)}>{brandSafe(n)}</span>
+      ))}
+
+      <span className="statpanel__foot">
+        <span className="statpanel__source">Source: {panel.source}</span>
+        <span className="statpanel__more">Read the detail <Plus size={14} /></span>
+      </span>
+    </motion.button>
+  );
+}
+
 function Reveal({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
   return (
     <motion.section
@@ -1950,18 +2089,8 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             </motion.div>
 
             <div className="slide-pair">
-              <SlideFigure
-                tone="dark"
-                slide={slides.bloodPressure}
-                caption="100% at 20. Around 15% past 60. Here is what that does to an artery."
-                onOpen={setModal}
-              />
-              <SlideFigure
-                tone="dark"
-                slide={slides.vesselRepair}
-                caption="Blocked versus open — the same vessel, two different lives."
-                onOpen={setModal}
-              />
+              <ItemPanel panel={itemPanels.bloodPressure} detail={slides.bloodPressure} onOpen={setModal} />
+              <ItemPanel panel={itemPanels.vesselRepair}  detail={slides.vesselRepair}  onOpen={setModal} />
             </div>
           </div>
 
@@ -2338,25 +2467,11 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
         <div className="tech-note"><Check /> BIO N:OV uses a patented fermentation-based approach with naturally derived ingredients.</div>
 
         <div className="slide-solo">
-          <SlideFigure
-            tone="dark"
-            slide={slides.techRoadmap}
-            caption="What was actually wrong with the first two generations."
-            onOpen={setModal}
-          />
+          <ItemPanel panel={itemPanels.techRoadmap} detail={slides.techRoadmap} onOpen={setModal} />
         </div>
 
         <div className="tech-showcase">
-          <figure className="tech-showcase__img">
-            <Image
-              src="/images/slide-fermentation-patents.jpg"
-              alt="BIO N:OV patent certificates and GMP certificate"
-              width={1308}
-              height={724}
-              sizes="(max-width: 1000px) 100vw, 52vw"
-            />
-            <figcaption>Patent certificates &middot; GMP certificate &middot; strain KACC91554P</figcaption>
-          </figure>
+          <ItemPanel panel={itemPanels.patents} detail={slides.patents} onOpen={setModal} />
 
           <div className="tech-showcase__copy">
             <span className="eyebrow">What third generation means</span>
@@ -2448,12 +2563,7 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
 
             {/* right: the manufacturer's own panel, showing all four together */}
             <div className="ing-stage">
-              <SlideFigure
-                tone="dark"
-                slide={slides.rawMaterials}
-                caption="All four together, and what each one contributes."
-                onOpen={setModal}
-              />
+<ItemPanel panel={itemPanels.rawMaterials} detail={slides.rawMaterials} onOpen={setModal} />
               <p className="slide-note">
                 Confirm the complete authorised formula and exact ingredient naming on the market label for your
                 country. Ingredient descriptions are reproduced from the manufacturer&rsquo;s product documentation.
@@ -2520,12 +2630,16 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
               ))}
             </div>
 
-            <SlideFigure
-              tone="dark"
-              slide={slides.betterChoice}
-              caption="The five claims, as published by the manufacturer."
-              onOpen={setModal}
-            />
+            <figure className="better-figure">
+              <Image
+                src="/images/tech-product.jpg"
+                alt="BIO N:OV carton and tablets surrounded by nitric oxide molecules"
+                width={1280}
+                height={720}
+                sizes="(max-width: 1000px) 100vw, 52vw"
+              />
+              <figcaption>500 mg &times; 60 tablets &middot; GMP-certified Korean manufacture</figcaption>
+            </figure>
           </div>
         </div>
 
