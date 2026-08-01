@@ -1130,3 +1130,49 @@ html[dir="rtl"] .hero small{margin-left:auto}
 }
 /* the brand lockup never wraps or shrinks, in any language */
 .brand{flex:none;white-space:nowrap}
+
+/* ================= STAT PANELS (translatable brochure panels) ================= */
+/* These replace flat JPEGs whose text was baked into the pixels, so a visitor
+   reading in Thai or Arabic gets the figures in their own language. */
+.statpanel{display:flex;flex-direction:column;padding:26px 24px;cursor:pointer;text-align:left;
+  border-radius:24px;border:1.5px solid rgba(143,230,255,.26);
+  background:linear-gradient(165deg,rgba(9,26,60,.88),rgba(6,18,44,.94));
+  backdrop-filter:blur(14px);box-shadow:0 20px 54px rgba(2,12,38,.44);
+  transition:border-color .25s,box-shadow .25s,background .25s}
+.statpanel:hover{border-color:rgba(95,224,255,.85);box-shadow:0 30px 76px rgba(2,12,38,.6);
+  background:linear-gradient(165deg,rgba(14,36,78,.94),rgba(9,24,56,.96))}
+.statpanel--alert{border-color:rgba(255,180,94,.4)}
+.statpanel--alert:hover{border-color:rgba(255,193,120,.95)}
+
+.statpanel__eyebrow{display:block;font-size:10.5px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;color:#8fe6ff}
+.statpanel--alert .statpanel__eyebrow{color:#ffb45e}
+.statpanel__title{margin:10px 0 12px;font-size:clamp(21px,2.4vw,28px);line-height:1.12;
+  letter-spacing:-.035em;color:#fff;font-weight:800}
+.statpanel__title span{color:#5fe0ff}
+.statpanel--alert .statpanel__title span{color:#ffb45e}
+.statpanel__lead{margin:0 0 18px;font-size:14px;line-height:1.65;color:#c6dcff}
+
+.statpanel__stats{display:grid;gap:12px;margin-bottom:16px}
+.statpanel__stats.count-2,.statpanel__stats.count-4{grid-template-columns:1fr 1fr}
+.statpanel__stats.count-3{grid-template-columns:repeat(3,1fr)}
+.statpanel__stat{display:block;padding:14px 14px 13px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06)}
+.statpanel__stat b{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;
+  font-size:clamp(24px,3vw,34px);line-height:1;font-weight:900;letter-spacing:-.045em;
+  color:#5fe0ff;text-shadow:0 0 30px rgba(95,224,255,.45)}
+.statpanel--alert .statpanel__stat b{color:#ffc478;text-shadow:0 0 30px rgba(255,180,94,.4)}
+.statpanel__stat b em{font-style:normal;font-size:13px;font-weight:800;letter-spacing:0;color:#cfe2ff}
+.statpanel__stat small{display:block;margin-top:7px;font-size:12px;line-height:1.45;color:#bcd4ff}
+
+.statpanel__note{display:block;margin-bottom:14px;font-size:11.5px;line-height:1.6;
+  color:rgba(200,220,255,.7)}
+.statpanel__foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+.statpanel__source{font-size:10.5px;line-height:1.5;color:rgba(200,220,255,.55);flex:1 1 160px}
+.statpanel__more{display:inline-flex;align-items:center;gap:7px;flex:none;padding:8px 14px;
+  border-radius:999px;border:1px solid rgba(143,230,255,.5);background:rgba(95,224,255,.14);
+  font-size:12px;font-weight:800;color:#8fe6ff}
+.statpanel--alert .statpanel__more{border-color:rgba(255,193,120,.55);background:rgba(255,180,94,.16);color:#ffc478}
+
+@media(max-width:620px){.statpanel__stats.count-3,.statpanel__stats.count-4{grid-template-columns:1fr}}

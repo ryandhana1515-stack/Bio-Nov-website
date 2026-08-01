@@ -30,6 +30,129 @@ type Detail = { title: string; subtitle?: string; body: string[]; points?: strin
  * Content
  * ------------------------------------------------------------------ */
 
+/* The brochure panels are JPEGs with their text baked into the pixels, so no
+   translator can reach them — a Thai or Arabic visitor still met English.
+   These rebuild the figure-heavy ones in markup: same numbers, same sources,
+   but every word is a real text node the page translator can reach. */
+type StatPanelData = {
+  eyebrow: string;
+  title: string;
+  accent: string;
+  lead?: string;
+  stats: { value: string; unit?: string; label: string }[];
+  notes?: string[];
+  source: string;
+  tone?: "alert" | "brand";
+};
+
+const statPanels: Record<string, StatPanelData> = {
+  hypertension: {
+    eyebrow: "Hypertension",
+    title: "Sowing seeds of",
+    accent: "risks",
+    lead: "High blood pressure is the leading risk factor for stroke, ischaemic heart disease, other vascular diseases and renal disease.",
+    stats: [
+      { value: "1.28", unit: "billion", label: "Hypertension patients worldwide" },
+      { value: "8.5", unit: "million", label: "Deaths directly linked to hypertension" },
+      { value: "80", unit: "%", label: "Of patients fail to control blood pressure" }
+    ],
+    source: "World Health Organization · UNSW",
+    tone: "alert"
+  },
+  diabetes: {
+    eyebrow: "Diabetes",
+    title: "Spiralling out of",
+    accent: "control",
+    lead: "One in ten adults is living with diabetes, and almost half are undiagnosed. It ranks among the top causes of premature death.",
+    stats: [
+      { value: "537", unit: "million", label: "Adults living with diabetes" },
+      { value: "5", unit: "seconds", label: "Between each death from diabetes" },
+      { value: "6.7", unit: "million", label: "Deaths in 2021" }
+    ],
+    source: "International Diabetes Federation",
+    tone: "alert"
+  },
+  stroke: {
+    eyebrow: "Stroke",
+    title: "Weighing down",
+    accent: "families",
+    lead: "Fifteen million people worldwide suffer a stroke every year, and the burden falls on the whole family rather than the patient alone.",
+    stats: [
+      { value: "15", unit: "million", label: "Strokes worldwide every year" },
+      { value: "6", unit: "million", label: "Deaths" },
+      { value: "5", unit: "million", label: "Permanently disabled" },
+      { value: "87", unit: "%", label: "Caused by blocked blood flow to the brain" }
+    ],
+    source: "World Heart Federation · Harvard Health Publishing",
+    tone: "alert"
+  },
+  dementia: {
+    eyebrow: "Dementia",
+    title: "Trapping the",
+    accent: "aged",
+    lead: "Ten million new cases a year — and the carers pay a price that is rarely counted.",
+    stats: [
+      { value: "10", unit: "million", label: "New cases per year" },
+      { value: "3.2", unit: "seconds", label: "Between each new case" },
+      { value: "1 in 3", label: "Seniors die with Alzheimer's or another dementia" },
+      { value: "70", unit: "%", label: "Of the expense is borne by families" }
+    ],
+    notes: ["Carers are twice as likely to be emotionally depressed and physically exhausted."],
+    source: "2022 Alzheimer's Association",
+    tone: "alert"
+  },
+  skin: {
+    eyebrow: "Tester-reported results",
+    title: "What testers reported about their",
+    accent: "skin",
+    lead: "Self-reported results from a panel of 100 testers aged 15 to 76. Tester-reported outcomes are not a clinical trial and individual results vary.",
+    stats: [
+      { value: "78", unit: "%", label: "Feel brighter" },
+      { value: "84", unit: "%", label: "Report wrinkles reduce" },
+      { value: "68", unit: "%", label: "Report pores shrink" },
+      { value: "68", unit: "%", label: "Report less inflammation" }
+    ],
+    source: "Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine"
+  },
+  diabetesEase: {
+    eyebrow: "Laboratory measurement",
+    title: "What the lab measured on",
+    accent: "blood sugar",
+    lead: "The manufacturer's laboratory reports blood sugar dropping by 8% within one hour, by reducing insulin resistance and slowing digestive enzyme activity after meals.",
+    stats: [
+      { value: "8", unit: "%", label: "Stated drop in blood sugar" },
+      { value: "1", unit: "hour", label: "Stated response window" }
+    ],
+    notes: ["This laboratory data is not intended or implied to be a substitute for professional medical advice, diagnosis or treatment. BIO N:OV is not a diabetes treatment and must never replace prescribed medication."],
+    source: "Bzzworld Smart Lab"
+  },
+  vigor: {
+    eyebrow: "Energy and stamina",
+    title: "Why energy fades, and what reverses the",
+    accent: "chain",
+    lead: "Nitric oxide declines with age. Mitochondrial function is affected and blood flow to skeletal muscle slows, so the muscle itself is damaged and performance drops. Raising the nitric oxide level is stated to reverse the same chain.",
+    stats: [
+      { value: "01", label: "NO declines with age — performance follows" },
+      { value: "02", label: "Mitochondrial function affected, muscle blood flow slows" },
+      { value: "03", label: "Raising NO restores affected functions" },
+      { value: "04", label: "More oxygen supplied to working muscle" }
+    ],
+    source: "Nitric oxide, aging and aerobic exercise — sedentary individuals to Master's athletes"
+  },
+  telomeres: {
+    eyebrow: "Cellular ageing",
+    title: "Ageing, at the level of the",
+    accent: "chromosome",
+    lead: "Telomeres cap the ends of your chromosomes and shorten every time a cell divides. When they reach a critical length the cell stops dividing. Telomerase is the enzyme that protects that length.",
+    stats: [
+      { value: "Normal", label: "Telomeres shorten with every cell division" },
+      { value: "With BIO N:OV", label: "Stated to activate telomerase through NO generated" }
+    ],
+    notes: ["A manufacturer statement about their product documentation, not an established clinical finding."],
+    source: "Circulation"
+  }
+};
+
 /* Manufacturer brochure panels (Bzzworld Korea BIO N:OV product deck). Each one
    is shown inline as a picture and opens full size with its own explanation.
    Figures and sources are reproduced as published in that deck. */
@@ -1422,6 +1545,55 @@ function SlideFigure({
   );
 }
 
+/* Renders a brochure panel as real markup. Same figures and the same cited
+   source as the original artwork, but translatable, responsive, and clickable
+   through to the full detail. */
+function StatPanel({
+  panel,
+  detail,
+  onOpen
+}: {
+  panel: StatPanelData;
+  detail: Detail;
+  onOpen: (d: Detail) => void;
+}) {
+  return (
+    <motion.button
+      whileHover={{ y: -6 }}
+      className={`statpanel statpanel--${panel.tone ?? "brand"}`}
+      onClick={() => onOpen(detail)}
+      aria-label={`Read more: ${panel.eyebrow}`}
+    >
+      <span className="statpanel__eyebrow">{panel.eyebrow}</span>
+      <h4 className="statpanel__title">
+        {panel.title} <span>{panel.accent}</span>
+      </h4>
+      {panel.lead && <p className="statpanel__lead">{brandSafe(panel.lead)}</p>}
+
+      <span className={`statpanel__stats count-${panel.stats.length}`}>
+        {panel.stats.map(st => (
+          <span className="statpanel__stat" key={st.label}>
+            <b>
+              {st.value}
+              {st.unit && <em>{st.unit}</em>}
+            </b>
+            <small>{st.label}</small>
+          </span>
+        ))}
+      </span>
+
+      {panel.notes?.map(n => (
+        <span className="statpanel__note" key={n.slice(0, 24)}>{brandSafe(n)}</span>
+      ))}
+
+      <span className="statpanel__foot">
+        <span className="statpanel__source">Source: {panel.source}</span>
+        <span className="statpanel__more">Read the detail <Plus size={14} /></span>
+      </span>
+    </motion.button>
+  );
+}
+
 function Reveal({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) {
   return (
     <motion.section
@@ -2117,30 +2289,10 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
               ))}
             </div>
             <div className="slide-quad">
-              <SlideFigure
-                tone="dark"
-                slide={slides.hypertension}
-                caption="1.28 billion patients. 80% never get it under control."
-                onOpen={setModal}
-              />
-              <SlideFigure
-                tone="dark"
-                slide={slides.diabetes}
-                caption="537 million adults — and almost half do not know."
-                onOpen={setModal}
-              />
-              <SlideFigure
-                tone="dark"
-                slide={slides.stroke}
-                caption="15 million a year. 87% from blocked flow to the brain."
-                onOpen={setModal}
-              />
-              <SlideFigure
-                tone="dark"
-                slide={slides.dementia}
-                caption="One new case every 3.2 seconds — and the carers pay too."
-                onOpen={setModal}
-              />
+              <StatPanel panel={statPanels.hypertension} detail={slides.hypertension} onOpen={setModal} />
+              <StatPanel panel={statPanels.diabetes}     detail={slides.diabetes}     onOpen={setModal} />
+              <StatPanel panel={statPanels.stroke}       detail={slides.stroke}       onOpen={setModal} />
+              <StatPanel panel={statPanels.dementia}     detail={slides.dementia}     onOpen={setModal} />
             </div>
 
             <p className="burden-note">
@@ -2378,30 +2530,10 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
         </div>
 
         <div className="slide-quad slide-pair--spaced">
-          <SlideFigure
-            tone="dark"
-            slide={slides.vigor}
-            caption="Why energy fades with age — and what reverses the chain."
-            onOpen={setModal}
-          />
-          <SlideFigure
-            tone="dark"
-            slide={slides.diabetesEase}
-            caption="What the lab measured on blood sugar."
-            onOpen={setModal}
-          />
-          <SlideFigure
-            tone="dark"
-            slide={slides.telomeres}
-            caption="Ageing, at the level of the chromosome."
-            onOpen={setModal}
-          />
-          <SlideFigure
-            tone="dark"
-            slide={slides.skin}
-            caption="What 100 testers reported about their skin."
-            onOpen={setModal}
-          />
+          <StatPanel panel={statPanels.vigor}        detail={slides.vigor}        onOpen={setModal} />
+          <StatPanel panel={statPanels.diabetesEase} detail={slides.diabetesEase} onOpen={setModal} />
+          <StatPanel panel={statPanels.telomeres}    detail={slides.telomeres}    onOpen={setModal} />
+          <StatPanel panel={statPanels.skin}         detail={slides.skin}         onOpen={setModal} />
         </div>
 
         <div className="benefits-cta">
