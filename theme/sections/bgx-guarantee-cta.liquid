@@ -123,10 +123,26 @@
   "tag": "section",
   "max_blocks": 5,
   "settings": [
-    { "type": "header", "content": "Background video" },
-    { "type": "text", "id": "video_mp4", "label": "Video URL (MP4)", "info": "Slot: vessel-restore." },
-    { "type": "text", "id": "video_webm", "label": "Video URL (WebM, optional)" },
-    { "type": "image_picker", "id": "video_poster", "label": "Poster image" },
+    {
+      "type": "header",
+      "content": "Background video"
+    },
+    {
+      "type": "text",
+      "id": "video_mp4",
+      "label": "Video URL (MP4)",
+      "info": "Slot: vessel-restore."
+    },
+    {
+      "type": "text",
+      "id": "video_webm",
+      "label": "Video URL (WebM, optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Poster image"
+    },
     {
       "type": "range",
       "id": "video_opacity",
@@ -137,7 +153,10 @@
       "unit": "%",
       "label": "Video opacity"
     },
-    { "type": "header", "content": "Copy" },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -150,8 +169,17 @@
       "label": "Subheading",
       "default": "Clearing the way to optimum health — from Korea to the world."
     },
-    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Shop BIO N:OV" },
-    { "type": "url", "id": "cta_link", "label": "Button link" },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Shop BIO N:OV"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
     {
       "type": "text",
       "id": "guarantee_text",
@@ -163,16 +191,39 @@
     {
       "type": "trust",
       "name": "Trust item",
-      "settings": [{ "type": "text", "id": "text", "label": "Text" }]
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
     }
   ],
-  "default": {
-    "blocks": [
-      { "type": "trust", "settings": { "text": "GMP Certified Korea" } },
-      { "type": "trust", "settings": { "text": "Free worldwide shipping over $99" } },
-      { "type": "trust", "settings": { "text": "Ships from Singapore & Korea" } }
-    ]
-  },
-  "presets": [{ "name": "BGX Guarantee CTA" }]
+  "presets": [
+    {
+      "name": "BGX Guarantee CTA",
+      "blocks": [
+        {
+          "type": "trust",
+          "settings": {
+            "text": "GMP Certified Korea"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "text": "Free worldwide shipping over $99"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "text": "Ships from Singapore & Korea"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

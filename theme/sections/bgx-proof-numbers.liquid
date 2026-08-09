@@ -124,22 +124,43 @@
   "tag": "section",
   "max_blocks": 6,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE NUMBERS" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE NUMBERS"
+    },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Measured In A Lab. Felt In 30 Minutes."
     },
-    { "type": "text", "id": "source", "label": "Source", "default": "Bzzworld Smart Lab" }
+    {
+      "type": "text",
+      "id": "source",
+      "label": "Source",
+      "default": "Bzzworld Smart Lab"
+    }
   ],
   "blocks": [
     {
       "type": "metric",
       "name": "Metric",
       "settings": [
-        { "type": "text", "id": "prefix", "label": "Prefix", "default": "+", "info": "Use + or − (a true minus sign, not a hyphen)." },
-        { "type": "number", "id": "value", "label": "Value", "default": 18 },
+        {
+          "type": "text",
+          "id": "prefix",
+          "label": "Prefix",
+          "default": "+",
+          "info": "Use + or − (a true minus sign, not a hyphen)."
+        },
+        {
+          "type": "number",
+          "id": "value",
+          "label": "Value",
+          "default": 18
+        },
         {
           "type": "range",
           "id": "ring_percent",
@@ -151,37 +172,64 @@
           "label": "Ring fill",
           "info": "How far the ring draws. Visual weight only — it does not have to equal the number."
         },
-        { "type": "text", "id": "label", "label": "Label", "default": "Vessel Diameter" },
-        { "type": "text", "id": "note", "label": "Note" }
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Vessel Diameter"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      { "type": "metric", "settings": { "prefix": "+", "value": 18, "ring_percent": 45, "label": "Vessel Diameter" } },
-      { "type": "metric", "settings": { "prefix": "+", "value": 42, "ring_percent": 70, "label": "Blood Flow" } },
-      {
-        "type": "metric",
-        "settings": {
-          "prefix": "−",
-          "value": 25,
-          "ring_percent": 55,
-          "label": "Blood Pressure",
-          "note": "within 30 minutes"
+  "presets": [
+    {
+      "name": "BGX Proof numbers",
+      "blocks": [
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "+",
+            "value": 18,
+            "ring_percent": 45,
+            "label": "Vessel Diameter"
+          }
+        },
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "+",
+            "value": 42,
+            "ring_percent": 70,
+            "label": "Blood Flow"
+          }
+        },
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "−",
+            "value": 25,
+            "ring_percent": 55,
+            "label": "Blood Pressure",
+            "note": "within 30 minutes"
+          }
+        },
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "−",
+            "value": 8,
+            "ring_percent": 25,
+            "label": "Blood Sugar",
+            "note": "within 1 hour"
+          }
         }
-      },
-      {
-        "type": "metric",
-        "settings": {
-          "prefix": "−",
-          "value": 8,
-          "ring_percent": 25,
-          "label": "Blood Sugar",
-          "note": "within 1 hour"
-        }
-      }
-    ]
-  },
-  "presets": [{ "name": "BGX Proof numbers" }]
+      ]
+    }
+  ]
 }
 {% endschema %}

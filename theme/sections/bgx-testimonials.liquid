@@ -181,8 +181,18 @@
   "tag": "section",
   "max_blocks": 12,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "CUSTOMERS" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Real People. Real Routines." }
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "CUSTOMERS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real People. Real Routines."
+    }
   ],
   "blocks": [
     {
@@ -193,66 +203,93 @@
           "type": "paragraph",
           "content": "Only publish reviews you have collected and have consent to use. Do not describe treating or curing any condition."
         },
-        { "type": "textarea", "id": "body", "label": "Review" },
-        { "type": "text", "id": "name", "label": "Name" },
-        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Rating" },
-        { "type": "checkbox", "id": "verified", "default": true, "label": "Verified buyer badge" },
-        { "type": "image_picker", "id": "avatar", "label": "Photo" }
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Rating"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "default": true,
+          "label": "Verified buyer badge"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Photo"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "review",
-        "settings": {
-          "body": "PLACEHOLDER — replace with a real review. Three small tablets a day, no aftertaste, and it slots into my morning coffee routine without thinking about it.",
-          "name": "Placeholder Reviewer",
-          "rating": 5
+  "presets": [
+    {
+      "name": "BGX Testimonials",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Three small tablets a day, no aftertaste, and it slots into my morning coffee routine without thinking about it.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. The blister packaging keeps them dry in a humid climate, which is more than I can say for the last supplement I tried.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Arrived in under a week and the box is exactly as pictured. Easy to swallow, no strong smell.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. I like that the ingredient list is short and I can pronounce all of it.",
+            "name": "Placeholder Reviewer",
+            "rating": 4
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. One box lasts me twenty days exactly, so the three-box bundle lines up neatly with a two-month routine.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Reordering was straightforward and customer service replied the same day.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
         }
-      },
-      {
-        "type": "review",
-        "settings": {
-          "body": "PLACEHOLDER — replace with a real review. The blister packaging keeps them dry in a humid climate, which is more than I can say for the last supplement I tried.",
-          "name": "Placeholder Reviewer",
-          "rating": 5
-        }
-      },
-      {
-        "type": "review",
-        "settings": {
-          "body": "PLACEHOLDER — replace with a real review. Arrived in under a week and the box is exactly as pictured. Easy to swallow, no strong smell.",
-          "name": "Placeholder Reviewer",
-          "rating": 5
-        }
-      },
-      {
-        "type": "review",
-        "settings": {
-          "body": "PLACEHOLDER — replace with a real review. I like that the ingredient list is short and I can pronounce all of it.",
-          "name": "Placeholder Reviewer",
-          "rating": 4
-        }
-      },
-      {
-        "type": "review",
-        "settings": {
-          "body": "PLACEHOLDER — replace with a real review. One box lasts me twenty days exactly, so the three-box bundle lines up neatly with a two-month routine.",
-          "name": "Placeholder Reviewer",
-          "rating": 5
-        }
-      },
-      {
-        "type": "review",
-        "settings": {
-          "body": "PLACEHOLDER — replace with a real review. Reordering was straightforward and customer service replied the same day.",
-          "name": "Placeholder Reviewer",
-          "rating": 5
-        }
-      }
-    ]
-  },
-  "presets": [{ "name": "BGX Testimonials" }]
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -196,7 +196,12 @@
   "tag": "section",
   "max_blocks": 8,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NO MATTERS" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "NO MATTERS"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -215,17 +220,46 @@
           "label": "Icon",
           "default": "circulation",
           "options": [
-            { "value": "circulation", "label": "Circulation" },
-            { "value": "bolt", "label": "Energy" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "shield", "label": "Shield" },
-            { "value": "sparkle", "label": "Sparkle" },
-            { "value": "brain", "label": "Brain" },
-            { "value": "heart", "label": "Heart" }
+            {
+              "value": "circulation",
+              "label": "Circulation"
+            },
+            {
+              "value": "bolt",
+              "label": "Energy"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            }
           ]
         },
-        { "type": "text", "id": "title", "label": "Title" },
-        { "type": "textarea", "id": "body", "label": "Body" },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body"
+        },
         {
           "type": "textarea",
           "id": "stats",
@@ -239,59 +273,65 @@
           "label": "Show lab-data disclaimer",
           "info": "REQUIRED whenever this panel quotes laboratory or tester data."
         },
-        { "type": "text", "id": "source", "label": "Source" }
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Source"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "benefit",
-        "settings": {
-          "icon": "circulation",
-          "title": "Balancing Blood Pressure & Blood Sugar",
-          "body": "GABA, polyphenols and antioxidants support insulin efficiency and glucose absorption. Laboratory data shows blood sugar down 8% within one hour.",
-          "show_lab_disclaimer": true,
-          "source": "Bzzworld Smart Lab"
+  "presets": [
+    {
+      "name": "BGX Benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "circulation",
+            "title": "Balancing Blood Pressure & Blood Sugar",
+            "body": "GABA, polyphenols and antioxidants support insulin efficiency and glucose absorption. Laboratory data shows blood sugar down 8% within one hour.",
+            "show_lab_disclaimer": true,
+            "source": "Bzzworld Smart Lab"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "bolt",
+            "title": "Boosting Vigor",
+            "body": "Increased NO improves blood flow to skeletal muscle and oxygen delivery, supporting all-day energy."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "leaf",
+            "title": "Reducing Inflammation",
+            "body": "Supports a calmer inflammatory response."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "title": "Enhancing Immunity",
+            "body": "Supports normal immune function and normal cell division."
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "sparkle",
+            "title": "Improving Cognition & Skin",
+            "body": "NO activates telomerase, supporting slower cellular aging. Reported by a 100-person tester panel:",
+            "stats": "78|felt brighter skin\n84|saw reduced wrinkles\n68|reported smaller pores\n68|reported less inflammation",
+            "show_lab_disclaimer": true,
+            "source": "Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine (100 testers aged 15–76)"
+          }
         }
-      },
-      {
-        "type": "benefit",
-        "settings": {
-          "icon": "bolt",
-          "title": "Boosting Vigor",
-          "body": "Increased NO improves blood flow to skeletal muscle and oxygen delivery, supporting all-day energy."
-        }
-      },
-      {
-        "type": "benefit",
-        "settings": {
-          "icon": "leaf",
-          "title": "Reducing Inflammation",
-          "body": "Supports a calmer inflammatory response."
-        }
-      },
-      {
-        "type": "benefit",
-        "settings": {
-          "icon": "shield",
-          "title": "Enhancing Immunity",
-          "body": "Supports normal immune function and normal cell division."
-        }
-      },
-      {
-        "type": "benefit",
-        "settings": {
-          "icon": "sparkle",
-          "title": "Improving Cognition & Skin",
-          "body": "NO activates telomerase, supporting slower cellular aging. Reported by a 100-person tester panel:",
-          "stats": "78|felt brighter skin\n84|saw reduced wrinkles\n68|reported smaller pores\n68|reported less inflammation",
-          "show_lab_disclaimer": true,
-          "source": "Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine (100 testers aged 15–76)"
-        }
-      }
-    ]
-  },
-  "presets": [{ "name": "BGX Benefits" }]
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -337,7 +337,11 @@
   "tag": "div",
   "max_blocks": 4,
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
     {
       "type": "text",
       "id": "tagline",
@@ -350,38 +354,97 @@
       "label": "Newsletter label",
       "default": "Get nitric oxide science in your inbox"
     },
-    { "type": "header", "content": "Contact & social" },
-    { "type": "text", "id": "email", "label": "Email", "default": "info@biogreenelixirs.com" },
-    { "type": "url", "id": "instagram", "label": "Instagram URL" },
-    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
-    { "type": "url", "id": "facebook", "label": "Facebook URL" },
-    { "type": "header", "content": "Legal" },
+    {
+      "type": "header",
+      "content": "Contact & social"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "info@biogreenelixirs.com"
+    },
+    {
+      "type": "url",
+      "id": "instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "header",
+      "content": "Legal"
+    },
     {
       "type": "text",
       "id": "company_note",
       "label": "Company note",
       "default": "Bio Green Elixirs — international distributor of BIO N:OV."
     },
-    { "type": "checkbox", "id": "show_payment_icons", "default": true, "label": "Show payment icons" }
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "default": true,
+      "label": "Show payment icons"
+    }
   ],
   "blocks": [
     {
       "type": "column",
       "name": "Link column",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
-        { "type": "link_list", "id": "menu", "label": "Menu" }
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      { "type": "column", "settings": { "heading": "Shop" } },
-      { "type": "column", "settings": { "heading": "Learn" } },
-      { "type": "column", "settings": { "heading": "Company" } },
-      { "type": "column", "settings": { "heading": "Support" } }
-    ]
-  },
-  "presets": [{ "name": "BGX Footer" }]
+  "presets": [
+    {
+      "name": "BGX Footer",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Shop"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Learn"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Company"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Support"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

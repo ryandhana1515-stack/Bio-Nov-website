@@ -194,10 +194,26 @@
   "tag": "section",
   "max_blocks": 5,
   "settings": [
-    { "type": "header", "content": "Molecule field background" },
-    { "type": "text", "id": "field_mp4", "label": "Video URL (MP4)", "info": "Slot: molecule-field." },
-    { "type": "text", "id": "field_webm", "label": "Video URL (WebM, optional)" },
-    { "type": "image_picker", "id": "field_poster", "label": "Poster image" },
+    {
+      "type": "header",
+      "content": "Molecule field background"
+    },
+    {
+      "type": "text",
+      "id": "field_mp4",
+      "label": "Video URL (MP4)",
+      "info": "Slot: molecule-field."
+    },
+    {
+      "type": "text",
+      "id": "field_webm",
+      "label": "Video URL (WebM, optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "field_poster",
+      "label": "Poster image"
+    },
     {
       "type": "range",
       "id": "field_opacity",
@@ -208,19 +224,48 @@
       "unit": "%",
       "label": "Video opacity"
     },
-    { "type": "header", "content": "Fermentation lab clip" },
-    { "type": "text", "id": "lab_mp4", "label": "Video URL (MP4)", "info": "Slot: fermentation-lab." },
-    { "type": "text", "id": "lab_webm", "label": "Video URL (WebM, optional)" },
-    { "type": "image_picker", "id": "lab_poster", "label": "Poster image" },
+    {
+      "type": "header",
+      "content": "Fermentation lab clip"
+    },
+    {
+      "type": "text",
+      "id": "lab_mp4",
+      "label": "Video URL (MP4)",
+      "info": "Slot: fermentation-lab."
+    },
+    {
+      "type": "text",
+      "id": "lab_webm",
+      "label": "Video URL (WebM, optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "lab_poster",
+      "label": "Poster image"
+    },
     {
       "type": "text",
       "id": "lab_caption",
       "label": "Caption",
       "default": "Microbial fermentation, Korea"
     },
-    { "type": "header", "content": "Copy" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "HOW IT WORKS" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Patented Microbial Fermentation" },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "HOW IT WORKS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Patented Microbial Fermentation"
+    },
     {
       "type": "textarea",
       "id": "body",
@@ -233,18 +278,44 @@
       "type": "step",
       "name": "Step",
       "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "Fermented extract meets stomach acid" },
-        { "type": "textarea", "id": "body", "label": "Body" }
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Fermented extract meets stomach acid"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      { "type": "step", "settings": { "title": "Fermented extract meets stomach acid" } },
-      { "type": "step", "settings": { "title": "NO released instantly, no enzyme required" } },
-      { "type": "step", "settings": { "title": "Vessels relax, circulation improves" } }
-    ]
-  },
-  "presets": [{ "name": "BGX Mechanism" }]
+  "presets": [
+    {
+      "name": "BGX Mechanism",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Fermented extract meets stomach acid"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "NO released instantly, no enzyme required"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Vessels relax, circulation improves"
+          }
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

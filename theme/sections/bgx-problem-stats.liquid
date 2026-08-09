@@ -96,7 +96,12 @@
   "tag": "section",
   "max_blocks": 12,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "WHY IT MATTERS" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "WHY IT MATTERS"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -127,25 +132,68 @@
           "label": "Icon",
           "default": "brain",
           "options": [
-            { "value": "brain", "label": "Brain" },
-            { "value": "heart", "label": "Heart" },
-            { "value": "circulation", "label": "Circulation" },
-            { "value": "immune", "label": "Immune" },
-            { "value": "respiratory", "label": "Respiratory" },
-            { "value": "digestive", "label": "Digestive" }
+            {
+              "value": "brain",
+              "label": "Brain"
+            },
+            {
+              "value": "heart",
+              "label": "Heart"
+            },
+            {
+              "value": "circulation",
+              "label": "Circulation"
+            },
+            {
+              "value": "immune",
+              "label": "Immune"
+            },
+            {
+              "value": "respiratory",
+              "label": "Respiratory"
+            },
+            {
+              "value": "digestive",
+              "label": "Digestive"
+            }
           ]
         },
-        { "type": "text", "id": "title", "label": "Title", "default": "Brain" },
-        { "type": "textarea", "id": "body", "label": "Body", "default": "Cognition, memory" }
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Brain"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body",
+          "default": "Cognition, memory"
+        }
       ]
     },
     {
       "type": "stat",
       "name": "Population statistic",
       "settings": [
-        { "type": "number", "id": "value", "label": "Number", "default": 1 },
-        { "type": "number", "id": "decimals", "label": "Decimal places", "default": 2 },
-        { "type": "text", "id": "suffix", "label": "Suffix", "default": "B" },
+        {
+          "type": "number",
+          "id": "value",
+          "label": "Number",
+          "default": 1
+        },
+        {
+          "type": "number",
+          "id": "decimals",
+          "label": "Decimal places",
+          "default": 2
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix",
+          "default": "B"
+        },
         {
           "type": "textarea",
           "id": "label",
@@ -155,54 +203,87 @@
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      { "type": "system", "settings": { "icon": "brain", "title": "Brain", "body": "Cognition, memory" } },
-      { "type": "system", "settings": { "icon": "heart", "title": "Heart", "body": "Circulation, rhythm" } },
-      {
-        "type": "system",
-        "settings": {
-          "icon": "circulation",
-          "title": "Blood Circulation",
-          "body": "Pressure, sugar balance"
+  "presets": [
+    {
+      "name": "BGX Problem stats",
+      "blocks": [
+        {
+          "type": "system",
+          "settings": {
+            "icon": "brain",
+            "title": "Brain",
+            "body": "Cognition, memory"
+          }
+        },
+        {
+          "type": "system",
+          "settings": {
+            "icon": "heart",
+            "title": "Heart",
+            "body": "Circulation, rhythm"
+          }
+        },
+        {
+          "type": "system",
+          "settings": {
+            "icon": "circulation",
+            "title": "Blood Circulation",
+            "body": "Pressure, sugar balance"
+          }
+        },
+        {
+          "type": "system",
+          "settings": {
+            "icon": "immune",
+            "title": "Immune System",
+            "body": "Daily defence"
+          }
+        },
+        {
+          "type": "system",
+          "settings": {
+            "icon": "respiratory",
+            "title": "Respiratory",
+            "body": "Oxygen delivery"
+          }
+        },
+        {
+          "type": "system",
+          "settings": {
+            "icon": "digestive",
+            "title": "Digestive",
+            "body": "Comfort, absorption"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": 1.28,
+            "decimals": 2,
+            "suffix": "B",
+            "label": "people worldwide living with high blood pressure"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": 537,
+            "decimals": 0,
+            "suffix": "M",
+            "label": "adults living with diabetes"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "value": 15,
+            "decimals": 0,
+            "suffix": "M",
+            "label": "strokes every year"
+          }
         }
-      },
-      {
-        "type": "system",
-        "settings": { "icon": "immune", "title": "Immune System", "body": "Daily defence" }
-      },
-      {
-        "type": "system",
-        "settings": { "icon": "respiratory", "title": "Respiratory", "body": "Oxygen delivery" }
-      },
-      {
-        "type": "system",
-        "settings": { "icon": "digestive", "title": "Digestive", "body": "Comfort, absorption" }
-      },
-      {
-        "type": "stat",
-        "settings": {
-          "value": 1.28,
-          "decimals": 2,
-          "suffix": "B",
-          "label": "people worldwide living with high blood pressure"
-        }
-      },
-      {
-        "type": "stat",
-        "settings": {
-          "value": 537,
-          "decimals": 0,
-          "suffix": "M",
-          "label": "adults living with diabetes"
-        }
-      },
-      {
-        "type": "stat",
-        "settings": { "value": 15, "decimals": 0, "suffix": "M", "label": "strokes every year" }
-      }
-    ]
-  },
-  "presets": [{ "name": "BGX Problem stats" }]
+      ]
+    }
+  ]
 }
 {% endschema %}

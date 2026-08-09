@@ -443,10 +443,30 @@
       "label": "Product",
       "info": "BIO N:OV. On a product page this defaults to the page's product."
     },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "CHOOSE YOUR SUPPLY" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose Your Supply" },
-    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Add to Cart" },
-    { "type": "checkbox", "id": "show_payment_icons", "default": true, "label": "Show payment icons" }
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "CHOOSE YOUR SUPPLY"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Choose Your Supply"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "default": true,
+      "label": "Show payment icons"
+    }
   ],
   "blocks": [
     {
@@ -459,8 +479,18 @@
           "label": "Variant ID",
           "info": "From Admin > Products > BIO N:OV > variant URL. Leave blank to use the variant in this card's position."
         },
-        { "type": "text", "id": "title", "label": "Title", "default": "Starter" },
-        { "type": "text", "id": "contents", "label": "Contents", "default": "1 box · 20-day supply" },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Starter"
+        },
+        {
+          "type": "text",
+          "id": "contents",
+          "label": "Contents",
+          "default": "1 box · 20-day supply"
+        },
         {
           "type": "number",
           "id": "boxes",
@@ -468,10 +498,26 @@
           "default": 1,
           "info": "Used to calculate the per-box price."
         },
-        { "type": "text", "id": "badge", "label": "Badge" },
-        { "type": "text", "id": "savings", "label": "Savings line" },
-        { "type": "text", "id": "gift", "label": "Free gift line" },
-        { "type": "text", "id": "urgency", "label": "Stock / urgency line" },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge"
+        },
+        {
+          "type": "text",
+          "id": "savings",
+          "label": "Savings line"
+        },
+        {
+          "type": "text",
+          "id": "gift",
+          "label": "Free gift line"
+        },
+        {
+          "type": "text",
+          "id": "urgency",
+          "label": "Stock / urgency line"
+        },
         {
           "type": "checkbox",
           "id": "is_popular",
@@ -491,54 +537,90 @@
           "label": "Icon",
           "default": "truck",
           "options": [
-            { "value": "truck", "label": "Shipping" },
-            { "value": "shield", "label": "Guarantee" },
-            { "value": "award", "label": "Award" },
-            { "value": "flask", "label": "Lab" }
+            {
+              "value": "truck",
+              "label": "Shipping"
+            },
+            {
+              "value": "shield",
+              "label": "Guarantee"
+            },
+            {
+              "value": "award",
+              "label": "Award"
+            },
+            {
+              "value": "flask",
+              "label": "Lab"
+            }
           ]
         },
-        { "type": "text", "id": "text", "label": "Text" }
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "tier",
-        "settings": {
-          "title": "Starter",
-          "contents": "1 box · 20-day supply",
-          "boxes": 1,
-          "urgency": "Try it"
+  "presets": [
+    {
+      "name": "BGX Offer bundles",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Starter",
+            "contents": "1 box · 20-day supply",
+            "boxes": 1,
+            "urgency": "Try it"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Most Popular",
+            "contents": "3 boxes · 60-day supply",
+            "boxes": 3,
+            "badge": "Most Popular",
+            "savings": "Save $30 + Free Worldwide Shipping",
+            "is_popular": true
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "title": "Best Value",
+            "contents": "6 boxes · 120-day supply",
+            "boxes": 6,
+            "badge": "Best Value",
+            "savings": "Save $120 + Free Shipping",
+            "gift": "Free NO Health Guide eBook"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "truck",
+            "text": "Free worldwide shipping over $99"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "shield",
+            "text": "30-day money-back guarantee"
+          }
+        },
+        {
+          "type": "trust",
+          "settings": {
+            "icon": "award",
+            "text": "Ships from Singapore & Korea"
+          }
         }
-      },
-      {
-        "type": "tier",
-        "settings": {
-          "title": "Most Popular",
-          "contents": "3 boxes · 60-day supply",
-          "boxes": 3,
-          "badge": "Most Popular",
-          "savings": "Save $30 + Free Worldwide Shipping",
-          "is_popular": true
-        }
-      },
-      {
-        "type": "tier",
-        "settings": {
-          "title": "Best Value",
-          "contents": "6 boxes · 120-day supply",
-          "boxes": 6,
-          "badge": "Best Value",
-          "savings": "Save $120 + Free Shipping",
-          "gift": "Free NO Health Guide eBook"
-        }
-      },
-      { "type": "trust", "settings": { "icon": "truck", "text": "Free worldwide shipping over $99" } },
-      { "type": "trust", "settings": { "icon": "shield", "text": "30-day money-back guarantee" } },
-      { "type": "trust", "settings": { "icon": "award", "text": "Ships from Singapore & Korea" } }
-    ]
-  },
-  "presets": [{ "name": "BGX Offer bundles" }]
+      ]
+    }
+  ]
 }
 {% endschema %}

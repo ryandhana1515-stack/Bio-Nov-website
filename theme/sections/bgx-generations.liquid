@@ -309,26 +309,64 @@
   "tag": "section",
   "max_blocks": 14,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "TECH ROADMAP" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "TECH ROADMAP"
+    },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Three Generations Of Nitric Oxide. Only One Works For Everyone."
     },
-    { "type": "header", "content": "Table column headings" },
-    { "type": "text", "id": "table_col_0", "label": "Column 1", "default": "" },
-    { "type": "text", "id": "table_col_1", "label": "Column 2", "default": "1st Gen — Arginine" },
-    { "type": "text", "id": "table_col_2", "label": "Column 3", "default": "2nd Gen — Veg & Fruit" },
-    { "type": "text", "id": "table_col_3", "label": "Column 4", "default": "3rd Gen — BIO N:OV" }
+    {
+      "type": "header",
+      "content": "Table column headings"
+    },
+    {
+      "type": "text",
+      "id": "table_col_0",
+      "label": "Column 1",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "table_col_1",
+      "label": "Column 2",
+      "default": "1st Gen — Arginine"
+    },
+    {
+      "type": "text",
+      "id": "table_col_2",
+      "label": "Column 3",
+      "default": "2nd Gen — Veg & Fruit"
+    },
+    {
+      "type": "text",
+      "id": "table_col_3",
+      "label": "Column 4",
+      "default": "3rd Gen — BIO N:OV"
+    }
   ],
   "blocks": [
     {
       "type": "generation",
       "name": "Generation card",
       "settings": [
-        { "type": "text", "id": "generation", "label": "Generation", "default": "1st Gen" },
-        { "type": "text", "id": "name", "label": "Name", "default": "Arginine" },
+        {
+          "type": "text",
+          "id": "generation",
+          "label": "Generation",
+          "default": "1st Gen"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Arginine"
+        },
         {
           "type": "textarea",
           "id": "points",
@@ -349,105 +387,123 @@
       "type": "row",
       "name": "Table row",
       "settings": [
-        { "type": "text", "id": "label", "label": "Row label" },
-        { "type": "text", "id": "gen1", "label": "1st Gen" },
-        { "type": "text", "id": "gen2", "label": "2nd Gen" },
-        { "type": "text", "id": "gen3", "label": "BIO N:OV" }
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Row label"
+        },
+        {
+          "type": "text",
+          "id": "gen1",
+          "label": "1st Gen"
+        },
+        {
+          "type": "text",
+          "id": "gen2",
+          "label": "2nd Gen"
+        },
+        {
+          "type": "text",
+          "id": "gen3",
+          "label": "BIO N:OV"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "generation",
-        "settings": {
-          "generation": "1st Gen",
-          "name": "Arginine",
-          "points": "Requires enzyme conversion\nUnstable\nNot suitable for heart patients"
+  "presets": [
+    {
+      "name": "BGX Generations",
+      "blocks": [
+        {
+          "type": "generation",
+          "settings": {
+            "generation": "1st Gen",
+            "name": "Arginine",
+            "points": "Requires enzyme conversion\nUnstable\nNot suitable for heart patients"
+          }
+        },
+        {
+          "type": "generation",
+          "settings": {
+            "generation": "2nd Gen",
+            "name": "Vegetable & Fruit Extracts",
+            "points": "Reported nausea, diarrhea, headache\nPoor results over 40"
+          }
+        },
+        {
+          "type": "generation",
+          "settings": {
+            "generation": "3rd Gen",
+            "name": "BIO N:OV",
+            "is_winner": true,
+            "points": "No enzyme needed — releases on contact with stomach acid\nWorks across age groups\n40–400% more effective than other NO supplements\nZero dependence"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Technology",
+            "gen1": "Amino acid",
+            "gen2": "Plant extract",
+            "gen3": "Microbial fermentation"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Enzyme conversion",
+            "gen1": "Required",
+            "gen2": "Required",
+            "gen3": "Not required — releases on contact with stomach acid"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Suitable for heart patients",
+            "gen1": "Not suitable",
+            "gen2": "Not established",
+            "gen3": "Works across age groups"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Reported side effects",
+            "gen1": "Unstable",
+            "gen2": "Nausea, diarrhea, headache",
+            "gen3": "Zero reported side effects"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Results over age 40",
+            "gen1": "Limited",
+            "gen2": "Poor",
+            "gen3": "Works across age groups"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Relative effectiveness",
+            "gen1": "Baseline",
+            "gen2": "Baseline",
+            "gen3": "40–400% more effective than other NO supplements"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "label": "Dependence",
+            "gen1": "Not established",
+            "gen2": "Not established",
+            "gen3": "Zero dependence"
+          }
         }
-      },
-      {
-        "type": "generation",
-        "settings": {
-          "generation": "2nd Gen",
-          "name": "Vegetable & Fruit Extracts",
-          "points": "Reported nausea, diarrhea, headache\nPoor results over 40"
-        }
-      },
-      {
-        "type": "generation",
-        "settings": {
-          "generation": "3rd Gen",
-          "name": "BIO N:OV",
-          "is_winner": true,
-          "points": "No enzyme needed — releases on contact with stomach acid\nWorks across age groups\n40–400% more effective than other NO supplements\nZero dependence"
-        }
-      },
-      {
-        "type": "row",
-        "settings": {
-          "label": "Technology",
-          "gen1": "Amino acid",
-          "gen2": "Plant extract",
-          "gen3": "Microbial fermentation"
-        }
-      },
-      {
-        "type": "row",
-        "settings": {
-          "label": "Enzyme conversion",
-          "gen1": "Required",
-          "gen2": "Required",
-          "gen3": "Not required — releases on contact with stomach acid"
-        }
-      },
-      {
-        "type": "row",
-        "settings": {
-          "label": "Suitable for heart patients",
-          "gen1": "Not suitable",
-          "gen2": "Not established",
-          "gen3": "Works across age groups"
-        }
-      },
-      {
-        "type": "row",
-        "settings": {
-          "label": "Reported side effects",
-          "gen1": "Unstable",
-          "gen2": "Nausea, diarrhea, headache",
-          "gen3": "Zero reported side effects"
-        }
-      },
-      {
-        "type": "row",
-        "settings": {
-          "label": "Results over age 40",
-          "gen1": "Limited",
-          "gen2": "Poor",
-          "gen3": "Works across age groups"
-        }
-      },
-      {
-        "type": "row",
-        "settings": {
-          "label": "Relative effectiveness",
-          "gen1": "Baseline",
-          "gen2": "Baseline",
-          "gen3": "40–400% more effective than other NO supplements"
-        }
-      },
-      {
-        "type": "row",
-        "settings": {
-          "label": "Dependence",
-          "gen1": "Not established",
-          "gen2": "Not established",
-          "gen3": "Zero dependence"
-        }
-      }
-    ]
-  },
-  "presets": [{ "name": "BGX Generations" }]
+      ]
+    }
+  ]
 }
 {% endschema %}

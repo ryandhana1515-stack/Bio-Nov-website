@@ -160,7 +160,12 @@
   "tag": "section",
   "max_blocks": 12,
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "TOP-NOTCH SCIENCE" },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "TOP-NOTCH SCIENCE"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -174,108 +179,153 @@
       "name": "Lead researcher",
       "limit": 1,
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Portrait" },
-        { "type": "text", "id": "fallback_asset", "label": "Fallback theme asset" },
-        { "type": "text", "id": "badge", "label": "Badge", "default": "RESEARCH BOARD HEAD" },
-        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Cheon Hyun Soo" },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portrait"
+        },
+        {
+          "type": "text",
+          "id": "fallback_asset",
+          "label": "Fallback theme asset"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "default": "RESEARCH BOARD HEAD"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Dr. Cheon Hyun Soo"
+        },
         {
           "type": "text",
           "id": "role",
           "label": "Role",
           "default": "Head of BIO N:OV Medical Development & Research Board"
         },
-        { "type": "text", "id": "org", "label": "Organisation", "default": "SunChon National University" }
+        {
+          "type": "text",
+          "id": "org",
+          "label": "Organisation",
+          "default": "SunChon National University"
+        }
       ]
     },
     {
       "type": "member",
       "name": "Team member",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Portrait" },
-        { "type": "text", "id": "fallback_asset", "label": "Fallback theme asset" },
-        { "type": "text", "id": "name", "label": "Name" },
-        { "type": "text", "id": "role", "label": "Role" },
-        { "type": "text", "id": "org", "label": "Organisation" }
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portrait"
+        },
+        {
+          "type": "text",
+          "id": "fallback_asset",
+          "label": "Fallback theme asset"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role"
+        },
+        {
+          "type": "text",
+          "id": "org",
+          "label": "Organisation"
+        }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      {
-        "type": "lead",
-        "settings": {
-          "fallback_asset": "bgx-researcher-cheon.png",
-          "badge": "RESEARCH BOARD HEAD",
-          "name": "Dr. Cheon Hyun Soo",
-          "role": "Head of BIO N:OV Medical Development & Research Board",
-          "org": "SunChon National University"
+  "presets": [
+    {
+      "name": "BGX Science team",
+      "blocks": [
+        {
+          "type": "lead",
+          "settings": {
+            "fallback_asset": "bgx-researcher-cheon.png",
+            "badge": "RESEARCH BOARD HEAD",
+            "name": "Dr. Cheon Hyun Soo",
+            "role": "Head of BIO N:OV Medical Development & Research Board",
+            "org": "SunChon National University"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-pae.png",
+            "name": "Prof. Dr. Hyun-Ock Pae",
+            "role": "NO & metabolites",
+            "org": "Wonkwang University School of Medicine"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-min.png",
+            "name": "Ph.D. Min Sun Kim",
+            "role": "Cardiovascular health",
+            "org": "Dean, Wonkwang University School of Medicine"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-shin.png",
+            "name": "Prof. Dr. Yong-Il Shin",
+            "role": "Neuro-rehabilitation",
+            "org": "Pusan National University"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-ju.png",
+            "name": "Dr. Ju Sung-Min",
+            "role": "NO, menopausal & lymphatic system research",
+            "org": "Center of TKM, Wonkwang University"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-han.png",
+            "name": "Ass. Prof. A-Lum Han",
+            "role": "Metabolic disease & clinical nutrition",
+            "org": "Wonkwang University Hospital"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-kim.png",
+            "name": "Prof. Dr. Kim Jong-Suk",
+            "role": "Metabolism & anti-aging",
+            "org": "Jeonbuk National University Medical School"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-sooah.png",
+            "name": "Dr. Sooah Kim",
+            "role": "Regenerative medicine & food application",
+            "org": "Jeonju University College of Medical Science"
+          }
         }
-      },
-      {
-        "type": "member",
-        "settings": {
-          "fallback_asset": "bgx-researcher-pae.png",
-          "name": "Prof. Dr. Hyun-Ock Pae",
-          "role": "NO & metabolites",
-          "org": "Wonkwang University School of Medicine"
-        }
-      },
-      {
-        "type": "member",
-        "settings": {
-          "fallback_asset": "bgx-researcher-min.png",
-          "name": "Ph.D. Min Sun Kim",
-          "role": "Cardiovascular health",
-          "org": "Dean, Wonkwang University School of Medicine"
-        }
-      },
-      {
-        "type": "member",
-        "settings": {
-          "fallback_asset": "bgx-researcher-shin.png",
-          "name": "Prof. Dr. Yong-Il Shin",
-          "role": "Neuro-rehabilitation",
-          "org": "Pusan National University"
-        }
-      },
-      {
-        "type": "member",
-        "settings": {
-          "fallback_asset": "bgx-researcher-ju.png",
-          "name": "Dr. Ju Sung-Min",
-          "role": "NO, menopausal & lymphatic system research",
-          "org": "Center of TKM, Wonkwang University"
-        }
-      },
-      {
-        "type": "member",
-        "settings": {
-          "fallback_asset": "bgx-researcher-han.png",
-          "name": "Ass. Prof. A-Lum Han",
-          "role": "Metabolic disease & clinical nutrition",
-          "org": "Wonkwang University Hospital"
-        }
-      },
-      {
-        "type": "member",
-        "settings": {
-          "fallback_asset": "bgx-researcher-kim.png",
-          "name": "Prof. Dr. Kim Jong-Suk",
-          "role": "Metabolism & anti-aging",
-          "org": "Jeonbuk National University Medical School"
-        }
-      },
-      {
-        "type": "member",
-        "settings": {
-          "fallback_asset": "bgx-researcher-sooah.png",
-          "name": "Dr. Sooah Kim",
-          "role": "Regenerative medicine & food application",
-          "org": "Jeonju University College of Medical Science"
-        }
-      }
-    ]
-  },
-  "presets": [{ "name": "BGX Science team" }]
+      ]
+    }
+  ]
 }
 {% endschema %}
