@@ -1,0 +1,17 @@
+# Ruflo local secrets and runtime data
+.env
+.env.local
+.env.*.local
+.claude-flow/data/
+.claude-flow/logs/
+.claude-flow/sessions/
+
+# Ruflo runtime databases (regenerated locally)
+.swarm/
+ruvector.db
+ruvector.db-*
+
+# Node / Next.js
+node_modules/
+.next/
+out/
