@@ -1,0 +1,58 @@
+{% comment %}
+  BIO N:OV — compliance footnote.
+
+  Renders the mandatory wording for supplement marketing. The exact strings
+  live here (not in section schema) so they cannot be edited away by accident
+  in the Theme Editor. If legal counsel updates the wording, change it once
+  here and it updates everywhere.
+
+  Accepts:
+    type {String} 'lab'   — required beneath every laboratory-data block
+                  'stats' — required beneath population health statistics
+                  'full'  — the long FDA-style footer disclaimer
+    align {String} 'center' to centre the text
+
+  Usage: {% render 'bgx-disclaimer', type: 'lab' %}
+{% endcomment %}
+
+{%- liquid
+  assign bgx_align = ''
+  if align == 'center'
+    assign bgx_align = ' bgx-disclaimer--center'
+  endif
+-%}
+
+<p class="bgx-disclaimer{{ bgx_align }}" role="note">
+  {%- case type -%}
+    {%- when 'lab' -%}
+      Laboratory data. Individual results vary. Not intended to diagnose, treat, cure or prevent any
+      disease, and not a substitute for professional medical advice.
+    {%- when 'stats' -%}
+      Figures describe general population health worldwide and are shown as context only. They do
+      not describe the effects of BIO N:OV.
+    {%- when 'full' -%}
+      These statements have not been evaluated by the FDA or any equivalent regulatory authority.
+      This product is not intended to diagnose, treat, cure or prevent any disease. Consult your
+      physician before use, particularly if you are pregnant, nursing, taking medication or under
+      medical supervision.
+    {%- else -%}
+      Individual results vary. Not intended to diagnose, treat, cure or prevent any disease.
+  {%- endcase -%}
+</p>
+
+{%- unless bgx_disclaimer_styles -%}
+  {%- assign bgx_disclaimer_styles = true -%}
+  <style>
+    .bgx-disclaimer {
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: rgba(169, 183, 208, 0.78);
+      max-width: 68ch;
+      margin: 1.4rem 0 0;
+    }
+    .bgx-disclaimer--center {
+      margin-inline: auto;
+      text-align: center;
+    }
+  </style>
+{%- endunless -%}

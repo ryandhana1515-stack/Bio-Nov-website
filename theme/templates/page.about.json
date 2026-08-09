@@ -1,0 +1,61 @@
+{
+  "sections": {
+    "intro": {
+      "type": "bgx-content",
+      "blocks": {
+        "t0": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Bio Green Elixirs is an international health brand built around one idea: the best preventive science should not stay locked inside the country that developed it.</p><p>We are the international distributor of BIO N:OV, a 3rd-generation nitric oxide supplement manufactured in Korea by Bzzworld under GMP certification, and developed with a research board of eight Korean university professors.</p><p>From Singapore we ship worldwide, with fulfilment from Singapore and Korea.</p>"
+          }
+        }
+      },
+      "block_order": ["t0"],
+      "settings": {
+        "eyebrow": "OUR STORY",
+        "heading": "From Korea To The World",
+        "background": "glow",
+        "narrow": true,
+        "center": false
+      }
+    },
+    "values": {
+      "type": "bgx-content",
+      "blocks": {
+        "c0": { "type": "card", "settings": { "icon": "flask", "title": "Science first", "body": "Every claim on this site traces back to the manufacturer's documentation, a named laboratory, or a cited source. If we cannot source it, we do not say it." } },
+        "c1": { "type": "card", "settings": { "icon": "award", "title": "Certified manufacturing", "body": "BIO N:OV is produced in Korea under GMP certification, using a patented fermentation process built on the proprietary microbial strain KACC91554P." } },
+        "c2": { "type": "card", "settings": { "icon": "leaf", "title": "Natural ingredients", "body": "Fermented garlic extract, fermented lettuce extract, soybean and soybean sprouts. A short ingredient list you can read out loud." } },
+        "c3": { "type": "card", "settings": { "icon": "truck", "title": "Global from day one", "body": "Fulfilment from Singapore and Korea, multi-currency checkout, and free worldwide shipping over $99." } }
+      },
+      "block_order": ["c0", "c1", "c2", "c3"],
+      "settings": {
+        "eyebrow": "WHAT WE STAND FOR",
+        "heading": "How We Work",
+        "background": "void",
+        "narrow": false,
+        "center": true
+      }
+    },
+    "contact": {
+      "type": "bgx-content",
+      "blocks": {
+        "t0": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Questions about the product, wholesale, or distribution in your market? Email <a href=\"mailto:info@biogreenelixirs.com\">info@biogreenelixirs.com</a> and we will get back to you.</p>"
+          }
+        },
+        "cta": { "type": "cta", "settings": { "text": "Shop BIO N:OV", "link": "shopify://products/bio-nov" } }
+      },
+      "block_order": ["t0", "cta"],
+      "settings": {
+        "eyebrow": "GET IN TOUCH",
+        "heading": "Talk To Us",
+        "background": "navy",
+        "narrow": true,
+        "center": false
+      }
+    }
+  },
+  "order": ["intro", "values", "contact"]
+}

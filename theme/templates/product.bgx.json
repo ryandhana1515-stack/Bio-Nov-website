@@ -1,0 +1,144 @@
+{
+  "sections": {
+    "hero": {
+      "type": "bgx-hero",
+      "blocks": {
+        "t0": { "type": "trust", "settings": { "text": "GMP Certified Korea" } },
+        "t1": { "type": "trust", "settings": { "text": "US Patented Strain KACC91554P" } },
+        "t2": { "type": "trust", "settings": { "text": "100% Natural Fermented Ingredients" } },
+        "t3": { "type": "trust", "settings": { "text": "Zero Reported Side Effects" } }
+      },
+      "block_order": ["t0", "t1", "t2", "t3"],
+      "settings": {
+        "eyebrow": "3RD GENERATION NITRIC OXIDE · 500MG × 60 TABLETS",
+        "heading": "BIO N:OV",
+        "subheading": "Patented Korean microbial fermentation. Supports healthy blood pressure, circulation, blood sugar and everyday energy. 3 tablets daily, 1 per serving.",
+        "cta_primary_text": "Choose Your Supply",
+        "cta_primary_link": "#offer",
+        "cta_secondary_text": "See The Science",
+        "cta_secondary_link": "shopify://pages/science",
+        "video_opacity": 45,
+        "show_scroll_cue": false
+      }
+    },
+    "offer": {
+      "type": "bgx-offer-bundles",
+      "blocks": {
+        "t0": { "type": "tier", "settings": { "title": "Starter", "contents": "1 box · 20-day supply", "boxes": 1, "urgency": "Try it", "is_popular": false } },
+        "t1": { "type": "tier", "settings": { "title": "Most Popular", "contents": "3 boxes · 60-day supply", "boxes": 3, "badge": "Most Popular", "savings": "Save $30 + Free Worldwide Shipping", "is_popular": true } },
+        "t2": { "type": "tier", "settings": { "title": "Best Value", "contents": "6 boxes · 120-day supply", "boxes": 6, "badge": "Best Value", "savings": "Save $120 + Free Shipping", "gift": "Free NO Health Guide eBook", "is_popular": false } },
+        "tr0": { "type": "trust", "settings": { "icon": "truck", "text": "Free worldwide shipping over $99" } },
+        "tr1": { "type": "trust", "settings": { "icon": "shield", "text": "30-day money-back guarantee" } },
+        "tr2": { "type": "trust", "settings": { "icon": "award", "text": "Ships from Singapore & Korea" } }
+      },
+      "block_order": ["t0", "t1", "t2", "tr0", "tr1", "tr2"],
+      "settings": {
+        "product": "",
+        "eyebrow": "CHOOSE YOUR SUPPLY",
+        "heading": "Choose Your Supply",
+        "cta_text": "Add to Cart",
+        "show_payment_icons": true
+      }
+    },
+    "proof-numbers": {
+      "type": "bgx-proof-numbers",
+      "blocks": {
+        "m0": { "type": "metric", "settings": { "prefix": "+", "value": 18, "ring_percent": 45, "label": "Vessel Diameter" } },
+        "m1": { "type": "metric", "settings": { "prefix": "+", "value": 42, "ring_percent": 70, "label": "Blood Flow" } },
+        "m2": { "type": "metric", "settings": { "prefix": "−", "value": 25, "ring_percent": 55, "label": "Blood Pressure", "note": "within 30 minutes" } },
+        "m3": { "type": "metric", "settings": { "prefix": "−", "value": 8, "ring_percent": 25, "label": "Blood Sugar", "note": "within 1 hour" } }
+      },
+      "block_order": ["m0", "m1", "m2", "m3"],
+      "settings": {
+        "eyebrow": "THE NUMBERS",
+        "heading": "Measured In A Lab. Felt In 30 Minutes.",
+        "source": "Bzzworld Smart Lab"
+      }
+    },
+    "benefits": {
+      "type": "bgx-benefits",
+      "blocks": {
+        "b0": { "type": "benefit", "settings": { "icon": "circulation", "title": "Balancing Blood Pressure & Blood Sugar", "body": "GABA, polyphenols and antioxidants support insulin efficiency and glucose absorption. Laboratory data shows blood sugar down 8% within one hour.", "show_lab_disclaimer": true, "source": "Bzzworld Smart Lab" } },
+        "b1": { "type": "benefit", "settings": { "icon": "bolt", "title": "Boosting Vigor", "body": "Increased NO improves blood flow to skeletal muscle and oxygen delivery, supporting all-day energy." } },
+        "b2": { "type": "benefit", "settings": { "icon": "leaf", "title": "Reducing Inflammation", "body": "Supports a calmer inflammatory response." } },
+        "b3": { "type": "benefit", "settings": { "icon": "shield", "title": "Enhancing Immunity", "body": "Supports normal immune function and normal cell division." } },
+        "b4": { "type": "benefit", "settings": { "icon": "sparkle", "title": "Improving Cognition & Skin", "body": "NO activates telomerase, supporting slower cellular aging. Reported by a 100-person tester panel:", "stats": "78|felt brighter skin\n84|saw reduced wrinkles\n68|reported smaller pores\n68|reported less inflammation", "show_lab_disclaimer": true, "source": "Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine (100 testers aged 15–76)" } }
+      },
+      "block_order": ["b0", "b1", "b2", "b3", "b4"],
+      "settings": { "eyebrow": "NO MATTERS", "heading": "NO Matters — Five Ways BIO N:OV Supports You" }
+    },
+    "ingredients": {
+      "type": "bgx-ingredients",
+      "blocks": {
+        "i0": { "type": "ingredient", "settings": { "title": "Fermented Garlic Extract", "fallback_asset": "bgx-garlic-product.jpg", "body": "Top-10 superfood; allicin supports metabolism." } },
+        "i1": { "type": "ingredient", "settings": { "title": "Fermented Lettuce Extract", "fallback_asset": "bgx-lettuce-product.jpg", "body": "Vitamins A & B, amino acids; supports skin against aging." } },
+        "i2": { "type": "ingredient", "settings": { "title": "Soybean", "body": "Vitamins, minerals and fiber; supports healthy cholesterol levels." } },
+        "i3": { "type": "ingredient", "settings": { "title": "Soybean Sprouts", "body": "β-carotene and vitamin C; supports immune function." } },
+        "sp0": { "type": "spec", "settings": { "icon": "flask", "text": "500mg × 60 tablets (30g)" } },
+        "sp1": { "type": "spec", "settings": { "icon": "sparkle", "text": "3 tablets daily, 1 per serving" } },
+        "sp2": { "type": "spec", "settings": { "icon": "leaf", "text": "Store cool & dry, away from direct sunlight" } },
+        "sp3": { "type": "spec", "settings": { "icon": "shield", "text": "Upgraded PTP protective film" } }
+      },
+      "block_order": ["i0", "i1", "i2", "i3", "sp0", "sp1", "sp2", "sp3"],
+      "settings": {
+        "eyebrow": "PREMIUM RAW MATERIALS",
+        "heading": "Four Natural Ingredients. One Patented Fermentation.",
+        "video_opacity": 28
+      }
+    },
+    "certifications": {
+      "type": "bgx-certifications",
+      "blocks": {
+        "c0": { "type": "certificate", "settings": { "title": "Korean Patent" } },
+        "c1": { "type": "certificate", "settings": { "title": "US Patent US 10,517,912 B2" } },
+        "c2": { "type": "certificate", "settings": { "title": "China Patent" } },
+        "c3": { "type": "certificate", "settings": { "title": "Korea GMP Certificate" } },
+        "bd0": { "type": "badge", "settings": { "text": "GMP" } },
+        "bd1": { "type": "badge", "settings": { "text": "건강기능식품 (Health Functional Food)" } },
+        "bd2": { "type": "badge", "settings": { "text": "KACC91554P" } },
+        "bd3": { "type": "badge", "settings": { "text": "Made in Korea" } }
+      },
+      "block_order": ["c0", "c1", "c2", "c3", "bd0", "bd1", "bd2", "bd3"],
+      "settings": { "eyebrow": "TRUST", "heading": "Certified, Patented, Verified" }
+    },
+    "faq": {
+      "type": "bgx-faq",
+      "blocks": {
+        "q0": { "type": "question", "settings": { "question": "How do I take it?", "answer": "<p>3 tablets daily, 1 tablet per serving, with water. Store in a cool, dry place away from direct sunlight.</p>" } },
+        "q1": { "type": "question", "settings": { "question": "Can I take it alongside my current medication?", "answer": "<p>Always consult your doctor or pharmacist first, especially if you take prescription medication, are pregnant or nursing, or are under medical supervision. Do not stop or change any prescribed medication.</p>" } },
+        "q2": { "type": "question", "settings": { "question": "Are there side effects?", "answer": "<p>There are no reported side effects for BIO N:OV. If you experience any discomfort, stop taking it and speak to a healthcare professional.</p>" } },
+        "q3": { "type": "question", "settings": { "question": "Where does it ship from and how long does delivery take?", "answer": "<p>Orders ship from Singapore and Korea. Delivery times depend on destination and are shown at checkout.</p>" } },
+        "q4": { "type": "question", "settings": { "question": "What's your return policy?", "answer": "<p>We offer a 30-day money-back guarantee. See our refund policy for full details.</p>" } }
+      },
+      "block_order": ["q0", "q1", "q2", "q3", "q4"],
+      "settings": { "eyebrow": "QUESTIONS", "heading": "Before You Order" }
+    },
+    "final-cta": {
+      "type": "bgx-guarantee-cta",
+      "blocks": {
+        "f0": { "type": "trust", "settings": { "text": "GMP Certified Korea" } },
+        "f1": { "type": "trust", "settings": { "text": "Free worldwide shipping over $99" } },
+        "f2": { "type": "trust", "settings": { "text": "Ships from Singapore & Korea" } }
+      },
+      "block_order": ["f0", "f1", "f2"],
+      "settings": {
+        "heading": "Stay Healthy. Happy. In Harmony.",
+        "subheading": "Clearing the way to optimum health — from Korea to the world.",
+        "cta_text": "Choose Your Supply",
+        "cta_link": "#offer",
+        "guarantee_text": "30-day money-back guarantee",
+        "video_opacity": 45
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "offer",
+    "proof-numbers",
+    "benefits",
+    "ingredients",
+    "certifications",
+    "faq",
+    "final-cta"
+  ]
+}

@@ -1,0 +1,453 @@
+{% comment %}
+  S6 · Generations — motion moment M6.
+  Three cards stagger in. The first two stamp a red ✕ (scale 1.4 → 1 bounce);
+  the third scales up, gains the gradient border and emits a cyan pulse ring.
+  Beneath, a comparison table with a sticky header row that scrolls
+  horizontally on mobile.
+
+  The stamp/pulse animations key off `.bgx-revealed`, which motion.js adds —
+  so they work with or without GSAP, and are inert under reduced motion.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--void">
+  <div class="bgx-wrap">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    <div class="bgx-gen__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'generation' -%}
+          {%- assign is_winner = block.settings.is_winner -%}
+          <article
+            class="bgx-card bgx-gen__card bgx-reveal{% if is_winner %} bgx-card--featured bgx-gen__card--winner{% endif %}"
+            data-bgx-delay="{{ forloop.index0 | times: 0.12 }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if is_winner -%}
+              <span class="bgx-gen__pulse" aria-hidden="true"></span>
+            {%- endif -%}
+
+            <span class="bgx-gen__gen">{{ block.settings.generation }}</span>
+            <h3 class="bgx-gen__name">{{ block.settings.name }}</h3>
+
+            <ul class="bgx-gen__points">
+              {%- assign points = block.settings.points | newline_to_br | split: '<br />' -%}
+              {%- for point in points -%}
+                {%- assign trimmed = point | strip -%}
+                {%- if trimmed != blank -%}
+                  <li>
+                    {%- if is_winner -%}
+                      <span class="bgx-gen__tick" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                      </span>
+                      <span class="visually-hidden">Yes: </span>
+                    {%- else -%}
+                      <span class="bgx-gen__x" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                      </span>
+                      <span class="visually-hidden">Limitation: </span>
+                    {%- endif -%}
+                    <span>{{ trimmed }}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- assign row_blocks = section.blocks | where: 'type', 'row' -%}
+    {%- if row_blocks.size > 0 -%}
+      <div class="bgx-gen__tablewrap bgx-reveal" tabindex="0" role="region" aria-label="Generation comparison table">
+        <table class="bgx-gen__table">
+          <thead>
+            <tr>
+              <th scope="col">{{ section.settings.table_col_0 }}</th>
+              <th scope="col">{{ section.settings.table_col_1 }}</th>
+              <th scope="col">{{ section.settings.table_col_2 }}</th>
+              <th scope="col" class="bgx-gen__table-win">{{ section.settings.table_col_3 }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in row_blocks -%}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row">{{ block.settings.label }}</th>
+                <td>{{ block.settings.gen1 }}</td>
+                <td>{{ block.settings.gen2 }}</td>
+                <td class="bgx-gen__table-win">{{ block.settings.gen3 }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .bgx-gen__grid {
+    display: grid;
+    gap: clamp(18px, 2.5vw, 26px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    margin-top: clamp(38px, 6vw, 60px);
+    align-items: start;
+  }
+
+  .bgx-gen__card {
+    position: relative;
+    overflow: visible;
+  }
+
+  .bgx-gen__card--winner {
+    z-index: 2;
+  }
+
+  /* Winner scales up once revealed. */
+  .bgx-gen__card--winner.bgx-revealed {
+    transform: scale(1.06);
+  }
+
+  .bgx-gen__card--winner.bgx-revealed:hover {
+    transform: scale(1.06) translateY(-6px);
+  }
+
+  .bgx-gen__pulse {
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    border: 1px solid var(--bgx-cyan);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .bgx-gen__card--winner.bgx-revealed .bgx-gen__pulse {
+    animation: bgx-pulse-ring 2.6s var(--bgx-ease-out) infinite;
+  }
+
+  @keyframes bgx-pulse-ring {
+    0% {
+      opacity: 0.65;
+      transform: scale(1);
+    }
+    70%,
+    100% {
+      opacity: 0;
+      transform: scale(1.07);
+    }
+  }
+
+  .bgx-gen__gen {
+    display: inline-block;
+    font-family: var(--bgx-font-display);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bgx-cyan);
+    margin-bottom: 0.6rem;
+  }
+
+  .bgx-gen__name {
+    font-family: var(--bgx-font-display);
+    font-size: 1.32rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--bgx-white);
+    margin: 0 0 1.2rem;
+  }
+
+  .bgx-gen__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .bgx-gen__points li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    align-items: start;
+    font-size: 0.94rem;
+    line-height: 1.55;
+    color: var(--bgx-mist-strong);
+  }
+
+  .bgx-gen__x,
+  .bgx-gen__tick {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    flex: none;
+    margin-top: 1px;
+  }
+
+  .bgx-gen__x {
+    background: rgba(230, 57, 70, 0.14);
+    color: var(--bgx-arterial);
+    transform: scale(1.4);
+    opacity: 0;
+  }
+
+  .bgx-gen__tick {
+    background: rgba(0, 220, 255, 0.14);
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-gen__x svg,
+  .bgx-gen__tick svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* The ✕ stamps in with a bounce once its card is revealed. */
+  .bgx-revealed .bgx-gen__x {
+    animation: bgx-stamp 0.5s var(--bgx-ease-out) forwards;
+  }
+
+  .bgx-gen__points li:nth-child(2) .bgx-gen__x {
+    animation-delay: 0.1s;
+  }
+  .bgx-gen__points li:nth-child(3) .bgx-gen__x {
+    animation-delay: 0.2s;
+  }
+  .bgx-gen__points li:nth-child(4) .bgx-gen__x {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes bgx-stamp {
+    0% {
+      transform: scale(1.4);
+      opacity: 0;
+    }
+    60% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* --- Comparison table ------------------------------------------------- */
+  .bgx-gen__tablewrap {
+    margin-top: clamp(40px, 6vw, 70px);
+    overflow-x: auto;
+    border-radius: var(--bgx-radius);
+    border: 1px solid var(--bgx-glass-border);
+    background: var(--bgx-glass);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .bgx-gen__table {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  .bgx-gen__table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #0a1428;
+    font-family: var(--bgx-font-display);
+    font-weight: 600;
+    color: var(--bgx-white);
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(0, 220, 255, 0.2);
+    white-space: nowrap;
+  }
+
+  .bgx-gen__table tbody th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--bgx-white);
+  }
+
+  .bgx-gen__table th,
+  .bgx-gen__table td {
+    padding: 13px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--bgx-mist-strong);
+    vertical-align: top;
+  }
+
+  .bgx-gen__table tbody tr:last-child th,
+  .bgx-gen__table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .bgx-gen__table-win {
+    background: rgba(0, 220, 255, 0.06);
+    color: var(--bgx-white) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bgx-gen__x {
+      transform: none;
+      opacity: 1;
+      animation: none !important;
+    }
+    .bgx-gen__card--winner.bgx-revealed .bgx-gen__pulse {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Generations",
+  "tag": "section",
+  "max_blocks": 14,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "TECH ROADMAP" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three Generations Of Nitric Oxide. Only One Works For Everyone."
+    },
+    { "type": "header", "content": "Table column headings" },
+    { "type": "text", "id": "table_col_0", "label": "Column 1", "default": "" },
+    { "type": "text", "id": "table_col_1", "label": "Column 2", "default": "1st Gen — Arginine" },
+    { "type": "text", "id": "table_col_2", "label": "Column 3", "default": "2nd Gen — Veg & Fruit" },
+    { "type": "text", "id": "table_col_3", "label": "Column 4", "default": "3rd Gen — BIO N:OV" }
+  ],
+  "blocks": [
+    {
+      "type": "generation",
+      "name": "Generation card",
+      "settings": [
+        { "type": "text", "id": "generation", "label": "Generation", "default": "1st Gen" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Arginine" },
+        {
+          "type": "textarea",
+          "id": "points",
+          "label": "Points",
+          "info": "One per line.",
+          "default": "Requires enzyme conversion\nUnstable\nNot suitable for heart patients"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_winner",
+          "default": false,
+          "label": "Winning card",
+          "info": "Gradient border, cyan pulse, ticks instead of crosses."
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Table row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Row label" },
+        { "type": "text", "id": "gen1", "label": "1st Gen" },
+        { "type": "text", "id": "gen2", "label": "2nd Gen" },
+        { "type": "text", "id": "gen3", "label": "BIO N:OV" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "generation",
+        "settings": {
+          "generation": "1st Gen",
+          "name": "Arginine",
+          "points": "Requires enzyme conversion\nUnstable\nNot suitable for heart patients"
+        }
+      },
+      {
+        "type": "generation",
+        "settings": {
+          "generation": "2nd Gen",
+          "name": "Vegetable & Fruit Extracts",
+          "points": "Reported nausea, diarrhea, headache\nPoor results over 40"
+        }
+      },
+      {
+        "type": "generation",
+        "settings": {
+          "generation": "3rd Gen",
+          "name": "BIO N:OV",
+          "is_winner": true,
+          "points": "No enzyme needed — releases on contact with stomach acid\nWorks across age groups\n40–400% more effective than other NO supplements\nZero dependence"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "label": "Technology",
+          "gen1": "Amino acid",
+          "gen2": "Plant extract",
+          "gen3": "Microbial fermentation"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "label": "Enzyme conversion",
+          "gen1": "Required",
+          "gen2": "Required",
+          "gen3": "Not required — releases on contact with stomach acid"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "label": "Suitable for heart patients",
+          "gen1": "Not suitable",
+          "gen2": "Not established",
+          "gen3": "Works across age groups"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "label": "Reported side effects",
+          "gen1": "Unstable",
+          "gen2": "Nausea, diarrhea, headache",
+          "gen3": "Zero reported side effects"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "label": "Results over age 40",
+          "gen1": "Limited",
+          "gen2": "Poor",
+          "gen3": "Works across age groups"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "label": "Relative effectiveness",
+          "gen1": "Baseline",
+          "gen2": "Baseline",
+          "gen3": "40–400% more effective than other NO supplements"
+        }
+      },
+      {
+        "type": "row",
+        "settings": {
+          "label": "Dependence",
+          "gen1": "Not established",
+          "gen2": "Not established",
+          "gen3": "Zero dependence"
+        }
+      }
+    ]
+  },
+  "presets": [{ "name": "BGX Generations" }]
+}
+{% endschema %}

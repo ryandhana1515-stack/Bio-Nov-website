@@ -1,0 +1,208 @@
+{% comment %}
+  S3 · Why It Matters.
+  Six glass cards for the body systems nitric oxide touches, then three
+  population-health counters (M5 style).
+
+  COMPLIANCE: the counters describe worldwide population health, never the
+  effect of BIO N:OV. The 'stats' disclaimer below them is mandatory —
+  do not remove it.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--void">
+  <div class="bgx-wrap">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    <div class="bgx-grid bgx-systems">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'system' -%}
+          <article
+            class="bgx-card bgx-reveal"
+            data-bgx-delay="{{ forloop.index0 | times: 0.08 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="bgx-icon">{% render 'bgx-icon', name: block.settings.icon %}</div>
+            <h3 class="bgx-card__title">{{ block.settings.title }}</h3>
+            <p class="bgx-card__body">{{ block.settings.body }}</p>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="bgx-context">
+      <h3 class="bgx-h3 bgx-center bgx-reveal">{{ section.settings.stats_heading }}</h3>
+
+      <div class="bgx-context__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div
+              class="bgx-context__stat bgx-reveal"
+              data-bgx-delay="{{ forloop.index0 | times: 0.08 }}"
+              {{ block.shopify_attributes }}
+            >
+              {% render 'bgx-counter',
+                to: block.settings.value,
+                decimals: block.settings.decimals,
+                suffix: block.settings.suffix,
+                label: block.settings.label,
+                size: 'xl'
+              %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.sources != blank -%}
+        <p class="bgx-source bgx-center bgx-reveal">Sources: {{ section.settings.sources }}</p>
+      {%- endif -%}
+
+      {% render 'bgx-disclaimer', type: 'stats', align: 'center' %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .bgx-systems {
+    margin-top: clamp(34px, 5vw, 56px);
+  }
+
+  .bgx-context {
+    margin-top: clamp(52px, 8vw, 96px);
+    padding-top: clamp(40px, 6vw, 64px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .bgx-context__grid {
+    display: grid;
+    gap: clamp(22px, 4vw, 40px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    margin-top: clamp(28px, 4vw, 44px);
+    text-align: center;
+  }
+
+  .bgx-context__stat .bgx-stat__label {
+    display: block;
+    max-width: 26ch;
+    margin-inline: auto;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Problem stats",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "WHY IT MATTERS" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Nitric Oxide Touches Nearly Every System In Your Body"
+    },
+    {
+      "type": "text",
+      "id": "stats_heading",
+      "label": "Statistics heading",
+      "default": "The global health picture"
+    },
+    {
+      "type": "text",
+      "id": "sources",
+      "label": "Sources",
+      "default": "WHO · International Diabetes Federation · World Heart Federation"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "system",
+      "name": "Body system",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "brain",
+          "options": [
+            { "value": "brain", "label": "Brain" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "circulation", "label": "Circulation" },
+            { "value": "immune", "label": "Immune" },
+            { "value": "respiratory", "label": "Respiratory" },
+            { "value": "digestive", "label": "Digestive" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Brain" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Cognition, memory" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Population statistic",
+      "settings": [
+        { "type": "number", "id": "value", "label": "Number", "default": 1 },
+        { "type": "number", "id": "decimals", "label": "Decimal places", "default": 2 },
+        { "type": "text", "id": "suffix", "label": "Suffix", "default": "B" },
+        {
+          "type": "textarea",
+          "id": "label",
+          "label": "Label",
+          "default": "people worldwide living with high blood pressure"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "system", "settings": { "icon": "brain", "title": "Brain", "body": "Cognition, memory" } },
+      { "type": "system", "settings": { "icon": "heart", "title": "Heart", "body": "Circulation, rhythm" } },
+      {
+        "type": "system",
+        "settings": {
+          "icon": "circulation",
+          "title": "Blood Circulation",
+          "body": "Pressure, sugar balance"
+        }
+      },
+      {
+        "type": "system",
+        "settings": { "icon": "immune", "title": "Immune System", "body": "Daily defence" }
+      },
+      {
+        "type": "system",
+        "settings": { "icon": "respiratory", "title": "Respiratory", "body": "Oxygen delivery" }
+      },
+      {
+        "type": "system",
+        "settings": { "icon": "digestive", "title": "Digestive", "body": "Comfort, absorption" }
+      },
+      {
+        "type": "stat",
+        "settings": {
+          "value": 1.28,
+          "decimals": 2,
+          "suffix": "B",
+          "label": "people worldwide living with high blood pressure"
+        }
+      },
+      {
+        "type": "stat",
+        "settings": {
+          "value": 537,
+          "decimals": 0,
+          "suffix": "M",
+          "label": "adults living with diabetes"
+        }
+      },
+      {
+        "type": "stat",
+        "settings": { "value": 15, "decimals": 0, "suffix": "M", "label": "strokes every year" }
+      }
+    ]
+  },
+  "presets": [{ "name": "BGX Problem stats" }]
+}
+{% endschema %}

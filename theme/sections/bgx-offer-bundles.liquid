@@ -1,0 +1,544 @@
+{% comment %}
+  S12 · Offer — the conversion block.
+
+  Three radio-style bundle cards wired to REAL Shopify variants. Selecting a
+  card updates the add-to-cart form and broadcasts `bgx:variant-change`, which
+  the sticky buy bar listens for.
+
+  Each card resolves its variant by ID when one is set, otherwise it falls
+  back to the variant at the same position — so the section still renders
+  sensibly before the variant IDs are filled in.
+
+  All prices come from Shopify, never from the theme. Change a price in
+  Admin and it changes here.
+{% endcomment %}
+
+{%- liquid
+  assign bgx_product = section.settings.product
+  if bgx_product == blank
+    assign bgx_product = product
+  endif
+-%}
+
+<section class="bgx-section bgx-section--glow" id="offer">
+  <div class="bgx-wrap">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    {%- if bgx_product == blank -%}
+      <div class="bgx-offer__empty">
+        <p>
+          No product selected yet. Open this section in the Theme Editor and choose the BIO N:OV
+          product to activate the bundle cards and the add-to-cart button.
+        </p>
+      </div>
+    {%- else -%}
+      {%- assign tiers = section.blocks | where: 'type', 'tier' -%}
+
+      <form
+        method="post"
+        action="{{ routes.cart_add_url }}"
+        class="bgx-offer"
+        data-bgx-offer
+        id="bgx-offer-form-{{ section.id }}"
+      >
+        <input type="hidden" name="form_type" value="product">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="quantity" value="1">
+        <input type="hidden" name="id" value="" data-bgx-offer-variant>
+
+        <fieldset class="bgx-offer__grid">
+          <legend class="visually-hidden">{{ section.settings.heading }}</legend>
+
+          {%- for block in tiers -%}
+            {%- liquid
+              # Resolve by explicit variant ID first, then fall back to the
+              # variant sitting in this card's position.
+              assign variant = blank
+              if block.settings.variant_id != blank
+                for v in bgx_product.variants
+                  if v.id == block.settings.variant_id
+                    assign variant = v
+                    break
+                  endif
+                endfor
+              endif
+              if variant == blank
+                assign variant = bgx_product.variants[forloop.index0]
+              endif
+
+              assign boxes = block.settings.boxes | default: 1
+              assign per_box = 0
+              if variant != blank and boxes > 0
+                assign per_box = variant.price | divided_by: boxes
+              endif
+            -%}
+
+            {%- if variant != blank -%}
+              <div
+                class="bgx-tier{% if block.settings.is_popular %} bgx-tier--popular{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                <input
+                  type="radio"
+                  name="bgx-tier-{{ section.id }}"
+                  id="bgx-tier-{{ section.id }}-{{ forloop.index }}"
+                  class="bgx-tier__input visually-hidden"
+                  value="{{ variant.id }}"
+                  data-bgx-tier
+                  data-bgx-price="{{ variant.price | money }}"
+                  {% if block.settings.is_popular %}checked{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                >
+                <label class="bgx-tier__label" for="bgx-tier-{{ section.id }}-{{ forloop.index }}">
+                  {%- if block.settings.badge != blank -%}
+                    <span class="bgx-tier__badge">{{ block.settings.badge }}</span>
+                  {%- endif -%}
+
+                  <span class="bgx-tier__name">{{ block.settings.title }}</span>
+                  <span class="bgx-tier__contents">{{ block.settings.contents }}</span>
+
+                  <span class="bgx-tier__prices">
+                    <span class="bgx-tier__price">{{ variant.price | money }}</span>
+                    {%- if variant.compare_at_price > variant.price -%}
+                      <s class="bgx-tier__was">{{ variant.compare_at_price | money }}</s>
+                    {%- endif -%}
+                  </span>
+
+                  {%- if boxes > 1 -%}
+                    <span class="bgx-tier__perbox">{{ per_box | money }} per box</span>
+                  {%- endif -%}
+
+                  {%- if block.settings.savings != blank -%}
+                    <span class="bgx-tier__savings">{{ block.settings.savings }}</span>
+                  {%- endif -%}
+
+                  {%- if block.settings.gift != blank -%}
+                    <span class="bgx-tier__gift">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9M2 7h20v5H2zM12 21V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7ZM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7Z"/></svg>
+                      {{ block.settings.gift }}
+                    </span>
+                  {%- endif -%}
+
+                  {%- if block.settings.urgency != blank -%}
+                    <span class="bgx-tier__urgency">{{ block.settings.urgency }}</span>
+                  {%- endif -%}
+
+                  {%- unless variant.available -%}
+                    <span class="bgx-tier__sold">Sold out</span>
+                  {%- endunless -%}
+                </label>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </fieldset>
+
+        <button type="submit" class="bgx-btn bgx-btn--full bgx-btn--lg bgx-offer__cta" data-bgx-magnetic>
+          {{ section.settings.cta_text }}
+        </button>
+
+        <p class="bgx-offer__error" role="alert" data-bgx-offer-error hidden></p>
+      </form>
+
+      {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <ul class="bgx-offer__pay" role="list">
+          {%- for type in shop.enabled_payment_types -%}
+            <li>{{ type | payment_type_svg_tag: class: 'bgx-pay-icon' }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- comment -%}
+        Product structured data. The bgx product template does not use Dawn's
+        main-product section, so it is emitted here instead — on the product
+        page only, to avoid duplicate Product markup on the homepage.
+      {%- endcomment -%}
+      {%- if template.name == 'product' -%}
+        {% render 'bgx-product-jsonld', bgx_product: bgx_product %}
+      {%- endif -%}
+
+      <ul class="bgx-offer__trust">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'trust' -%}
+            <li {{ block.shopify_attributes }}>
+              <span class="bgx-offer__trust-icon" aria-hidden="true">
+                {% render 'bgx-icon', name: block.settings.icon %}
+              </span>
+              {{ block.settings.text }}
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  /* Bundle selector: keeps the form, the price and the sticky bar in sync. */
+  (function () {
+    var form = document.querySelector('[data-bgx-offer]');
+    if (!form) return;
+
+    var hidden = form.querySelector('[data-bgx-offer-variant]');
+    var radios = form.querySelectorAll('[data-bgx-tier]');
+    var error = form.querySelector('[data-bgx-offer-error]');
+
+    function sync(radio) {
+      if (!radio) return;
+      hidden.value = radio.value;
+      document.dispatchEvent(
+        new CustomEvent('bgx:variant-change', {
+          detail: { variantId: radio.value, price: radio.dataset.bgxPrice },
+        })
+      );
+    }
+
+    radios.forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        sync(radio);
+      });
+    });
+
+    /* Seed from whichever tier is checked on load. */
+    sync(form.querySelector('[data-bgx-tier]:checked') || radios[0]);
+
+    form.addEventListener('submit', function (e) {
+      if (hidden.value) return;
+      e.preventDefault();
+      error.hidden = false;
+      error.textContent = 'Please choose a supply option first.';
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .bgx-offer {
+    margin-top: clamp(34px, 5vw, 56px);
+  }
+
+  .bgx-offer__empty {
+    margin-top: 40px;
+    padding: 26px;
+    border-radius: var(--bgx-radius);
+    border: 1px dashed rgba(0, 220, 255, 0.3);
+    color: var(--bgx-mist-strong);
+    text-align: center;
+  }
+
+  .bgx-offer__grid {
+    display: grid;
+    gap: clamp(14px, 2vw, 20px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    border: 0;
+    padding: 0;
+    margin: 0;
+    align-items: stretch;
+  }
+
+  .bgx-tier {
+    display: flex;
+  }
+
+  .bgx-tier__label {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    width: 100%;
+    padding: clamp(22px, 3vw, 30px) clamp(18px, 2.5vw, 26px);
+    border-radius: var(--bgx-radius);
+    border: 1px solid var(--bgx-glass-border);
+    background: var(--bgx-glass);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    cursor: pointer;
+    transition: transform 0.4s var(--bgx-ease-out), box-shadow 0.4s var(--bgx-ease-out),
+      border-color 0.4s var(--bgx-ease-out), background-color 0.4s var(--bgx-ease-out);
+  }
+
+  .bgx-tier__label:hover {
+    transform: translateY(-4px);
+    border-color: var(--bgx-glass-border-hi);
+  }
+
+  /* Selected state — gradient border + cyan bloom. */
+  .bgx-tier__input:checked + .bgx-tier__label {
+    border-color: transparent;
+    background: linear-gradient(rgba(11, 27, 58, 0.86), rgba(11, 27, 58, 0.86)) padding-box,
+      var(--bgx-gradient) border-box;
+    box-shadow: var(--bgx-bloom-lg);
+  }
+
+  .bgx-tier__input:focus-visible + .bgx-tier__label {
+    outline: 2px solid var(--bgx-cyan);
+    outline-offset: 3px;
+  }
+
+  .bgx-tier__input:disabled + .bgx-tier__label {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .bgx-tier__badge {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    translate: -50% 0;
+    padding: 0.35em 0.9em;
+    border-radius: var(--bgx-radius-pill);
+    background: var(--bgx-gradient);
+    color: var(--bgx-void);
+    font-family: var(--bgx-font-display);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .bgx-tier__name {
+    font-family: var(--bgx-font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bgx-white);
+  }
+
+  .bgx-tier__contents {
+    font-size: 0.88rem;
+    color: var(--bgx-mist-strong);
+  }
+
+  .bgx-tier__prices {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 0.5rem;
+  }
+
+  .bgx-tier__price {
+    font-family: var(--bgx-font-display);
+    font-size: clamp(1.8rem, 4.5vw, 2.3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--bgx-white);
+  }
+
+  .bgx-tier__was {
+    font-size: 0.95rem;
+    color: rgba(169, 183, 208, 0.7);
+  }
+
+  .bgx-tier__perbox {
+    font-size: 0.85rem;
+    color: var(--bgx-cyan);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bgx-tier__savings {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--bgx-amber);
+  }
+
+  .bgx-tier__gift {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.83rem;
+    color: var(--bgx-mist-strong);
+    margin-top: 0.35rem;
+  }
+
+  .bgx-tier__gift svg {
+    width: 16px;
+    height: 16px;
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-tier__urgency {
+    font-size: 0.78rem;
+    color: rgba(169, 183, 208, 0.8);
+    margin-top: 0.5rem;
+  }
+
+  .bgx-tier__sold {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--bgx-arterial);
+    margin-top: 0.4rem;
+  }
+
+  .bgx-offer__cta {
+    margin-top: clamp(22px, 3vw, 32px);
+  }
+
+  .bgx-offer__error {
+    color: var(--bgx-arterial);
+    font-size: 0.85rem;
+    margin: 0.8rem 0 0;
+    text-align: center;
+  }
+
+  .bgx-offer__pay {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+  }
+
+  .bgx-offer__trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(14px, 3vw, 32px);
+    list-style: none;
+    margin: 26px 0 0;
+    padding: 0;
+  }
+
+  .bgx-offer__trust li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.86rem;
+    color: var(--bgx-mist-strong);
+  }
+
+  .bgx-offer__trust-icon {
+    display: grid;
+    place-items: center;
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-offer__trust-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Offer bundles",
+  "tag": "section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product",
+      "info": "BIO N:OV. On a product page this defaults to the page's product."
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "CHOOSE YOUR SUPPLY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose Your Supply" },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Add to Cart" },
+    { "type": "checkbox", "id": "show_payment_icons", "default": true, "label": "Show payment icons" }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Bundle tier",
+      "settings": [
+        {
+          "type": "number",
+          "id": "variant_id",
+          "label": "Variant ID",
+          "info": "From Admin > Products > BIO N:OV > variant URL. Leave blank to use the variant in this card's position."
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Starter" },
+        { "type": "text", "id": "contents", "label": "Contents", "default": "1 box · 20-day supply" },
+        {
+          "type": "number",
+          "id": "boxes",
+          "label": "Boxes",
+          "default": 1,
+          "info": "Used to calculate the per-box price."
+        },
+        { "type": "text", "id": "badge", "label": "Badge" },
+        { "type": "text", "id": "savings", "label": "Savings line" },
+        { "type": "text", "id": "gift", "label": "Free gift line" },
+        { "type": "text", "id": "urgency", "label": "Stock / urgency line" },
+        {
+          "type": "checkbox",
+          "id": "is_popular",
+          "default": false,
+          "label": "Pre-selected",
+          "info": "Exactly one tier should have this on."
+        }
+      ]
+    },
+    {
+      "type": "trust",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Shipping" },
+            { "value": "shield", "label": "Guarantee" },
+            { "value": "award", "label": "Award" },
+            { "value": "flask", "label": "Lab" }
+          ]
+        },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "tier",
+        "settings": {
+          "title": "Starter",
+          "contents": "1 box · 20-day supply",
+          "boxes": 1,
+          "urgency": "Try it"
+        }
+      },
+      {
+        "type": "tier",
+        "settings": {
+          "title": "Most Popular",
+          "contents": "3 boxes · 60-day supply",
+          "boxes": 3,
+          "badge": "Most Popular",
+          "savings": "Save $30 + Free Worldwide Shipping",
+          "is_popular": true
+        }
+      },
+      {
+        "type": "tier",
+        "settings": {
+          "title": "Best Value",
+          "contents": "6 boxes · 120-day supply",
+          "boxes": 6,
+          "badge": "Best Value",
+          "savings": "Save $120 + Free Shipping",
+          "gift": "Free NO Health Guide eBook"
+        }
+      },
+      { "type": "trust", "settings": { "icon": "truck", "text": "Free worldwide shipping over $99" } },
+      { "type": "trust", "settings": { "icon": "shield", "text": "30-day money-back guarantee" } },
+      { "type": "trust", "settings": { "icon": "award", "text": "Ships from Singapore & Korea" } }
+    ]
+  },
+  "presets": [{ "name": "BGX Offer bundles" }]
+}
+{% endschema %}

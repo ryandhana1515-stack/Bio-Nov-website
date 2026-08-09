@@ -1,0 +1,368 @@
+{% comment %}
+  BIO N:OV — site header.
+  Transparent over the hero, frosted once scrolled (motion.js toggles
+  .is-scrolled). Mobile opens a full-screen overlay with staggered links.
+{% endcomment %}
+
+<header class="bgx-header" data-bgx-header>
+  <div class="bgx-header__inner">
+    <a href="{{ routes.root_url }}" class="bgx-header__logo" aria-label="{{ shop.name }} — home">
+      {%- if section.settings.logo != blank -%}
+        {{
+          section.settings.logo
+          | image_url: width: 400
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '100,200,300,400',
+            sizes: '160px',
+            alt: shop.name,
+            class: 'bgx-header__logo-img'
+        }}
+      {%- else -%}
+        <span class="bgx-header__wordmark">BIO N:OV</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="bgx-header__nav" aria-label="Primary">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="bgx-header__actions">
+      <a
+        href="{{ routes.cart_url }}"
+        class="bgx-header__cart"
+        aria-label="Cart, {{ cart.item_count }} items"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/>
+          <path d="M3 6h18"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="bgx-header__count">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+
+      {%- if section.settings.cta_link != blank -%}
+        <a href="{{ section.settings.cta_link }}" class="bgx-btn bgx-header__cta">
+          {{- section.settings.cta_text -}}
+        </a>
+      {%- endif -%}
+
+      <button
+        class="bgx-header__burger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="bgx-mobile-menu"
+        aria-label="Open menu"
+        data-bgx-burger
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="bgx-mobilemenu" id="bgx-mobile-menu" hidden data-bgx-mobilemenu>
+    <nav aria-label="Mobile">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}" style="--i:{{ forloop.index0 }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    {%- if section.settings.cta_link != blank -%}
+      <a href="{{ section.settings.cta_link }}" class="bgx-btn bgx-btn--lg bgx-mobilemenu__cta">
+        {{- section.settings.cta_text -}}
+      </a>
+    {%- endif -%}
+  </div>
+</header>
+
+<script>
+  /* Mobile overlay: focus-trapped, Escape closes, body scroll locked. */
+  (function () {
+    var burger = document.querySelector('[data-bgx-burger]');
+    var menu = document.querySelector('[data-bgx-mobilemenu]');
+    if (!burger || !menu) return;
+
+    function setOpen(open) {
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.hidden = !open;
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (window.BGX && window.BGX.lenis) {
+        open ? window.BGX.lenis.stop() : window.BGX.lenis.start();
+      }
+      if (open) {
+        var first = menu.querySelector('a');
+        if (first) first.focus();
+      }
+    }
+
+    burger.addEventListener('click', function () {
+      setOpen(burger.getAttribute('aria-expanded') !== 'true');
+    });
+
+    menu.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') setOpen(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .bgx-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: transparent;
+    transition: background-color 0.45s var(--bgx-ease-out), backdrop-filter 0.45s var(--bgx-ease-out),
+      border-color 0.45s var(--bgx-ease-out);
+    border-bottom: 1px solid transparent;
+  }
+
+  .bgx-header.is-scrolled {
+    background: rgba(5, 7, 14, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: rgba(0, 220, 255, 0.14);
+  }
+
+  .bgx-header__inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: var(--bgx-maxw);
+    margin-inline: auto;
+    padding: 14px var(--bgx-gutter);
+  }
+
+  .bgx-header__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex: none;
+  }
+
+  .bgx-header__logo-img {
+    display: block;
+    width: auto;
+    max-height: 34px;
+  }
+
+  .bgx-header__wordmark {
+    font-family: var(--bgx-font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    color: var(--bgx-white);
+  }
+
+  .bgx-header__nav {
+    display: none;
+    flex: 1;
+    justify-content: center;
+    gap: clamp(14px, 2.2vw, 30px);
+  }
+
+  .bgx-header__nav a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--bgx-mist-strong);
+    text-decoration: none;
+    position: relative;
+    padding-block: 4px;
+    transition: color 0.3s ease;
+  }
+
+  .bgx-header__nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--bgx-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--bgx-ease-out);
+  }
+
+  .bgx-header__nav a:hover,
+  .bgx-header__nav a[aria-current='page'] {
+    color: var(--bgx-white);
+  }
+
+  .bgx-header__nav a:hover::after,
+  .bgx-header__nav a[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+
+  .bgx-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  .bgx-header__cart {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    color: var(--bgx-white);
+    text-decoration: none;
+  }
+
+  .bgx-header__cart svg {
+    width: 21px;
+    height: 21px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .bgx-header__count {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    min-width: 17px;
+    height: 17px;
+    padding-inline: 4px;
+    border-radius: 999px;
+    background: var(--bgx-cyan);
+    color: var(--bgx-void);
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .bgx-header__cta {
+    display: none;
+    padding: 0.78em 1.5em;
+    font-size: 0.88rem;
+  }
+
+  .bgx-header__burger {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-content: center;
+    gap: 5px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .bgx-header__burger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--bgx-white);
+    transition: transform 0.35s var(--bgx-ease-out), opacity 0.2s ease;
+  }
+
+  .bgx-header__burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .bgx-header__burger[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+  .bgx-header__burger[aria-expanded='true'] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .bgx-mobilemenu {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgba(5, 7, 14, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 100px var(--bgx-gutter) 60px;
+    overflow-y: auto;
+  }
+
+  .bgx-mobilemenu nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .bgx-mobilemenu nav a {
+    font-family: var(--bgx-font-display);
+    font-size: clamp(1.7rem, 8vw, 2.4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--bgx-white);
+    text-decoration: none;
+    padding-block: 8px;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: bgx-menu-in 0.6s var(--bgx-ease-out) forwards;
+    animation-delay: calc(var(--i) * 0.06s + 0.05s);
+  }
+
+  .bgx-mobilemenu__cta {
+    margin-top: 26px;
+    align-self: flex-start;
+  }
+
+  @keyframes bgx-menu-in {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bgx-mobilemenu nav a {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .bgx-header__nav,
+    .bgx-header__cta {
+      display: flex;
+    }
+    .bgx-header__burger,
+    .bgx-mobilemenu {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Header",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Falls back to a BIO N:OV wordmark." },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Buy Now" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "BGX Header" }]
+}
+{% endschema %}

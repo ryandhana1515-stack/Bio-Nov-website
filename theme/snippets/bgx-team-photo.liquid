@@ -1,0 +1,32 @@
+{% comment %}
+  BIO N:OV — researcher portrait with a three-step fallback:
+  uploaded image → theme asset filename → initial letter placeholder.
+
+  Accepts: block {Object}, width {Number}, sizes {String}
+{% endcomment %}
+
+{%- if block.settings.image != blank -%}
+  {{
+    block.settings.image
+    | image_url: width: width
+    | image_tag:
+      loading: 'lazy',
+      decoding: 'async',
+      widths: '160,240,360,500,700',
+      sizes: sizes,
+      alt: block.settings.name
+  }}
+{%- elsif block.settings.fallback_asset != blank -%}
+  <img
+    src="{{ block.settings.fallback_asset | asset_url }}"
+    alt="{{ block.settings.name }}"
+    loading="lazy"
+    decoding="async"
+    width="{{ width }}"
+    height="{{ width }}"
+  >
+{%- else -%}
+  <div class="bgx-team__placeholder" aria-hidden="true">
+    {{- block.settings.name | slice: 0, 1 | upcase -}}
+  </div>
+{%- endif -%}

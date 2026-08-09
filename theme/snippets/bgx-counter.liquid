@@ -1,0 +1,57 @@
+{% comment %}
+  BIO N:OV — animated number counter.
+
+  Counts from `from` to `to` when scrolled into view (motion.js). Under
+  prefers-reduced-motion it writes the final value immediately.
+
+  Accepts:
+    to        {Number}  target value (required)
+    from      {Number}  start value, default 0 — set higher than `to` to count DOWN
+    prefix    {String}  e.g. '+' or '−' or '$'
+    suffix    {String}  e.g. '%' or 'M' or 'B'
+    decimals  {Number}  decimal places, default 0
+    duration  {Number}  seconds, default 1.8
+    size      {String}  'xl' | 'lg' | '' (inherits)
+    label     {String}  caption rendered beneath
+    note      {String}  smaller caption beneath the label
+
+  Usage:
+    {% render 'bgx-counter', to: 18, prefix: '+', suffix: '%', label: 'Vessel Diameter' %}
+{% endcomment %}
+
+{%- liquid
+  assign bgx_from = from | default: 0
+  assign bgx_decimals = decimals | default: 0
+  assign bgx_duration = duration | default: 1.8
+  assign bgx_size_class = ''
+  if size == 'xl'
+    assign bgx_size_class = ' bgx-num--xl'
+  elsif size == 'lg'
+    assign bgx_size_class = ' bgx-num--lg'
+  endif
+-%}
+
+<div class="bgx-stat">
+  <span
+    class="bgx-num{{ bgx_size_class }}"
+    data-bgx-counter
+    data-bgx-from="{{ bgx_from }}"
+    data-bgx-to="{{ to }}"
+    data-bgx-decimals="{{ bgx_decimals }}"
+    data-bgx-duration="{{ bgx_duration }}"
+    {% if prefix != blank %}
+      data-bgx-prefix="{{ prefix }}"
+    {% endif %}
+    {% if suffix != blank %}
+      data-bgx-suffix="{{ suffix }}"
+    {% endif %}
+  >
+    {{- prefix }}{{ bgx_from }}{{ suffix -}}
+  </span>
+  {%- if label != blank -%}
+    <span class="bgx-stat__label">{{ label }}</span>
+  {%- endif -%}
+  {%- if note != blank -%}
+    <span class="bgx-stat__note">{{ note }}</span>
+  {%- endif -%}
+</div>

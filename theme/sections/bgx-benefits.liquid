@@ -1,0 +1,297 @@
+{% comment %}
+  S8 · Five Benefits.
+  Height-animated accordion cards. Counters inside a panel run the moment
+  that panel opens (motion.js re-scans on expand).
+
+  COMPLIANCE: every benefit is phrased as "supports / helps maintain".
+  Panels that quote lab or tester data carry the 'lab' disclaimer.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--void">
+  <div class="bgx-wrap bgx-wrap--narrow">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    <div class="bgx-benefits" data-bgx-accordion="single">
+      {%- for block in section.blocks -%}
+        <div
+          class="bgx-card bgx-benefit bgx-reveal"
+          data-bgx-delay="{{ forloop.index0 | times: 0.07 }}"
+          {{ block.shopify_attributes }}
+        >
+          <h3 class="bgx-benefit__h">
+            <button
+              type="button"
+              class="bgx-benefit__trigger"
+              data-bgx-acc-trigger
+              aria-expanded="false"
+              aria-controls="bgx-benefit-{{ section.id }}-{{ forloop.index }}"
+              id="bgx-benefit-trigger-{{ section.id }}-{{ forloop.index }}"
+            >
+              <span class="bgx-icon bgx-benefit__icon">
+                {% render 'bgx-icon', name: block.settings.icon %}
+              </span>
+              <span class="bgx-benefit__title">{{ block.settings.title }}</span>
+              <span class="bgx-benefit__chev" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button>
+          </h3>
+
+          <div
+            class="bgx-benefit__panel"
+            id="bgx-benefit-{{ section.id }}-{{ forloop.index }}"
+            role="region"
+            aria-labelledby="bgx-benefit-trigger-{{ section.id }}-{{ forloop.index }}"
+            style="height:0"
+          >
+            <div class="bgx-benefit__inner">
+              <p class="bgx-benefit__body">{{ block.settings.body }}</p>
+
+              {%- if block.settings.stats != blank -%}
+                {%- assign stat_lines = block.settings.stats | newline_to_br | split: '<br />' -%}
+                <div class="bgx-benefit__stats">
+                  {%- for line in stat_lines -%}
+                    {%- assign parts = line | strip | split: '|' -%}
+                    {%- if parts.size == 2 -%}
+                      {% render 'bgx-counter',
+                        to: parts[0],
+                        suffix: '%',
+                        label: parts[1],
+                        duration: 1.4
+                      %}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.show_lab_disclaimer -%}
+                {% render 'bgx-disclaimer', type: 'lab' %}
+              {%- endif -%}
+
+              {%- if block.settings.source != blank -%}
+                <p class="bgx-source">Source: {{ block.settings.source }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .bgx-benefits {
+    display: grid;
+    gap: 12px;
+    margin-top: clamp(34px, 5vw, 52px);
+  }
+
+  .bgx-benefit {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .bgx-benefit:hover {
+    transform: none;
+  }
+
+  .bgx-benefit__h {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .bgx-benefit__trigger {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: clamp(16px, 2.4vw, 22px) clamp(18px, 2.6vw, 26px);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+    font: inherit;
+  }
+
+  .bgx-benefit__icon {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+  }
+
+  .bgx-benefit__title {
+    font-family: var(--bgx-font-display);
+    font-size: clamp(1rem, 2.2vw, 1.14rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--bgx-white);
+  }
+
+  .bgx-benefit__chev {
+    color: var(--bgx-cyan);
+    display: grid;
+    place-items: center;
+    transition: transform 0.4s var(--bgx-ease-out);
+  }
+
+  .bgx-benefit__chev svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .bgx-benefit__trigger[aria-expanded='true'] .bgx-benefit__chev {
+    transform: rotate(180deg);
+  }
+
+  .bgx-benefit__panel {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.5s var(--bgx-ease-out);
+  }
+
+  .bgx-benefit__inner {
+    padding: 0 clamp(18px, 2.6vw, 26px) clamp(18px, 2.6vw, 26px);
+  }
+
+  .bgx-benefit__body {
+    margin: 0;
+    color: var(--bgx-mist-strong);
+    font-size: 0.97rem;
+    line-height: 1.66;
+  }
+
+  .bgx-benefit__stats {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 120px), 1fr));
+    margin-top: 1.5rem;
+  }
+
+  .bgx-benefit__stats .bgx-num {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+  }
+
+  .bgx-benefit__stats .bgx-stat__label {
+    font-size: 0.83rem;
+    line-height: 1.4;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bgx-benefit__panel {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Benefits",
+  "tag": "section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NO MATTERS" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "NO Matters — Five Ways BIO N:OV Supports You"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "circulation",
+          "options": [
+            { "value": "circulation", "label": "Circulation" },
+            { "value": "bolt", "label": "Energy" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "brain", "label": "Brain" },
+            { "value": "heart", "label": "Heart" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        {
+          "type": "textarea",
+          "id": "stats",
+          "label": "Stats",
+          "info": "One per line, formatted: 78|felt brighter skin"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_lab_disclaimer",
+          "default": false,
+          "label": "Show lab-data disclaimer",
+          "info": "REQUIRED whenever this panel quotes laboratory or tester data."
+        },
+        { "type": "text", "id": "source", "label": "Source" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "benefit",
+        "settings": {
+          "icon": "circulation",
+          "title": "Balancing Blood Pressure & Blood Sugar",
+          "body": "GABA, polyphenols and antioxidants support insulin efficiency and glucose absorption. Laboratory data shows blood sugar down 8% within one hour.",
+          "show_lab_disclaimer": true,
+          "source": "Bzzworld Smart Lab"
+        }
+      },
+      {
+        "type": "benefit",
+        "settings": {
+          "icon": "bolt",
+          "title": "Boosting Vigor",
+          "body": "Increased NO improves blood flow to skeletal muscle and oxygen delivery, supporting all-day energy."
+        }
+      },
+      {
+        "type": "benefit",
+        "settings": {
+          "icon": "leaf",
+          "title": "Reducing Inflammation",
+          "body": "Supports a calmer inflammatory response."
+        }
+      },
+      {
+        "type": "benefit",
+        "settings": {
+          "icon": "shield",
+          "title": "Enhancing Immunity",
+          "body": "Supports normal immune function and normal cell division."
+        }
+      },
+      {
+        "type": "benefit",
+        "settings": {
+          "icon": "sparkle",
+          "title": "Improving Cognition & Skin",
+          "body": "NO activates telomerase, supporting slower cellular aging. Reported by a 100-person tester panel:",
+          "stats": "78|felt brighter skin\n84|saw reduced wrinkles\n68|reported smaller pores\n68|reported less inflammation",
+          "show_lab_disclaimer": true,
+          "source": "Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine (100 testers aged 15–76)"
+        }
+      }
+    ]
+  },
+  "presets": [{ "name": "BGX Benefits" }]
+}
+{% endschema %}
