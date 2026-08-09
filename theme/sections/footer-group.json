@@ -1,0 +1,27 @@
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "bgx-footer": {
+      "type": "bgx-footer",
+      "blocks": {
+        "col-shop": { "type": "column", "settings": { "heading": "Shop", "menu": "" } },
+        "col-learn": { "type": "column", "settings": { "heading": "Learn", "menu": "" } },
+        "col-company": { "type": "column", "settings": { "heading": "Company", "menu": "" } },
+        "col-support": { "type": "column", "settings": { "heading": "Support", "menu": "footer" } }
+      },
+      "block_order": ["col-shop", "col-learn", "col-company", "col-support"],
+      "settings": {
+        "tagline": "Clearing the way to optimum health — from Korea to the world.",
+        "newsletter_label": "Get nitric oxide science in your inbox",
+        "email": "info@biogreenelixirs.com",
+        "instagram": "https://www.instagram.com/biogreenelixirs",
+        "tiktok": "https://www.tiktok.com/@biogreenelixirs",
+        "facebook": "",
+        "company_note": "Bio Green Elixirs — international distributor of BIO N:OV.",
+        "show_payment_icons": true
+      }
+    }
+  },
+  "order": ["bgx-footer"]
+}

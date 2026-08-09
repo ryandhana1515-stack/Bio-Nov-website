@@ -1,0 +1,358 @@
+{% comment %}
+  S9 · Ingredients.
+  Four cards with hover-lift and a slow photo zoom, over the ingredients-macro
+  video. Beneath, the product spec strip.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--navy">
+  {% render 'bgx-video-bg',
+    mp4: section.settings.video_mp4,
+    webm: section.settings.video_webm,
+    poster: section.settings.video_poster,
+    opacity: section.settings.video_opacity,
+    scrim: 'flat'
+  %}
+
+  <div class="bgx-wrap">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    <div class="bgx-grid bgx-grid--4 bgx-ing__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'ingredient' -%}
+          <article
+            class="bgx-card bgx-ing bgx-reveal"
+            data-bgx-delay="{{ forloop.index0 | times: 0.09 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="bgx-ing__media">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 600
+                  | image_tag:
+                    loading: 'lazy',
+                    decoding: 'async',
+                    widths: '200,300,450,600',
+                    sizes: '(min-width: 990px) 260px, 45vw',
+                    alt: block.settings.title
+                }}
+              {%- elsif block.settings.fallback_asset != blank -%}
+                <img
+                  src="{{ block.settings.fallback_asset | asset_url }}"
+                  alt="{{ block.settings.title }}"
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="600"
+                >
+              {%- else -%}
+                <div class="bgx-ing__placeholder">
+                  {% render 'bgx-icon', name: 'leaf' %}
+                </div>
+              {%- endif -%}
+            </div>
+
+            <h3 class="bgx-card__title">{{ block.settings.title }}</h3>
+            <p class="bgx-card__body">{{ block.settings.body }}</p>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- assign spec_blocks = section.blocks | where: 'type', 'spec' -%}
+    {%- if spec_blocks.size > 0 -%}
+      <ul class="bgx-ing__spec bgx-reveal">
+        {%- for block in spec_blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <span class="bgx-ing__spec-icon" aria-hidden="true">
+              {% render 'bgx-icon', name: block.settings.icon %}
+            </span>
+            <span>{{ block.settings.text }}</span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .bgx-ing__grid {
+    margin-top: clamp(34px, 5vw, 56px);
+  }
+
+  .bgx-ing {
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  .bgx-ing__media {
+    margin: 0 calc(clamp(22px, 3vw, 34px) * -1) clamp(16px, 2vw, 22px);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .bgx-ing__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.9s var(--bgx-ease-out);
+  }
+
+  .bgx-ing:hover .bgx-ing__media img,
+  .bgx-ing:focus-within .bgx-ing__media img {
+    transform: scale(1.07);
+  }
+
+  .bgx-ing__placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: var(--bgx-cyan);
+    background: radial-gradient(60% 60% at 50% 50%, rgba(0, 220, 255, 0.12), transparent 70%);
+  }
+
+  .bgx-ing__placeholder svg {
+    width: 40px;
+    height: 40px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.4;
+  }
+
+  .bgx-ing__spec {
+    list-style: none;
+    margin: clamp(34px, 5vw, 56px) 0 0;
+    padding: clamp(18px, 2.6vw, 26px);
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    border-radius: var(--bgx-radius);
+    border: 1px solid var(--bgx-glass-border);
+    background: var(--bgx-glass);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .bgx-ing__spec li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 11px;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--bgx-mist-strong);
+  }
+
+  .bgx-ing__spec-icon {
+    display: grid;
+    place-items: center;
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-ing__spec-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bgx-ing__media img {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Ingredients",
+  "tag": "section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background video"
+    },
+    {
+      "type": "text",
+      "id": "video_mp4",
+      "label": "Video URL (MP4)",
+      "info": "Slot: ingredients-macro."
+    },
+    {
+      "type": "text",
+      "id": "video_webm",
+      "label": "Video URL (WebM, optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_poster",
+      "label": "Poster image"
+    },
+    {
+      "type": "range",
+      "id": "video_opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "default": 30,
+      "unit": "%",
+      "label": "Video opacity"
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "PREMIUM RAW MATERIALS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Four Natural Ingredients. One Patented Fermentation."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "fallback_asset",
+          "label": "Fallback theme asset",
+          "info": "Filename of an image in the theme's assets folder, used when no photo is chosen."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body"
+        }
+      ]
+    },
+    {
+      "type": "spec",
+      "name": "Spec item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "flask",
+          "options": [
+            {
+              "value": "flask",
+              "label": "Flask"
+            },
+            {
+              "value": "sparkle",
+              "label": "Sparkle"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BGX Ingredients",
+      "blocks": [
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Fermented Garlic Extract",
+            "fallback_asset": "bgx-garlic-product.jpg",
+            "body": "Top-10 superfood; allicin supports metabolism."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Fermented Lettuce Extract",
+            "fallback_asset": "bgx-lettuce-product.jpg",
+            "body": "Vitamins A & B, amino acids; supports skin against aging."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Soybean",
+            "body": "Vitamins, minerals and fiber; supports healthy cholesterol levels."
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "title": "Soybean Sprouts",
+            "body": "β-carotene and vitamin C; supports immune function."
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "flask",
+            "text": "500mg × 60 tablets (30g)"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "sparkle",
+            "text": "3 tablets daily, 1 per serving"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "leaf",
+            "text": "Store cool & dry, away from direct sunlight"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "shield",
+            "text": "Upgraded PTP protective film"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

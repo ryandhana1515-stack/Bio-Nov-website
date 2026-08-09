@@ -1,0 +1,162 @@
+{
+  "sections": {
+    "intro": {
+      "type": "bgx-content",
+      "blocks": {
+        "t0": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Nitric oxide is a signalling molecule your body makes for itself. It tells the smooth muscle lining your blood vessels to relax, which keeps those vessels broad and supports circulation to every organ. Production peaks in your twenties and falls from there.</p><p>BIO N:OV is a 3rd-generation nitric oxide supplement. Rather than supplying a precursor your body has to convert, it is produced by patented microbial fermentation and releases NO on contact with stomach acid — no enzyme conversion required.</p>"
+          }
+        }
+      },
+      "block_order": ["t0"],
+      "settings": {
+        "eyebrow": "THE SCIENCE",
+        "heading": "How Nitric Oxide Works",
+        "background": "glow",
+        "narrow": true,
+        "center": false
+      }
+    },
+    "no-decline": {
+      "type": "bgx-no-decline",
+      "settings": {
+        "eyebrow": "AGE & NO",
+        "heading": "After 30, Your Body Stops Making Enough Nitric Oxide",
+        "body": "Nitric oxide keeps your blood vessels relaxed, broad and smooth. Production begins declining by about 20% every ten years — by age 60 most people have lost up to 85% of their natural NO production.",
+        "readout_label": "Natural NO production",
+        "source": "Circulation"
+      }
+    },
+    "vessel-aging": {
+      "type": "bgx-vessel-aging",
+      "blocks": {
+        "d0": { "type": "stage", "settings": { "decade": "20s", "no_level": "100% NO", "description": "Open & elastic" } },
+        "d1": { "type": "stage", "settings": { "decade": "30s", "no_level": "80% NO", "description": "Walls thickening" } },
+        "d2": { "type": "stage", "settings": { "decade": "40s", "no_level": "50% NO", "description": "Inflammation" } },
+        "d3": { "type": "stage", "settings": { "decade": "50s", "no_level": "35% NO", "description": "Narrowing" } },
+        "d4": { "type": "stage", "settings": { "decade": "60+", "no_level": "15% NO", "description": "Severely restricted" } }
+      },
+      "block_order": ["d0", "d1", "d2", "d3", "d4"],
+      "settings": {
+        "eyebrow": "VESSEL AGE",
+        "heading": "Your Blood Vessels Are Aging Faster Than You Are",
+        "meter_label": "Natural NO production",
+        "restore_badge": "BIO N:OV",
+        "restore_heading": "BIO N:OV Helps Your Body Generate NO",
+        "restore_body": "Vessels relax. Broad. Smooth.",
+        "closing_line": "Age is inevitable. Vessel age doesn't have to be.",
+        "source": "Dr. Nathan Bryan, Functional Nitric Oxide Nutrition"
+      }
+    },
+    "mechanism": {
+      "type": "bgx-mechanism",
+      "blocks": {
+        "p0": { "type": "step", "settings": { "title": "Fermented extract meets stomach acid" } },
+        "p1": { "type": "step", "settings": { "title": "NO released instantly, no enzyme required" } },
+        "p2": { "type": "step", "settings": { "title": "Vessels relax, circulation improves" } }
+      },
+      "block_order": ["p0", "p1", "p2"],
+      "settings": {
+        "eyebrow": "MECHANISM",
+        "heading": "Patented Microbial Fermentation",
+        "body": "BIO N:OV is produced from a proprietary microbial strain (KACC91554P) held by the Korea Research Institute of Bioscience and Biotechnology, fermenting natural vegetables and herbs into a stable, bioavailable NO precursor.",
+        "lab_caption": "Microbial fermentation, Korea",
+        "field_opacity": 35
+      }
+    },
+    "proof-numbers": {
+      "type": "bgx-proof-numbers",
+      "blocks": {
+        "m0": { "type": "metric", "settings": { "prefix": "+", "value": 18, "ring_percent": 45, "label": "Vessel Diameter" } },
+        "m1": { "type": "metric", "settings": { "prefix": "+", "value": 42, "ring_percent": 70, "label": "Blood Flow" } },
+        "m2": { "type": "metric", "settings": { "prefix": "−", "value": 25, "ring_percent": 55, "label": "Blood Pressure", "note": "within 30 minutes" } },
+        "m3": { "type": "metric", "settings": { "prefix": "−", "value": 8, "ring_percent": 25, "label": "Blood Sugar", "note": "within 1 hour" } }
+      },
+      "block_order": ["m0", "m1", "m2", "m3"],
+      "settings": {
+        "eyebrow": "LABORATORY DATA",
+        "heading": "Measured In A Lab. Felt In 30 Minutes.",
+        "source": "Bzzworld Smart Lab"
+      }
+    },
+    "generations": {
+      "type": "bgx-generations",
+      "blocks": {
+        "g0": { "type": "generation", "settings": { "generation": "1st Gen", "name": "Arginine", "points": "Requires enzyme conversion\nUnstable\nNot suitable for heart patients", "is_winner": false } },
+        "g1": { "type": "generation", "settings": { "generation": "2nd Gen", "name": "Vegetable & Fruit Extracts", "points": "Reported nausea, diarrhea, headache\nPoor results over 40", "is_winner": false } },
+        "g2": { "type": "generation", "settings": { "generation": "3rd Gen", "name": "BIO N:OV", "points": "No enzyme needed — releases on contact with stomach acid\nWorks across age groups\n40–400% more effective than other NO supplements\nZero dependence", "is_winner": true } },
+        "r0": { "type": "row", "settings": { "label": "Technology", "gen1": "Amino acid", "gen2": "Plant extract", "gen3": "Microbial fermentation" } },
+        "r1": { "type": "row", "settings": { "label": "Enzyme conversion", "gen1": "Required", "gen2": "Required", "gen3": "Not required — releases on contact with stomach acid" } },
+        "r2": { "type": "row", "settings": { "label": "Reported side effects", "gen1": "Unstable", "gen2": "Nausea, diarrhea, headache", "gen3": "Zero reported side effects" } },
+        "r3": { "type": "row", "settings": { "label": "Relative effectiveness", "gen1": "Baseline", "gen2": "Baseline", "gen3": "40–400% more effective than other NO supplements" } }
+      },
+      "block_order": ["g0", "g1", "g2", "r0", "r1", "r2", "r3"],
+      "settings": {
+        "eyebrow": "TECH ROADMAP",
+        "heading": "Three Generations Of Nitric Oxide",
+        "table_col_0": "",
+        "table_col_1": "1st Gen — Arginine",
+        "table_col_2": "2nd Gen — Veg & Fruit",
+        "table_col_3": "3rd Gen — BIO N:OV"
+      }
+    },
+    "science-team": {
+      "type": "bgx-science-team",
+      "blocks": {
+        "lead": { "type": "lead", "settings": { "fallback_asset": "bgx-researcher-cheon.png", "badge": "RESEARCH BOARD HEAD", "name": "Dr. Cheon Hyun Soo", "role": "Head of BIO N:OV Medical Development & Research Board", "org": "SunChon National University" } },
+        "m0": { "type": "member", "settings": { "fallback_asset": "bgx-researcher-pae.png", "name": "Prof. Dr. Hyun-Ock Pae", "role": "NO & metabolites", "org": "Wonkwang University School of Medicine" } },
+        "m1": { "type": "member", "settings": { "fallback_asset": "bgx-researcher-min.png", "name": "Ph.D. Min Sun Kim", "role": "Cardiovascular health", "org": "Dean, Wonkwang University School of Medicine" } },
+        "m2": { "type": "member", "settings": { "fallback_asset": "bgx-researcher-shin.png", "name": "Prof. Dr. Yong-Il Shin", "role": "Neuro-rehabilitation", "org": "Pusan National University" } },
+        "m3": { "type": "member", "settings": { "fallback_asset": "bgx-researcher-ju.png", "name": "Dr. Ju Sung-Min", "role": "NO, menopausal & lymphatic system research", "org": "Center of TKM, Wonkwang University" } },
+        "m4": { "type": "member", "settings": { "fallback_asset": "bgx-researcher-han.png", "name": "Ass. Prof. A-Lum Han", "role": "Metabolic disease & clinical nutrition", "org": "Wonkwang University Hospital" } },
+        "m5": { "type": "member", "settings": { "fallback_asset": "bgx-researcher-kim.png", "name": "Prof. Dr. Kim Jong-Suk", "role": "Metabolism & anti-aging", "org": "Jeonbuk National University Medical School" } },
+        "m6": { "type": "member", "settings": { "fallback_asset": "bgx-researcher-sooah.png", "name": "Dr. Sooah Kim", "role": "Regenerative medicine & food application", "org": "Jeonju University College of Medical Science" } }
+      },
+      "block_order": ["lead", "m0", "m1", "m2", "m3", "m4", "m5", "m6"],
+      "settings": {
+        "eyebrow": "R&D",
+        "heading": "Developed By Eight Korean University Professors"
+      }
+    },
+    "certifications": {
+      "type": "bgx-certifications",
+      "blocks": {
+        "c0": { "type": "certificate", "settings": { "title": "Korean Patent" } },
+        "c1": { "type": "certificate", "settings": { "title": "US Patent US 10,517,912 B2" } },
+        "c2": { "type": "certificate", "settings": { "title": "China Patent" } },
+        "c3": { "type": "certificate", "settings": { "title": "Korea GMP Certificate" } },
+        "bd0": { "type": "badge", "settings": { "text": "GMP" } },
+        "bd1": { "type": "badge", "settings": { "text": "KACC91554P" } },
+        "bd2": { "type": "badge", "settings": { "text": "Made in Korea" } }
+      },
+      "block_order": ["c0", "c1", "c2", "c3", "bd0", "bd1", "bd2"],
+      "settings": { "eyebrow": "TRUST", "heading": "Certified, Patented, Verified" }
+    },
+    "final-cta": {
+      "type": "bgx-guarantee-cta",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading": "Stay Healthy. Happy. In Harmony.",
+        "subheading": "Clearing the way to optimum health — from Korea to the world.",
+        "cta_text": "Shop BIO N:OV",
+        "cta_link": "shopify://products/bio-nov",
+        "guarantee_text": "30-day money-back guarantee",
+        "video_opacity": 45
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "no-decline",
+    "vessel-aging",
+    "mechanism",
+    "proof-numbers",
+    "generations",
+    "science-team",
+    "certifications",
+    "final-cta"
+  ]
+}

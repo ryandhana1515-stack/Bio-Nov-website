@@ -1,0 +1,37 @@
+{
+  "sections": {
+    "faq": {
+      "type": "bgx-faq",
+      "blocks": {
+        "q0": { "type": "question", "settings": { "question": "What is nitric oxide and why does it matter?", "answer": "<p>Nitric oxide (NO) is a molecule your body produces naturally. It signals the smooth muscle in your blood vessel walls to relax, which keeps vessels broad and supports healthy circulation throughout the body.</p>" } },
+        "q1": { "type": "question", "settings": { "question": "How is BIO N:OV different from arginine or beet-based supplements?", "answer": "<p>1st-generation arginine products need an enzyme to convert into NO, and 2nd-generation vegetable and fruit extracts have reported side effects including nausea, diarrhea and headache. BIO N:OV is a 3rd-generation product made by patented microbial fermentation — it releases NO on contact with stomach acid, so no enzyme conversion is required.</p>" } },
+        "q2": { "type": "question", "settings": { "question": "How do I take it?", "answer": "<p>3 tablets daily, 1 tablet per serving, with water. Store in a cool, dry place away from direct sunlight.</p>" } },
+        "q3": { "type": "question", "settings": { "question": "How soon might I notice something?", "answer": "<p>This varies from person to person and no outcome is guaranteed. Laboratory measurements were taken within 30 minutes to 1 hour of intake. Individual results vary.</p>" } },
+        "q4": { "type": "question", "settings": { "question": "Can I take it alongside my current medication?", "answer": "<p>Always consult your doctor or pharmacist first, especially if you take prescription medication, are pregnant or nursing, or are under medical supervision. Do not stop or change any prescribed medication.</p>" } },
+        "q5": { "type": "question", "settings": { "question": "Are there side effects?", "answer": "<p>There are no reported side effects for BIO N:OV. If you experience any discomfort, stop taking it and speak to a healthcare professional.</p>" } },
+        "q6": { "type": "question", "settings": { "question": "Is it suitable for vegetarians?", "answer": "<p>BIO N:OV is made from fermented garlic extract, fermented lettuce extract, soybean and soybean sprouts. Check the current product label for the full ingredient and allergen statement before purchase.</p>" } },
+        "q7": { "type": "question", "settings": { "question": "Where does it ship from and how long does delivery take?", "answer": "<p>Orders ship from Singapore and Korea. Delivery times depend on destination and are shown at checkout.</p>" } },
+        "q8": { "type": "question", "settings": { "question": "What's your return policy?", "answer": "<p>We offer a 30-day money-back guarantee. See our refund policy for full details.</p>" } },
+        "q9": { "type": "question", "settings": { "question": "Is BIO N:OV certified?", "answer": "<p>BIO N:OV is manufactured in Korea under GMP certification and is built on a patented fermentation technology using the proprietary microbial strain KACC91554P, held by the Korea Research Institute of Bioscience and Biotechnology.</p>" } },
+        "q10": { "type": "question", "settings": { "question": "Do you ship to my country?", "answer": "<p>We ship worldwide from Singapore and Korea. Enter your address at checkout to see available options and delivery estimates.</p>" } },
+        "q11": { "type": "question", "settings": { "question": "How do I join the affiliate program?", "answer": "<p>Email <a href=\"mailto:info@biogreenelixirs.com\">info@biogreenelixirs.com</a> with your handle and audience, or see our affiliates page for the full details.</p>" } }
+      },
+      "block_order": ["q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11"],
+      "settings": { "eyebrow": "HELP CENTRE", "heading": "Frequently Asked Questions" }
+    },
+    "final-cta": {
+      "type": "bgx-guarantee-cta",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "heading": "Still Have A Question?",
+        "subheading": "Email info@biogreenelixirs.com and a human will answer.",
+        "cta_text": "Shop BIO N:OV",
+        "cta_link": "shopify://products/bio-nov",
+        "guarantee_text": "30-day money-back guarantee",
+        "video_opacity": 45
+      }
+    }
+  },
+  "order": ["faq", "final-cta"]
+}

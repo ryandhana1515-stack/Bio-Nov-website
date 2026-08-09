@@ -1,0 +1,159 @@
+{% comment %}
+  BIO N:OV — sticky mobile buy bar.
+
+  Uses the current product on a product page, otherwise the product chosen in
+  Theme settings > BIO N:OV. Stays in sync with the bundle selector: the offer
+  section dispatches `bgx:variant-change` and this bar re-renders its price.
+{% endcomment %}
+
+{%- liquid
+  assign bgx_product = product
+  if bgx_product == blank
+    assign bgx_product = settings.bgx_buybar_product
+  endif
+-%}
+
+{%- if bgx_product != blank and bgx_product.available -%}
+  {%- assign bgx_variant = bgx_product.selected_or_first_available_variant -%}
+
+  <div class="bgx-buybar" data-bgx-buybar>
+    <div class="bgx-buybar__inner">
+      {%- if bgx_product.featured_image -%}
+        {{
+          bgx_product.featured_image
+          | image_url: width: 120
+          | image_tag:
+            loading: 'lazy',
+            widths: '60,120',
+            sizes: '46px',
+            alt: bgx_product.title,
+            class: 'bgx-buybar__thumb'
+        }}
+      {%- endif -%}
+
+      <div class="bgx-buybar__text">
+        <span class="bgx-buybar__title">{{ bgx_product.title | truncate: 34 }}</span>
+        <span class="bgx-buybar__price" data-bgx-buybar-price>
+          {{- bgx_variant.price | money -}}
+        </span>
+      </div>
+
+      <form method="post" action="{{ routes.cart_add_url }}" data-bgx-buybar-form>
+        <input type="hidden" name="form_type" value="product">
+        <input type="hidden" name="utf8" value="✓">
+        <input
+          type="hidden"
+          name="id"
+          value="{{ bgx_variant.id }}"
+          data-bgx-buybar-variant
+        >
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="bgx-btn bgx-buybar__cta" data-bgx-magnetic>Add to Cart</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* Keep the bar in sync with the bundle selector. */
+    (function () {
+      var bar = document.querySelector('[data-bgx-buybar]');
+      if (!bar) return;
+      var input = bar.querySelector('[data-bgx-buybar-variant]');
+      var price = bar.querySelector('[data-bgx-buybar-price]');
+
+      document.addEventListener('bgx:variant-change', function (e) {
+        if (!e.detail) return;
+        if (input && e.detail.variantId) input.value = e.detail.variantId;
+        if (price && e.detail.price) price.textContent = e.detail.price;
+      });
+    })();
+  </script>
+
+  {%- comment -%}
+    Plain <style> rather than {% stylesheet %} — that tag is only valid inside
+    sections, and this is a snippet.
+  {%- endcomment -%}
+  <style>
+    .bgx-buybar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 45;
+      transform: translateY(110%);
+      transition: transform 0.5s var(--bgx-ease-out);
+      background: rgba(5, 7, 14, 0.93);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-top: 1px solid rgba(0, 220, 255, 0.2);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    .bgx-buybar.is-visible {
+      transform: none;
+    }
+
+    .bgx-buybar__inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: var(--bgx-maxw);
+      margin-inline: auto;
+      padding: 10px var(--bgx-gutter);
+    }
+
+    .bgx-buybar__thumb {
+      width: 46px;
+      height: 46px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      flex: none;
+    }
+
+    .bgx-buybar__text {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .bgx-buybar__title {
+      font-size: 0.78rem;
+      color: var(--bgx-mist);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bgx-buybar__price {
+      font-family: var(--bgx-font-display);
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: var(--bgx-white);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bgx-buybar__cta {
+      padding: 0.9em 1.4em;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .bgx-buybar form {
+      margin: 0 0 0 auto;
+    }
+
+    @media (min-width: 990px) {
+      /* Desktop keeps the in-page offer card as the primary buy surface. */
+      .bgx-buybar {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bgx-buybar {
+        transition: none;
+      }
+    }
+  </style>
+{%- endif -%}

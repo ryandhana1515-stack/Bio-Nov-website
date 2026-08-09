@@ -1,0 +1,450 @@
+{% comment %}
+  BIO N:OV — footer.
+  Four link columns, newsletter capture with inline validation, socials,
+  payment icons and the full compliance disclaimer.
+{% endcomment %}
+
+<footer class="bgx-footer">
+  <div class="bgx-wrap">
+    <div class="bgx-footer__top">
+      <div class="bgx-footer__brand">
+        {%- if section.settings.logo != blank -%}
+          {{
+            section.settings.logo
+            | image_url: width: 400
+            | image_tag: loading: 'lazy', widths: '150,300,400', sizes: '170px', alt: shop.name
+          }}
+        {%- else -%}
+          <span class="bgx-footer__wordmark">BIO N:OV</span>
+        {%- endif -%}
+        <p class="bgx-footer__tagline">{{ section.settings.tagline }}</p>
+
+        <form class="bgx-news" data-bgx-newsletter novalidate>
+          <label for="bgx-news-email" class="bgx-news__label">{{ section.settings.newsletter_label }}</label>
+          <div class="bgx-news__row">
+            <input
+              type="email"
+              id="bgx-news-email"
+              name="contact[email]"
+              placeholder="you@email.com"
+              autocomplete="email"
+              required
+              aria-describedby="bgx-news-msg"
+            >
+            <button type="submit" class="bgx-btn">Join</button>
+          </div>
+          <p class="bgx-news__msg" id="bgx-news-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="bgx-footer__cols">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'column' -%}
+            <div class="bgx-footer__col" {{ block.shopify_attributes }}>
+              <h3>{{ block.settings.heading }}</h3>
+              {%- if block.settings.menu != blank -%}
+                <ul>
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="bgx-footer__mid">
+      <ul class="bgx-footer__social">
+        {%- if section.settings.instagram != blank -%}
+          <li>
+            <a href="{{ section.settings.instagram }}" aria-label="Instagram" rel="noopener" target="_blank">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </li>
+        {%- endif -%}
+        {%- if section.settings.tiktok != blank -%}
+          <li>
+            <a href="{{ section.settings.tiktok }}" aria-label="TikTok" rel="noopener" target="_blank">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3v11a4 4 0 1 1-4-4"/><path d="M15 6a5 5 0 0 0 5 4"/></svg>
+            </a>
+          </li>
+        {%- endif -%}
+        {%- if section.settings.facebook != blank -%}
+          <li>
+            <a href="{{ section.settings.facebook }}" aria-label="Facebook" rel="noopener" target="_blank">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V9H7v3h2v9h3v-9h2.5l.5-3H12V6.5a1 1 0 0 1 1-1h2Z"/></svg>
+            </a>
+          </li>
+        {%- endif -%}
+      </ul>
+
+      <a href="mailto:{{ section.settings.email }}" class="bgx-footer__email">{{ section.settings.email }}</a>
+
+      {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <ul class="bgx-footer__pay" role="list">
+          {%- for type in shop.enabled_payment_types -%}
+            <li>{{ type | payment_type_svg_tag: class: 'bgx-pay-icon' }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div class="bgx-footer__legal">
+      {% render 'bgx-disclaimer', type: 'full' %}
+      <p class="bgx-footer__copy">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+        {%- if section.settings.company_note != blank %} {{ section.settings.company_note }}{% endif -%}
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Newsletter: inline validation + success micro-animation. Point the form at
+     Klaviyo/Shopify by setting a real action, then delete this handler. */
+  (function () {
+    var form = document.querySelector('[data-bgx-newsletter]');
+    if (!form) return;
+    var input = form.querySelector('input[type="email"]');
+    var msg = form.querySelector('.bgx-news__msg');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var valid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value.trim());
+      form.classList.toggle('is-invalid', !valid);
+      if (!valid) {
+        msg.textContent = 'Please enter a valid email address.';
+        input.focus();
+        return;
+      }
+      form.classList.add('is-success');
+      msg.textContent = 'You are on the list. Watch your inbox.';
+      input.value = '';
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .bgx-footer {
+    background: linear-gradient(180deg, var(--bgx-void) 0%, #070b16 100%);
+    border-top: 1px solid rgba(0, 220, 255, 0.12);
+    padding-block: clamp(56px, 8vw, 96px) 40px;
+  }
+
+  .bgx-footer__top {
+    display: grid;
+    gap: clamp(34px, 5vw, 60px);
+    grid-template-columns: 1fr;
+  }
+
+  .bgx-footer__wordmark {
+    font-family: var(--bgx-font-display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--bgx-white);
+  }
+
+  .bgx-footer__tagline {
+    margin: 0.9rem 0 1.8rem;
+    color: var(--bgx-mist);
+    max-width: 38ch;
+    font-size: 0.95rem;
+  }
+
+  .bgx-news__label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--bgx-mist-strong);
+    margin-bottom: 0.6rem;
+  }
+
+  .bgx-news__row {
+    display: flex;
+    gap: 8px;
+    max-width: 400px;
+  }
+
+  .bgx-news__row input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.95em 1.1em;
+    border-radius: var(--bgx-radius-pill);
+    border: 1px solid var(--bgx-glass-border);
+    background: var(--bgx-glass);
+    color: var(--bgx-white);
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+
+  .bgx-news__row input::placeholder {
+    color: rgba(169, 183, 208, 0.6);
+  }
+
+  .bgx-news.is-invalid .bgx-news__row input {
+    border-color: var(--bgx-arterial);
+  }
+
+  .bgx-news__msg {
+    font-size: 0.82rem;
+    margin: 0.7rem 0 0;
+    min-height: 1.2em;
+    color: var(--bgx-mist);
+  }
+
+  .bgx-news.is-success .bgx-news__msg {
+    color: var(--bgx-cyan);
+    animation: bgx-pop 0.5s var(--bgx-ease-out);
+  }
+
+  @keyframes bgx-pop {
+    0% {
+      opacity: 0;
+      transform: translateY(6px) scale(0.96);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .bgx-footer__cols {
+    display: grid;
+    gap: 28px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .bgx-footer__col h3 {
+    font-family: var(--bgx-font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bgx-cyan);
+    margin: 0 0 1rem;
+  }
+
+  .bgx-footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .bgx-footer__col a {
+    color: var(--bgx-mist-strong);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.3s ease;
+  }
+
+  .bgx-footer__col a:hover {
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-footer__mid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-top: clamp(38px, 5vw, 60px);
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .bgx-footer__social {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .bgx-footer__social a {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--bgx-glass-border);
+    color: var(--bgx-mist-strong);
+    transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .bgx-footer__social a:hover {
+    color: var(--bgx-cyan);
+    border-color: var(--bgx-glass-border-hi);
+    box-shadow: var(--bgx-bloom);
+  }
+
+  .bgx-footer__social svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .bgx-footer__email {
+    color: var(--bgx-mist-strong);
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+
+  .bgx-footer__email:hover {
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-footer__pay {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    list-style: none;
+    margin: 0 0 0 auto;
+    padding: 0;
+  }
+
+  .bgx-pay-icon {
+    width: 38px;
+    height: 24px;
+    border-radius: 4px;
+  }
+
+  .bgx-footer__legal {
+    margin-top: 30px;
+  }
+
+  .bgx-footer__copy {
+    font-size: 0.78rem;
+    color: rgba(169, 183, 208, 0.65);
+    margin: 1rem 0 0;
+  }
+
+  @media (min-width: 900px) {
+    .bgx-footer__top {
+      grid-template-columns: minmax(280px, 1fr) 1.35fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Footer",
+  "tag": "div",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Clearing the way to optimum health — from Korea to the world."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_label",
+      "label": "Newsletter label",
+      "default": "Get nitric oxide science in your inbox"
+    },
+    {
+      "type": "header",
+      "content": "Contact & social"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "info@biogreenelixirs.com"
+    },
+    {
+      "type": "url",
+      "id": "instagram",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "tiktok",
+      "label": "TikTok URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "header",
+      "content": "Legal"
+    },
+    {
+      "type": "text",
+      "id": "company_note",
+      "label": "Company note",
+      "default": "Bio Green Elixirs — international distributor of BIO N:OV."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "default": true,
+      "label": "Show payment icons"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Link column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BGX Footer",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Shop"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Learn"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Company"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Support"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

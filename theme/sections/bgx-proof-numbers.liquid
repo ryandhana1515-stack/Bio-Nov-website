@@ -1,0 +1,235 @@
+{% comment %}
+  S5 · The Numbers — motion moment M5.
+  Four counters that tick up from zero with a circular progress ring drawing
+  around each.
+
+  COMPLIANCE: this section carries laboratory data. The 'lab' disclaimer
+  beneath it is MANDATORY and must stay directly under the numbers.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--navy">
+  <div class="bgx-wrap">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    <div class="bgx-proof__grid">
+      {%- for block in section.blocks -%}
+        <div
+          class="bgx-proof__item bgx-reveal"
+          data-bgx-delay="{{ forloop.index0 | times: 0.1 }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="bgx-proof__ring">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <defs>
+                <linearGradient id="bgxRing{{ forloop.index }}" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00DCFF"/>
+                  <stop offset="55%" stop-color="#1F8BFF"/>
+                  <stop offset="100%" stop-color="#7B4DFF"/>
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="6"/>
+              <circle
+                data-bgx-ring="{{ block.settings.ring_percent }}"
+                cx="60"
+                cy="60"
+                r="52"
+                fill="none"
+                stroke="url(#bgxRing{{ forloop.index }})"
+                stroke-width="6"
+                stroke-linecap="round"
+                transform="rotate(-90 60 60)"
+              />
+            </svg>
+
+            <div class="bgx-proof__value">
+              {% render 'bgx-counter',
+                to: block.settings.value,
+                prefix: block.settings.prefix,
+                suffix: '%',
+                duration: 2
+              %}
+            </div>
+          </div>
+
+          <h3 class="bgx-proof__label">{{ block.settings.label }}</h3>
+          {%- if block.settings.note != blank -%}
+            <p class="bgx-proof__note">{{ block.settings.note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.source != blank -%}
+      <p class="bgx-source bgx-center bgx-reveal">Source: {{ section.settings.source }}</p>
+    {%- endif -%}
+
+    {% render 'bgx-disclaimer', type: 'lab', align: 'center' %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .bgx-proof__grid {
+    display: grid;
+    gap: clamp(24px, 4vw, 42px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    margin-top: clamp(38px, 6vw, 64px);
+    text-align: center;
+  }
+
+  .bgx-proof__ring {
+    position: relative;
+    width: clamp(140px, 22vw, 175px);
+    margin-inline: auto;
+  }
+
+  .bgx-proof__ring svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .bgx-proof__value {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .bgx-proof__value .bgx-num {
+    font-size: clamp(1.65rem, 4vw, 2.15rem);
+  }
+
+  .bgx-proof__label {
+    font-family: var(--bgx-font-display);
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--bgx-white);
+    margin: 1.1rem 0 0.2rem;
+  }
+
+  .bgx-proof__note {
+    font-size: 0.82rem;
+    color: rgba(169, 183, 208, 0.8);
+    margin: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Proof numbers",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "THE NUMBERS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Measured In A Lab. Felt In 30 Minutes."
+    },
+    {
+      "type": "text",
+      "id": "source",
+      "label": "Source",
+      "default": "Bzzworld Smart Lab"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "metric",
+      "name": "Metric",
+      "settings": [
+        {
+          "type": "text",
+          "id": "prefix",
+          "label": "Prefix",
+          "default": "+",
+          "info": "Use + or − (a true minus sign, not a hyphen)."
+        },
+        {
+          "type": "number",
+          "id": "value",
+          "label": "Value",
+          "default": 18
+        },
+        {
+          "type": "range",
+          "id": "ring_percent",
+          "min": 5,
+          "max": 100,
+          "step": 5,
+          "default": 45,
+          "unit": "%",
+          "label": "Ring fill",
+          "info": "How far the ring draws. Visual weight only — it does not have to equal the number."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Vessel Diameter"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BGX Proof numbers",
+      "blocks": [
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "+",
+            "value": 18,
+            "ring_percent": 45,
+            "label": "Vessel Diameter"
+          }
+        },
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "+",
+            "value": 42,
+            "ring_percent": 70,
+            "label": "Blood Flow"
+          }
+        },
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "−",
+            "value": 25,
+            "ring_percent": 55,
+            "label": "Blood Pressure",
+            "note": "within 30 minutes"
+          }
+        },
+        {
+          "type": "metric",
+          "settings": {
+            "prefix": "−",
+            "value": 8,
+            "ring_percent": 25,
+            "label": "Blood Sugar",
+            "note": "within 1 hour"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

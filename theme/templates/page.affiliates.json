@@ -1,0 +1,65 @@
+{
+  "sections": {
+    "intro": {
+      "type": "bgx-content",
+      "blocks": {
+        "t0": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We are looking for health, wellness and lifestyle creators to introduce BIO N:OV to their audience. You earn 15–25% commission on every sale made through your unique link, tracked automatically.</p><p>Accepted affiliates receive a free box to try before they post.</p>"
+          }
+        },
+        "s0": { "type": "stat", "settings": { "prefix": "", "value": 25, "decimals": 0, "suffix": "%", "label": "Top commission rate" } },
+        "s1": { "type": "stat", "settings": { "prefix": "", "value": 30, "decimals": 0, "suffix": "-day", "label": "Cookie window" } },
+        "s2": { "type": "stat", "settings": { "prefix": "", "value": 1, "decimals": 0, "suffix": " free box", "label": "Sent to every accepted affiliate" } },
+        "cta": { "type": "cta", "settings": { "text": "Apply To Join", "link": "mailto:info@biogreenelixirs.com?subject=Affiliate%20application" } }
+      },
+      "block_order": ["t0", "s0", "s1", "s2", "cta"],
+      "settings": {
+        "eyebrow": "AFFILIATE PROGRAM",
+        "heading": "Earn 15–25% Promoting BIO N:OV",
+        "background": "glow",
+        "narrow": true,
+        "center": false
+      }
+    },
+    "how": {
+      "type": "bgx-content",
+      "blocks": {
+        "c0": { "type": "card", "settings": { "icon": "sparkle", "title": "1. Apply", "body": "Send us your handle and audience. We review every application by hand — no follower minimum, but your audience should genuinely care about health." } },
+        "c1": { "type": "card", "settings": { "icon": "truck", "title": "2. Try it", "body": "Accepted affiliates get a free box shipped to them. We would rather you post after you have actually taken it." } },
+        "c2": { "type": "card", "settings": { "icon": "bolt", "title": "3. Share your link", "body": "You get a unique tracking link and a creative pack — product shots, brand colours and pre-cleared copy that stays inside health-advertising rules." } },
+        "c3": { "type": "card", "settings": { "icon": "award", "title": "4. Get paid", "body": "Commission on every tracked sale, paid monthly. Clicks, conversions and payouts are all visible in your dashboard." } }
+      },
+      "block_order": ["c0", "c1", "c2", "c3"],
+      "settings": {
+        "eyebrow": "HOW IT WORKS",
+        "heading": "Four Steps",
+        "background": "void",
+        "narrow": false,
+        "center": true
+      }
+    },
+    "rules": {
+      "type": "bgx-content",
+      "blocks": {
+        "t0": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>What you can and cannot say</h3><p>BIO N:OV is a dietary supplement, not a medicine. Affiliates must not claim it cures, treats, prevents or diagnoses any disease, must not promise specific results, and must not tell anyone to stop taking prescribed medication.</p><p>Use supportive language — \"supports\", \"helps maintain\", \"promotes\" — and disclose the partnership on every post, as required in your market. We will send you the full creative guidelines when you are accepted.</p>"
+          }
+        },
+        "cta": { "type": "cta", "settings": { "text": "Apply To Join", "link": "mailto:info@biogreenelixirs.com?subject=Affiliate%20application" } }
+      },
+      "block_order": ["t0", "cta"],
+      "settings": {
+        "eyebrow": "THE RULES",
+        "heading": "Promote It Properly",
+        "background": "navy",
+        "narrow": true,
+        "center": false
+      }
+    }
+  },
+  "order": ["intro", "how", "rules"]
+}

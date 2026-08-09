@@ -1,0 +1,1013 @@
+{
+  "sections": {
+    "hero": {
+      "type": "bgx-hero",
+      "blocks": {
+        "t0": {
+          "type": "trust",
+          "settings": {
+            "text": "GMP Certified Korea"
+          }
+        },
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "text": "US Patented Strain KACC91554P"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "text": "100% Natural Fermented Ingredients"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "text": "Zero Reported Side Effects"
+          }
+        }
+      },
+      "block_order": [
+        "t0",
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "eyebrow": "KOREAN BIOTECH · 3RD GENERATION NITRIC OXIDE",
+        "heading": "Clearing The Way To Optimum Health",
+        "subheading": "BIO N:OV is a 3rd-generation nitric oxide supplement built on patented Korean microbial fermentation — supporting healthy blood pressure, blood sugar, energy, and vitality.",
+        "cta_primary_text": "Shop BIO N:OV",
+        "cta_primary_link": "shopify://products/bio-nov",
+        "cta_secondary_text": "See The Science",
+        "cta_secondary_link": "shopify://pages/science",
+        "video_opacity": 55,
+        "show_scroll_cue": true
+      }
+    },
+    "no-decline": {
+      "type": "bgx-no-decline",
+      "settings": {
+        "eyebrow": "THE PROBLEM",
+        "heading": "After 30, Your Body Stops Making Enough Nitric Oxide",
+        "body": "Nitric oxide keeps your blood vessels relaxed, broad and smooth. Production begins declining by about 20% every ten years — by age 60 most people have lost up to 85% of their natural NO production.",
+        "readout_label": "Natural NO production",
+        "source": "Circulation"
+      }
+    },
+    "problem-stats": {
+      "type": "bgx-problem-stats",
+      "blocks": {
+        "s0": {
+          "type": "system",
+          "settings": {
+            "icon": "brain",
+            "title": "Brain",
+            "body": "Cognition, memory"
+          }
+        },
+        "s1": {
+          "type": "system",
+          "settings": {
+            "icon": "heart",
+            "title": "Heart",
+            "body": "Circulation, rhythm"
+          }
+        },
+        "s2": {
+          "type": "system",
+          "settings": {
+            "icon": "circulation",
+            "title": "Blood Circulation",
+            "body": "Pressure, sugar balance"
+          }
+        },
+        "s3": {
+          "type": "system",
+          "settings": {
+            "icon": "immune",
+            "title": "Immune System",
+            "body": "Daily defence"
+          }
+        },
+        "s4": {
+          "type": "system",
+          "settings": {
+            "icon": "respiratory",
+            "title": "Respiratory",
+            "body": "Oxygen delivery"
+          }
+        },
+        "s5": {
+          "type": "system",
+          "settings": {
+            "icon": "digestive",
+            "title": "Digestive",
+            "body": "Comfort, absorption"
+          }
+        },
+        "n0": {
+          "type": "stat",
+          "settings": {
+            "value": 1.28,
+            "decimals": 2,
+            "suffix": "B",
+            "label": "people worldwide living with high blood pressure"
+          }
+        },
+        "n1": {
+          "type": "stat",
+          "settings": {
+            "value": 537,
+            "decimals": 0,
+            "suffix": "M",
+            "label": "adults living with diabetes"
+          }
+        },
+        "n2": {
+          "type": "stat",
+          "settings": {
+            "value": 15,
+            "decimals": 0,
+            "suffix": "M",
+            "label": "strokes every year"
+          }
+        }
+      },
+      "block_order": [
+        "s0",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "n0",
+        "n1",
+        "n2"
+      ],
+      "settings": {
+        "eyebrow": "WHY IT MATTERS",
+        "heading": "Nitric Oxide Touches Nearly Every System In Your Body",
+        "stats_heading": "The global health picture",
+        "sources": "WHO · International Diabetes Federation · World Heart Federation"
+      }
+    },
+    "vessel-aging": {
+      "type": "bgx-vessel-aging",
+      "blocks": {
+        "d0": {
+          "type": "stage",
+          "settings": {
+            "decade": "20s",
+            "no_level": "100% NO",
+            "description": "Open & elastic"
+          }
+        },
+        "d1": {
+          "type": "stage",
+          "settings": {
+            "decade": "30s",
+            "no_level": "80% NO",
+            "description": "Walls thickening"
+          }
+        },
+        "d2": {
+          "type": "stage",
+          "settings": {
+            "decade": "40s",
+            "no_level": "50% NO",
+            "description": "Inflammation"
+          }
+        },
+        "d3": {
+          "type": "stage",
+          "settings": {
+            "decade": "50s",
+            "no_level": "35% NO",
+            "description": "Narrowing"
+          }
+        },
+        "d4": {
+          "type": "stage",
+          "settings": {
+            "decade": "60+",
+            "no_level": "15% NO",
+            "description": "Severely restricted"
+          }
+        }
+      },
+      "block_order": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "settings": {
+        "eyebrow": "VESSEL AGE",
+        "heading": "Your Blood Vessels Are Aging Faster Than You Are",
+        "meter_label": "Natural NO production",
+        "restore_badge": "BIO N:OV",
+        "restore_heading": "BIO N:OV Helps Your Body Generate NO",
+        "restore_body": "Vessels relax. Broad. Smooth.",
+        "closing_line": "Age is inevitable. Vessel age doesn't have to be.",
+        "source": "Dr. Nathan Bryan, Functional Nitric Oxide Nutrition"
+      }
+    },
+    "proof-numbers": {
+      "type": "bgx-proof-numbers",
+      "blocks": {
+        "m0": {
+          "type": "metric",
+          "settings": {
+            "prefix": "+",
+            "value": 18,
+            "ring_percent": 45,
+            "label": "Vessel Diameter"
+          }
+        },
+        "m1": {
+          "type": "metric",
+          "settings": {
+            "prefix": "+",
+            "value": 42,
+            "ring_percent": 70,
+            "label": "Blood Flow"
+          }
+        },
+        "m2": {
+          "type": "metric",
+          "settings": {
+            "prefix": "−",
+            "value": 25,
+            "ring_percent": 55,
+            "label": "Blood Pressure",
+            "note": "within 30 minutes"
+          }
+        },
+        "m3": {
+          "type": "metric",
+          "settings": {
+            "prefix": "−",
+            "value": 8,
+            "ring_percent": 25,
+            "label": "Blood Sugar",
+            "note": "within 1 hour"
+          }
+        }
+      },
+      "block_order": [
+        "m0",
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "eyebrow": "THE NUMBERS",
+        "heading": "Measured In A Lab. Felt In 30 Minutes.",
+        "source": "Bzzworld Smart Lab"
+      }
+    },
+    "generations": {
+      "type": "bgx-generations",
+      "blocks": {
+        "g0": {
+          "type": "generation",
+          "settings": {
+            "generation": "1st Gen",
+            "name": "Arginine",
+            "points": "Requires enzyme conversion\nUnstable\nNot suitable for heart patients",
+            "is_winner": false
+          }
+        },
+        "g1": {
+          "type": "generation",
+          "settings": {
+            "generation": "2nd Gen",
+            "name": "Vegetable & Fruit Extracts",
+            "points": "Reported nausea, diarrhea, headache\nPoor results over 40",
+            "is_winner": false
+          }
+        },
+        "g2": {
+          "type": "generation",
+          "settings": {
+            "generation": "3rd Gen",
+            "name": "BIO N:OV",
+            "points": "No enzyme needed — releases on contact with stomach acid\nWorks across age groups\n40–400% more effective than other NO supplements\nZero dependence",
+            "is_winner": true
+          }
+        },
+        "r0": {
+          "type": "row",
+          "settings": {
+            "label": "Technology",
+            "gen1": "Amino acid",
+            "gen2": "Plant extract",
+            "gen3": "Microbial fermentation"
+          }
+        },
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "Enzyme conversion",
+            "gen1": "Required",
+            "gen2": "Required",
+            "gen3": "Not required — releases on contact with stomach acid"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "Suitable for heart patients",
+            "gen1": "Not suitable",
+            "gen2": "Not established",
+            "gen3": "Works across age groups"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "label": "Reported side effects",
+            "gen1": "Unstable",
+            "gen2": "Nausea, diarrhea, headache",
+            "gen3": "Zero reported side effects"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "label": "Results over age 40",
+            "gen1": "Limited",
+            "gen2": "Poor",
+            "gen3": "Works across age groups"
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "label": "Relative effectiveness",
+            "gen1": "Baseline",
+            "gen2": "Baseline",
+            "gen3": "40–400% more effective than other NO supplements"
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "label": "Dependence",
+            "gen1": "Not established",
+            "gen2": "Not established",
+            "gen3": "Zero dependence"
+          }
+        }
+      },
+      "block_order": [
+        "g0",
+        "g1",
+        "g2",
+        "r0",
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "settings": {
+        "eyebrow": "TECH ROADMAP",
+        "heading": "Three Generations Of Nitric Oxide. Only One Works For Everyone.",
+        "table_col_0": "",
+        "table_col_1": "1st Gen — Arginine",
+        "table_col_2": "2nd Gen — Veg & Fruit",
+        "table_col_3": "3rd Gen — BIO N:OV"
+      }
+    },
+    "mechanism": {
+      "type": "bgx-mechanism",
+      "blocks": {
+        "p0": {
+          "type": "step",
+          "settings": {
+            "title": "Fermented extract meets stomach acid"
+          }
+        },
+        "p1": {
+          "type": "step",
+          "settings": {
+            "title": "NO released instantly, no enzyme required"
+          }
+        },
+        "p2": {
+          "type": "step",
+          "settings": {
+            "title": "Vessels relax, circulation improves"
+          }
+        }
+      },
+      "block_order": [
+        "p0",
+        "p1",
+        "p2"
+      ],
+      "settings": {
+        "eyebrow": "HOW IT WORKS",
+        "heading": "Patented Microbial Fermentation",
+        "body": "BIO N:OV is produced from a proprietary microbial strain (KACC91554P) held by the Korea Research Institute of Bioscience and Biotechnology, fermenting natural vegetables and herbs into a stable, bioavailable NO precursor.",
+        "lab_caption": "Microbial fermentation, Korea",
+        "field_opacity": 35
+      }
+    },
+    "benefits": {
+      "type": "bgx-benefits",
+      "blocks": {
+        "b0": {
+          "type": "benefit",
+          "settings": {
+            "icon": "circulation",
+            "title": "Balancing Blood Pressure & Blood Sugar",
+            "body": "GABA, polyphenols and antioxidants support insulin efficiency and glucose absorption. Laboratory data shows blood sugar down 8% within one hour.",
+            "show_lab_disclaimer": true,
+            "source": "Bzzworld Smart Lab"
+          }
+        },
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "bolt",
+            "title": "Boosting Vigor",
+            "body": "Increased NO improves blood flow to skeletal muscle and oxygen delivery, supporting all-day energy."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "leaf",
+            "title": "Reducing Inflammation",
+            "body": "Supports a calmer inflammatory response."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "title": "Enhancing Immunity",
+            "body": "Supports normal immune function and normal cell division."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "sparkle",
+            "title": "Improving Cognition & Skin",
+            "body": "NO activates telomerase, supporting slower cellular aging. Reported by a 100-person tester panel:",
+            "stats": "78|felt brighter skin\n84|saw reduced wrinkles\n68|reported smaller pores\n68|reported less inflammation",
+            "show_lab_disclaimer": true,
+            "source": "Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine (100 testers aged 15–76)"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "eyebrow": "NO MATTERS",
+        "heading": "NO Matters — Five Ways BIO N:OV Supports You"
+      }
+    },
+    "ingredients": {
+      "type": "bgx-ingredients",
+      "blocks": {
+        "i0": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Fermented Garlic Extract",
+            "fallback_asset": "bgx-garlic-product.jpg",
+            "body": "Top-10 superfood; allicin supports metabolism."
+          }
+        },
+        "i1": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Fermented Lettuce Extract",
+            "fallback_asset": "bgx-lettuce-product.jpg",
+            "body": "Vitamins A & B, amino acids; supports skin against aging."
+          }
+        },
+        "i2": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Soybean",
+            "body": "Vitamins, minerals and fiber; supports healthy cholesterol levels."
+          }
+        },
+        "i3": {
+          "type": "ingredient",
+          "settings": {
+            "title": "Soybean Sprouts",
+            "body": "β-carotene and vitamin C; supports immune function."
+          }
+        },
+        "sp0": {
+          "type": "spec",
+          "settings": {
+            "icon": "flask",
+            "text": "500mg × 60 tablets (30g)"
+          }
+        },
+        "sp1": {
+          "type": "spec",
+          "settings": {
+            "icon": "sparkle",
+            "text": "3 tablets daily, 1 per serving"
+          }
+        },
+        "sp2": {
+          "type": "spec",
+          "settings": {
+            "icon": "leaf",
+            "text": "Store cool & dry, away from direct sunlight"
+          }
+        },
+        "sp3": {
+          "type": "spec",
+          "settings": {
+            "icon": "shield",
+            "text": "Upgraded PTP protective film"
+          }
+        }
+      },
+      "block_order": [
+        "i0",
+        "i1",
+        "i2",
+        "i3",
+        "sp0",
+        "sp1",
+        "sp2",
+        "sp3"
+      ],
+      "settings": {
+        "eyebrow": "PREMIUM RAW MATERIALS",
+        "heading": "Four Natural Ingredients. One Patented Fermentation.",
+        "video_opacity": 30
+      }
+    },
+    "science-team": {
+      "type": "bgx-science-team",
+      "blocks": {
+        "lead": {
+          "type": "lead",
+          "settings": {
+            "fallback_asset": "bgx-researcher-cheon.png",
+            "badge": "RESEARCH BOARD HEAD",
+            "name": "Dr. Cheon Hyun Soo",
+            "role": "Head of BIO N:OV Medical Development & Research Board",
+            "org": "SunChon National University"
+          }
+        },
+        "m0": {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-pae.png",
+            "name": "Prof. Dr. Hyun-Ock Pae",
+            "role": "NO & metabolites",
+            "org": "Wonkwang University School of Medicine"
+          }
+        },
+        "m1": {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-min.png",
+            "name": "Ph.D. Min Sun Kim",
+            "role": "Cardiovascular health",
+            "org": "Dean, Wonkwang University School of Medicine"
+          }
+        },
+        "m2": {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-shin.png",
+            "name": "Prof. Dr. Yong-Il Shin",
+            "role": "Neuro-rehabilitation",
+            "org": "Pusan National University"
+          }
+        },
+        "m3": {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-ju.png",
+            "name": "Dr. Ju Sung-Min",
+            "role": "NO, menopausal & lymphatic system research",
+            "org": "Center of TKM, Wonkwang University"
+          }
+        },
+        "m4": {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-han.png",
+            "name": "Ass. Prof. A-Lum Han",
+            "role": "Metabolic disease & clinical nutrition",
+            "org": "Wonkwang University Hospital"
+          }
+        },
+        "m5": {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-kim.png",
+            "name": "Prof. Dr. Kim Jong-Suk",
+            "role": "Metabolism & anti-aging",
+            "org": "Jeonbuk National University Medical School"
+          }
+        },
+        "m6": {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-sooah.png",
+            "name": "Dr. Sooah Kim",
+            "role": "Regenerative medicine & food application",
+            "org": "Jeonju University College of Medical Science"
+          }
+        }
+      },
+      "block_order": [
+        "lead",
+        "m0",
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "settings": {
+        "eyebrow": "TOP-NOTCH SCIENCE",
+        "heading": "Developed By Eight Korean University Professors"
+      }
+    },
+    "certifications": {
+      "type": "bgx-certifications",
+      "blocks": {
+        "c0": {
+          "type": "certificate",
+          "settings": {
+            "title": "Korean Patent"
+          }
+        },
+        "c1": {
+          "type": "certificate",
+          "settings": {
+            "title": "US Patent US 10,517,912 B2"
+          }
+        },
+        "c2": {
+          "type": "certificate",
+          "settings": {
+            "title": "China Patent"
+          }
+        },
+        "c3": {
+          "type": "certificate",
+          "settings": {
+            "title": "Korea GMP Certificate"
+          }
+        },
+        "bd0": {
+          "type": "badge",
+          "settings": {
+            "text": "GMP"
+          }
+        },
+        "bd1": {
+          "type": "badge",
+          "settings": {
+            "text": "건강기능식품 (Health Functional Food)"
+          }
+        },
+        "bd2": {
+          "type": "badge",
+          "settings": {
+            "text": "KACC91554P"
+          }
+        },
+        "bd3": {
+          "type": "badge",
+          "settings": {
+            "text": "Made in Korea"
+          }
+        }
+      },
+      "block_order": [
+        "c0",
+        "c1",
+        "c2",
+        "c3",
+        "bd0",
+        "bd1",
+        "bd2",
+        "bd3"
+      ],
+      "settings": {
+        "eyebrow": "TRUST",
+        "heading": "Certified, Patented, Verified"
+      }
+    },
+    "offer": {
+      "type": "bgx-offer-bundles",
+      "blocks": {
+        "t0": {
+          "type": "tier",
+          "settings": {
+            "title": "Starter",
+            "contents": "1 box · 20-day supply",
+            "boxes": 1,
+            "urgency": "Try it",
+            "is_popular": false,
+            "variant_id": 50045773545722
+          }
+        },
+        "t1": {
+          "type": "tier",
+          "settings": {
+            "title": "Most Popular",
+            "contents": "3 boxes · 60-day supply",
+            "boxes": 3,
+            "badge": "Most Popular",
+            "savings": "Save $30 + Free Worldwide Shipping",
+            "is_popular": true,
+            "variant_id": 50045773578490
+          }
+        },
+        "t2": {
+          "type": "tier",
+          "settings": {
+            "title": "Best Value",
+            "contents": "6 boxes · 120-day supply",
+            "boxes": 6,
+            "badge": "Best Value",
+            "savings": "Save $120 + Free Shipping",
+            "gift": "Free NO Health Guide eBook",
+            "is_popular": false,
+            "variant_id": 50045773611258
+          }
+        },
+        "tr0": {
+          "type": "trust",
+          "settings": {
+            "icon": "truck",
+            "text": "Free worldwide shipping over $99"
+          }
+        },
+        "tr1": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield",
+            "text": "30-day money-back guarantee"
+          }
+        },
+        "tr2": {
+          "type": "trust",
+          "settings": {
+            "icon": "award",
+            "text": "Ships from Singapore & Korea"
+          }
+        }
+      },
+      "block_order": [
+        "t0",
+        "t1",
+        "t2",
+        "tr0",
+        "tr1",
+        "tr2"
+      ],
+      "settings": {
+        "product": "bio-nov",
+        "eyebrow": "CHOOSE YOUR SUPPLY",
+        "heading": "Choose Your Supply",
+        "cta_text": "Add to Cart",
+        "show_payment_icons": true
+      }
+    },
+    "testimonials": {
+      "type": "bgx-testimonials",
+      "blocks": {
+        "rv0": {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Three small tablets a day, no aftertaste, and it slots into my morning coffee routine without thinking about it.",
+            "name": "Placeholder Reviewer",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "rv1": {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. The blister packaging keeps them dry in a humid climate, which is more than I can say for the last supplement I tried.",
+            "name": "Placeholder Reviewer",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "rv2": {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Arrived in under a week and the box is exactly as pictured. Easy to swallow, no strong smell.",
+            "name": "Placeholder Reviewer",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "rv3": {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. I like that the ingredient list is short and I can pronounce all of it.",
+            "name": "Placeholder Reviewer",
+            "rating": 4,
+            "verified": true
+          }
+        },
+        "rv4": {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. One box lasts me twenty days exactly, so the three-box bundle lines up neatly with a two-month routine.",
+            "name": "Placeholder Reviewer",
+            "rating": 5,
+            "verified": true
+          }
+        },
+        "rv5": {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Reordering was straightforward and customer service replied the same day.",
+            "name": "Placeholder Reviewer",
+            "rating": 5,
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "rv0",
+        "rv1",
+        "rv2",
+        "rv3",
+        "rv4",
+        "rv5"
+      ],
+      "settings": {
+        "eyebrow": "CUSTOMERS",
+        "heading": "Real People. Real Routines."
+      }
+    },
+    "faq": {
+      "type": "bgx-faq",
+      "blocks": {
+        "q0": {
+          "type": "question",
+          "settings": {
+            "question": "What is nitric oxide and why does it matter?",
+            "answer": "<p>Nitric oxide (NO) is a molecule your body produces naturally. It signals the smooth muscle in your blood vessel walls to relax, which keeps vessels broad and supports healthy circulation throughout the body.</p>"
+          }
+        },
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How is BIO N:OV different from arginine or beet-based supplements?",
+            "answer": "<p>1st-generation arginine products need an enzyme to convert into NO, and 2nd-generation vegetable and fruit extracts have reported side effects including nausea, diarrhea and headache. BIO N:OV is a 3rd-generation product made by patented microbial fermentation — it releases NO on contact with stomach acid, so no enzyme conversion is required.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How do I take it?",
+            "answer": "<p>3 tablets daily, 1 tablet per serving, with water. Store in a cool, dry place away from direct sunlight.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "How soon might I notice something?",
+            "answer": "<p>This varies from person to person and no outcome is guaranteed. Laboratory measurements were taken within 30 minutes to 1 hour of intake. Individual results vary.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I take it alongside my current medication?",
+            "answer": "<p>Always consult your doctor or pharmacist first, especially if you take prescription medication, are pregnant or nursing, or are under medical supervision. Do not stop or change any prescribed medication.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Are there side effects?",
+            "answer": "<p>There are no reported side effects for BIO N:OV. If you experience any discomfort, stop taking it and speak to a healthcare professional.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "Is it suitable for vegetarians?",
+            "answer": "<p>BIO N:OV is made from fermented garlic extract, fermented lettuce extract, soybean and soybean sprouts. Check the current product label for the full ingredient and allergen statement before purchase.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "question": "Where does it ship from and how long does delivery take?",
+            "answer": "<p>Orders ship from Singapore and Korea. Delivery times depend on destination and are shown at checkout.</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "<p>We offer a 30-day money-back guarantee. See our refund policy for full details.</p>"
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "question": "Is BIO N:OV certified?",
+            "answer": "<p>BIO N:OV is manufactured in Korea under GMP certification and is built on a patented fermentation technology using the proprietary microbial strain KACC91554P, held by the Korea Research Institute of Bioscience and Biotechnology.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q0",
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9"
+      ],
+      "settings": {
+        "eyebrow": "QUESTIONS",
+        "heading": "Frequently Asked Questions"
+      }
+    },
+    "final-cta": {
+      "type": "bgx-guarantee-cta",
+      "blocks": {
+        "f0": {
+          "type": "trust",
+          "settings": {
+            "text": "GMP Certified Korea"
+          }
+        },
+        "f1": {
+          "type": "trust",
+          "settings": {
+            "text": "Free worldwide shipping over $99"
+          }
+        },
+        "f2": {
+          "type": "trust",
+          "settings": {
+            "text": "Ships from Singapore & Korea"
+          }
+        }
+      },
+      "block_order": [
+        "f0",
+        "f1",
+        "f2"
+      ],
+      "settings": {
+        "heading": "Stay Healthy. Happy. In Harmony.",
+        "subheading": "Clearing the way to optimum health — from Korea to the world.",
+        "cta_text": "Shop BIO N:OV",
+        "cta_link": "shopify://products/bio-nov",
+        "guarantee_text": "30-day money-back guarantee",
+        "video_opacity": 45
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "no-decline",
+    "problem-stats",
+    "vessel-aging",
+    "proof-numbers",
+    "generations",
+    "mechanism",
+    "benefits",
+    "ingredients",
+    "science-team",
+    "certifications",
+    "offer",
+    "testimonials",
+    "faq",
+    "final-cta"
+  ]
+}

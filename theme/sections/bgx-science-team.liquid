@@ -1,0 +1,331 @@
+{% comment %}
+  S10 · The Science Team.
+  A lead card for the research board head, then a grid of the R&D team.
+  Cards lift with a gradient border on hover.
+
+  Portrait images are cropped from the official BIO N:OV deck. Permission to
+  use each portrait must be confirmed before launch — see README.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--void">
+  <div class="bgx-wrap">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    {%- assign leads = section.blocks | where: 'type', 'lead' -%}
+    {%- for block in leads -%}
+      <article class="bgx-team__lead bgx-reveal" {{ block.shopify_attributes }}>
+        <div class="bgx-team__lead-photo">
+          {% render 'bgx-team-photo', block: block, width: 700, sizes: '(min-width: 900px) 260px, 46vw' %}
+        </div>
+        <div class="bgx-team__lead-copy">
+          <span class="bgx-pill bgx-pill--accent">{{ block.settings.badge }}</span>
+          <h3 class="bgx-h3">{{ block.settings.name }}</h3>
+          <p class="bgx-team__role">{{ block.settings.role }}</p>
+          <p class="bgx-team__org">{{ block.settings.org }}</p>
+        </div>
+      </article>
+    {%- endfor -%}
+
+    <div class="bgx-grid bgx-team__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'member' -%}
+          <article
+            class="bgx-card bgx-team__card bgx-reveal"
+            data-bgx-delay="{{ forloop.index0 | times: 0.06 }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="bgx-team__photo">
+              {% render 'bgx-team-photo', block: block, width: 400, sizes: '120px' %}
+            </div>
+            <h3 class="bgx-team__name">{{ block.settings.name }}</h3>
+            <p class="bgx-team__role">{{ block.settings.role }}</p>
+            <p class="bgx-team__org">{{ block.settings.org }}</p>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .bgx-team__lead {
+    display: grid;
+    gap: clamp(20px, 3vw, 36px);
+    grid-template-columns: 1fr;
+    align-items: center;
+    margin-top: clamp(34px, 5vw, 56px);
+    padding: clamp(22px, 3vw, 34px);
+    border-radius: var(--bgx-radius);
+    border: 1px solid transparent;
+    background: linear-gradient(rgba(11, 27, 58, 0.8), rgba(11, 27, 58, 0.8)) padding-box,
+      var(--bgx-gradient) border-box;
+    box-shadow: var(--bgx-bloom-lg);
+  }
+
+  .bgx-team__lead-photo {
+    width: min(260px, 46vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(0, 220, 255, 0.35);
+    justify-self: center;
+  }
+
+  .bgx-team__lead-photo img,
+  .bgx-team__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .bgx-team__lead-copy .bgx-h3 {
+    margin: 1rem 0 0.4rem;
+  }
+
+  .bgx-team__grid {
+    margin-top: clamp(20px, 3vw, 28px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  }
+
+  .bgx-team__card {
+    text-align: center;
+  }
+
+  .bgx-team__card:hover,
+  .bgx-team__card:focus-within {
+    border-color: transparent;
+    background: linear-gradient(rgba(11, 27, 58, 0.7), rgba(11, 27, 58, 0.7)) padding-box,
+      var(--bgx-gradient) border-box;
+  }
+
+  .bgx-team__photo {
+    width: 120px;
+    aspect-ratio: 1;
+    margin: 0 auto 1.1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(0, 220, 255, 0.28);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .bgx-team__name {
+    font-family: var(--bgx-font-display);
+    font-size: 1.04rem;
+    font-weight: 600;
+    color: var(--bgx-white);
+    margin: 0 0 0.35rem;
+  }
+
+  .bgx-team__role {
+    font-size: 0.88rem;
+    color: var(--bgx-mist-strong);
+    margin: 0 0 0.3rem;
+  }
+
+  .bgx-team__org {
+    font-size: 0.82rem;
+    color: rgba(169, 183, 208, 0.75);
+    margin: 0;
+  }
+
+  .bgx-team__placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: rgba(0, 220, 255, 0.5);
+    font-family: var(--bgx-font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  @media (min-width: 900px) {
+    .bgx-team__lead {
+      grid-template-columns: auto 1fr;
+    }
+    .bgx-team__lead-photo {
+      justify-self: start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Science team",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "TOP-NOTCH SCIENCE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Developed By Eight Korean University Professors"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lead",
+      "name": "Lead researcher",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portrait"
+        },
+        {
+          "type": "text",
+          "id": "fallback_asset",
+          "label": "Fallback theme asset"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "default": "RESEARCH BOARD HEAD"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Dr. Cheon Hyun Soo"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Head of BIO N:OV Medical Development & Research Board"
+        },
+        {
+          "type": "text",
+          "id": "org",
+          "label": "Organisation",
+          "default": "SunChon National University"
+        }
+      ]
+    },
+    {
+      "type": "member",
+      "name": "Team member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Portrait"
+        },
+        {
+          "type": "text",
+          "id": "fallback_asset",
+          "label": "Fallback theme asset"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role"
+        },
+        {
+          "type": "text",
+          "id": "org",
+          "label": "Organisation"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BGX Science team",
+      "blocks": [
+        {
+          "type": "lead",
+          "settings": {
+            "fallback_asset": "bgx-researcher-cheon.png",
+            "badge": "RESEARCH BOARD HEAD",
+            "name": "Dr. Cheon Hyun Soo",
+            "role": "Head of BIO N:OV Medical Development & Research Board",
+            "org": "SunChon National University"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-pae.png",
+            "name": "Prof. Dr. Hyun-Ock Pae",
+            "role": "NO & metabolites",
+            "org": "Wonkwang University School of Medicine"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-min.png",
+            "name": "Ph.D. Min Sun Kim",
+            "role": "Cardiovascular health",
+            "org": "Dean, Wonkwang University School of Medicine"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-shin.png",
+            "name": "Prof. Dr. Yong-Il Shin",
+            "role": "Neuro-rehabilitation",
+            "org": "Pusan National University"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-ju.png",
+            "name": "Dr. Ju Sung-Min",
+            "role": "NO, menopausal & lymphatic system research",
+            "org": "Center of TKM, Wonkwang University"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-han.png",
+            "name": "Ass. Prof. A-Lum Han",
+            "role": "Metabolic disease & clinical nutrition",
+            "org": "Wonkwang University Hospital"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-kim.png",
+            "name": "Prof. Dr. Kim Jong-Suk",
+            "role": "Metabolism & anti-aging",
+            "org": "Jeonbuk National University Medical School"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "fallback_asset": "bgx-researcher-sooah.png",
+            "name": "Dr. Sooah Kim",
+            "role": "Regenerative medicine & food application",
+            "org": "Jeonju University College of Medical Science"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

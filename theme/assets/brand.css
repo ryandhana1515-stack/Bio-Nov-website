@@ -1,0 +1,567 @@
+/* ==========================================================================
+   BIO N:OV — Bio Green Elixirs brand system
+   Design tokens + global type/colour + shared component primitives.
+   Everything the bgx-* sections use lives here. Edit tokens, not components.
+   ========================================================================== */
+
+:root {
+  /* --- Core palette ------------------------------------------------------ */
+  --bgx-void: #05070e; /* page background, deep near-black navy */
+  --bgx-navy: #0b1b3a;
+  --bgx-deep: #12256b; /* deck deep indigo */
+  --bgx-cyan: #00dcff; /* PRIMARY brand accent */
+  --bgx-blue: #1f8bff;
+  --bgx-violet: #7b4dff; /* deck gradient end */
+  --bgx-magenta: #c64be8;
+  --bgx-arterial: #e63946; /* vessel / risk visuals ONLY */
+  --bgx-amber: #ff8a3d; /* stat highlight */
+  --bgx-white: #ffffff;
+  --bgx-mist: #a9b7d0; /* body text on dark */
+
+  /* Accessible mist. --bgx-mist is 8.4:1 on --bgx-void but only 4.2:1 on the
+     lightest navy surfaces, so text on raised cards uses --bgx-mist-strong. */
+  --bgx-mist-strong: #c3cee1;
+
+  /* --- Signature gradient ------------------------------------------------ */
+  --bgx-gradient: linear-gradient(100deg, #00dcff 0%, #1f8bff 35%, #7b4dff 70%, #c64be8 100%);
+  --bgx-gradient-soft: linear-gradient(
+    100deg,
+    rgba(0, 220, 255, 0.16) 0%,
+    rgba(31, 139, 255, 0.14) 35%,
+    rgba(123, 77, 255, 0.14) 70%,
+    rgba(198, 75, 232, 0.16) 100%
+  );
+
+  /* --- Surfaces ---------------------------------------------------------- */
+  --bgx-glass: rgba(255, 255, 255, 0.04);
+  --bgx-glass-hi: rgba(255, 255, 255, 0.07);
+  --bgx-glass-border: rgba(0, 220, 255, 0.18);
+  --bgx-glass-border-hi: rgba(0, 220, 255, 0.42);
+  --bgx-bloom: 0 0 60px -20px var(--bgx-cyan);
+  --bgx-bloom-lg: 0 0 90px -24px var(--bgx-cyan);
+  --bgx-radius: 20px;
+  --bgx-radius-sm: 14px;
+  --bgx-radius-pill: 999px;
+
+  /* --- Type -------------------------------------------------------------- */
+  --bgx-font-display: 'Space Grotesk', 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --bgx-font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --bgx-h1: clamp(2.65rem, 7.2vw, 5.25rem);
+  --bgx-h2: clamp(2.05rem, 5vw, 3.6rem);
+  --bgx-h3: clamp(1.35rem, 2.6vw, 1.85rem);
+  --bgx-eyebrow: clamp(0.7rem, 1.5vw, 0.82rem);
+  --bgx-body: 17px;
+  --bgx-lead: clamp(1.05rem, 2.1vw, 1.25rem);
+
+  /* --- Rhythm ------------------------------------------------------------ */
+  --bgx-section-y: clamp(88px, 12vw, 180px);
+  --bgx-gutter: clamp(20px, 5vw, 48px);
+  --bgx-maxw: 1280px;
+  --bgx-maxw-narrow: 820px;
+
+  /* --- Motion ------------------------------------------------------------ */
+  --bgx-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --bgx-dur: 0.9s;
+}
+
+@media (min-width: 750px) {
+  :root {
+    --bgx-body: 18px;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.bgx-dark,
+body.bgx-dark {
+  background-color: var(--bgx-void);
+  color: var(--bgx-mist);
+  font-family: var(--bgx-font-body);
+  font-size: var(--bgx-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Lenis smooth scroll requires the html element to opt out of native smoothing. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.bgx-section {
+  position: relative;
+  padding-block: var(--bgx-section-y);
+  overflow: clip;
+  isolation: isolate;
+}
+
+.bgx-section--void {
+  background: var(--bgx-void);
+}
+.bgx-section--navy {
+  background: linear-gradient(180deg, var(--bgx-void) 0%, var(--bgx-navy) 55%, var(--bgx-void) 100%);
+}
+/* Subtle radial cyan glow — the third surface in the alternating rhythm. */
+.bgx-section--glow {
+  background: var(--bgx-void);
+}
+.bgx-section--glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(70% 55% at 50% 0%, rgba(0, 220, 255, 0.13) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.bgx-wrap {
+  width: 100%;
+  max-width: var(--bgx-maxw);
+  margin-inline: auto;
+  padding-inline: var(--bgx-gutter);
+}
+.bgx-wrap--narrow {
+  max-width: var(--bgx-maxw-narrow);
+}
+
+/* Hairline gradient divider between sections. */
+.bgx-divider {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(90deg, transparent, rgba(0, 220, 255, 0.35), transparent);
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+.bgx-eyebrow {
+  display: inline-block;
+  font-family: var(--bgx-font-display);
+  font-size: var(--bgx-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bgx-cyan);
+  margin-bottom: 1.1rem;
+}
+
+.bgx-h1,
+.bgx-h2,
+.bgx-h3 {
+  font-family: var(--bgx-font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  color: var(--bgx-white);
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+.bgx-h1 {
+  font-size: var(--bgx-h1);
+}
+.bgx-h2 {
+  font-size: var(--bgx-h2);
+  line-height: 1.08;
+}
+.bgx-h3 {
+  font-size: var(--bgx-h3);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.bgx-lead {
+  font-size: var(--bgx-lead);
+  color: var(--bgx-mist);
+  max-width: 62ch;
+  margin: 0 0 1.5rem;
+}
+
+.bgx-grad-text {
+  background: var(--bgx-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Fallback for the rare engine that drops background-clip:text. */
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gradient underline used beneath headlines. */
+.bgx-underline {
+  display: block;
+  width: 84px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--bgx-gradient);
+  margin-top: 1.4rem;
+}
+.bgx-underline--center {
+  margin-inline: auto;
+}
+
+.bgx-source {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: rgba(169, 183, 208, 0.72);
+  margin-top: 1.5rem;
+}
+
+.bgx-center {
+  text-align: center;
+}
+.bgx-center .bgx-lead {
+  margin-inline: auto;
+}
+
+/* Word-splitter output (motion.js). Words animate, spaces stay intact. */
+.bgx-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.bgx-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+}
+
+/* ==========================================================================
+   Glass cards
+   ========================================================================== */
+
+.bgx-card {
+  position: relative;
+  background: var(--bgx-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--bgx-glass-border);
+  border-radius: var(--bgx-radius);
+  padding: clamp(22px, 3vw, 34px);
+  transition: transform 0.5s var(--bgx-ease-out), box-shadow 0.5s var(--bgx-ease-out),
+    border-color 0.5s var(--bgx-ease-out), background-color 0.5s var(--bgx-ease-out);
+}
+.bgx-card:hover,
+.bgx-card:focus-within {
+  transform: translateY(-6px);
+  border-color: var(--bgx-glass-border-hi);
+  background: var(--bgx-glass-hi);
+  box-shadow: var(--bgx-bloom);
+}
+.bgx-card__title {
+  font-family: var(--bgx-font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--bgx-white);
+  margin: 0 0 0.55rem;
+  letter-spacing: -0.01em;
+}
+.bgx-card__body {
+  margin: 0;
+  color: var(--bgx-mist-strong);
+  font-size: 0.97rem;
+  line-height: 1.62;
+}
+
+/* Gradient-border variant — used for the winning/featured card. */
+.bgx-card--featured {
+  border-color: transparent;
+  background: linear-gradient(var(--bgx-navy), var(--bgx-navy)) padding-box,
+    var(--bgx-gradient) border-box;
+  border: 1px solid transparent;
+  box-shadow: var(--bgx-bloom-lg);
+}
+
+.bgx-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--bgx-gradient-soft);
+  border: 1px solid var(--bgx-glass-border);
+  margin-bottom: 1.1rem;
+  color: var(--bgx-cyan);
+}
+.bgx-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bgx-grid {
+  display: grid;
+  gap: clamp(16px, 2.2vw, 26px);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+}
+.bgx-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+}
+.bgx-grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.bgx-btn {
+  --bgx-btn-fg: var(--bgx-void);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  padding: 1.05em 2.1em;
+  border: 0;
+  border-radius: var(--bgx-radius-pill);
+  font-family: var(--bgx-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--bgx-btn-fg);
+  background: var(--bgx-gradient);
+  background-size: 200% 100%;
+  transition: background-position 0.6s var(--bgx-ease-out), box-shadow 0.4s var(--bgx-ease-out),
+    transform 0.25s var(--bgx-ease-out);
+  will-change: transform;
+}
+.bgx-btn:hover,
+.bgx-btn:focus-visible {
+  background-position: 100% 0;
+  box-shadow: var(--bgx-bloom);
+  color: var(--bgx-btn-fg);
+}
+.bgx-btn:active {
+  transform: scale(0.98);
+}
+
+.bgx-btn--ghost {
+  --bgx-btn-fg: var(--bgx-white);
+  background: transparent;
+  border: 1px solid var(--bgx-glass-border-hi);
+}
+.bgx-btn--ghost:hover,
+.bgx-btn--ghost:focus-visible {
+  background: var(--bgx-gradient-soft);
+  box-shadow: var(--bgx-bloom);
+}
+
+.bgx-btn--full {
+  width: 100%;
+}
+.bgx-btn--lg {
+  font-size: 1.08rem;
+  padding: 1.2em 2.4em;
+}
+
+.bgx-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 2rem;
+}
+
+/* ==========================================================================
+   Focus ring — visible cyan on every interactive element
+   ========================================================================== */
+
+.bgx-dark :is(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--bgx-cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.bgx-skip {
+  position: absolute;
+  left: -9999px;
+  z-index: 1000;
+  padding: 1em 1.5em;
+  background: var(--bgx-navy);
+  color: var(--bgx-white);
+}
+.bgx-skip:focus {
+  left: 12px;
+  top: 12px;
+}
+
+/* ==========================================================================
+   Trust row / badges / pills
+   ========================================================================== */
+
+.bgx-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 26px);
+  list-style: none;
+  margin: 2.2rem 0 0;
+  padding: 0;
+}
+.bgx-trust li {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  font-size: 0.85rem;
+  color: var(--bgx-mist-strong);
+}
+.bgx-trust svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  color: var(--bgx-cyan);
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+}
+
+.bgx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1em;
+  border-radius: var(--bgx-radius-pill);
+  border: 1px solid var(--bgx-glass-border);
+  background: var(--bgx-glass);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--bgx-mist-strong);
+}
+.bgx-pill--accent {
+  border-color: transparent;
+  background: var(--bgx-gradient);
+  color: var(--bgx-void);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Numerals / counters
+   ========================================================================== */
+
+.bgx-num {
+  font-family: var(--bgx-font-display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  background: var(--bgx-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.bgx-num--xl {
+  font-size: clamp(2.6rem, 6.5vw, 4.2rem);
+}
+.bgx-num--lg {
+  font-size: clamp(2rem, 4.6vw, 3rem);
+}
+
+.bgx-stat__label {
+  font-size: 0.92rem;
+  color: var(--bgx-mist-strong);
+  margin-top: 0.65rem;
+}
+.bgx-stat__note {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(169, 183, 208, 0.72);
+  margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   Video background (snippets/bgx-video-bg.liquid)
+   ========================================================================== */
+
+.bgx-videobg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bgx-videobg video,
+.bgx-videobg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.bgx-videobg video {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.bgx-videobg video.is-ready {
+  opacity: 1;
+}
+/* Poster sits under the video so there is never a flash of empty background. */
+.bgx-videobg__poster {
+  position: absolute;
+  inset: 0;
+}
+.bgx-videobg__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Reveal states — the default entrance for every section
+   ========================================================================== */
+
+.bgx-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.bgx-revealed,
+.bgx-no-motion .bgx-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================================
+   Reduced motion / low-power fallbacks
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .bgx-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .bgx-videobg video {
+    display: none;
+  }
+}
+
+/* Utility used by JS when it needs to hard-disable motion. */
+.bgx-no-motion .bgx-videobg video {
+  display: none;
+}

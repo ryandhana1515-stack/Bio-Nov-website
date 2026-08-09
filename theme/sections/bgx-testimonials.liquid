@@ -1,0 +1,295 @@
+{% comment %}
+  S13 · Testimonials.
+  Auto-scrolling marquee, paused on hover and on keyboard focus.
+
+  <!-- REPLACE WITH REAL REVIEWS -->
+  The six defaults are PLACEHOLDERS. They deliberately talk only about taste,
+  routine, packaging and ease of use — never a health outcome — because
+  fabricated medical testimonials are both non-compliant and unusable.
+  Swap them for consented, verified reviews before launch, or connect Loox /
+  Judge.me and render their widget in place of this section.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--void">
+  <div class="bgx-wrap bgx-center">
+    <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+    <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+    <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+  </div>
+
+  <div class="bgx-marquee bgx-reveal" data-bgx-marquee>
+    {%- comment -%} Rendered twice so the loop is seamless. {%- endcomment -%}
+    {%- for pass in (1..2) -%}
+      <ul class="bgx-marquee__track" {% if pass == 2 %}aria-hidden="true"{% endif %}>
+        {%- for block in section.blocks -%}
+          <li class="bgx-card bgx-review" {{ block.shopify_attributes }}>
+            <div class="bgx-review__stars" role="img" aria-label="{{ block.settings.rating }} out of 5 stars">
+              {%- for i in (1..5) -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="{% if i <= block.settings.rating %}is-on{% endif %}">
+                  <path d="m12 2 3 6.6 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21.2l1.4-7L2 9.4l7-.8Z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+
+            <p class="bgx-review__body">{{ block.settings.body }}</p>
+
+            <footer class="bgx-review__foot">
+              {%- if block.settings.avatar != blank -%}
+                {{
+                  block.settings.avatar
+                  | image_url: width: 120
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '60,120',
+                    sizes: '38px',
+                    alt: '',
+                    class: 'bgx-review__avatar'
+                }}
+              {%- endif -%}
+              <span>
+                <span class="bgx-review__name">{{ block.settings.name }}</span>
+                {%- if block.settings.verified -%}
+                  <span class="bgx-review__verified">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg>
+                    Verified Buyer
+                  </span>
+                {%- endif -%}
+              </span>
+            </footer>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endfor -%}
+  </div>
+
+  <div class="bgx-wrap">
+    {% render 'bgx-disclaimer', type: 'default', align: 'center' %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .bgx-marquee {
+    margin-top: clamp(34px, 5vw, 52px);
+    display: flex;
+    gap: 18px;
+    overflow: hidden;
+    /* Fade the edges so cards enter and leave rather than being cut. */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .bgx-marquee__track {
+    display: flex;
+    gap: 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: none;
+    animation: bgx-marquee 46s linear infinite;
+  }
+
+  .bgx-marquee:hover .bgx-marquee__track,
+  .bgx-marquee:focus-within .bgx-marquee__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes bgx-marquee {
+    to {
+      transform: translateX(calc(-100% - 18px));
+    }
+  }
+
+  .bgx-review {
+    width: min(340px, 78vw);
+    flex: none;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .bgx-review__stars {
+    display: flex;
+    gap: 3px;
+  }
+
+  .bgx-review__stars svg {
+    width: 16px;
+    height: 16px;
+    fill: rgba(255, 255, 255, 0.16);
+  }
+
+  .bgx-review__stars svg.is-on {
+    fill: var(--bgx-amber);
+  }
+
+  .bgx-review__body {
+    margin: 0;
+    color: var(--bgx-mist-strong);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .bgx-review__foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bgx-review__avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .bgx-review__name {
+    display: block;
+    font-family: var(--bgx-font-display);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--bgx-white);
+  }
+
+  .bgx-review__verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.76rem;
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-review__verified svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bgx-marquee {
+      overflow-x: auto;
+    }
+    .bgx-marquee__track {
+      animation: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Testimonials",
+  "tag": "section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "CUSTOMERS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real People. Real Routines."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Only publish reviews you have collected and have consent to use. Do not describe treating or curing any condition."
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5,
+          "label": "Rating"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "default": true,
+          "label": "Verified buyer badge"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Photo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BGX Testimonials",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Three small tablets a day, no aftertaste, and it slots into my morning coffee routine without thinking about it.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. The blister packaging keeps them dry in a humid climate, which is more than I can say for the last supplement I tried.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Arrived in under a week and the box is exactly as pictured. Easy to swallow, no strong smell.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. I like that the ingredient list is short and I can pronounce all of it.",
+            "name": "Placeholder Reviewer",
+            "rating": 4
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. One box lasts me twenty days exactly, so the three-box bundle lines up neatly with a two-month routine.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "body": "PLACEHOLDER — replace with a real review. Reordering was straightforward and customer service replied the same day.",
+            "name": "Placeholder Reviewer",
+            "rating": 5
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

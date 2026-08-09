@@ -1,0 +1,455 @@
+{% comment %}
+  S4 · Vessel Aging — motion moment M3. THE CENTREPIECE.
+
+  A pinned 200vh stage. Scroll position drives `video.currentTime` on the
+  aging clip: the artery narrows, decade labels cross-fade through the left
+  rail, and the NO% counter falls 100 → 80 → 50 → 35 → 15. Past 68% of the
+  pin the scrub reverses — the restore clip fades in, cyan floods the vessel
+  and the counter climbs back.
+
+  Below 768px, on <4-core devices, on save-data, and under reduced motion the
+  pin is skipped entirely: every decade label shows at once and the section
+  reads as a static story. That fallback is deliberate — a stuttering scrub
+  is worse than no scrub. Controller: assets/vessel-scene.js.
+{% endcomment %}
+
+<section class="bgx-vessel" data-bgx-vessel>
+  <div class="bgx-vessel__pin" data-bgx-vessel-pin>
+    {% render 'bgx-video-bg',
+      mp4: section.settings.aging_mp4,
+      webm: section.settings.aging_webm,
+      poster: section.settings.aging_poster,
+      scrim: 'flat',
+      scrub: true,
+      attr: 'data-bgx-vessel-aging'
+    %}
+
+    {% render 'bgx-video-bg',
+      mp4: section.settings.restore_mp4,
+      webm: section.settings.restore_webm,
+      scrim: 'none',
+      scrub: true,
+      no_poster: true,
+      attr: 'data-bgx-vessel-restore'
+    %}
+
+    <div class="bgx-wrap bgx-vessel__layout">
+      <header class="bgx-vessel__head">
+        <span class="bgx-eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="bgx-h2">{{ section.settings.heading }}</h2>
+      </header>
+
+      <ol class="bgx-vessel__rail" data-bgx-vessel-track>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stage' -%}
+            <li class="bgx-vessel__stage" data-bgx-stage {{ block.shopify_attributes }}>
+              <span class="bgx-vessel__decade">{{ block.settings.decade }}</span>
+              <span class="bgx-vessel__no">{{ block.settings.no_level }}</span>
+              <span class="bgx-vessel__desc">{{ block.settings.description }}</span>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ol>
+
+      <div class="bgx-vessel__meter" aria-hidden="true">
+        <span class="bgx-num bgx-num--xl" data-bgx-vessel-counter>100%</span>
+        <span class="bgx-stat__label">{{ section.settings.meter_label }}</span>
+      </div>
+
+      <aside class="bgx-vessel__restore" data-bgx-vessel-restore-panel>
+        <span class="bgx-pill bgx-pill--accent">{{ section.settings.restore_badge }}</span>
+        <h3 class="bgx-h3">{{ section.settings.restore_heading }}</h3>
+        <p class="bgx-vessel__restore-body">{{ section.settings.restore_body }}</p>
+      </aside>
+
+      <p class="bgx-vessel__closer">{{ section.settings.closing_line }}</p>
+    </div>
+  </div>
+
+  {%- if section.settings.source != blank -%}
+    <div class="bgx-wrap">
+      <p class="bgx-source">Source: {{ section.settings.source }}</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .bgx-vessel {
+    position: relative;
+    background: var(--bgx-void);
+  }
+
+  .bgx-vessel__pin {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: clip;
+    isolation: isolate;
+    padding-block: clamp(60px, 9vw, 110px);
+  }
+
+  .bgx-vessel__layout {
+    display: grid;
+    gap: clamp(20px, 3vw, 34px);
+    width: 100%;
+    grid-template-columns: 1fr;
+    align-content: center;
+  }
+
+  .bgx-vessel__head {
+    max-width: 22ch;
+  }
+
+  .bgx-vessel__rail {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 22px;
+    display: grid;
+    gap: 10px;
+    position: relative;
+  }
+
+  /* Progress spine: the filled portion tracks scroll via --bgx-track. */
+  .bgx-vessel__rail::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .bgx-vessel__rail::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 2px;
+    height: var(--bgx-track, 0%);
+    border-radius: 2px;
+    background: var(--bgx-gradient);
+    transition: height 0.2s linear;
+  }
+
+  .bgx-vessel__stage {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: baseline;
+    gap: 10px;
+    opacity: 0.32;
+    transform: translateX(-4px);
+    transition: opacity 0.45s var(--bgx-ease-out), transform 0.45s var(--bgx-ease-out);
+  }
+
+  .bgx-vessel__stage.is-active {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bgx-vessel__decade {
+    font-family: var(--bgx-font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--bgx-white);
+    min-width: 3.2em;
+  }
+
+  .bgx-vessel__no {
+    font-family: var(--bgx-font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--bgx-cyan);
+  }
+
+  .bgx-vessel__desc {
+    font-size: 0.9rem;
+    color: var(--bgx-mist-strong);
+  }
+
+  .bgx-vessel__meter {
+    text-align: left;
+  }
+
+  .bgx-vessel__meter .bgx-stat__label {
+    display: block;
+    max-width: 16ch;
+  }
+
+  .bgx-vessel__restore {
+    border-radius: var(--bgx-radius);
+    border: 1px solid transparent;
+    background: linear-gradient(rgba(11, 27, 58, 0.86), rgba(11, 27, 58, 0.86)) padding-box,
+      var(--bgx-gradient) border-box;
+    padding: clamp(18px, 2.6vw, 26px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s var(--bgx-ease-out), transform 0.5s var(--bgx-ease-out),
+      box-shadow 0.5s var(--bgx-ease-out);
+  }
+
+  .bgx-vessel__restore.is-visible {
+    transform: none;
+    box-shadow: var(--bgx-bloom-lg);
+  }
+
+  .bgx-vessel__restore .bgx-h3 {
+    margin: 0.9rem 0 0.5rem;
+  }
+
+  .bgx-vessel__restore-body {
+    margin: 0;
+    color: var(--bgx-mist-strong);
+    font-size: 0.95rem;
+  }
+
+  .bgx-vessel__closer {
+    font-family: var(--bgx-font-display);
+    font-size: clamp(1.15rem, 2.6vw, 1.7rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--bgx-white);
+    margin: 0;
+    max-width: 30ch;
+  }
+
+  /* Cyan wash over the whole stage once the vessel starts restoring. */
+  .bgx-vessel.is-restoring .bgx-vessel__pin::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(60% 55% at 50% 50%, rgba(0, 220, 255, 0.18) 0%, transparent 72%);
+  }
+
+  /* --- Static fallback: no pin, everything visible ---------------------- */
+  .bgx-vessel--static .bgx-vessel__pin {
+    min-height: 0;
+  }
+
+  .bgx-vessel--static .bgx-vessel__stage {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bgx-vessel--static .bgx-vessel__restore {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bgx-vessel--static .bgx-vessel__rail::after {
+    height: 100%;
+  }
+
+  @media (min-width: 900px) {
+    .bgx-vessel__layout {
+      grid-template-columns: minmax(280px, 1fr) minmax(240px, 0.8fr);
+      grid-template-areas:
+        'head   meter'
+        'rail   restore'
+        'closer restore';
+      gap: clamp(24px, 3vw, 40px) clamp(30px, 5vw, 70px);
+    }
+    .bgx-vessel__head {
+      grid-area: head;
+    }
+    .bgx-vessel__rail {
+      grid-area: rail;
+    }
+    .bgx-vessel__meter {
+      grid-area: meter;
+      text-align: right;
+    }
+    .bgx-vessel__meter .bgx-stat__label {
+      margin-left: auto;
+    }
+    .bgx-vessel__restore {
+      grid-area: restore;
+      align-self: start;
+    }
+    .bgx-vessel__closer {
+      grid-area: closer;
+      align-self: end;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX Vessel aging",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Aging video (scrubbed by scroll)"
+    },
+    {
+      "type": "text",
+      "id": "aging_mp4",
+      "label": "Aging video URL (MP4)",
+      "info": "Slot: vessel-aging-scrub. Must be one continuous take with no cuts — scroll drives playback position."
+    },
+    {
+      "type": "text",
+      "id": "aging_webm",
+      "label": "Aging video URL (WebM, optional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "aging_poster",
+      "label": "Aging poster image"
+    },
+    {
+      "type": "header",
+      "content": "Restore video (reversal)"
+    },
+    {
+      "type": "text",
+      "id": "restore_mp4",
+      "label": "Restore video URL (MP4)",
+      "info": "Slot: vessel-restore."
+    },
+    {
+      "type": "text",
+      "id": "restore_webm",
+      "label": "Restore video URL (WebM, optional)"
+    },
+    {
+      "type": "header",
+      "content": "Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "VESSEL AGE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Blood Vessels Are Aging Faster Than You Are"
+    },
+    {
+      "type": "text",
+      "id": "meter_label",
+      "label": "Meter label",
+      "default": "Natural NO production"
+    },
+    {
+      "type": "header",
+      "content": "Reversal panel"
+    },
+    {
+      "type": "text",
+      "id": "restore_badge",
+      "label": "Badge",
+      "default": "BIO N:OV"
+    },
+    {
+      "type": "text",
+      "id": "restore_heading",
+      "label": "Heading",
+      "default": "BIO N:OV Helps Your Body Generate NO"
+    },
+    {
+      "type": "textarea",
+      "id": "restore_body",
+      "label": "Body",
+      "default": "Vessels relax. Broad. Smooth."
+    },
+    {
+      "type": "text",
+      "id": "closing_line",
+      "label": "Closing line",
+      "default": "Age is inevitable. Vessel age doesn't have to be."
+    },
+    {
+      "type": "text",
+      "id": "source",
+      "label": "Source",
+      "default": "Dr. Nathan Bryan, Functional Nitric Oxide Nutrition"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stage",
+      "name": "Decade stage",
+      "settings": [
+        {
+          "type": "text",
+          "id": "decade",
+          "label": "Decade",
+          "default": "20s"
+        },
+        {
+          "type": "text",
+          "id": "no_level",
+          "label": "NO level",
+          "default": "100% NO"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Open & elastic"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BGX Vessel aging",
+      "blocks": [
+        {
+          "type": "stage",
+          "settings": {
+            "decade": "20s",
+            "no_level": "100% NO",
+            "description": "Open & elastic"
+          }
+        },
+        {
+          "type": "stage",
+          "settings": {
+            "decade": "30s",
+            "no_level": "80% NO",
+            "description": "Walls thickening"
+          }
+        },
+        {
+          "type": "stage",
+          "settings": {
+            "decade": "40s",
+            "no_level": "50% NO",
+            "description": "Inflammation"
+          }
+        },
+        {
+          "type": "stage",
+          "settings": {
+            "decade": "50s",
+            "no_level": "35% NO",
+            "description": "Narrowing"
+          }
+        },
+        {
+          "type": "stage",
+          "settings": {
+            "decade": "60+",
+            "no_level": "15% NO",
+            "description": "Severely restricted"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,117 @@
+{% comment %}
+  BIO N:OV — reusable video background.
+
+  Renders a poster image immediately and lazily swaps in the video once it
+  nears the viewport (vessel-scene.js does the data-src -> src swap). Under
+  prefers-reduced-motion the video is never fetched at all and the poster
+  is the final design — not a placeholder.
+
+  Accepts:
+    mp4      {String}  MP4 URL (Shopify Files, Bunny, Cloudinary — anything)
+    webm     {String}  optional WebM VP9 URL, served first when present
+    poster   {Object}  Shopify image object (preferred), or
+    poster_url {String} raw poster URL if the image lives off-Shopify
+    opacity  {Number}  0-100, default 55
+    scrim    {String}  'vignette' | 'bottom' | 'flat' | 'none' (default vignette)
+    eager    {Boolean} true for above-the-fold video (skips lazy gate)
+    scrub    {Boolean} true if scroll drives currentTime (no autoplay)
+    attr     {String}  extra attributes for the <video> tag, e.g. data-bgx-vessel-aging
+    alt      {String}  poster alt text; videos are decorative so this is usually ''
+
+  Usage:
+    {% render 'bgx-video-bg',
+       mp4: section.settings.hero_video,
+       poster: section.settings.hero_poster,
+       opacity: 55, eager: true %}
+{% endcomment %}
+
+{%- liquid
+  assign bgx_opacity = opacity | default: 55
+  assign bgx_scrim = scrim | default: 'vignette'
+  assign bgx_alt = alt | default: ''
+-%}
+
+<div class="bgx-videobg" aria-hidden="true">
+  {%- if poster != blank -%}
+    <div class="bgx-videobg__poster">
+      {{
+        poster
+        | image_url: width: 1600
+        | image_tag:
+          loading: 'lazy',
+          decoding: 'async',
+          sizes: '100vw',
+          widths: '600,900,1200,1600,2000',
+          alt: bgx_alt
+      }}
+    </div>
+  {%- elsif poster_url != blank -%}
+    <div class="bgx-videobg__poster">
+      <img src="{{ poster_url }}" alt="{{ bgx_alt }}" loading="lazy" decoding="async">
+    </div>
+  {%- elsif no_poster != true -%}
+    {%- comment -%}
+      No poster yet: a dark brand gradient stands in so the section looks
+      finished before the video assets land. `no_poster: true` skips this
+      for stacked layers that must not obscure the layer beneath.
+    {%- endcomment -%}
+    <div
+      class="bgx-videobg__poster"
+      style="background:radial-gradient(80% 70% at 50% 40%, #12256b 0%, #0b1b3a 45%, #05070e 100%)"
+    ></div>
+  {%- endif -%}
+
+  {%- if mp4 != blank or webm != blank -%}
+    <video
+      data-bgx-video
+      {% if eager %}data-bgx-eager="1"{% endif %}
+      {% if scrub %}data-bgx-scrub="1"{% else %}autoplay loop{% endif %}
+      muted
+      playsinline
+      disablepictureinpicture
+      preload="{% if eager %}metadata{% else %}none{% endif %}"
+      tabindex="-1"
+      style="opacity:0;--bgx-video-opacity:{{ bgx_opacity }}"
+      {{ attr }}
+    >
+      {%- if webm != blank -%}
+        <source data-src="{{ webm }}" type="video/webm">
+      {%- endif -%}
+      {%- if mp4 != blank -%}
+        <source data-src="{{ mp4 }}" type="video/mp4">
+      {%- endif -%}
+    </video>
+  {%- endif -%}
+
+  {%- case bgx_scrim -%}
+    {%- when 'vignette' -%}
+      <div
+        class="bgx-videobg__scrim"
+        style="background:radial-gradient(70% 65% at 50% 45%, rgba(5,7,14,.18) 0%, rgba(5,7,14,.72) 62%, rgba(5,7,14,.96) 100%)"
+      ></div>
+    {%- when 'bottom' -%}
+      <div
+        class="bgx-videobg__scrim"
+        style="background:linear-gradient(180deg, rgba(5,7,14,.62) 0%, rgba(5,7,14,.38) 35%, rgba(5,7,14,.94) 100%)"
+      ></div>
+    {%- when 'flat' -%}
+      <div class="bgx-videobg__scrim" style="background:rgba(5,7,14,.68)"></div>
+  {%- endcase -%}
+</div>
+
+<style>
+  /* Autoplay loops fade to their configured opacity once decoded. */
+  .bgx-videobg video.is-ready:not([data-bgx-scrub='1']) {
+    opacity: calc(var(--bgx-video-opacity, 55) / 100);
+  }
+
+  /* Scrubbed layers have their opacity driven per-frame by vessel-scene.js
+     via --bgx-scrub-opacity, gated on is-ready so an undecoded video never
+     flashes black over the poster. */
+  .bgx-videobg video[data-bgx-scrub='1'] {
+    opacity: 0;
+  }
+  .bgx-videobg video[data-bgx-scrub='1'].is-ready {
+    opacity: var(--bgx-scrub-opacity, 1);
+  }
+</style>

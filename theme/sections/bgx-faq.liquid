@@ -1,0 +1,275 @@
+{% comment %}
+  S14 · FAQ.
+  Height-animated accordion (motion.js) plus schema.org FAQPage JSON-LD.
+
+  COMPLIANCE: the medication question must always answer "consult your doctor
+  or pharmacist". Do not soften it.
+{% endcomment %}
+
+<section class="bgx-section bgx-section--navy">
+  <div class="bgx-wrap bgx-wrap--narrow">
+    <div class="bgx-center">
+      <span class="bgx-eyebrow bgx-reveal">{{ section.settings.eyebrow }}</span>
+      <h2 class="bgx-h2" data-bgx-split>{{ section.settings.heading }}</h2>
+      <span class="bgx-underline bgx-underline--center bgx-reveal"></span>
+    </div>
+
+    <div class="bgx-faq" data-bgx-accordion="single">
+      {%- for block in section.blocks -%}
+        <div class="bgx-faq__item bgx-reveal" data-bgx-delay="{{ forloop.index0 | times: 0.04 }}" {{ block.shopify_attributes }}>
+          <h3 class="bgx-faq__q">
+            <button
+              type="button"
+              data-bgx-acc-trigger
+              aria-expanded="false"
+              aria-controls="bgx-faq-{{ section.id }}-{{ forloop.index }}"
+              id="bgx-faq-trigger-{{ section.id }}-{{ forloop.index }}"
+            >
+              <span>{{ block.settings.question }}</span>
+              <span class="bgx-faq__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </button>
+          </h3>
+          <div
+            class="bgx-faq__a"
+            id="bgx-faq-{{ section.id }}-{{ forloop.index }}"
+            role="region"
+            aria-labelledby="bgx-faq-trigger-{{ section.id }}-{{ forloop.index }}"
+            style="height:0"
+          >
+            <div class="bgx-faq__a-inner">{{ block.settings.answer }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- capture bgx_faq_ld -%}
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+      {
+        "@type": "Question",
+        "name": {{ block.settings.question | json }},
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": {{ block.settings.answer | strip_html | strip | json }}
+        }
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+{%- endcapture -%}
+<script type="application/ld+json">{{ bgx_faq_ld }}</script>
+
+{% stylesheet %}
+  .bgx-faq {
+    margin-top: clamp(34px, 5vw, 52px);
+    border-radius: var(--bgx-radius);
+    border: 1px solid var(--bgx-glass-border);
+    background: var(--bgx-glass);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    overflow: hidden;
+  }
+
+  .bgx-faq__item + .bgx-faq__item {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .bgx-faq__q {
+    margin: 0;
+    font-size: inherit;
+  }
+
+  .bgx-faq__q button {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    width: 100%;
+    padding: clamp(16px, 2.4vw, 21px) clamp(18px, 2.6vw, 26px);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--bgx-font-display);
+    font-size: clamp(0.98rem, 2vw, 1.06rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--bgx-white);
+  }
+
+  .bgx-faq__icon {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--bgx-glass-border);
+    color: var(--bgx-cyan);
+    transition: transform 0.4s var(--bgx-ease-out), background-color 0.4s ease;
+  }
+
+  .bgx-faq__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .bgx-faq__q button[aria-expanded='true'] .bgx-faq__icon {
+    transform: rotate(135deg);
+    background: rgba(0, 220, 255, 0.12);
+  }
+
+  .bgx-faq__a {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.45s var(--bgx-ease-out);
+  }
+
+  .bgx-faq__a-inner {
+    padding: 0 clamp(18px, 2.6vw, 26px) clamp(18px, 2.6vw, 24px);
+    color: var(--bgx-mist-strong);
+    font-size: 0.95rem;
+    line-height: 1.68;
+  }
+
+  .bgx-faq__a-inner p:first-child {
+    margin-top: 0;
+  }
+
+  .bgx-faq__a-inner p:last-child {
+    margin-bottom: 0;
+  }
+
+  .bgx-faq__a-inner a {
+    color: var(--bgx-cyan);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bgx-faq__a {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "BGX FAQ",
+  "tag": "section",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "QUESTIONS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BGX FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "What is nitric oxide and why does it matter?",
+            "answer": "<p>Nitric oxide (NO) is a molecule your body produces naturally. It signals the smooth muscle in your blood vessel walls to relax, which keeps vessels broad and supports healthy circulation throughout the body.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How is BIO N:OV different from arginine or beet-based supplements?",
+            "answer": "<p>1st-generation arginine products need an enzyme to convert into NO, and 2nd-generation vegetable and fruit extracts have reported side effects including nausea, diarrhea and headache. BIO N:OV is a 3rd-generation product made by patented microbial fermentation — it releases NO on contact with stomach acid, so no enzyme conversion is required.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How do I take it?",
+            "answer": "<p>3 tablets daily, 1 tablet per serving, with water. Store in a cool, dry place away from direct sunlight.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How soon might I notice something?",
+            "answer": "<p>This varies from person to person and no outcome is guaranteed. Laboratory measurements were taken within 30 minutes to 1 hour of intake. Individual results vary.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Can I take it alongside my current medication?",
+            "answer": "<p>Always consult your doctor or pharmacist first, especially if you take prescription medication, are pregnant or nursing, or are under medical supervision. Do not stop or change any prescribed medication.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are there side effects?",
+            "answer": "<p>There are no reported side effects for BIO N:OV. If you experience any discomfort, stop taking it and speak to a healthcare professional.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Is it suitable for vegetarians?",
+            "answer": "<p>BIO N:OV is made from fermented garlic extract, fermented lettuce extract, soybean and soybean sprouts. Check the current product label for the full ingredient and allergen statement before purchase.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Where does it ship from and how long does delivery take?",
+            "answer": "<p>Orders ship from Singapore and Korea. Delivery times depend on destination and are shown at checkout.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "<p>We offer a 30-day money-back guarantee. See our refund policy for full details.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Is BIO N:OV certified?",
+            "answer": "<p>BIO N:OV is manufactured in Korea under GMP certification and is built on a patented fermentation technology using the proprietary microbial strain KACC91554P, held by the Korea Research Institute of Bioscience and Biotechnology.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
