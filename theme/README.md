@@ -40,6 +40,27 @@ shopify theme push --theme "BIO N:OV"
 
 ---
 
+## Before you upload: run the schema check
+
+```bash
+python3 scripts/validate-schemas.py
+```
+
+Shopify validates section schemas on upload and, when one fails, **silently
+drops the file** — and then drops every page template that referenced it, while
+still reporting the import as successful. A single bad schema can remove your
+whole homepage with no error message anywhere.
+
+This script checks the four rules that bite:
+
+1. A section may declare `presets` or `default`, never both.
+2. A `range` default must land exactly on a step (`min: 10, step: 5` allows
+   25 or 30, never 28).
+3. A setting must not have `"default": ""` — omit the key instead.
+4. `theme_name` in `settings_schema.json` is capped at 25 characters.
+   Exceed it and Shopify blanks the entire file, leaving the theme with no
+   colour schemes at all.
+
 ## What is on the homepage
 
 Fifteen sections, in this order. Each one is a separate block in the Theme
