@@ -68,7 +68,7 @@ export default function BioNovSite({faq}:{faq:{question:string;answer:string}[]}
       "The PDF describes proprietary microbial fermentation technology. Patent, strain and GMP details require verification.",
       "Use only according to the authorised product label.",
       "Consult a qualified healthcare professional when appropriate. Do not use this product as a substitute for medical treatment."
-    ][tab]}</div><a className="button primary" href="#contact">Request product information <ArrowRight/></a></div></div></Reveal>
+    ][tab]}</div><div className="showcase-actions"><a className="button primary" href="/product">Buy BIO N:OV <ArrowRight/></a><a className="button glass" href="#contact">Request product information</a></div></div></div></Reveal>
 
     <Reveal className="section"><Heading eyebrow="Experience framework" title="Stories Shared with Care"/><div className="testimonial"><div className="quote">“</div><p>Sample testimonial layout — replace with verified customer reviews.</p><div className="dots"><i/><i/><i/></div></div></Reveal>
 
