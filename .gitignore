@@ -17,6 +17,8 @@ ruvector.db-*
 .claude-flow/harness-active-policy.json
 .claude-flow/policy/
 .claude-flow/metrics/
+.claude-flow/agents/
+.claude-flow/swarm/
 .claude/proven-config.json
 .claude/.proven-config-version
 
