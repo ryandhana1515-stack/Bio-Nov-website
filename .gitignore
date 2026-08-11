@@ -16,6 +16,7 @@ ruvector.db-*
 .claude-flow/daemon.pid
 .claude-flow/harness-active-policy.json
 .claude-flow/policy/
+.claude-flow/metrics/
 .claude/proven-config.json
 .claude/.proven-config-version
 
