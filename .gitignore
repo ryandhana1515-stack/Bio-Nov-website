@@ -9,6 +9,16 @@
 ruvector.db
 ruvector.db-*
 
+# Ruflo per-machine runtime state and self-tuning output. These carry
+# timestamps, PIDs, and locally-adopted policy hashes, so they churn on every
+# machine and every session without describing shared project config.
+.claude-flow/daemon-state.json
+.claude-flow/daemon.pid
+.claude-flow/harness-active-policy.json
+.claude-flow/policy/
+.claude/proven-config.json
+.claude/.proven-config-version
+
 # Next.js
 node_modules/
 .next/
