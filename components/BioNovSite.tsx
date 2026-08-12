@@ -2772,12 +2772,12 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             </div>
 
             <div className="showcase-cta">
-              <a className="button primary" href="#contact">Request product information <ArrowRight size={18} /></a>
+              <a className="button primary" href="/product">Buy {brandSafe("BIO N:OV")} <ArrowRight size={18} /></a>
               <a className="button glass" href="#affiliate">Join us as an affiliate <ArrowRight size={18} /></a>
             </div>
             <p className="showcase-note">
-              Pricing and ordering open when the store goes live. Register your interest now and we will contact you
-              first.
+              Single boxes and multi-box bundles are priced in Singapore dollars and checked out securely through our
+              store. Prefer to partner instead? Join the affiliate programme.
             </p>
           </div>
         </div>

@@ -14,9 +14,12 @@ const SOURCE = [
   "app/layout.tsx",
   "app/page.tsx",
   "app/globals.css",
+  "app/product/page.tsx",
   "components/BioNovSite.tsx",
+  "components/ProductBuyBox.tsx",
   "components/XrayJourney.tsx",
-  "components/i18n.ts"
+  "components/i18n.ts",
+  "lib/product.ts"
 ];
 
 const IMAGES = [
