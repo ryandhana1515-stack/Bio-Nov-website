@@ -1,0 +1,24 @@
+<article class="section">
+  <div class="page-width" style="max-width: 80rem;">
+    <header class="section-header">
+      <span class="eyebrow">{{ blog.title }}</span>
+      <h1>{{ article.title }}</h1>
+      <p style="font-size: 1.3rem;">{{ article.published_at | date: '%B %d, %Y' }}{% if article.author != blank %} · {{ article.author }}{% endif %}</p>
+    </header>
+
+    {%- if article.image -%}
+      <div style="margin-bottom: 3.2rem;">
+        {{ article.image | image_url: width: 1600 | image_tag: widths: '800, 1600', sizes: '(min-width: 990px) 80rem, 100vw', class: 'rte' }}
+      </div>
+    {%- endif -%}
+
+    <div class="rte">{{ article.content }}</div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}

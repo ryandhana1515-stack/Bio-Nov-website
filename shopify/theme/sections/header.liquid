@@ -1,0 +1,51 @@
+<header class="site-header">
+  <div class="page-width">
+    <div class="site-header__inner">
+      <button class="menu-toggle" data-menu-toggle aria-expanded="false" aria-label="{{ 'general.menu' | t }}">
+        {% render 'icon', name: 'menu' %}
+      </button>
+
+      <a href="{{ routes.root_url }}" class="site-header__logo">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" width="150" height="44">
+        {%- else -%}
+          BIOEXCELA<em>&nbsp;GLOBAL</em>
+        {%- endif -%}
+      </a>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+
+      <div class="site-header__actions">
+        <a href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</a>
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">{% render 'icon', name: 'account' %}</a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" aria-label="{{ 'general.cart' | t }}">
+          {% render 'icon', name: 'cart' %}
+          {%- if cart.item_count > 0 -%}
+            <span class="cart-count-bubble" aria-label="{{ cart.item_count }} {{ 'accessibility.cart_count' | t }}">{{ cart.item_count }}</span>
+          {%- endif -%}
+        </a>
+      </div>
+    </div>
+
+    <nav class="mobile-nav" data-mobile-nav aria-label="Mobile navigation">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

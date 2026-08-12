@@ -1,0 +1,55 @@
+<section class="section">
+  <div class="page-width" style="max-width: 88rem;">
+    <div class="section-header">
+      <h1>{{ 'cart.title' | t }}</h1>
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post">
+        {%- for item in cart.items -%}
+          <div class="cart-line">
+            <a href="{{ item.url }}">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="80" height="80" loading="lazy">
+              {%- endif -%}
+            </a>
+            <div>
+              <h3 style="font-size: 1.6rem; margin-bottom: 0.4rem;">{{ item.product.title }}</h3>
+              {%- unless item.product.has_only_default_variant -%}
+                <p style="font-size: 1.3rem; margin-bottom: 0.8rem;">{{ item.variant.title }}</p>
+              {%- endunless -%}
+              <div class="qty-input" data-qty style="transform: scale(0.85); transform-origin: left;">
+                <button type="button" data-dir="down" aria-label="Decrease quantity">&minus;</button>
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="{{ 'products.quantity' | t }}" onchange="this.form.submit()">
+                <button type="button" data-dir="up" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <p style="color: var(--color-text); font-weight: 600;">{{ item.final_line_price | money }}</p>
+              <a href="{{ item.url_to_remove }}" style="font-size: 1.2rem;">{{ 'cart.remove' | t }}</a>
+            </div>
+          </div>
+        {%- endfor -%}
+
+        <div class="glass-card cart-summary">
+          <div style="display: flex; justify-content: space-between; font-size: 1.8rem; font-weight: 600; color: var(--color-text);">
+            <span>{{ 'cart.subtotal' | t }}</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p style="font-size: 1.3rem; margin: 1.2rem 0 2.4rem;">{{ 'cart.note' | t }}</p>
+          <button type="submit" name="checkout" class="btn btn--primary btn--full">{{ 'cart.checkout' | t }}</button>
+        </div>
+      </form>
+    {%- else -%}
+      <p>{{ 'cart.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">{{ 'general.continue_shopping' | t }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

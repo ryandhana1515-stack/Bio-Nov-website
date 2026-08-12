@@ -1,0 +1,70 @@
+<section class="section">
+  <div class="page-width">
+    <div class="section-header section-header--center reveal">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+
+    <div class="comparison-wrap reveal">
+      <table class="comparison">
+        <thead>
+          <tr>
+            <th scope="col">Approach</th>
+            <th scope="col">Generation</th>
+            <th scope="col">Considerations</th>
+            <th scope="col" class="is-highlight">BIO N:OV difference</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <td>{{ block.settings.approach }}</td>
+              <td>{{ block.settings.generation }}</td>
+              <td>{{ block.settings.considerations }}</td>
+              <td class="is-highlight">{{ block.settings.difference }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+    {%- if section.settings.footnote != blank -%}
+      <p class="text-center" style="font-size: 1.2rem; margin-top: 2rem;">{{ section.settings.footnote }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison table",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Three generations of NO science" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Why third-generation matters" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "footnote", "label": "Footnote", "default": "Educational comparison of supplement technology approaches. Individual results vary." }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison row",
+      "settings": [
+        { "type": "text", "id": "approach", "label": "Approach", "default": "Arginine-based" },
+        { "type": "text", "id": "generation", "label": "Generation", "default": "1st" },
+        { "type": "text", "id": "considerations", "label": "Considerations", "default": "Requires enzyme conversion in the body" },
+        { "type": "text", "id": "difference", "label": "BIO N:OV difference", "default": "No enzyme conversion needed" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison table",
+      "blocks": [
+        { "type": "row", "settings": { "approach": "Arginine-based supplements", "generation": "1st", "considerations": "Depends on enzyme conversion, which declines with age", "difference": "Fermentation-derived — no enzyme conversion required" } },
+        { "type": "row", "settings": { "approach": "Raw vegetable extracts", "generation": "2nd", "considerations": "Can be harsh on digestion for some users", "difference": "Fermented for gentleness and everyday use" } },
+        { "type": "row", "settings": { "approach": "BIO N:OV microbial fermentation", "generation": "3rd", "considerations": "Patented Korean process (KACC91554P)", "difference": "Designed to be suitable for everyone" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

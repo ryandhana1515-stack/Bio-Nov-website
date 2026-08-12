@@ -1,0 +1,156 @@
+<section class="section">
+  <div class="page-width">
+    <div class="product">
+
+      {%- comment -%} ---------- Gallery ---------- {%- endcomment -%}
+      <div class="product__gallery">
+        <div class="product__media-main">
+          {%- if product.featured_image != blank -%}
+            <img
+              data-main-image
+              src="{{ product.featured_image | image_url: width: 1200 }}"
+              srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+              sizes="(min-width: 990px) 50vw, 100vw"
+              alt="{{ product.featured_image.alt | escape | default: product.title }}"
+              width="1200" height="1200"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag }}
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for image in product.images limit: 5 -%}
+              <button
+                type="button"
+                data-thumb
+                data-src="{{ image | image_url: width: 1200 }}"
+                data-srcset="{{ image | image_url: width: 600 }} 600w, {{ image | image_url: width: 1200 }} 1200w"
+                class="{% if forloop.first %}is-active{% endif %}"
+                aria-label="View image {{ forloop.index }}"
+              >
+                <img src="{{ image | image_url: width: 200 }}" alt="" width="200" height="200" loading="lazy">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- Buy box ---------- {%- endcomment -%}
+      <div class="product__info" data-buy-box>
+        <p class="product__vendor">{{ product.vendor }}</p>
+        <h1 class="product__title">{{ product.title }}</h1>
+
+        {%- if product.metafields.custom.tagline != blank -%}
+          <p style="font-size: 1.7rem;">{{ product.metafields.custom.tagline }}</p>
+        {%- endif -%}
+
+        <p class="product__price" data-product-price>
+          {{ product.selected_or_first_available_variant.price | money }}
+          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+            <s>{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>
+          {%- endif -%}
+        </p>
+
+        <div class="product__badge-row">
+          <span class="trust-strip__item">{% render 'icon', name: 'award' %} GMP Certified</span>
+          <span class="trust-strip__item">{% render 'icon', name: 'flask' %} Patented Fermentation</span>
+          <span class="trust-strip__item">{% render 'icon', name: 'truck' %} Ships Worldwide</span>
+        </div>
+
+        {%- form 'product', product, data-product-form: '' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+          {%- unless product.has_only_default_variant -%}
+            <div class="variant-selects">
+              {%- for option in product.options_with_values -%}
+                <fieldset>
+                  <legend>{{ option.name }}</legend>
+                  <div class="swatches">
+                    {%- for value in option.values -%}
+                      <input
+                        type="radio"
+                        id="Option-{{ option.position }}-{{ forloop.index }}"
+                        name="option{{ option.position }}"
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                      >
+                      <label for="Option-{{ option.position }}-{{ forloop.index }}">{{ value }}</label>
+                    {%- endfor -%}
+                  </div>
+                </fieldset>
+              {%- endfor -%}
+            </div>
+          {%- endunless -%}
+
+          <fieldset style="border:0; padding:0; margin:0 0 2rem;">
+            <legend class="visually-hidden">{{ 'products.quantity' | t }}</legend>
+            <div class="qty-input" data-qty>
+              <button type="button" data-dir="down" aria-label="Decrease quantity">&minus;</button>
+              <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.quantity' | t }}">
+              <button type="button" data-dir="up" aria-label="Increase quantity">+</button>
+            </div>
+          </fieldset>
+
+          <div class="product__buy">
+            <button
+              type="submit"
+              name="add"
+              class="btn btn--primary btn--full"
+              data-atc
+              data-label-available="{{ 'products.add_to_cart' | t }}"
+              data-label-soldout="{{ 'products.sold_out' | t }}"
+              {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+            >
+              {%- if product.selected_or_first_available_variant.available -%}
+                {{ 'products.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.sold_out' | t }}
+              {%- endif -%}
+            </button>
+            {{ form | payment_button }}
+          </div>
+
+          <script type="application/json" data-variant-json>
+            [
+              {%- for variant in product.variants -%}
+              {
+                "id": {{ variant.id }},
+                "available": {{ variant.available }},
+                "options": {{ variant.options | json }},
+                "price_formatted": {{ variant.price | money | json }}
+              }{% unless forloop.last %},{% endunless %}
+              {%- endfor -%}
+            ]
+          </script>
+        {%- endform -%}
+
+        <div class="rte">{{ product.description }}</div>
+
+        {%- comment -%} ---------- Metafield-driven accordions ---------- {%- endcomment -%}
+        <div class="product-accordions">
+          {%- assign accordion_fields = 'benefits,Key benefits|ingredients_list,Full ingredients|directions,How to use|warnings,Warnings|shipping_info,Shipping & returns' | split: '|' -%}
+          {%- for field in accordion_fields -%}
+            {%- assign parts = field | split: ',' -%}
+            {%- assign key = parts[0] -%}
+            {%- assign content = product.metafields.custom[key] -%}
+            {%- if content != blank -%}
+              <details class="faq-item">
+                <summary>{{ parts[1] }}</summary>
+                <div class="faq-item__body rte">{{ content | metafield_tag }}</div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": []
+}
+{% endschema %}

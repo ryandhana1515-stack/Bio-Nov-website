@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "main": { "type": "main-page" },
+    "how": { "type": "how-it-works" },
+    "ingredients": { "type": "ingredients" },
+    "comparison": { "type": "comparison-table" },
+    "faq": { "type": "faq" }
+  },
+  "order": ["main", "how", "ingredients", "comparison", "faq"]
+}

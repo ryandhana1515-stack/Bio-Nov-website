@@ -1,0 +1,38 @@
+<section class="section">
+  <div class="page-width">
+    <div class="glass-card text-center reveal" style="padding: clamp(3.2rem, 7vw, 7rem);">
+      {%- if section.settings.eyebrow != blank -%}<span class="eyebrow" style="justify-content:center;">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      <p style="max-width: 56ch; margin-left: auto; margin-right: auto;">{{ section.settings.text }}</p>
+
+      {%- form 'customer', class: 'newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label for="NewsletterEmail" class="visually-hidden">Email</label>
+        <input
+          id="NewsletterEmail"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ 'newsletter.email_placeholder' | t }}"
+          required
+          autocomplete="email"
+        >
+        <button type="submit" class="btn btn--primary">{{ 'newsletter.submit' | t }}</button>
+        {%- if form.posted_successfully? -%}
+          <p style="flex-basis: 100%; color: var(--color-accent);">{{ 'newsletter.success' | t }}</p>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the inner circle" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wellness intelligence, delivered" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Subscribe for launch offers, new product announcements and evidence-based wellness insights. No spam, ever." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

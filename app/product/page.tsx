@@ -58,7 +58,7 @@ export default function ProductPage() {
               slides rather than product shots. Add more once real photography
               is available. */}
           <div className="product-gallery">
-            <Image src="/images/bio-nov-hero.jpg" alt="BIO N:OV product box, blister pack and tablets" width={1920} height={1080} priority />
+            <Image src="/images/product-showcase.jpg" alt="BIO N:OV product box, blister pack and tablets" width={1920} height={1080} priority />
           </div>
           <ProductBuyBox />
         </div>

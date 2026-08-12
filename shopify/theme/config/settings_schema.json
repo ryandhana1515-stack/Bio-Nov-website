@@ -1,0 +1,55 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "BioExcela Prestige",
+    "theme_version": "1.0.0",
+    "theme_author": "BioExcela Global",
+    "theme_documentation_url": "https://biogreenelixirs.com",
+    "theme_support_url": "https://biogreenelixirs.com/pages/contact"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_background", "label": "Background", "default": "#050A18" },
+      { "type": "color", "id": "color_background_elevated", "label": "Elevated background", "default": "#0A1428" },
+      { "type": "color", "id": "color_text", "label": "Text", "default": "#F2F6FF" },
+      { "type": "color", "id": "color_text_muted", "label": "Muted text", "default": "#9BA9C4" },
+      { "type": "color", "id": "color_accent", "label": "Primary accent (cyan)", "default": "#00DCFF" },
+      { "type": "color", "id": "color_accent_secondary", "label": "Secondary accent", "default": "#7C5CFF" }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "min": 1000, "max": 1600, "step": 40, "unit": "px", "label": "Page width", "default": 1280 },
+      { "type": "range", "id": "corner_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Corner radius", "default": 12 }
+    ]
+  },
+  {
+    "name": "Branding",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo image" },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon (32 x 32px)" }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_facebook", "label": "Facebook URL", "default": "https://facebook.com/biogreenelixirs" },
+      { "type": "text", "id": "social_instagram", "label": "Instagram URL", "default": "https://instagram.com/biogreenelixirs" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok URL", "default": "https://tiktok.com/@biogreenelixirs" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube URL" }
+    ]
+  },
+  {
+    "name": "Compliance",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "footer_disclaimer",
+        "label": "Footer disclaimer",
+        "default": "These statements have not been evaluated by any food or drug authority. This product is not intended to diagnose, treat, cure or prevent any disease. Always consult your healthcare professional before starting any supplement, especially if you are pregnant, nursing, taking medication or have a medical condition."
+      }
+    ]
+  }
+]
