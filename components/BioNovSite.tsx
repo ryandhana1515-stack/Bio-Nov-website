@@ -43,6 +43,8 @@ type StatPanelData = {
   notes?: string[];
   source: string;
   tone?: "alert" | "brand";
+  /** The original brochure slide this panel was rebuilt from, shown beneath it. */
+  slide?: string;
 };
 
 type ItemPanelData = {
@@ -55,10 +57,13 @@ type ItemPanelData = {
   columns?: 2 | 3 | 4;
   notes?: string[];
   source: string;
+  /** The original brochure slide this panel was rebuilt from, shown beneath it. */
+  slide?: string;
 };
 
 const itemPanels: Record<string, ItemPanelData> = {
   rawMaterials: {
+    slide: "slide-raw-materials.jpg",
     eyebrow: "Premium raw materials",
     title: "Four materials, and what each one",
     accent: "contributes",
@@ -77,6 +82,7 @@ const itemPanels: Record<string, ItemPanelData> = {
     source: "Manufacturer product documentation"
   },
   patents: {
+    slide: "slide-fermentation-patents.jpg",
     eyebrow: "Exclusive proprietary microbial strain",
     title: "The part you can verify on",
     accent: "paper",
@@ -91,6 +97,7 @@ const itemPanels: Record<string, ItemPanelData> = {
     source: "Manufacturer product documentation"
   },
   techRoadmap: {
+    slide: "slide-tech-roadmap.jpg",
     eyebrow: "Nitric oxide supplements",
     title: "Three generations, and what was wrong with the first",
     accent: "two",
@@ -107,6 +114,7 @@ const itemPanels: Record<string, ItemPanelData> = {
     source: "Manufacturer product documentation"
   },
   bloodPressure: {
+    slide: "slide-blood-pressure.jpg",
     eyebrow: "Balancing blood pressure",
     title: "What the decades do to an",
     accent: "artery",
@@ -126,6 +134,7 @@ const itemPanels: Record<string, ItemPanelData> = {
     source: "Dr. Nathan Bryan, Functional Nitric Oxide Nutrition"
   },
   vesselRepair: {
+    slide: "slide-vessel-repair.jpg",
     eyebrow: "Repairing blood vessels",
     title: "Stroke and heart disease both start",
     accent: "here",
@@ -144,6 +153,7 @@ const itemPanels: Record<string, ItemPanelData> = {
 
 const statPanels: Record<string, StatPanelData> = {
   hypertension: {
+    slide: "slide-hypertension.jpg",
     eyebrow: "Hypertension",
     title: "Sowing seeds of",
     accent: "risks",
@@ -157,6 +167,7 @@ const statPanels: Record<string, StatPanelData> = {
     tone: "alert"
   },
   diabetes: {
+    slide: "slide-diabetes.jpg",
     eyebrow: "Diabetes",
     title: "Spiralling out of",
     accent: "control",
@@ -170,6 +181,7 @@ const statPanels: Record<string, StatPanelData> = {
     tone: "alert"
   },
   stroke: {
+    slide: "slide-stroke.jpg",
     eyebrow: "Stroke",
     title: "Weighing down",
     accent: "families",
@@ -184,6 +196,7 @@ const statPanels: Record<string, StatPanelData> = {
     tone: "alert"
   },
   dementia: {
+    slide: "slide-dementia.jpg",
     eyebrow: "Dementia",
     title: "Trapping the",
     accent: "aged",
@@ -199,6 +212,7 @@ const statPanels: Record<string, StatPanelData> = {
     tone: "alert"
   },
   skin: {
+    slide: "slide-skin.jpg",
     eyebrow: "Tester-reported results",
     title: "What testers reported about their",
     accent: "skin",
@@ -212,6 +226,7 @@ const statPanels: Record<string, StatPanelData> = {
     source: "Gregory Chernoff, The Utilization of a Topical Nitric Oxide Generating Serum in Aesthetic Medicine"
   },
   diabetesEase: {
+    slide: "slide-diabetes-ease.jpg",
     eyebrow: "Laboratory measurement",
     title: "What the lab measured on",
     accent: "blood sugar",
@@ -224,6 +239,7 @@ const statPanels: Record<string, StatPanelData> = {
     source: "Bzzworld Smart Lab"
   },
   vigor: {
+    slide: "slide-vigor.jpg",
     eyebrow: "Energy and stamina",
     title: "Why energy fades, and what reverses the",
     accent: "chain",
@@ -237,6 +253,7 @@ const statPanels: Record<string, StatPanelData> = {
     source: "Nitric oxide, aging and aerobic exercise — sedentary individuals to Master's athletes"
   },
   telomeres: {
+    slide: "slide-telomeres.jpg",
     eyebrow: "Cellular ageing",
     title: "Ageing, at the level of the",
     accent: "chromosome",
@@ -1615,6 +1632,21 @@ function SlideFigure({
 /* Renders a brochure panel as real markup. Same figures and the same cited
    source as the original artwork, but translatable, responsive, and clickable
    through to the full detail. */
+/* The original brochure slide, sat at the foot of the panel it was rebuilt
+   from. The rebuilt text above carries the meaning into every language; the
+   picture below carries the impact, which no amount of typography replaces.
+   Its own words stay English — that is the trade, and it is why the numbers
+   are repeated as text rather than left to the image alone. */
+function PanelSlide({ slide }: { slide?: string }) {
+  if (!slide) return null;
+  return (
+    <span className="panelslide">
+      <Image src={`/images/${slide}`} alt="" width={1600} height={900} loading="lazy" />
+      <span className="panelslide__cap">From the original {brandSafe("BIO N:OV")} presentation</span>
+    </span>
+  );
+}
+
 function StatPanel({
   panel,
   detail,
@@ -1652,6 +1684,8 @@ function StatPanel({
       {panel.notes?.map(n => (
         <span className="statpanel__note" key={n.slice(0, 24)}>{brandSafe(n)}</span>
       ))}
+
+      <PanelSlide slide={panel.slide} />
 
       <span className="statpanel__foot">
         <span className="statpanel__source">Source: {panel.source}</span>
@@ -1724,6 +1758,8 @@ function ItemPanel({
       {panel.notes?.map(n => (
         <span className="statpanel__note" key={n.slice(0, 24)}>{brandSafe(n)}</span>
       ))}
+
+      <PanelSlide slide={panel.slide} />
 
       <span className="statpanel__foot">
         <span className="statpanel__source">Source: {panel.source}</span>
@@ -2384,6 +2420,11 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
                 </div>
 
                 <p className="nomap__source">Source: Dr. Ferid Murad, <em>Magical Nitric Oxide</em></p>
+
+                <figure className="panelslide panelslide--wide">
+                  <Image src="/images/slide-six-systems.jpg" alt="" width={1600} height={900} loading="lazy" />
+                  <figcaption className="panelslide__cap">From the original {brandSafe("BIO N:OV")} presentation</figcaption>
+                </figure>
               </div>
             </div>
           </div>
@@ -2641,6 +2682,11 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
               <figcaption>500 mg &times; 60 tablets &middot; GMP-certified Korean manufacture</figcaption>
             </figure>
           </div>
+
+          <figure className="panelslide panelslide--wide">
+            <Image src="/images/slide-better-choice.jpg" alt="" width={1600} height={900} loading="lazy" />
+            <figcaption className="panelslide__cap">From the original {brandSafe("BIO N:OV")} presentation</figcaption>
+          </figure>
         </div>
 
         <div className="slide-quad slide-pair--spaced">
