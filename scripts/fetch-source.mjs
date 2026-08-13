@@ -17,6 +17,7 @@ const SOURCE = [
   "app/product/page.tsx",
   "components/BioNovSite.tsx",
   "components/ProductBuyBox.tsx",
+  "components/SystemScenes.tsx",
   "components/XrayJourney.tsx",
   "components/i18n.ts",
   "lib/product.ts"

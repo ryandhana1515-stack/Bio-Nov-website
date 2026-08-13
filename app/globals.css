@@ -1177,6 +1177,42 @@ html[dir="rtl"] .hero small{margin-left:auto}
 
 @media(max-width:620px){.statpanel__stats.count-3,.statpanel__stats.count-4{grid-template-columns:1fr}}
 
+/* ---- The six system scenes ----
+   One scene per role in the list beside it. The stage keeps a fixed aspect so
+   swapping scenes never jumps the page height, and the SVG fills it. */
+.sysscene{display:flex;flex-direction:column}
+.sysscene__eyebrow{display:block;margin-bottom:12px;font-size:10.5px;font-weight:800;
+  letter-spacing:.18em;text-transform:uppercase;color:#8fe6ff}
+.sysscene__stage{position:relative;width:100%;aspect-ratio:640/440;border-radius:20px;
+  overflow:hidden;border:1px solid rgba(143,230,255,.2);
+  background:radial-gradient(120% 100% at 50% 20%,rgba(20,52,104,.9),rgba(4,14,36,.96));
+  box-shadow:inset 0 0 60px rgba(2,10,30,.6)}
+.sysscene__art{position:absolute;inset:0}
+.sysscene__art svg{display:block;width:100%;height:100%}
+.sysscene__cap{margin:14px 0 0;font-size:15px;font-weight:750;line-height:1.4;color:#eaf3ff}
+.sysscene__dots{display:flex;gap:7px;margin-top:12px}
+.sysscene__dots i{width:22px;height:4px;border-radius:2px;background:rgba(143,230,255,.25);
+  transition:background .3s,width .3s}
+.sysscene__dots i.is-on{width:38px;background:#5fe0ff;box-shadow:0 0 14px rgba(95,224,255,.7)}
+
+/* Motion inside the scenes. Kept in CSS so the SVG markup stays readable and
+   so a reduced-motion preference can switch all of it off at once. */
+@keyframes sc-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.06)}}
+@keyframes sc-fire{0%,100%{opacity:.72;transform:scale(.97)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes sc-feed{0%,100%{opacity:.55;transform:scale(.97)}55%{opacity:1;transform:scale(1.04)}}
+@keyframes sc-run{0%{stroke-dashoffset:320}100%{stroke-dashoffset:-40}}
+@keyframes sc-morph{0%,100%{transform:scale(1)}33%{transform:scale(1.08,.93)}66%{transform:scale(.94,1.07)}}
+.sc-vessel{animation:sc-breathe 5.5s ease-in-out infinite;transform-origin:50% 60%}
+.sc-mito{animation:sc-fire 2.8s ease-in-out infinite}
+.sc-feed{animation:sc-feed 4s ease-in-out infinite}
+.sc-pulse{animation:sc-run 2.6s linear infinite}
+.sc-wbc{animation:sc-morph 2.2s ease-in-out infinite}
+
+@media(prefers-reduced-motion:reduce){
+  .sc-vessel,.sc-mito,.sc-feed,.sc-pulse,.sc-wbc{animation:none}
+  .sysscene__stage animate,.sysscene__stage animateMotion,.sysscene__stage animateTransform{display:none}
+}
+
 /* ---- The original brochure slide, beneath the panel it became ----
    The rebuilt text above translates; this carries the visual proof. It sits
    flush to the panel's inner width with a hairline frame so it reads as part

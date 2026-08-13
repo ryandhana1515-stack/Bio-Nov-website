@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Globe, Volume2, VolumeX, Wind, X, Zap } from "lucide-react";
 
 import XrayJourney from "./XrayJourney";
+import SystemScene from "./SystemScenes";
 import { allLocales, englishLocale, localeGroups, includedLanguages, type Locale } from "./i18n";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
@@ -2053,27 +2054,10 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
               ))}
             </div>
 
-            {/* what the signal physically does, drawn rather than described */}
+            {/* The picture follows the list: whichever role is selected on the
+                left, its scene is what renders here. */}
             <div className="vesselviz">
-              <span className="vesselviz__eyebrow">Cross-section &middot; artery wall</span>
-
-              <div className="vesselviz__tube">
-                <span className="vesselviz__muscle" />
-                <span className="vesselviz__endo" />
-                <span className="vesselviz__lumen">
-                  {[0, 1, 2, 3, 4, 5, 6].map(n => <i className="vesselviz__rbc" key={n} style={{ animationDelay: `${n * -0.9}s` }} />)}
-                  {[0, 1, 2, 3].map(n => <b className="vesselviz__no" key={n} style={{ animationDelay: `${n * -1.6}s` }} />)}
-                </span>
-                <span className="vesselviz__endo vesselviz__endo--b" />
-                <span className="vesselviz__muscle vesselviz__muscle--b" />
-              </div>
-
-              <ul className="vesselviz__key">
-                <li><span className="k k--muscle" /> Smooth muscle &mdash; relaxes when NO arrives</li>
-                <li><span className="k k--endo" /> Endothelium &mdash; where NO is released</li>
-                <li><span className="k k--rbc" /> Red blood cells carrying oxygen</li>
-                <li><span className="k k--no" /> Nitric oxide, the signal itself</li>
-              </ul>
+              <SystemScene role={activeRole} />
 
               <div className="vesselviz__creds">
                 <span><Sparkles size={14} /> Molecule of the Year, 1992</span>
