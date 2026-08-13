@@ -41,7 +41,25 @@ const IMAGES = [
   "researcher-shin.png",
   "researcher-sooah.png",
   "tech-product.jpg",
-  "vessel-macro.jpg"
+  "vessel-macro.jpg",
+  // The original brochure slides, shown at the foot of the panels rebuilt from
+  // them. The rebuilt text carries the meaning into every language; these carry
+  // the impact.
+  "slide-better-choice.jpg",
+  "slide-blood-pressure.jpg",
+  "slide-dementia.jpg",
+  "slide-diabetes-ease.jpg",
+  "slide-diabetes.jpg",
+  "slide-fermentation-patents.jpg",
+  "slide-hypertension.jpg",
+  "slide-raw-materials.jpg",
+  "slide-six-systems.jpg",
+  "slide-skin.jpg",
+  "slide-stroke.jpg",
+  "slide-tech-roadmap.jpg",
+  "slide-telomeres.jpg",
+  "slide-vessel-repair.jpg",
+  "slide-vigor.jpg"
 ].map((name) => `public/images/${name}`);
 
 const VIDEO = [
