@@ -337,8 +337,27 @@ function Ageing() {
   );
 }
 
-const SCENES: Record<string, { Scene: () => ReactElement; eyebrow: string; caption: string }> = {
-  "Circulation":      { Scene: Circulation, eyebrow: "Artery · relaxed",        caption: "Wide open — blood moves freely" },
+/* Each role can carry a photoreal render as `photo`. When one is present it
+   becomes the scene — the drawn version stays as the fallback, so a role
+   without a photo yet still shows something rather than an empty frame, and a
+   render that fails to fetch at build time never leaves a hole in the page. */
+type SceneDef = {
+  Scene: () => ReactElement;
+  eyebrow: string;
+  caption: string;
+  photo?: string;
+  /** What the render shows, for anyone using a screen reader. */
+  alt?: string;
+};
+
+const SCENES: Record<string, SceneDef> = {
+  "Circulation": {
+    Scene: Circulation,
+    eyebrow: "Artery · relaxed",
+    caption: "Wide open — blood moves freely",
+    photo: "scene-circulation.jpg",
+    alt: "A relaxed artery cut away, packed with red blood cells, nitric oxide glowing blue along the vessel lining"
+  },
   "Vitality & Energy":{ Scene: Vitality,    eyebrow: "Muscle · mitochondria",   caption: "Oxygen arrives — the cell makes energy" },
   "Cognition & Clarity":{ Scene: Cognition, eyebrow: "Brain · blood supply",    caption: "Blood reaches the hungriest organ you own" },
   "Metabolic Support":{ Scene: Metabolic,   caption: "Nutrients cross into the tissue that needs them", eyebrow: "Capillary · exchange" },
@@ -346,11 +365,45 @@ const SCENES: Record<string, { Scene: () => ReactElement; eyebrow: string; capti
   "Healthy Ageing":   { Scene: Ageing,      eyebrow: "The same vessel · five decades", caption: "Production falls with each decade" }
 };
 
+/* A photoreal render, treated the way the Blood Flow section treats its own:
+   filled to the frame, drifting slowly so it reads as alive rather than as a
+   still, with the nitric oxide signal glowing over it and the label in the
+   corner. The label is markup, so it translates — the render carries no words
+   of its own, which is the whole reason this works in every market. */
+function PhotoScene({ photo, alt, caption }: { photo: string; alt: string; caption: string }) {
+  return (
+    <div className="sysphoto">
+      <img className="sysphoto__img" src={`/images/${photo}`} alt={alt} loading="lazy" decoding="async" />
+      <span className="sysphoto__vignette" aria-hidden="true" />
+      <svg className="sysphoto__no" viewBox="0 0 640 440" aria-hidden="true">
+        <defs>
+          <radialGradient id="pno" cx="40%" cy="34%" r="70%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="40%" stopColor="#5fe0ff" />
+            <stop offset="100%" stopColor="#0b6f96" />
+          </radialGradient>
+          <filter id="pbloom" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="8" result="b" />
+            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+        {[[118, 306], [214, 214], [330, 330], [418, 172], [502, 268], [268, 118]].map(([cx, cy], i) => (
+          <circle key={i} cx={cx} cy={cy} r="7" fill="url(#pno)" filter="url(#pbloom)">
+            <animate attributeName="opacity" values="0;.9;0" dur="3.6s" begin={`${i * 0.58}s`} repeatCount="indefinite" />
+            <animate attributeName="r" values="3;11;3" dur="3.6s" begin={`${i * 0.58}s`} repeatCount="indefinite" />
+          </circle>
+        ))}
+      </svg>
+      <span className="sysphoto__chip">{caption}</span>
+    </div>
+  );
+}
+
 const ORDER = Object.keys(SCENES);
 
 export default function SystemScene({ role }: { role: string | null }) {
   const key = role && SCENES[role] ? role : ORDER[0];
-  const { Scene, eyebrow, caption } = SCENES[key];
+  const { Scene, eyebrow, caption, photo, alt } = SCENES[key];
 
   return (
     <div className="sysscene">
@@ -366,7 +419,7 @@ export default function SystemScene({ role }: { role: string | null }) {
             exit={{ opacity: 0, scale: 1.03 }}
             transition={{ duration: 0.38, ease: "easeOut" }}
           >
-            <Scene />
+            {photo ? <PhotoScene photo={photo} alt={alt ?? caption} caption={caption} /> : <Scene />}
           </motion.div>
         </AnimatePresence>
       </div>
