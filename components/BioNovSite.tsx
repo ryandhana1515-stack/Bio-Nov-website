@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Globe, Volume2, VolumeX, Wind, X, Zap } from "lucide-react";
 
 import XrayJourney from "./XrayJourney";
-import SystemScene from "./SystemScenes";
+import VitalityExplorer from "./vitality/VitalityExplorer";
 import { allLocales, englishLocale, localeGroups, includedLanguages, type Locale } from "./i18n";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
@@ -2029,42 +2029,9 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             copy="Follow a single tablet from your mouth to every cell you own. Nitric oxide was named Molecule of the Year in 1992 and won a Nobel Prize in 1998 — yet most people have never heard of the signal keeping their blood vessels open."
           />
 
-          <div className="molecule-grid">
-
-            <div className="no-roles">
-
-              <p className="click-prompt light"><MousePointerClick size={17} /> Hover to light up the body &middot; click for the full science</p>
-              {noRoles.map(role => (
-                <motion.button
-                  whileHover={{ x: 6 }}
-                  className={`no-role-card ${activeRole === role.name ? "is-active" : ""}`}
-                  key={role.name}
-                  onMouseEnter={() => setActiveRole(role.name)}
-                  onFocus={() => setActiveRole(role.name)}
-                  onClick={() => { setActiveRole(role.name); setModal(role); }}
-                  aria-label={`Read more about ${role.name}`}
-                >
-                  <span className="no-role-icon"><role.Icon /></span>
-                  <div>
-                    <b>{role.name}</b>
-                    <small>{role.short}</small>
-                  </div>
-                  <Plus size={18} className="row-plus" />
-                </motion.button>
-              ))}
-            </div>
-
-            {/* The picture follows the list: whichever role is selected on the
-                left, its scene is what renders here. */}
-            <div className="vesselviz">
-              <SystemScene role={activeRole} />
-
-              <div className="vesselviz__creds">
-                <span><Sparkles size={14} /> Molecule of the Year, 1992</span>
-                <span><Microscope size={14} /> Nobel Prize in Medicine, 1998</span>
-              </div>
-            </div>
-          </div>
+          {/* The interactive body player, ported from the Vitality Explorer
+              project: menu on the left, cinematic viewer on the right. */}
+          <VitalityExplorer />
 
           {/* ---- The decline story ---- */}
           <div className="decline-block">
