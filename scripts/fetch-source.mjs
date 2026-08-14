@@ -20,6 +20,7 @@ const SOURCE = [
   "components/SystemScenes.tsx",
   "components/XrayJourney.tsx",
   "components/i18n.ts",
+  "components/vitality/VitalityEmbed.tsx",
   "components/vitality/VitalityExplorer.tsx",
   "components/vitality/data.ts",
   "components/vitality/useNarration.ts",

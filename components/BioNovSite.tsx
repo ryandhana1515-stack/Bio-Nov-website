@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Globe, Volume2, VolumeX, Wind, X, Zap } from "lucide-react";
 
 import XrayJourney from "./XrayJourney";
-import VitalityExplorer from "./vitality/VitalityExplorer";
+import VitalityEmbed from "./vitality/VitalityEmbed";
 import { allLocales, englishLocale, localeGroups, includedLanguages, type Locale } from "./i18n";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
@@ -2029,9 +2029,9 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
             copy="Follow a single tablet from your mouth to every cell you own. Nitric oxide was named Molecule of the Year in 1992 and won a Nobel Prize in 1998 — yet most people have never heard of the signal keeping their blood vessels open."
           />
 
-          {/* The interactive body player, ported from the Vitality Explorer
-              project: menu on the left, cinematic viewer on the right. */}
-          <VitalityExplorer />
+          {/* The interactive body player, embedded from its published Lovable
+              deployment so the film, the voice and the cuts are the real ones. */}
+          <VitalityEmbed />
 
           {/* ---- The decline story ---- */}
           <div className="decline-block">
