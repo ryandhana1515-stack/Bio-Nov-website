@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Activity, ArrowRight, Brain, Check, ChevronDown, CircleDot, Dna, Droplets, FlaskConical, Gift, HeartPulse, Leaf, Link2, Megaphone, Menu, Microscope, MousePointerClick, Plus, ShieldCheck, ShieldPlus, Sparkles, Sun, Timer, TrendingUp, Users, Globe, Volume2, VolumeX, Wind, X, Zap } from "lucide-react";
 
 import XrayJourney from "./XrayJourney";
-import VitalityEmbed from "./vitality/VitalityEmbed";
+import LovableEmbed from "./vitality/LovableEmbed";
 import { allLocales, englishLocale, localeGroups, includedLanguages, type Locale } from "./i18n";
 
 const nav = [["Home","home"],["Why Nitric Oxide?","why-no"],["The Crisis","crisis"],["Inside The Body","journey"],["Blood Flow","vessels"],["Technology","technology"],["Benefits","benefits"],["Research Team","team"],["Product","product"],["Affiliate","affiliate"],["FAQ","faq"]];
@@ -2031,7 +2031,10 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
 
           {/* The interactive body player, embedded from its published Lovable
               deployment so the film, the voice and the cuts are the real ones. */}
-          <VitalityEmbed />
+          <LovableEmbed
+            src="https://bionov-vitality-explorer.lovable.app"
+            title="Interactive body visualization"
+          />
 
           {/* ---- The decline story ---- */}
           <div className="decline-block">
@@ -2234,67 +2237,23 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
         </div>
       </Reveal>
 
-      {/* ---------------- Age chart ---------------- */}
-      <Reveal className="body-section">
-        <div className="body-copy">
-          <Heading light eyebrow="Interactive body atlas" title="One Signal. Many Biological Roles." copy="Select any system to read how circulation and nitric oxide participate in its normal function." />
-          <div className="body-list">
-            {bodySystems.map((sys, i) => (
-              <motion.button
-                whileHover={{ x: 6 }}
-                key={sys.name}
-                className={activeSystem === i ? "is-active" : ""}
-                onClick={() => { setActiveSystem(i); setModal(sys); }}
-              >
-                <span>{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <b>{sys.name}</b>
-                  <small>{sys.short}</small>
-                </div>
-                <Plus size={18} className="row-plus" />
-              </motion.button>
-            ))}
-          </div>
-        </div>
-        <div className="body-visual">
-          <video
-            className="body-visual__video"
-            poster="/video/xray-journey-poster.jpg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden="true"
-          >
-            <source src="/video/xray-journey.mp4" type="video/mp4" />
-          </video>
-
-          {/* the selected system, explained over the body */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={bodySystems[activeSystem].name}
-              className="body-readout"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -14 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="body-readout__no">
-                System {String(activeSystem + 1).padStart(2, "0")} of {bodySystems.length}
-              </span>
-              <h3>{bodySystems[activeSystem].name}</h3>
-              <p>{bodySystems[activeSystem].body[0]}</p>
-              <ul>
-                {bodySystems[activeSystem].points?.slice(0, 3).map(pt => (
-                  <li key={pt}><Check size={14} /><span>{pt}</span></li>
-                ))}
-              </ul>
-              <button className="button primary" onClick={() => setModal(bodySystems[activeSystem])}>
-                Read the full science <ArrowRight size={16} />
-              </button>
-            </motion.div>
-          </AnimatePresence>
+      {/* ---------------- Interactive body atlas ----------------
+           Embedded from its published Lovable deployment ("Human Unveiled"),
+           so the six anatomy films, their narration and their panels are the
+           ones signed off there rather than a re-implementation. */}
+      <Reveal className="body-section body-section--embed">
+        <div className="body-embed-inner">
+          <Heading
+            light
+            eyebrow="Interactive body atlas"
+            title="One Signal. Many Biological Roles."
+            copy="Select any system to watch how circulation and nitric oxide participate in its normal function."
+          />
+          <LovableEmbed
+            src="https://bio-cinematic-journeys.lovable.app"
+            title="Interactive body atlas"
+            size="atlas"
+          />
         </div>
       </Reveal>
 
