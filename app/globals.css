@@ -1180,7 +1180,7 @@ html[dir="rtl"] .hero small{margin-left:auto}
 /* The Vitality Explorer, embedded from its published deployment. Heights come
    from the real layout: two columns on desktop, stacked below 1000px. They are
    only the fallback — the page posts its true height when it can. */
-.viz-embed{position:relative;width:100%;height:1180px;border-radius:26px;overflow:hidden;
+.viz-embed{position:relative;width:100%;border-radius:26px;overflow:hidden;
   border:1px solid rgba(95,224,255,.2);background:#04102a;
   box-shadow:0 26px 70px rgba(2,12,38,.5);transition:height .35s ease}
 .viz-embed iframe{position:relative;z-index:1;display:block;width:100%;height:100%;border:0}
@@ -1193,8 +1193,26 @@ html[dir="rtl"] .hero small{margin-left:auto}
 .viz-embed-link{display:inline-flex;align-items:center;gap:7px;margin-top:14px;
   font-size:13px;font-weight:750;color:#8fe6ff;transition:color .2s}
 .viz-embed-link:hover{color:#fff}
-@media(max-width:1000px){.viz-embed{height:1560px;border-radius:20px}}
-@media(max-width:640px){.viz-embed{height:1680px}}
+/* Fallback heights, used only until the embedded page reports its own. Taken
+   from each layout: the player is two columns on desktop and stacks below
+   1000px; the atlas is a list beside a figure and is shorter. */
+.viz-embed--tall{height:1180px}
+.viz-embed--atlas{height:900px}
+@media(max-width:1000px){
+  .viz-embed{border-radius:20px}
+  .viz-embed--tall{height:1560px}
+  .viz-embed--atlas{height:1280px}
+}
+@media(max-width:640px){
+  .viz-embed--tall{height:1680px}
+  .viz-embed--atlas{height:1400px}
+}
+
+/* The atlas keeps the section heading above it, so the embed needs breathing
+   room rather than the full-bleed treatment the player gets. */
+.body-section--embed{padding-block:clamp(60px,7vw,96px)}
+.body-embed-inner{max-width:1180px;margin:0 auto;padding-inline:max(5vw,20px)}
+.body-embed-inner .viz-embed-wrap{margin-top:32px}
 
 /* ================= Vitality Explorer — inside-the-body player =================
    Ported from the Lovable project. Deep navy panels, cyan accent, glass edges. */
