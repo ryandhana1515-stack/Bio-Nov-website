@@ -1199,21 +1199,27 @@ html[dir="rtl"] .hero small{margin-left:auto}
 .viz-embed--tall{height:1180px}
 /* The atlas page carries its own heading, the six-system list, the player and
    the full written explanation beneath — a long page, hence the tall fallback. */
-.viz-embed--atlas{height:2100px}
+.viz-embed--atlas{height:1750px}
 @media(max-width:1000px){
   .viz-embed{border-radius:20px}
   .viz-embed--tall{height:1560px}
-  .viz-embed--atlas{height:2700px}
+  .viz-embed--atlas{height:2500px}
 }
 @media(max-width:640px){
   .viz-embed--tall{height:1680px}
-  .viz-embed--atlas{height:3000px}
+  .viz-embed--atlas{height:2900px}
 }
 
 /* The atlas embed brings its own heading and page padding, so it sits flush
    rather than inside another wrapper. */
-.body-section--embed{padding:0;background:none}
-.body-section--embed .viz-embed{border:0;border-radius:0;box-shadow:none}
+/* .body-section is a two-column grid. An embed dropped straight into it lands
+   in column one and gets half the page, which makes the embedded page think it
+   is on a narrow screen and stack itself. It has to be a single full-width
+   block instead. The section keeps its own navy gradient so that a page which
+   renders transparent inside an iframe has something to sit on rather than
+   showing white. */
+.body-section--embed{display:block;grid-template-columns:none;min-height:0;padding:0}
+.body-section--embed .viz-embed{border:0;border-radius:0;box-shadow:none;background:transparent}
 .body-section--embed .viz-embed-link{display:none}
 
 /* ================= Vitality Explorer — inside-the-body player =================
