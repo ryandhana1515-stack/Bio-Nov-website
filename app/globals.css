@@ -1197,22 +1197,24 @@ html[dir="rtl"] .hero small{margin-left:auto}
    from each layout: the player is two columns on desktop and stacks below
    1000px; the atlas is a list beside a figure and is shorter. */
 .viz-embed--tall{height:1180px}
-.viz-embed--atlas{height:900px}
+/* The atlas page carries its own heading, the six-system list, the player and
+   the full written explanation beneath — a long page, hence the tall fallback. */
+.viz-embed--atlas{height:2100px}
 @media(max-width:1000px){
   .viz-embed{border-radius:20px}
   .viz-embed--tall{height:1560px}
-  .viz-embed--atlas{height:1280px}
+  .viz-embed--atlas{height:2700px}
 }
 @media(max-width:640px){
   .viz-embed--tall{height:1680px}
-  .viz-embed--atlas{height:1400px}
+  .viz-embed--atlas{height:3000px}
 }
 
-/* The atlas keeps the section heading above it, so the embed needs breathing
-   room rather than the full-bleed treatment the player gets. */
-.body-section--embed{padding-block:clamp(60px,7vw,96px)}
-.body-embed-inner{max-width:1180px;margin:0 auto;padding-inline:max(5vw,20px)}
-.body-embed-inner .viz-embed-wrap{margin-top:32px}
+/* The atlas embed brings its own heading and page padding, so it sits flush
+   rather than inside another wrapper. */
+.body-section--embed{padding:0;background:none}
+.body-section--embed .viz-embed{border:0;border-radius:0;box-shadow:none}
+.body-section--embed .viz-embed-link{display:none}
 
 /* ================= Vitality Explorer — inside-the-body player =================
    Ported from the Lovable project. Deep navy panels, cyan accent, glass edges. */

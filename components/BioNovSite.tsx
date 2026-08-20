@@ -2241,20 +2241,15 @@ export default function BioNovSite({ faq }: { faq: { group: string; question: st
            Embedded from its published Lovable deployment ("Human Unveiled"),
            so the six anatomy films, their narration and their panels are the
            ones signed off there rather than a re-implementation. */}
+      {/* No heading here: the embedded page carries its own "Interactive body
+          atlas / One Signal. Many Biological Roles." Printing one as well
+          showed the same title twice. */}
       <Reveal className="body-section body-section--embed">
-        <div className="body-embed-inner">
-          <Heading
-            light
-            eyebrow="Interactive body atlas"
-            title="One Signal. Many Biological Roles."
-            copy="Select any system to watch how circulation and nitric oxide participate in its normal function."
-          />
-          <LovableEmbed
-            src="https://bio-cinematic-journeys.lovable.app"
-            title="Interactive body atlas"
-            size="atlas"
-          />
-        </div>
+        <LovableEmbed
+          src="https://bio-cinematic-journeys.lovable.app"
+          title="Interactive body atlas"
+          size="atlas"
+        />
       </Reveal>
 
       {/* ---------------- The NO deficiency crisis ---------------- */}
