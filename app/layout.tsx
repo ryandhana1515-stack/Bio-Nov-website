@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import VoiceAgent from "../components/VoiceAgent";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -44,7 +45,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: translateCrashGuard }} />
       </head>
-      <body className={inter.variable}>{children}</body>
+      <body className={inter.variable}>
+        {children}
+        <VoiceAgent />
+      </body>
     </html>
   );
 }

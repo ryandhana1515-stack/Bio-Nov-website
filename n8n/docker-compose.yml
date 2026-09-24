@@ -1,0 +1,28 @@
+version: "3.8"
+
+# Self-hosted n8n for Bio Green Elixirs AI agents.
+# Only needed if you DON'T use n8n Cloud. See n8n/README.md.
+#
+# Run with:  docker compose up -d
+# Then open: http://localhost:5678
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: biogreen-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - GENERIC_TIMEZONE=Asia/Singapore
+      - TZ=Asia/Singapore
+      # Set this to a long random string before first run:
+      - N8N_ENCRYPTION_KEY=change-me-to-a-long-random-string
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
