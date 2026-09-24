@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SalesQualificationOutput",
+  "description": "Structured output contract for the Sales Qualification Agent. The n8n AI Agent node's Structured Output Parser uses this shape directly — the model must return exactly this, nothing more.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "lead_status",
+    "intent",
+    "summary",
+    "missing_information",
+    "recommended_reply",
+    "next_action",
+    "human_review_required"
+  ],
+  "properties": {
+    "company_name": { "type": ["string", "null"] },
+    "contact_name": { "type": ["string", "null"] },
+    "industry": { "type": ["string", "null"] },
+    "company_size": { "type": ["string", "null"] },
+    "problem": { "type": ["string", "null"], "description": "The repetitive/manual work the prospect described, in their words, not embellished." },
+    "current_tools": { "type": ["string", "null"] },
+    "lead_sources": { "type": ["string", "null"], "description": "Where the prospect said their own leads come from, if mentioned." },
+    "desired_automation": { "type": ["string", "null"] },
+    "budget": { "type": ["string", "null"] },
+    "timeline": { "type": ["string", "null"] },
+    "decision_maker": { "type": ["boolean", "null"] },
+    "missing_information": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Field names still unknown, e.g. [\"budget\", \"timeline\"]. Never fabricate a value instead of listing it here."
+    },
+    "lead_temperature": { "type": "string", "enum": ["cold", "warm", "hot"] },
+    "lead_status": {
+      "type": "string",
+      "enum": ["NEW", "CONTACTED", "QUALIFYING", "QUALIFIED", "HOT", "PROPOSAL_REQUIRED", "HUMAN_REVIEW", "WON", "LOST", "FOLLOW_UP"]
+    },
+    "intent": { "type": "string", "description": "One short phrase, e.g. \"AI automation for lead follow-up\"." },
+    "summary": { "type": "string", "description": "2-3 sentences, factual, no sales spin." },
+    "recommended_reply": { "type": "string", "description": "The next message to send the prospect. Asks 1-2 of the most important missing questions, never all of them at once." },
+    "next_action": { "type": "string", "description": "One concrete next step, e.g. \"Send recommended_reply and wait for budget/timeline\"." },
+    "follow_up_at": { "type": ["string", "null"], "format": "date-time" },
+    "human_review_required": {
+      "type": "boolean",
+      "description": "True if this conversation has reached a point requiring a human: a price/contract commitment, a refund, a request the agent cannot ethically or accurately answer, or the prospect explicitly asking for a human."
+    },
+    "human_review_reason": { "type": ["string", "null"] }
+  }
+}
